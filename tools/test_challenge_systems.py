@@ -1291,7 +1291,8 @@ class RoomAuditCoverageTests(unittest.TestCase):
     def test_every_concrete_special_and_secret_room_has_a_documented_policy(self):
         root = Path(__file__).resolve().parents[1]
         import os
-        game = Path(os.environ.get("SHATTERED_GAME_DIR", str(root.parent / "shattered-pixel-dungeon")))
+        default_game = root / "game" if (root / "game").is_dir() else root.parent / "shattered-pixel-dungeon"
+        game = Path(os.environ.get("SHATTERED_GAME_DIR", str(default_game)))
         rooms = game/"core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/levels/rooms"
         if not rooms.is_dir():
             self.skipTest("Separate game checkout required for source room audit")
