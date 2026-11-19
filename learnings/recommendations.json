@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "id": "000001-dew-pickup-navigation",
+    "priority": "high",
+    "summary": "Separate repeated refused underfoot dew pickups from impassable-floor bookkeeping.",
+    "evidence": [
+      "decisions 881–882, accepted transitions at log lines 2521 and 2524",
+      "decisions 883–885, log lines 2526–2533",
+      "decision 886, navigation-loop report at log line 2535",
+      "decision 1017, exploration-exhaustion report at log line 2888",
+      "decision 1284, accepted transition at log line 3669"
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000001"
+  }
+]

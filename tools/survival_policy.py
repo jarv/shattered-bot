@@ -306,7 +306,22 @@ class SurvivalPolicy:
                 if before == after:
                     self.failed_moves[action["cell"]] += 1
                     if self.failed_moves[action["cell"]] >= 2:
-                        self.blocked.add(action["cell"])
+                        refused_dew = action["cell"] == pos and self.last_decision.intent == Intent.LOOT \
+                            and any(o.get("cell") == pos and o.get("name", "").lower() == "dewdrop"
+                                    and o.get("top_item") for o in state.get("objects", []))
+                        if refused_dew:
+                            # A refused underfoot pickup is not evidence that
+                            # the occupied floor is impassable. Keep the loot
+                            # obligation, but let ordinary exploration resume.
+                            try:
+                                from .room_loot import inventory_context
+                            except ImportError:
+                                from room_loot import inventory_context
+                            self.room_loot_deferred[pos] = inventory_context(state)
+                            self.room_loot_plan = None
+                            self.failed_moves.pop(pos, None)
+                        else:
+                            self.blocked.add(action["cell"])
             elif action["type"] == "cell":
                 self.failed_moves.pop(action["cell"], None)
         for tile in state["map"]["cells"]:

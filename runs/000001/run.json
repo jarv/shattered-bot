@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "id": "000001",
+  "started_at": "2026-11-19T21:08:28Z",
+  "completed_at": "2026-11-19T21:17:43.179740+00:00",
+  "source_commit": "63ac713f147b25d6bd2fb6cb3a5d37ebc06ad770",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f68d82e99985c989eff7c3c6932c9c775d1bdaeafe86ac4dfd8c27f3c622d7c3",
+  "game_source": "eaf5dcd728b7cd3b72ea0699ead826fb6127b316",
+  "game_checksum": "7c34720677254c09d296c517ecdc47bf1a135fe7f041197b7fb77891d4f6d76f",
+  "supervisor_version": "af878b4006d13e482e18831ec641672338d000378933407ac088e40db6d21cd2",
+  "outcome": "blocked",
+  "outcome_summary": "Stopped alive after repeated exploration failures and fallback waits",
+  "outcome_reason": "Fallback stopped after 128 accepted waits without observed gameplay progress",
+  "max_depth": 3,
+  "actions": 1285,
+  "duration_seconds": 511.066,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Baseline: no preceding run.",
+  "incoming_update_status": "baseline",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run stopped alive after the fallback wait bound, not death. A concrete earlier defect occurred at decisions 881–885: repeated underfoot dewdrop clicks left HP full, the waterskin full, the item present and elapsed turns fixed at 854 (accepted transitions, log lines 2521, 2524, 2527, 2530, 2533). SurvivalPolicy.update treated two unchanged pickup attempts as impassable terrain. The room-loot interceptor then continued selecting that pickup while the underlying region controller had switched to frontier 907. Decision 886 logged a navigation loop and deferred that frontier (line 2535). This is a supported bookkeeping/selection defect, not evidence that the frontier contained the exit. Later exploration exhaustion and 128 advancing fallback waits ended the recording; the final accepted transition advanced turns 1253 to 1254 with 35/35 HP. The proposed focused repair separates repeated refused underfoot dew pickup from failed movement, using existing pickup deferral without removing the outstanding loot obligation. A reduced public-evidence fixture fails on original source and passes on the candidate; the full suite passes 1399 tests, with four skipped. No full controller-memory reconstruction or counterfactual gameplay was performed. The patch does not establish that exploration would find an exit or finish the run.",
+    "learnings": "Separate a refused underfoot pickup from failed movement. Keep uncollected loot outstanding, and do not blame a frontier for a room-loot override loop. This repair does not prove exit discovery."
+  },
+  "recommendations": [
+    {
+      "id": "000001-dew-pickup-navigation",
+      "priority": "high",
+      "summary": "Separate repeated refused underfoot dew pickups from impassable-floor bookkeeping.",
+      "evidence": [
+        "decisions 881–882, accepted transitions at log lines 2521 and 2524",
+        "decisions 883–885, log lines 2526–2533",
+        "decision 886, navigation-loop report at log line 2535",
+        "decision 1017, exploration-exhaustion report at log line 2888",
+        "decision 1284, accepted transition at log line 3669"
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000001"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000001/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000001/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 309,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 310,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 165
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 28,
+        "gold_gained": 109,
+        "turns": 464,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 481,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "objective-completed-dialogue"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 600
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 9,
+        "gold_gained": 178,
+        "turns": 481,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 479,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 2,
+    "ending_level": 4,
+    "starving_turns": 9,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  }
+}
