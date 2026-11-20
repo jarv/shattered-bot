@@ -156,12 +156,15 @@
   {
     "id": "000013-pool-preparation-admission",
     "priority": "high",
-    "summary": "Establish safe unknown-supply preparation for the mandatory piranha chest.",
+    "summary": "Admit bounded ordinary doorway staging for identified pool invisibility.",
     "evidence": [
-      "Run 000013: decisions 3014–3016 and 4063, retained backlog evidence."
+      "Run 000013: decisions 3014–3016 and 4063, retained backlog evidence.",
+      "Run 000023: decision 553, accepted log line 1589, public identification.",
+      "Run 000023: decisions 557 and 564, log lines 1596 and 1616; original-source reconstruction validated through 564.",
+      "Run 000023: candidate first diverges at decision 557 and reconstruction stops."
     ],
-    "status": "deferred",
-    "reason": "This recording does not establish a safe pool preparation alternative. The earlier case still needs recorded-input-validated dry test-bank and remote potion-protection admission plus a budgeted protected chest trip, or observed non-drinking identification.",
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000013"
   },
   {

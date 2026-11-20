@@ -139,7 +139,22 @@ def stage_known_pool(p,state,demand,item,distance,neighbors):
                     and not p.tiles[c].get('trap') and not p.tiles[c].get('plant')
                     and not p.effects_block_movement(p.tiles[c]) for c in around) \
             and sum(p.walkable(n) for n in neighbors(bank,width,height))>=2
-        if not verified and not known_water and (bank==state['hero']['cell'] or not staging_bank(p,state,bank)):continue
+        # A closed entrance can be the only origin whose protected round trip
+        # fits the budget. Scout/open it with ordinary movement, then reobserve;
+        # never charge its opening to an already-running potion. Unlike an
+        # unknown drink, identified invisibility needs no frost-test bank.
+        known_door=item.get('identified') and p.tiles[bank]['terrain'] in {5,6} \
+            and bank not in p.room_blocked and bank not in p.blocked and bank not in p.loot \
+            and bank not in p.neutral_actor_cells \
+            and (bank!=state['hero']['cell'] or p.tiles[bank].get('visible')) \
+            and all(c in p.tiles and p.tiles[c].get('observed') is not False
+                    and p.tiles[c]['terrain'] in {1,3,4,5,6,9,11,12,14,19,20}
+                    and not p.tiles[c].get('trap') and not p.tiles[c].get('plant')
+                    and not p.effects_block_movement(p.tiles[c]) for c in around) \
+            and not any(o['cell']==bank and not o.get('top_item') for o in state.get('objects',[])) \
+            and sum(p.walkable(n) for n in neighbors(bank,width,height))>=2
+        if not verified and not known_water and not known_door \
+                and (bank==state['hero']['cell'] or not staging_bank(p,state,bank)):continue
         staged=dict(state,hero=dict(state['hero'],cell=bank))
         journey=plan_journey(p,staged,[],neighbors,probe_kind='pool',plan_only=True)
         # Do not choose water from which the entrance helper cannot act.
@@ -154,6 +169,7 @@ def stage_known_pool(p,state,demand,item,distance,neighbors):
     if bank!=state['hero']['cell']:
         p.puzzle_revisit_steps['pool']+=1
         return p.toward(state,bank,'room: stage known invisibility outside piranha reach',paths,intent=Intent.REPOSITION)
+    if p.tiles[bank]['terrain']==5:return None  # Opening is not an arrival receipt.
     ready,opening=open_journey_entrance(p,state,journey)
     if not ready:return opening
     p.room_journey=journey
