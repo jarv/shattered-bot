@@ -301,5 +301,19 @@
     "status": "deferred",
     "reason": "No safe focused replacement is established. The public geometry admits protected chest trips from some approaches, but not an unknown-drink bank satisfying the existing dry-surroundings gates; no carried known invisibility or safe identification supply is recorded at the block. A repair needs evidence of an admissible identification/test-and-inventory-protection route, or additional public observations establishing one. Merely adding a pool meal would not resolve the recorded post-meal failure, and speculative movement or weakened hazard checks is not justified.",
     "origin_run": "000026"
+  },
+  {
+    "id": "000027-goo-water-engagement",
+    "priority": "medium",
+    "summary": "Establish an admitted dry-engagement or charge-preservation alternative before changing Goo combat priorities.",
+    "evidence": [
+      "Decision 1453, selection line 4015: wakes Goo on water with full health and six staff charges.",
+      "Decisions 1460–1464, lines 4029–4046: melee trades on water consume health while four charges remain.",
+      "Decisions 1469–1470, lines 4055–4062: health falls from 27 to 12 during further melee trades.",
+      "Decision 1481, line 4087: exhausted-magic withdrawal starts; decision 1493, line 4136: fallback retreat follows."
+    ],
+    "status": "deferred",
+    "reason": "Complete source explains the selection but establishes no discrete implementation defect or validated safe replacement. At decision 1460 the observed adjacent dry steps do not provide the separating landing required by the existing lure rule. A repair needs an admitted multi-turn dry-engagement route or a public-input-validated attack/resource alternative preserving warning escape and health/hunger budgets. Arbitrarily preferring magic, extending preparation, or guessing potion identities is not sufficient evidence.",
+    "origin_run": "000027"
   }
 ]
