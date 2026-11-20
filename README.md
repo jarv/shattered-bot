@@ -9,6 +9,10 @@ OpenCode investigation and publication are managed in `jarv/config-mgmt`.
 
 Clone the game alongside this repository and use Java 21 for its Gradle build.
 Python needs only its standard library.
+The client requires player API version 1 (`api_version: 1`); update the game and
+client together. Structured failures expose `PlayerAPIError.code` and
+`action_may_have_executed`. Requests are never automatically retried, and failures
+invalidate cached observation handles.
 
 ```sh
 python3 -m unittest discover -s tools -p 'test_*.py'

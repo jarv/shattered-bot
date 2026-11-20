@@ -9,12 +9,16 @@ import urllib.request
 
 
 class PlayerAPIError(RuntimeError):
-    def __init__(self, status, message):
+    def __init__(self, status, message, *, code=None, action_may_have_executed=None):
         self.status, self.message = status, message
+        self.code = code
+        self.action_may_have_executed = action_may_have_executed
         super().__init__(f"HTTP {status}: {message}")
 
 
 class PlayerAPI:
+    API_VERSION = 1
+
     def __init__(self, url="http://127.0.0.1:8765", token=None):
         self.url = url.rstrip("/")
         self.token = token or os.environ["SPD_API_TOKEN"]
@@ -31,9 +35,38 @@ class PlayerAPI:
         )
         try:
             with urllib.request.urlopen(request, timeout=35) as response:
-                self.observation = json.load(response)
+                observation = json.load(response)
+                if (not isinstance(observation, dict)
+                        or type(observation.get("api_version")) is not int
+                        or observation["api_version"] != self.API_VERSION):
+                    raise PlayerAPIError(
+                        response.status, "Unsupported player API version; update the game and client together",
+                        code="API_VERSION_MISMATCH", action_may_have_executed=body is not None,
+                    )
         except urllib.error.HTTPError as error:
-            raise PlayerAPIError(error.code, error.read().decode()) from error
+            self.observation = None
+            with error:
+                raw = error.read().decode(errors="replace")
+            try:
+                detail = json.loads(raw)["error"]
+                message = detail["message"]
+                code = detail["code"]
+                uncertain = detail["action_may_have_executed"]
+            except (ValueError, KeyError, TypeError):
+                message, code, uncertain = raw, None, body is not None
+            raise PlayerAPIError(
+                error.code, message, code=code, action_may_have_executed=uncertain,
+            ) from error
+        except (urllib.error.URLError, TimeoutError, OSError, ValueError) as error:
+            self.observation = None
+            raise PlayerAPIError(
+                0, f"Request failed; read state before continuing: {error}",
+                code="TRANSPORT_ERROR", action_may_have_executed=body is not None,
+            ) from error
+        except PlayerAPIError:
+            self.observation = None
+            raise
+        self.observation = observation
         return self.observation
 
     def state(self):

@@ -68,6 +68,12 @@ def launch_game(args, *, log_path=None):
                 return api, process, profile
             except urllib.error.URLError:
                 time.sleep(0.25)
+            except PlayerAPIError as error:
+                # A fresh server may not be listening yet. Only retry a failed
+                # observation transport request, never a protocol error or input.
+                if error.code != "TRANSPORT_ERROR" or error.action_may_have_executed:
+                    raise
+                time.sleep(0.25)
         raise RuntimeError(f"Game did not become ready; see {game_log}")
     except BaseException:
         stop_game(process)
