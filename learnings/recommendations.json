@@ -287,5 +287,19 @@
     "status": "deferred",
     "reason": "The complete selecting source explains the risky read, but no validated preparation or replacement action is established. A minimum charge threshold would be arbitrary, and neither full charges nor a quiet origin guarantees a safe teleport destination. A focused repair needs bounded readiness criteria plus public-input-validated preparation or recovery alternatives that preserve discovery and mandatory progression; hidden potion identities cannot supply that evidence.",
     "origin_run": "000025"
+  },
+  {
+    "id": "000026-pool-preparation-feasibility",
+    "priority": "medium",
+    "summary": "Resolve pool preparation feasibility before adding food spending or additional staging movement.",
+    "evidence": [
+      "Decision 806, log line 2413: observed chest and piranhas.",
+      "Decision 1000, log line 2957: pool supplies declined while hungry.",
+      "Decision 1044, log lines 3087–3089: mandatory chest blocks descent; fallback waits begin.",
+      "Decisions 1076–1078, log lines 3183–3189: eating and healing do not restore progress."
+    ],
+    "status": "deferred",
+    "reason": "No safe focused replacement is established. The public geometry admits protected chest trips from some approaches, but not an unknown-drink bank satisfying the existing dry-surroundings gates; no carried known invisibility or safe identification supply is recorded at the block. A repair needs evidence of an admissible identification/test-and-inventory-protection route, or additional public observations establishing one. Merely adding a pool meal would not resolve the recorded post-meal failure, and speculative movement or weakened hazard checks is not justified.",
+    "origin_run": "000026"
   }
 ]
