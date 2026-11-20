@@ -1126,7 +1126,11 @@ class MagePolicy(SurvivalPolicy):
                 from .priority_resources import targets as progression_targets
             except ImportError:
                 from priority_resources import targets as progression_targets
-            if progression_targets(self):return None
+            if progression_targets(self):
+                # Required loot may itself need the potion preparation that
+                # started this stash. Finish its guarded drop/return workflow
+                # before yielding to a fresh staging decision for that loot.
+                return advance_stash(self,state,enemies,distance)
         warp = ally_warp(self, state, enemies, distance) or warp_escape(self, state, enemies, distance)
         if warp:
             return warp
