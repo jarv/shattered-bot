@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "id": "000024",
+  "started_at": "2026-11-20T18:53:22Z",
+  "completed_at": "2026-11-20T19:08:31.122606+00:00",
+  "source_commit": "af5840d7c12ec233390d6ff3662a645fa89738ed",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "b6c86f5f5d24b28005d8611ec04e6fe79f6d9e53501448791b99376cd2e21e54",
+  "outcome": "dead",
+  "outcome_summary": "Died while starving with the pool chest still unresolved",
+  "outcome_reason": "Hero died",
+  "max_depth": 2,
+  "actions": 2360,
+  "duration_seconds": 901.008,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000023",
+  "previous_source_commit": "8faa5e26c98b34ed0d393ae9903dfa61a2de6a90",
+  "improvements": [
+    "The bot can now approach and open a guarded pool entrance before drinking identified invisibility when that doorway is the only starting point within the round-trip budget. It still waits for a fresh observation before spending the potion."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Distinguish unknown-potion test banks from staging identified invisibility. A guarded entrance doorway may be the only origin within the protected round-trip budget. Open and reobserve before spending protection; require actual buffs and collection evidence. Choosing preparation is not puzzle completion.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The Mage died after prolonged unresolved pool-chest progression and starvation. The terminal accepted transition at decision 2359 (log line 6924) changes HP from 1 to 0 during a targeted staff zap; the nearby gnoll does not establish the killer. Potion identities revealed after death were not treated as prior knowledge.\n\nA supported navigation defect preceded the later fallback symptoms: decisions 845–848 alternate between returning to the dry pool approach and leaving for ordinary loot, without remembering completed scouting. The source chain is rule preparation through prepare_supplies and revisit_pool, with pool observations maintained by piranha_tactics. A hypothetical protected trip does not admit an unknown-potion test. The correction records observed approach arrivals, including arrivals where preparation declines before reaching the revisit helper. It preserves test safety, real protection and collection verification, and mandatory progression pickup.\n\nOffline bookkeeping reconstruction is not recorded runtime memory: original selected actions and reasons matched decisions 0–860. Candidate inputs matched through 854 and reconstruction stopped at the first differing input, decision 855. No subsequent observations were invented. The new regression fails by assertion on the original selector and passes all four tests on the candidate; the full suite passes 1,573 tests with four skipped. This establishes bounded scouting bookkeeping, not puzzle success or improved survival. The earlier hungry preparation gap and existing backlog remain unresolved.",
+    "learnings": "Treat arrival at a pool approach as completed scouting, not completed loot. Retain that receipt when preparation is interrupted or declines, while rechecking actual potion-test admission separately. Unknown potion identities and hypothetical protection cannot justify entering the pool."
+  },
+  "recommendations": [
+    {
+      "id": "000019-crab-surprise-recovery",
+      "priority": "high",
+      "summary": "Establish a bounded admitted surprise alternative before crab recovery degenerates into adjacent waits.",
+      "evidence": [
+        "Run 000019: decisions 1708, 1718 and 1737, accepted log lines 4852, 4885 and 4938.",
+        "Run 000019: decisions 1774, 1805, 1863 and 1966, retained backlog evidence."
+      ],
+      "status": "deferred",
+      "reason": "This recording does not establish a safe crab surprise alternative. The earlier case still needs recorded-input-validated doorway-attempt, pursuit and escape bookkeeping plus an admitted bounded surprise approach with a second exit under existing health and hazard checks.",
+      "origin_run": "000019"
+    },
+    {
+      "id": "000018-strength-preparation-admission",
+      "priority": "high",
+      "summary": "Establish admitted preparation for mandatory progression loot instead of exhausting resources in fallback.",
+      "evidence": [
+        "Run 000018: decisions 2826–2827 and 3903, retained backlog evidence.",
+        "Run 000020: decisions 3990, 3992, 4438 and 4553, retained backlog evidence.",
+        "Run 000022: decision 2683, log line 7634, starvation precedes fire-room discovery.",
+        "Run 000022: decision 2756, log line 7847, unreachable upgrade and food with HP 53/55.",
+        "Run 000022: decisions 2909–2910, log lines 8278–8283, mandatory veto, healing and fallback wait.",
+        "Run 000022: decision 3632, accepted log line 10666, explicit starvation death."
+      ],
+      "status": "deferred",
+      "reason": "The full helper chain is available and already delegates inaccessible pickups to guarded supplies. Here starvation blocks preparation before the frost preflight; a bandolier is present, so missing protection is not established as the blocker. A safe correction needs a contemporaneously known identification/extinguishing resource or a recorded-input-validated preparation alternative satisfying hunger, health, hazard, bank/protection and retrieval budgets. None is certified. Unknown potion identities revealed on death cannot supply that evidence, and neither relaxing test admission nor waiving mandatory pickup is justified.",
+      "origin_run": "000018"
+    },
+    {
+      "id": "000024-pool-approach-receipt",
+      "priority": "medium",
+      "summary": "Remember observed pool-approach arrivals instead of restarting completed scouting detours.",
+      "evidence": [
+        "Decisions 845–848, selection log lines 2413, 2416, 2419 and 2422.",
+        "Decisions 851 and 855, selection log lines 2431 and 2445.",
+        "Original-source offline selections matched decisions 0–860; candidate inputs first differ at decision 855."
+      ],
+      "status": "rejected",
+      "reason": "Candidate validation failed; code was not promoted.",
+      "origin_run": "000024"
+    }
+  ],
+  "update_status": "rejected",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000024/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000024/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 63,
+        "turns": 356,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 348,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 360
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 68,
+        "gold_gained": 754,
+        "turns": 1969,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 2006,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 289
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt/choice container",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Possible drop-room exit",
+            "status": "reported-hypothesis"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 8,
+    "ending_level": 5,
+    "starving_turns": 846,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 846,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 5,
+    "gold_collected": 817,
+    "gold_complete": true,
+    "turns": 2325,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 3,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

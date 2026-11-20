@@ -263,5 +263,18 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000021"
+  },
+  {
+    "id": "000024-pool-approach-receipt",
+    "priority": "medium",
+    "summary": "Remember observed pool-approach arrivals instead of restarting completed scouting detours.",
+    "evidence": [
+      "Decisions 845–848, selection log lines 2413, 2416, 2419 and 2422.",
+      "Decisions 851 and 855, selection log lines 2431 and 2445.",
+      "Original-source offline selections matched decisions 0–860; candidate inputs first differ at decision 855."
+    ],
+    "status": "rejected",
+    "reason": "Candidate validation failed; code was not promoted.",
+    "origin_run": "000024"
   }
 ]
