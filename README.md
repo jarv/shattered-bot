@@ -32,6 +32,8 @@ review patches.
 
 See [pickup, key-room, and trinket policy](docs/pickup-and-trinket-policy.md)
 for inventory retention tiers and the Mage-specific catalyst/trinket ranking.
+The [Sad Ghost policy](docs/ghost-quest-policy.md) covers exploration-first
+quest timing and escape-backed Great Crab doorway ambushes.
 
 ## Fresh run history
 

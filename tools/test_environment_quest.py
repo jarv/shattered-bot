@@ -267,8 +267,11 @@ class GhostQuestTests(unittest.TestCase):
     def test_great_crab_never_receives_unaware_direct_zap(self):
         s,p=ready()
         foe={"name":"great crab","cell":25}
-        action=quest_combat(p,s,[foe],distance,neighbors)
-        self.assertNotEqual("ZAP",action.action.get("action"))
+        # This fixture has no second exit: do not replace a blocked zap with
+        # a blind retreat into the same confined room.
+        from tools.policy_decision import TacticalBlocked
+        with self.assertRaises(TacticalBlocked):
+            quest_combat(p,s,[foe],distance,neighbors)
         foe["sleeping"]=True
         action=quest_combat(p,s,[foe],distance,neighbors)
         self.assertIn("surprise",action.reason)

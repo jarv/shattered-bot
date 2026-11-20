@@ -12,6 +12,31 @@ except ImportError:
 TARGETS = {"fetid rat", "gnoll trickster", "great crab"}
 
 
+def map_explored(p,state):
+    """Finish public exploration before spawning a quest foe, not a secret-map claim."""
+    paths=p.paths(state)
+    report=p.exploration_report(state,paths)
+    try:
+        from .policy_geometry import neighbors
+    except ImportError:
+        from policy_geometry import neighbors
+    skipped=set(report['skipped_special_cells'])
+    # Exhausted route attempts are not proof that fog/mapped-only tiles were seen.
+    frontier=[c for c in paths if c not in skipped and p.tiles[c]['terrain'] in
+              {1,2,3,5,6,9,11,14,15,19,20,29,30} and (
+                  p.tiles[c].get('observed') is False or
+                  any(n not in p.tiles for n in neighbors(c,state['map']['width'],state['map']['height'])))]
+    locks=[c for c in report['unresolved_doors'] if c not in p.resolved_crystal_alternatives]
+    pending={'frontiers':frontier,'unopened_doors':report['unopened_doors'],
+             'unreachable_known_floor':report['unreachable_known_floor'],'unresolved_locks':locks}
+    ready=not any(pending.values())
+    p.planner.report['ghost_exploration']={'ready':ready,**pending,
+        'qualification':'Observed reachable map and known locks; deferred hazardous areas/secrets are not certified clear'}
+    if not ready:
+        p.planner.report['ghost_readiness']={'status':'deferred','reason':'Explore the floor before starting Sad Ghost quest'}
+    return ready
+
+
 def observe_quest(p, state):
     text = " ".join(state.get("ui", {}).get("texts", [])).replace("_", "").lower()
     ghosts = [o for o in state.get("objects",[]) if o["name"].lower()=="sad ghost"]
@@ -30,6 +55,7 @@ def observe_quest(p, state):
         p.ghost_quest.update(target_seen=True,reminder_queried=False)
     if p.ghost_quest.get("stage") == "active" and "thank you... come find me" in text:
         p.ghost_quest["stage"] = "reward"
+        p.great_crab_plan=None
         p.ghost_quest["travel"] = 0
         p.ghost_quest.pop('return_goal',None)
         p.ghost_quest['return_views']=[]
@@ -71,6 +97,8 @@ def visit_ghost(p, state, enemies, distance, neighbors):
         return None
     # Starting dialogue spawns a foe. Prepare before speaking, not afterwards.
     if not returning:
+        if not map_explored(p,state):
+            return None
         charges = sum(int(i["status"].split("/")[0]) for i in p.charged_magic(state)
                       if (i.get("status") or "?").split("/")[0].isdigit())
         if charges < 3:
@@ -92,7 +120,7 @@ def visit_ghost(p, state, enemies, distance, neighbors):
                       "quest: ask Sad Ghost for public completion evidence" if query else "quest: speak to observed Sad Ghost with prepared health and magic")
     paths = p.paths(state)
     banks = [n for n in neighbors(target["cell"],state["map"]["width"],state["map"]["height"])
-              if n in paths and n!=hero["cell"] and len(p.route(paths,n)) <= (24 if returning else 9)]
+              if n in paths and n!=hero["cell"] and len(p.route(paths,n)) <= 24]
     if banks:
         p.ghost_quest["travel"] = p.ghost_quest.get("travel",0)+1
         return p.toward(state,min(banks,key=lambda c:len(p.route(paths,c))),
@@ -154,7 +182,8 @@ def prepare_ghost(p,state,enemies):
     """Small dedicated safe readiness budget; never spawn a quest foe while unprepared."""
     if not getattr(p,'unit_strategies_enabled',False) or state['depth'] not in {2,3,4} \
             or p.ghost_quest.get('last_depth')!=state['depth'] or p.ghost_quest.get('stage') not in {None,'new'} \
-            or enemies or p.recent_threats or p.ranged_plan or p.escape_commitment or state.get('danger_cells'):return None
+             or enemies or p.recent_threats or p.ranged_plan or p.escape_commitment or state.get('danger_cells'):return None
+    if not map_explored(p,state):return None
     hero=state['hero'];buffs=' '.join(b['name'].lower() for b in hero.get('buffs',[]))
     charges=sum(int(i['status'].split('/')[0]) for i in p.charged_magic(state)
                 if (i.get('status') or '?').split('/')[0].isdigit())
@@ -252,22 +281,11 @@ def quest_combat(p,state,enemies,distance,neighbors):
     hero=state["hero"]; pos=hero["cell"]; width=state["map"]["width"]
     buffs=" ".join(b["name"].lower() for b in hero.get("buffs",[]))
     if name == "great crab":
-        if foe.get("sleeping") or "invisib" in buffs:
-            action=p.best_attack(state,foe)
-            if action:
-                action.reason="quest: great crab surprise attack while publicly asleep or hero invisible"
-                return action
-        ambush=p.door_ambush(state,enemies,[foe],kind="great-crab")
-        if ambush:
-            return ambush
-        invisible=next((i for i in state["inventory"] if base_name(i)=="potion of invisibility" and "DRINK" in i.get("actions",[])),None)
-        if invisible:
-            return p.use(invisible,"DRINK","quest: enable surprise against great crab's blocking claw")
-        escape=p.retreat(state,enemies)
-        if escape:
-            escape.reason="quest: retreat from great crab rather than attack its visible guard"
-            return escape
-        p.stop_tactical("quest-combat","Great crab: no public surprise setup or environmental attack; refusing blocked direct attacks")
+        try:
+            from .great_crab_tactics import choose
+        except ImportError:
+            from great_crab_tactics import choose
+        return choose(p,state,enemies)
     if name == "gnoll trickster":
         try:
             from .ranged_tactics import choose

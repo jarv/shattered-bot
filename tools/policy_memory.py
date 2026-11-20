@@ -176,6 +176,8 @@ class CombatMemory:
 
 @dataclass
 class ResourceMemory:
+    great_crab_plan: object = value(None, floor=True)
+    great_crab_attempts: Counter = local(Counter)
     crystal_spend_plans: dict = local(dict)
     crystal_key_count: int = value(0, floor=True)
     wood_burn_plan: object = value(None, floor=True)

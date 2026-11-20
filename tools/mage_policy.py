@@ -369,6 +369,12 @@ class MagePolicy(SurvivalPolicy):
         decision = super().choose(state)
         if state.get('scene')=='GameScene':
             try:
+                from .great_crab_tactics import guard_movement
+            except ImportError:
+                from great_crab_tactics import guard_movement
+            guard_movement(self,state,decision)
+        if state.get('scene')=='GameScene':
+            try:
                 from .trap_field_tactics import before_move
             except ImportError:
                 from trap_field_tactics import before_move
@@ -1063,6 +1069,13 @@ class MagePolicy(SurvivalPolicy):
                 return self.toward(state,target,"survival: seek known safe ground after unexplained HP loss",paths)
         if not enemies and self.unit_strategies_enabled and self.ghost_quest.get('stage') in {'reward','collect_dropped'}:
             return None  # Let healing/starvation and the priority reward-return leaf arbitrate before optional utility.
+        if not enemies and self.great_crab_plan:
+            try:
+                from .great_crab_tactics import choose as continue_crab_ambush
+            except ImportError:
+                from great_crab_tactics import choose as continue_crab_ambush
+            ambush=continue_crab_ambush(self,state,enemies)
+            if ambush:return ambush
         if not enemies and self.unit_strategies_enabled:
             try:
                 from .priority_resources import targets as progression_targets
