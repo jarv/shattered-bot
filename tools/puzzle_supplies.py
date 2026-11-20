@@ -11,7 +11,7 @@ try:
     from .room_tactics import PROTECTION, remaining, plan_journey,sentry_geometry
     from .runestone_tactics import prepare_intuition
     from .special_rooms import fire_barrier
-    from .potion_stash import protect_potions
+    from .potion_stash import protect_potions, can_protect_potions
     from .policy_decision import Intent
     from .policy_geometry import distance
 except ImportError:
@@ -19,7 +19,7 @@ except ImportError:
     from room_tactics import PROTECTION, remaining, plan_journey,sentry_geometry
     from runestone_tactics import prepare_intuition
     from special_rooms import fire_barrier
-    from potion_stash import protect_potions
+    from potion_stash import protect_potions, can_protect_potions
     from policy_decision import Intent
     from policy_geometry import distance
 
@@ -504,6 +504,16 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
                 if demand.kind=='pool':
                     staged=revisit_pool(p,state,demand,neighbors)
                     if staged:return staged
+            continue
+        # A protected reward route alone is insufficient for an unknown drink:
+        # frost could destroy the other carried potions. Admit the same remote
+        # stash route used by protect_potions BEFORE committing to a test bank.
+        # Infeasible, unstarted preparation declines locally; it must not raise
+        # a stash obligation that disables all other floor potion supplies.
+        banks = [bank for bank in banks if can_protect_potions(
+            p,dict(state,hero=dict(hero,cell=bank)),candidate,
+            distance,neighbors,safe_test_bank)]
+        if not banks:
             continue
         bank = min(banks,key=lambda c:len(p.route(paths,c)))
         if bank != hero["cell"]:

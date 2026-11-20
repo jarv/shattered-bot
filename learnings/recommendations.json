@@ -139,5 +139,18 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000011"
+  },
+  {
+    "id": "000012-potion-stash-bank-preflight",
+    "priority": "high",
+    "summary": "Preflight remote potion protection before committing to an unknown-potion test bank.",
+    "evidence": [
+      "Decision 556, logs 1610–1611: levitation-room approach",
+      "Decision 557, logs 1613–1616: stash veto and recovery",
+      "Decision 596, logs 1732–1734: pending piranha chest blocks descent"
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000012"
   }
 ]

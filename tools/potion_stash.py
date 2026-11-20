@@ -11,6 +11,30 @@ def potions(state):
     return [i for i in state["inventory"] if any(k in base_name(i) for k in ("potion", "elixir of ", " brew"))]
 
 
+def stash_cells(p,state,distance,neighbors,safe_bank):
+    """Read-only admission shared by test-bank preflight and actual stashing."""
+    bank=state["hero"]["cell"]
+    width=state["map"]["width"]
+    paths=p.paths(state)
+    return [c for c in paths if 3<=distance(c,bank,width)<=5 and len(p.route(paths,c))<=7
+            and safe_bank(p,state,c,distance,neighbors,allow_dry=True)
+            and all(p.tiles[n]["terrain"] in {1,3,9,11,14,19,20,29}
+                    and not p.tiles[n].get("trap") and not p.tiles[n].get("effects")
+                    and n not in p.loot for n in p.route(paths,c))]
+
+
+def can_protect_potions(p,state,candidate,distance,neighbors,safe_bank):
+    """No drops, receipts, or inferred effects: only preparation feasibility."""
+    if candidate.get("quantity",1)>1:
+        return False
+    others=[i for i in potions(state) if i["id"]!=candidate["id"]]
+    if not others:
+        return True
+    if p.potion_stash or any("DROP" not in i.get("actions",[]) for i in others):
+        return False
+    return bool(stash_cells(p,state,distance,neighbors,safe_bank))
+
+
 def protect_potions(p,state,candidate,distance,neighbors,safe_bank):
     others=[i for i in potions(state) if i["id"]!=candidate["id"]]
     # DROP detaches an entire stack. Do not pretend we can retain one dose of
@@ -23,13 +47,8 @@ def protect_potions(p,state,candidate,distance,neighbors,safe_bank):
     if plan:
         p.stop_obligation("potion-stash","Potion stash incomplete: other potions remain before potential frost drink")
     bank=state["hero"]["cell"]
-    width=state["map"]["width"]
     paths=p.paths(state)
-    stashes=[c for c in paths if 3<=distance(c,bank,width)<=5 and len(p.route(paths,c))<=7
-             and safe_bank(p,state,c,distance,neighbors,allow_dry=True)
-             and all(p.tiles[n]["terrain"] in {1,3,9,11,14,19,20,29}
-                     and not p.tiles[n].get("trap") and not p.tiles[n].get("effects")
-                     and n not in p.loot for n in p.route(paths,c))]
+    stashes=stash_cells(p,state,distance,neighbors,safe_bank)
     if not stashes or any("DROP" not in i.get("actions",[]) for i in others):
         p.stop_obligation("potion-stash","Potential frost test has no verified remote potion stash/drop route")
     p.potion_stash={"depth":state["depth"],"bank":bank,"cell":min(stashes,key=lambda c:len(p.route(paths,c))),
