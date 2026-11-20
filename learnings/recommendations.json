@@ -152,5 +152,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000012"
+  },
+  {
+    "id": "000013-pool-preparation-admission",
+    "priority": "high",
+    "summary": "Establish a safe preparation strategy for pool entrances with no jointly admitted unknown-test bank and protected reward trip.",
+    "evidence": [
+      "Decision 103, log line 278: approach the observed pool entrance",
+      "Decision 104, log line 281: leave the entrance without potion preparation",
+      "Decision 334, log lines 961-963: mandatory pool veto and first fallback wait",
+      "Decisions 459-460, log lines 1336-1340: starvation meal does not resume pool work",
+      "Decision 588, log lines 1723-1725: advancing clock and blocked termination"
+    ],
+    "status": "deferred",
+    "reason": "Full selector browsing and validated reconstruction resolve the missing arbitration and memory evidence, but do not establish a safe replacement. The sole admitted journey start is excluded by unknown-test safety, while the dry test bank exceeds the protected round-trip budget. A justified preparation or public-identification mechanism preserving those gates is needed; the recorded inventory provides no usable identification resource. Relaxing door safety or protection reserve, guessing potion identity, or adding an early meal would not be an evidence-backed focused repair.",
+    "origin_run": "000013"
   }
 ]
