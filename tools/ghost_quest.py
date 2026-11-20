@@ -108,6 +108,13 @@ def visit_ghost(p, state, enemies, distance, neighbors):
     if configured and reward:
         return return_for_reward(p,state,ghosts,distance,neighbors)
     if not ghosts and (returning or configured) and p.ghost_quest.get("last_depth")==state["depth"]:
+        # A last-seen position is an approach prior, not a live NPC. Do not
+        # circle its neighbors after reaching interaction range and observing
+        # it empty. A more distant remembered area can still be approached.
+        if distance(hero["cell"],p.ghost_quest["last_cell"],state["map"]["width"])<=1 \
+                and any(t.get('cell')==p.ghost_quest["last_cell"] and t.get('visible')
+               for t in state.get('map',{}).get('cells',[])):
+            return None
         ghosts = [{"name":"sad ghost","cell":p.ghost_quest["last_cell"],"remembered":True}]
     if not ghosts or p.ghost_quest.get("travel",0) >= 60:
         return None

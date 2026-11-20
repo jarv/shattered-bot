@@ -220,5 +220,32 @@
     "status": "deferred",
     "reason": "Complete source browsing resolves the selector and helper chain, but not a safe replacement. Recorded diagnostics establish the target and route veto, not an admitted unknown-potion preparation. Needed follow-up is an offline policy state validated against earlier recorded selections and a fixture demonstrating a safe approach/test bank, bounded protected strength retrieval, and protection of the other potions, or observed non-drinking identification. Snapshot-only probes do not establish these conditions; changing movement, potion assumptions, hunger admission, or the mandatory pickup gate would be speculative.",
     "origin_run": "000018"
+  },
+  {
+    "id": "000019-visible-empty-ghost-memory",
+    "priority": "medium",
+    "summary": "Stop circling a visibly empty last-seen ghost cell after reaching interaction range.",
+    "evidence": [
+      "Decision 1657, log line 4709: ghost observed at 731.",
+      "Decisions 1669–1671, log lines 4733–4740: empty visible prior selects 732, 691, then 690 while time advances.",
+      "Decision 1681, log line 4769: navigation-loop on the stale ghost approach."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000019"
+  },
+  {
+    "id": "000019-crab-surprise-recovery",
+    "priority": "high",
+    "summary": "Establish a bounded admitted surprise alternative before crab recovery degenerates into adjacent waits.",
+    "evidence": [
+      "Decisions 1708, 1718 and 1737, accepted log lines 4852, 4885 and 4938: doorway strikes leave the crab alive.",
+      "Decision 1774, log line 5039: no fresh surprise or admitted escape-backed doorway.",
+      "Decisions 1805 and 1863, log lines 5164–5165 and 5352–5353: tactical decline becomes adjacent waiting.",
+      "Decision 1966, log lines 5659–5660: lethal accepted wait and explicit crab death message."
+    ],
+    "status": "deferred",
+    "reason": "The complete selecting chain is available, but no safe replacement has been established. Needed evidence is a recorded-input-validated policy state resolving crab-door attempts, pursuit exhaustion and escape commitment, plus an isolated fixture admitting a bounded surprise approach and second exit under the existing health and hazard checks. Without that, selecting a new route or guessing an unidentified potion would be speculative. This patch addresses only the independent stale-ghost orbit.",
+    "origin_run": "000019"
   }
 ]
