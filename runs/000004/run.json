@@ -1,0 +1,311 @@
+{
+  "schema_version": 1,
+  "id": "000004",
+  "started_at": "2026-11-20T07:59:20Z",
+  "completed_at": "2026-11-20T08:26:17.653786+00:00",
+  "source_commit": "945d92144e39d48327a18c4b5d191d160bd7576c",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2d6e7b4f2433e84e361a92fd80e6540d95a663e43b9269b59cc5fa6a7724cce8",
+  "game_source": "eaf5dcd728b7cd3b72ea0699ead826fb6127b316",
+  "game_checksum": "7c34720677254c09d296c517ecdc47bf1a135fe7f041197b7fb77891d4f6d76f",
+  "supervisor_version": "af878b4006d13e482e18831ec641672338d000378933407ac088e40db6d21cd2",
+  "outcome": "dead",
+  "outcome_summary": "Died while starving under prison guard pressure",
+  "outcome_reason": "Hero died",
+  "max_depth": 7,
+  "actions": 2965,
+  "duration_seconds": 1604.609,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000003",
+  "previous_source_commit": "537625d829b698f520495e53fca7c46b8eac7bd4",
+  "improvements": [
+    "Added caustic slime to the bounded weak-target finisher arbitration, with a regression for its existing health, crowding and attempt limits."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Recognized ordinary enemy variants should receive the same bounded weak-target arbitration when their public observations satisfy its gates. Preserve hazard, healing, crowding, attack-admission and mandatory progression-pickup precedence. A selector regression is not evidence of a guaranteed kill or survival.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero died while starving under prison guard pressure. Decision 2964's accepted transition records HP 5 to 0; it does not establish the killer. Earlier, entrance-shop search exhaustion caused 201 advancing-time fallback waits on floor six. A separate, directly evidenced defect initiated repeated full-pack loot loops: decisions 2794–2798 repeatedly clicked the persistent pasty without advancing time, and decision 2799 reported a navigation loop. For the upgrade pickup, decision 2828 explicitly reports the occupied floor blocked by prior movement bookkeeping after full-pack refusal. The selecting chain confuses pickup refusal with failed movement. The proposed focused correction retains floor reachability and defers ordinary collection until inventory changes only when an existing public full-pack receipt matches; mandatory resources remain outstanding. A new reduced regression fails on the played policy and passes on the candidate. All 1410 Python tests pass, with four skipped. This does not prove pack relief or survival, and unidentified potions are not counted as known healing. Policy and regression changes are local proposals; files is empty because the trusted adapter derives them.",
+    "learnings": "A verified underfoot pickup refusal is not evidence that occupied ground is impassable. Preserve honest loot obligations and hazard checks; reopen ordinary collection after inventory changes without granting acquisition or descent credit."
+  },
+  "recommendations": [
+    {
+      "id": "000004-full-pack-floor",
+      "priority": "medium",
+      "summary": "Separate verified full-pack pickup refusal from failed navigation bookkeeping.",
+      "evidence": [
+        "Decision 2794, log lines 7922–7925: persistent pasty and verified full-pack refusal",
+        "Decisions 2795–2799, log lines 7926–7944: repeated same-cell pickups and navigation-loop recovery",
+        "Decisions 2826–2828, log lines 8028–8036: upgrade refusal becomes blocked occupied floor",
+        "tools/survival_policy.py:301–336; tools/inventory_tactics.py:183–191; tools/room_loot.py:19–26"
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000004"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000004/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000004/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 239,
+        "turns": 287,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 279,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 843
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 34,
+        "gold_gained": 693,
+        "turns": 721,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 721,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "objective-completed-dialogue"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 41,
+        "gold_gained": 470,
+        "turns": 417,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 443,
+        "terminal_floor": false,
+        "highlights": []
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 55,
+        "gold_gained": 164,
+        "turns": 440,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 510,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 258,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 278,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1062
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 360
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 41,
+        "gold_gained": 0,
+        "turns": 422,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 461,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 170
+          }
+        ]
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "experience_gained": 27,
+        "gold_gained": 0,
+        "turns": 204,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 260,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 909
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 13,
+    "ending_experience": 43,
+    "ending_level": 8,
+    "starving_turns": 297.833251953125,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 11,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 1,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 75.833251953125,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "starving_turns": 204,
+        "starving_turns_complete": true
+      }
+    ]
+  }
+}

@@ -41,5 +41,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000003"
+  },
+  {
+    "id": "000004-full-pack-floor",
+    "priority": "medium",
+    "summary": "Separate verified full-pack pickup refusal from failed navigation bookkeeping.",
+    "evidence": [
+      "Decision 2794, log lines 7922–7925: persistent pasty and verified full-pack refusal",
+      "Decisions 2795–2799, log lines 7926–7944: repeated same-cell pickups and navigation-loop recovery",
+      "Decisions 2826–2828, log lines 8028–8036: upgrade refusal becomes blocked occupied floor",
+      "tools/survival_policy.py:301–336; tools/inventory_tactics.py:183–191; tools/room_loot.py:19–26"
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000004"
   }
 ]

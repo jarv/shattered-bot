@@ -309,10 +309,22 @@ class SurvivalPolicy:
                         refused_dew = action["cell"] == pos and self.last_decision.intent == Intent.LOOT \
                             and any(o.get("cell") == pos and o.get("name", "").lower() == "dewdrop"
                                     and o.get("top_item") for o in state.get("objects", []))
-                        if refused_dew:
+                        pressure = getattr(self, "inventory_pressure", None)
+                        refused_full_pack = False
+                        if pressure and action["cell"] == pos and self.last_decision.intent == Intent.LOOT \
+                                and pressure["depth"] == depth and pressure["cell"] == pos:
+                            try:
+                                from .inventory_tactics import signature
+                            except ImportError:
+                                from inventory_tactics import signature
+                            refused_full_pack = pressure["signature"] == signature(state) \
+                                and any(o.get("cell") == pos and o.get("top_item")
+                                        for o in state.get("objects", []))
+                        if refused_dew or refused_full_pack:
                             # A refused underfoot pickup is not evidence that
                             # the occupied floor is impassable. Keep the loot
-                            # obligation, but let ordinary exploration resume.
+                            # obligation (including progression resources), but
+                            # defer the ordinary tour until inventory changes.
                             try:
                                 from .room_loot import inventory_context
                             except ImportError:
