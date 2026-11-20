@@ -149,6 +149,10 @@ def doorway_route(p,state,enemies,current):
             p.multi_door_plan=None;return None
         door=plan['door']
     else:
+        # This is a new, unverified doorway setup, not a known single-attacker
+        # retreat. Honor the same accepted-pursuit loss budget as other lures;
+        # choose() may still select an already verified sight break/choke.
+        if p.pursuit_lure_exhausted:return None
         options=[]
         for door in paths:
             if p.tiles[door]['terrain'] not in {5,6} or p.multi_door_attempts[door]>=2:continue

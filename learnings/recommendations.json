@@ -70,5 +70,18 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000005"
+  },
+  {
+    "id": "000007-doorway-staging-budget",
+    "priority": "high",
+    "summary": "Make new multi-threat doorway staging honor the existing exhausted-pursuit budget.",
+    "evidence": [
+      "Decision 824, log lines 2326-2327",
+      "Decision 825, log lines 2331-2333",
+      "Decision 827, log line 2340 and accepted transition"
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000007"
   }
 ]
