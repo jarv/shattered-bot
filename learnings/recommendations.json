@@ -156,16 +156,15 @@
   {
     "id": "000013-pool-preparation-admission",
     "priority": "high",
-    "summary": "Establish a safe preparation strategy for pool entrances with no jointly admitted unknown-test bank and protected reward trip.",
+    "summary": "Establish safe unknown-supply preparation for the mandatory piranha chest.",
     "evidence": [
-      "Decision 103, log line 278: approach the observed pool entrance",
-      "Decision 104, log line 281: leave the entrance without potion preparation",
-      "Decision 334, log lines 961-963: mandatory pool veto and first fallback wait",
-      "Decisions 459-460, log lines 1336-1340: starvation meal does not resume pool work",
-      "Decision 588, log lines 1723-1725: advancing clock and blocked termination"
+      "Decision 3014, log lines 8669–8671: return to the dry pool approach",
+      "Decision 3015, log lines 8672–8674: mandatory chest veto and near-full-HP waterskin use",
+      "Decision 3016, log lines 8675–8677: fallback waiting begins",
+      "Decision 4063, log lines 11755–11758: final wait, HP loss and explicit starvation message"
     ],
     "status": "deferred",
-    "reason": "Still deferred for unknown supplies: this recording establishes an identified-invisibility staging defect, not a safe unknown-potion test bank. A publicly justified identification or preparation mechanism is still needed for entrances where unknown-test safety and the protected trip cannot both be admitted. The proposed known-supply change does not alter those gates.",
+    "reason": "Complete source browsing resolves the selector and fallback chain, but does not establish a safe replacement. The actual initiating inventory has unknown supplies, and no validated alternative simultaneously demonstrates visible dry-bank safety, a budgeted protected trip, and remote protection of the other carried potions. A reduced snapshot probe admitted a hypothetical reward route but did not admit the corresponding test bank or stash. Needed follow-up is an offline, recorded-input-validated preparation state and a fixture demonstrating all three admissions, or observed access to a non-drinking identification resource. Changing only the distance filter, candidate ordering or wait bound would leave independent safety gates unresolved.",
     "origin_run": "000013"
   },
   {
