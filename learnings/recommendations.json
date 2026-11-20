@@ -27,5 +27,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000002"
+  },
+  {
+    "id": "000003-caustic-finisher",
+    "priority": "medium",
+    "summary": "Include caustic slime in the existing bounded nearly-dead ordinary-enemy finisher exception.",
+    "evidence": [
+      "Decision 1135, log lines 3310-3311",
+      "Decision 1138, accepted transition 3323",
+      "Decision 1144, log lines 3346-3347",
+      "Decision 1197, accepted transition 3562"
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000003"
   }
 ]

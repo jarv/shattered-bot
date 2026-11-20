@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "id": "000003",
+  "started_at": "2026-11-20T07:43:39Z",
+  "completed_at": "2026-11-20T07:51:40.939938+00:00",
+  "source_commit": "537625d829b698f520495e53fca7c46b8eac7bd4",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2d6e7b4f2433e84e361a92fd80e6540d95a663e43b9269b59cc5fa6a7724cce8",
+  "game_source": "eaf5dcd728b7cd3b72ea0699ead826fb6127b316",
+  "game_checksum": "7c34720677254c09d296c517ecdc47bf1a135fe7f041197b7fb77891d4f6d76f",
+  "supervisor_version": "af878b4006d13e482e18831ec641672338d000378933407ac088e40db6d21cd2",
+  "outcome": "dead",
+  "outcome_summary": "Died to a slime after prolonged retreats with exhausted magic",
+  "outcome_reason": "Hero died",
+  "max_depth": 4,
+  "actions": 1198,
+  "duration_seconds": 475.776,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000002",
+  "previous_source_commit": "35b055cb715e75f7943eb61d78f87d96b5a538a9",
+  "improvements": [
+    "Kept the legacy systematic frontier planner active when only explicitly sleeping enemies are visible; enemy occupancy and active-threat admission remain unchanged."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Do not let visibility of an explicitly sleeping foe alternate frontier planners. Preserve committed navigation while retaining enemy occupancy, active-threat arbitration, hazard checks, and mandatory progression obligations. Validate selector repairs separately from claims of successful exploration or survival.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The complete recording confirms death to a slime: decision 1197 (log line 3561) moved at 1 HP, and accepted transition 3562 reached 0 HP with explicit public death attribution. An earlier avoidable arbitration issue starts at decision 1135 (3310): at 18/40 HP with an empty staff, the hero withdrew from an adjacent caustic slime displaying 1/19 health. The existing two-attempt weak-enemy exception included slime but omitted caustic slime, although the unit-profile chain treats it as ordinary melee. Nine retreat inputs followed before decision 1144; its accepted transition (3347) records a melee defeat of that still-weakened foe at 15 HP. This does not prove an earlier attack would hit or prevent death. The candidate adds only this species to the existing bounded exception, allowing downstream combat arbitration rather than forcing an attack. A reduced public-input leaf fixture failed two assertions on original policy and passes all four tests on the candidate; the full suite passes 1406 tests with four skips. No full runtime-memory reconstruction or counterfactual gameplay continuation was performed. Earlier cursed-ring equipment, starvation and later multi-enemy pressure remain contributors, not repaired by this change. Unidentified carried potions are not treated as known healing from post-death revelations.",
+    "learnings": "Recognized ordinary enemy variants should receive the same bounded weak-target arbitration when their public observations satisfy its gates. Preserve hazard, healing, crowding, attack-admission and mandatory progression-pickup precedence. A selector regression is not evidence of a guaranteed kill or survival."
+  },
+  "recommendations": [
+    {
+      "id": "000003-caustic-finisher",
+      "priority": "medium",
+      "summary": "Include caustic slime in the existing bounded nearly-dead ordinary-enemy finisher exception.",
+      "evidence": [
+        "Decision 1135, log lines 3310-3311",
+        "Decision 1138, accepted transition 3323",
+        "Decision 1144, log lines 3346-3347",
+        "Decision 1197, accepted transition 3562"
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000003"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000003/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000003/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 194,
+        "turns": 380,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 328,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 941
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 29,
+        "gold_gained": 524,
+        "turns": 634,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 486,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 852
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 28,
+        "gold_gained": 273,
+        "turns": 238,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 213,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "objective-completed-dialogue"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 924
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 18,
+        "gold_gained": 0,
+        "turns": 189,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 165,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 15,
+    "ending_level": 5,
+    "starving_turns": 83.0699462890625,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 5,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 75.0699462890625,
+        "starving_turns_complete": true
+      }
+    ]
+  }
+}

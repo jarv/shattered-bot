@@ -277,7 +277,7 @@ def critical_withdrawal(c):
     close = [e for e in c.active if distance(c.pos, e["cell"], c.width) == 1]
     finisher = None
     if not c.planning_combat and len(close) == 1 and 0.25 <= c.hp < 0.5 and not p.charged_magic(c.state) \
-            and close[0]["name"].lower() in {"marsupial rat", "albino rat", "gnoll scout", "slime", "swarm of flies"}:
+            and close[0]["name"].lower() in {"marsupial rat", "albino rat", "gnoll scout", "slime", "caustic slime", "swarm of flies"}:
         bar = close[0].get("health_bar")
         key = ("critical-finisher", p.depth, close[0]["cell"], close[0]["name"])
         if bar and bar[1] > 0 and bar[0] / bar[1] <= 0.15 and p.snake_melee_attempts[key] < 2:
