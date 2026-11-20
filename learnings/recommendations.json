@@ -83,5 +83,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000007"
+  },
+  {
+    "id": "000008-refused-mimic-reward",
+    "priority": "high",
+    "summary": "Honor inventory-context pickup deferral in the mimic reward selector.",
+    "evidence": [
+      "Decisions 3185–3187, logs 8962–8972: fresh full-pack refusals and unchanged inventory.",
+      "Decision 3188, logs 8974–8976: mimic reward selector retries the deferred pickup.",
+      "Decisions 3191–3203, logs 8987–9032: recovery oscillations and fallback dew consumption.",
+      "Decisions 3204–3294, logs 9034–9304: advancing fallback waits end with starvation and a meal."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000008"
   }
 ]

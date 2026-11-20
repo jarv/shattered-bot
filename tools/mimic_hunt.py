@@ -57,6 +57,16 @@ def hunt_missing_mimic(p,state,enemies,distance):
     paths=p.paths(state)
     rewards=[c for c in plan["reward_cells"] if c in paths and c in p.loot]
     if rewards:
+        try:
+            from .room_loot import inventory_context
+        except ImportError:
+            from room_loot import inventory_context
+        # A known reward refused by this inventory is not a missing mimic.
+        # Yield to ordinary cleanup/recovery/exploration without erasing its
+        # obligation. Reconsider collection only when the inventory changes.
+        context=inventory_context(state)
+        rewards=[c for c in rewards if p.room_loot_deferred.get(c)!=context]
+        if not rewards:return None
         return p.toward(state,min(rewards,key=lambda c:len(p.route(paths,c))),
                         "mimic: collect observed reward before leaving room",paths,intent=Intent.LOOT)
     if plan["steps"]>=16:
