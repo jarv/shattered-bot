@@ -344,5 +344,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000029"
+  },
+  {
+    "id": "000030-missing-exit-search-admission",
+    "priority": "high",
+    "summary": "Establish an admitted missing-exit search alternative at the eight-search hunger transition.",
+    "evidence": [
+      "Decision 4547, line 12920: ordinary region tasks are exhausted and wall searching begins.",
+      "Decision 4645, lines 13203-13204: the eighth search leaves health full but changes hunger phase.",
+      "Decision 4646, lines 13205-13206: no reachable exit is reported and fallback waits begin.",
+      "Decision 5799, lines 16655-16656: a starving hero falls from 1 HP to zero while waiting."
+    ],
+    "status": "deferred",
+    "reason": "Source establishes the cumulative search-ceiling gate, not a safe replacement. The concrete blocker is validating a remaining target with its safe approach/return, current threat bookkeeping, hunger cost, and bounded search receipts. The incomplete observed map does not prove where progression lies; the known trap-blocked connection also lacks a validated protected traversal. A larger search or waiting bound, speculative movement, or guessed potion effect would not supply that evidence. No policy or test changes are proposed.",
+    "origin_run": "000030"
   }
 ]
