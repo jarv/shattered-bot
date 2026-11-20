@@ -64,7 +64,11 @@ def prepare(p,state,demand,candidate,safe_bank):
     p.puzzle_probe={'depth':state['depth'],'kind':'flame','turns':0}
     p.potion_probe_permit=(candidate['id'],candidate['name'])
     try:
-        return p.use(candidate,'DRINK','room: test unknown fire beside wood; retreat immediately to verified water if burning')
+        try:
+            from .room_supplies import use as use_room_supply
+        except ImportError:
+            from room_supplies import use as use_room_supply
+        return use_room_supply(p,candidate,'DRINK','room: test unknown fire beside wood; retreat immediately to verified water if burning',kind='flame')
     finally:p.potion_probe_permit=None
 
 
@@ -116,8 +120,12 @@ def known_burn(p,state,enemies):
     hero=state['hero'];pos=hero['cell'];width,height=state['map']['width'],state['map']['height']
     buffs=' '.join(b['name'].lower() for b in hero.get('buffs',[]))
     if hero['hp']<.8*hero['max_hp'] or any(t in buffs for t in ('burn','poison','bleed','blind','vertigo','paral','root')):return None
+    try:
+        from .room_supplies import eligible
+    except ImportError:
+        from room_supplies import eligible
     flame=next((i for i in state['inventory'] if base_name(i)=='potion of liquid flame'
-                and 'THROW' in i.get('actions',[]) and p.item_action_allowed(i,'THROW')),None)
+                and 'THROW' in i.get('actions',[]) and eligible(p,i,'THROW','flame')),None)
     if not flame:return None
     paths=p.paths(state);nonflammable={0,1,3,4,9,11,12,14,19,20,24,25,26,28,29};choices=[]
     for wood,tile in p.tiles.items():
@@ -160,4 +168,8 @@ def known_burn(p,state,enemies):
     p.room_attempts.add((state['depth'],'burn',wood))
     p.wood_burn_plan={'depth':state['depth'],'branch':state.get('branch',0),'wood':wood,'bank':bank,
                       'water':bank,'phase':'verify-wood','steps':0}
-    return p.use(flame,'THROW','room: ignite observed barricade from isolated bank; verify fire expiry before entry',target=wood)
+    try:
+        from .room_supplies import use as use_room_supply
+    except ImportError:
+        from room_supplies import use as use_room_supply
+    return use_room_supply(p,flame,'THROW','room: ignite observed barricade from isolated bank; verify fire expiry before entry',kind='flame',target=wood)

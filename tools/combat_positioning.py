@@ -175,8 +175,12 @@ def emergency_frost(p,state):
     if frost:
         p.planner.report['emergency_extinguishing']={'method':'known frost self-splash',
             'caveat':'Cold and carried-potion risks accepted for active burning; no survival guarantee'}
-        return p.use(frost,'THROW','survival: emergency known frost self-splash to extinguish burning',
-                     target=state['hero']['cell'])
+        try:
+            from .room_supplies import use as use_room_supply
+        except ImportError:
+            from room_supplies import use as use_room_supply
+        return use_room_supply(p,frost,'THROW','survival: emergency known frost self-splash to extinguish burning',
+                               kind='emergency',target=state['hero']['cell'])
 
 
 def close_zapper(p, state, enemies, distance):

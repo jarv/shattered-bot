@@ -168,6 +168,11 @@ class MagePolicy(SurvivalPolicy):
 
     def item_action_allowed(self, item, action):
         name = base_name(item)
+        try:
+            from .room_supplies import allowed as room_supply_allowed
+        except ImportError:
+            from room_supplies import allowed as room_supply_allowed
+        if not room_supply_allowed(self,item,action):return False
         if action == 'EAT':
             try:
                 from .blandfruit_tactics import HARMFUL_FOOD
@@ -413,7 +418,15 @@ class MagePolicy(SurvivalPolicy):
                 from .piranha_tactics import pending as pending_piranha_rooms
             except ImportError:
                 from piranha_tactics import pending as pending_piranha_rooms
-            if pending_piranha_rooms(self):
+            try:
+                from .room_supplies import depleted, POTIONS
+            except ImportError:
+                from room_supplies import depleted, POTIONS
+            spent_rooms=depleted(self,state)
+            for kind in sorted(spent_rooms):
+                self.defer_obligations(state,[{'kind':'potion-room supply exhausted','room':kind,'potion':POTIONS[kind]}],
+                    "Collected floor supply was used elsewhere; descend without room completion credit")
+            if pending_piranha_rooms(self) and 'pool' not in spent_rooms:
                 self.stop_gameplay('Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending')
             if self.unit_strategies_enabled:
                 try:
@@ -1216,7 +1229,11 @@ class MagePolicy(SurvivalPolicy):
             cleansing = next((i for i in state["inventory"] if base_name(i) == "potion of cleansing"
                               and "DRINK" in i.get("actions", [])), None)
             if cleansing:
-                return self.use(cleansing, "DRINK", "challenge: cleansing restores full satiety without healing poison")
+                try:
+                    from .room_supplies import use as use_room_supply
+                except ImportError:
+                    from room_supplies import use as use_room_supply
+                return use_room_supply(self,cleansing,"DRINK","challenge: cleansing restores full satiety without healing poison",kind="emergency")
         if self.into_darkness and "light" not in buffs:
             torch = next((i for i in state["inventory"] if base_name(i) == "torch"
                            and "LIGHT" in i.get("actions", [])), None)

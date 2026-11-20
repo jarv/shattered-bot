@@ -50,7 +50,11 @@ def choose_necromancer(p, state, enemies, distance, neighbors, line_clear):
             item = next((i for i in state["inventory"] if name in i["name"].lower()
                          and action in i.get("actions", [])), None)
             if item and (not active_buff or active_buff not in buffs):
-                return p.use(item, action, "necro: escape supported minion attrition")
+                try:
+                    from .room_supplies import use as use_room_supply
+                except ImportError:
+                    from room_supplies import use as use_room_supply
+                return use_room_supply(p,item,action,"necro: escape supported minion attrition",kind='emergency')
     # Killing the caster also kills its minion via Skeleton.die(), which still
     # explodes. At low HP, don't turn a nearly-won caster fight into self-death.
     wounded_caster = any(e.get("health_bar") and e["health_bar"][1] > 0

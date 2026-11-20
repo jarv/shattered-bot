@@ -14,6 +14,11 @@ NAMES={'scroll of upgrade','potion of strength'}
 
 def targets(p):
     try:
+        from .room_supplies import deferred_loot
+    except ImportError:
+        from room_supplies import deferred_loot
+    deferred=deferred_loot(p)
+    try:
         from .pickup_priority import food
         from .inventory_tactics import discarded
     except ImportError:
@@ -25,6 +30,7 @@ def targets(p):
                  for o in p.loot.values() if o.get('name','').lower() in {'locked chest','crystal chest'})
     needed={f'{kind} key' for kind in kinds if not getattr(p,'keys',{}).get(kind,0)}
     return {c:o for c,o in p.loot.items() if not o.get('for_sale')
+            and c not in deferred
             and not discarded(p,c,o)
             and (base_name(o.get('top_item',o)) in NAMES | needed or food(o.get('top_item',o)))}
 

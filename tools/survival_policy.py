@@ -676,7 +676,7 @@ class SurvivalPolicy:
         if recharge and "recharging" not in buffs:
             return self.use(recharge, "READ", "wraith: recharge magic")
         invisible = next((i for i in state["inventory"] if "potion of invisibility" in i["name"].lower()
-                          and "DRINK" in i["actions"]), None)
+                           and "DRINK" in i["actions"] and self.item_action_allowed(i,"DRINK")), None)
         if invisible:
             return self.use(invisible, "DRINK", "wraith: enable surprise attack")
         escape = self.retreat(state, enemies)
@@ -790,7 +790,7 @@ class SurvivalPolicy:
         if magic and self.shot_clear(state, target["cell"]):
             return self.use(magic[0], "ZAP", "snake: bypass evasion with magic", target=target["cell"])
         invisible = next((i for i in state["inventory"] if "potion of invisibility" in i["name"].lower()
-                          and "DRINK" in i.get("actions", [])), None)
+                           and "DRINK" in i.get("actions", []) and self.item_action_allowed(i,"DRINK")), None)
         if invisible and "invisib" not in buffs:
             return self.use(invisible, "DRINK", "snake: enable surprise attack with known invisibility")
         escape = self.retreat(state, enemies)

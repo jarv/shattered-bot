@@ -14,6 +14,7 @@ try:
     from .policy_decision import Intent
     from .mimic_hunt import begin_hunt
     from .mimic_tactics import suspicious_container
+    from .room_supplies import use as use_room_supply, eligible as room_supply_eligible
 except ImportError:
     from consumable_tactics import base_name
     from combat_items import unencumbered
@@ -21,6 +22,7 @@ except ImportError:
     from policy_decision import Intent
     from mimic_hunt import begin_hunt
     from mimic_tactics import suspicious_container
+    from room_supplies import use as use_room_supply, eligible as room_supply_eligible
 
 
 GROUND = {1, 2, 3, 6, 9, 11, 14, 15, 19, 20, 29, 30}
@@ -240,7 +242,7 @@ def plan_journey(p, state, enemies, neighbors, *, probe_kind=None, plan_only=Fal
                 p.room_journey = journey
                 if duration:
                     return p.room_journey.advance(p,state,enemies,neighbors)
-                return p.use(item, "DRINK", f"room: prepare {kind} protection for verified round trip")
+                return use_room_supply(p,item,"DRINK",f"room: prepare {kind} protection for verified round trip",kind=kind)
             for adjacent in neighbors(cell, width, height):
                 closed_probe = plan_only and kind in PROTECTION and p.tiles.get(adjacent,{}).get('terrain')==5 \
                     and adjacent not in occupied and adjacent not in p.blocked and not p.tiles[adjacent].get('effects') \
@@ -290,7 +292,7 @@ def extinguish(p, state, enemies, distance):
                 from barrier_followup import begin
                 from policy_geometry import neighbors
             begin(p,state,cell,neighbors)
-            return p.use(frost, "THROW", "room: extinguish observed magical fire from safe distance", target=cell)
+            return use_room_supply(p,frost,"THROW","room: extinguish observed magical fire from safe distance",kind='frost',target=cell)
     return None
 
 
@@ -318,7 +320,7 @@ def controlled_burn(p, state, enemies, distance, neighbors):
     if enemies or state.get("danger_cells") or state["hero"]["hp"] < 0.8*state["hero"]["max_hp"]:
         return None
     flame = next((i for i in state["inventory"] if base_name(i) == "potion of liquid flame"
-                  and "THROW" in i.get("actions", []) and p.item_action_allowed(i,"THROW")), None)
+                  and "THROW" in i.get("actions", []) and room_supply_eligible(p,i,"THROW","flame")), None)
     if not flame:
         return None
     pos, width, height = state["hero"]["cell"], state["map"]["width"], state["map"]["height"]
@@ -340,7 +342,7 @@ def controlled_burn(p, state, enemies, distance, neighbors):
                 return move
             continue
         p.room_attempts.add(key)
-        return p.use(flame, "THROW", "room: burn isolated observed barrier; normal hazard checks forbid entry until clear", target=cell)
+        return use_room_supply(p,flame,"THROW","room: burn isolated observed barrier; normal hazard checks forbid entry until clear",kind='flame',target=cell)
     return None
 
 

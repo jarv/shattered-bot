@@ -17,13 +17,23 @@ def required_loot(p):
 
 
 def pending_collections(p):
-    return bool(required_loot(p) or missing_keys(p) or p.mimic_obligations
+    try:
+        from .room_supplies import deferred_loot
+    except ImportError:
+        from room_supplies import deferred_loot
+    return bool(set(required_loot(p))-deferred_loot(p) or missing_keys(p) or p.mimic_obligations
                 or p.potion_stash or p.trap_payload_return)
 
 
 def missing_keys(p):
+    try:
+        from .room_supplies import deferred_loot
+    except ImportError:
+        from room_supplies import deferred_loot
+    deferred=deferred_loot(p)
     kinds=set()
-    for obj in required_loot(p).values():
+    for cell,obj in required_loot(p).items():
+        if cell in deferred:continue
         title=obj['name'].lower()
         if 'locked chest' in title and not p.keys.get('golden',0):kinds.add('golden')
         if 'crystal chest' in title and not p.keys.get('crystal',0):kinds.add('crystal')

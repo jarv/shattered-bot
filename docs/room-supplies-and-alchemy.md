@@ -41,9 +41,12 @@ can reopen that known entrance if it closes behind the hero, while retaining
 its protection-time checks. Current fish occupancy, actual buff duration, and
 the return route are rechecked on each step.
 
-Record chest collection only from an accepted pickup receipt. Do not descend
-while that chest remains pending; ordinary unfinished-loot descent permission
-does not waive this specific requirement.
+Record chest collection only from an accepted pickup receipt. Reserve supplies
+for this objective. If an accepted off-purpose action consumes the floor's
+collected supply and no known replacement remains, defer the affected room and
+descend without collection or floor-clear credit. Ordinary unfinished-loot
+permission alone does not waive a still-supplied pool objective. See the
+[shared potion rule and complete room status](special-room-status.md).
 
 ### Unknown supplies: the bandolier is protection, not a potion
 

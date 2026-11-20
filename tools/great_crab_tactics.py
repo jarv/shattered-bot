@@ -177,7 +177,7 @@ def choose(p,state,enemies):
             return p.toward(state,door,'quest: lure great crab toward known escape-backed doorway',
                             paths,intent=Intent.RETREAT)
     invisible=next((i for i in state['inventory'] if base_name(i)=='potion of invisibility'
-                    and 'DRINK' in i.get('actions',[])),None)
+                     and 'DRINK' in i.get('actions',[]) and p.item_action_allowed(i,'DRINK')),None)
     if invisible:
         return p.use(invisible,'DRINK','quest: enable great crab surprise without a confined-room lure')
     moves=[c for c in neighbors(pos,width,height) if clean(p,state,c,occupied)

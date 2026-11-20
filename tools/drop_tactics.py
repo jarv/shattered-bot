@@ -77,9 +77,17 @@ def prepare_drop(p,state,enemies,distance,neighbors):
     if hero["cell"]!=bank:
         return p.toward(state,bank,"drop: approach observed distant-well ledge before using protection",paths)
     if not protected and feather:
-        return p.use(feather,"DRINK","drop: activate feather fall and verify its rendered buff before jumping")
+        try:
+            from .room_supplies import use as use_room_supply
+        except ImportError:
+            from room_supplies import use as use_room_supply
+        return use_room_supply(p,feather,"DRINK","drop: activate feather fall and verify its rendered buff before jumping",kind="fall")
     if not protected and not cleared and cleanse:
-        return p.use(cleanse,"DRINK","drop: pre-cleanse to prevent landing bleed after budgeting direct damage")
+        try:
+            from .room_supplies import use as use_room_supply
+        except ImportError:
+            from room_supplies import use as use_room_supply
+        return use_room_supply(p,cleanse,"DRINK","drop: pre-cleanse to prevent landing bleed after budgeting direct damage",kind="fall")
     if not protected and not cleared:
         return None
     p.drop_attempts.add((state["depth"],drop))
@@ -124,7 +132,11 @@ def recover_drop(p,state,enemies,distance,neighbors):
     if "bleed" in buffs:
         cleanse=next((i for i in state["inventory"] if base_name(i)=="potion of cleansing" and "DRINK" in i.get("actions",[])),None)
         if cleanse:
-            return p.use(cleanse,"DRINK","drop: cleanse observed landing bleeding before looting")
+            try:
+                from .room_supplies import use as use_room_supply
+            except ImportError:
+                from room_supplies import use as use_room_supply
+            return use_room_supply(p,cleanse,"DRINK","drop: cleanse observed landing bleeding before looting",kind="fall")
         sandals=next((i for i in state["inventory"] if i.get("equipped") and "ROOT" in i.get("actions",[])
                       and "seed of mageroyal" in i.get("description","").replace("_","").lower()),None)
         if sandals:

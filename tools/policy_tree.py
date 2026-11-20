@@ -39,6 +39,7 @@ POLICY = Selector("survival", (
         Leaf("piranha-room-supplies", n.piranha_supplies),
         Leaf("ghost-reward", n.ghost_reward),
         Leaf("wandmaker-quest", n.wandmaker),
+        Leaf("exhausted-room-supply-descent", n.exhausted_room_descent),
         Leaf("blandfruit", n.blandfruit),
         Leaf("peaceful-preparation", n.peaceful_preparation),
     )),

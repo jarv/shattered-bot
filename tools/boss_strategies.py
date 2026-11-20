@@ -121,7 +121,11 @@ class GooStrategy:
         for name, action in (("scroll of teleportation", "READ"), ("potion of invisibility", "DRINK")):
             item = next((i for i in state["inventory"] if name in i["name"].lower() and action in i.get("actions", [])), None)
             if item and ("invisibility" not in name or "invisib" not in buffs):
-                return p.use(item, action, "boss: goo emergency escape from trapped charge")
+                try:
+                    from .room_supplies import use as use_room_supply
+                except ImportError:
+                    from room_supplies import use as use_room_supply
+                return use_room_supply(p,item,action,"boss: goo emergency escape from trapped charge",kind='emergency')
         raise BossEscapeBlocked("Goo charged attack: no immediate safe exit or usable escape; refusing generic movement inside the blast")
 
     def refuge_size(self, p, state, enemies, goo, start, neighbors, limit=6):

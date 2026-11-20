@@ -201,6 +201,14 @@ def piranha_supplies(c):
     return choose(c.policy,c.state,c.enemies)
 
 
+def exhausted_room_descent(c):
+    try:
+        from .room_supplies import descend
+    except ImportError:
+        from room_supplies import descend
+    return descend(c.policy,c.state,c.enemies)
+
+
 def wandmaker(c):
     if not hasattr(c.policy,'wandmaker_quest'):return None
     try:

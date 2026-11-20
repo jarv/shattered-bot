@@ -236,7 +236,7 @@ def ember_combat(p,state,enemies):
                 and not any(c in area and ('potion' in o.get('name','').lower()
                             or 'meat' in o.get('name','').lower()) for c,o in p.loot.items()))
     cold=next((i for i in state['inventory'] if base_name(i) in {'potion of frost','icefruit'}
-               and 'THROW' in i.get('actions',[])),None)
+                and 'THROW' in i.get('actions',[]) and p.item_action_allowed(i,'THROW')),None)
     if cold and safe(foe['cell']):
         return p.use(cold,'THROW','quest: use known cold against observed newborn elemental',target=foe['cell'])
     try:

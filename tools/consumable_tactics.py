@@ -119,7 +119,11 @@ def choose_consumable(p, state, enemies, distance, neighbors):
                 item = next((i for i in state["inventory"] if base_name(i) == name and "DRINK" in i.get("actions", [])), None)
                 if item and buff not in buffs:
                     p.consumable_cooldown = 8
-                    return p.use(item, "DRINK", "potion: enable escape from dangerous combat")
+                    try:
+                        from .room_supplies import use as use_room_supply
+                    except ImportError:
+                        from room_supplies import use as use_room_supply
+                    return use_room_supply(p,item,"DRINK","potion: enable escape from dangerous combat",kind='emergency')
         if hp < 0.35:
             fear = next((i for i in state["inventory"] if base_name(i) == "stone of fear"
                          and "THROW" in i.get("actions", [])), None)
@@ -160,11 +164,19 @@ def choose_consumable(p, state, enemies, distance, neighbors):
                         and hp>=.5 and item.get('quantity',1)==1 \
                         and any(t['terrain'] in {13,27} for t in p.tiles.values()):
                     continue  # Keep the last known ignition source for observed wood; emergencies may spend it.
-                if not p.target_allowed(item, enemy):
+                try:
+                    from .room_supplies import eligible_target, use as use_room_supply
+                except ImportError:
+                    from room_supplies import eligible_target, use as use_room_supply
+                if hp>=.5 and not p.item_action_allowed(item,"THROW"):continue
+                if not (eligible_target(p,item,enemy,'emergency') if hp<.5 else p.target_allowed(item, enemy)):
                     continue
                 if "flame" in name and any(p.tiles.get(c, {}).get("terrain") in {2, 15, 30} for c in neighbors(pos, width, height)):
                     continue
                 p.consumable_cooldown = 10
+                if hp<.5:
+                    return use_room_supply(p,item,"THROW","potion: ranged control/damage against durable enemy",
+                                           kind='emergency',target=enemy["cell"])
                 return p.use(item, "THROW", "potion: ranged control/damage against durable enemy", target=enemy["cell"])
     return None
 

@@ -34,6 +34,11 @@ def observe(p,state):
 
 
 def choose(p,state,enemies):
+    try:
+        from .room_supplies import exhausted
+    except ImportError:
+        from room_supplies import exhausted
+    if exhausted(p,state,'pool'):return None
     rooms=pending(p)
     if not rooms or enemies or p.recent_threats or state.get('danger_cells') or p.room_journey \
             or p.puzzle_probe or state.get('status')!='ready' or state.get('modal'):return None

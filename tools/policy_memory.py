@@ -178,6 +178,10 @@ class CombatMemory:
 
 @dataclass
 class ResourceMemory:
+    room_supply_pickups: Counter = local(Counter)
+    room_supply_spent_elsewhere: set = local(set)
+    room_supply_pending_use: object = value(None, floor=True)
+    room_supply_permit: object = value(None, floor=True)
     bandolier_inventory: object = value(None)  # (owned, possible overflow); persists across floors.
     piranha_rooms: dict = local(dict)
     alchemy_energy: object = value(None, floor=True)

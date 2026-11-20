@@ -37,6 +37,8 @@ quest timing and escape-backed Great Crab doorway ambushes.
 See [DM-100 door escape](docs/dm100-door-escape.md) and
 [room supplies and alchemy energy](docs/room-supplies-and-alchemy.md) for
 lightning response, potion testing/retrieval, and minimum-energy crafting gates.
+The [special-room status list](docs/special-room-status.md) lists recognized
+room families, required supplies, known limits, and the shared reserve-or-defer rule.
 
 ## Fresh run history
 

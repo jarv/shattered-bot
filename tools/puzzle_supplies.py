@@ -14,6 +14,7 @@ try:
     from .potion_stash import protect_potions, can_protect_potions, bandolier_protected
     from .policy_decision import Intent
     from .policy_geometry import distance
+    from .room_supplies import use as use_room_supply
 except ImportError:
     from consumable_tactics import base_name, unknown_potion
     from room_tactics import PROTECTION, remaining, plan_journey,sentry_geometry
@@ -22,6 +23,7 @@ except ImportError:
     from potion_stash import protect_potions, can_protect_potions, bandolier_protected
     from policy_decision import Intent
     from policy_geometry import distance
+    from room_supplies import use as use_room_supply
 
 
 @dataclass(frozen=True)
@@ -34,7 +36,7 @@ class Demand:
 MAX_ROOM_POTION_TESTS=12  # Distinct unknown types, at most once each per floor.
 
 
-def demands(p, state, distance):
+def demands(p, state, distance, *, include_deferred=False):
     width = state["map"]["width"]
     paths = p.paths(state)
     found = []
@@ -66,7 +68,14 @@ def demands(p, state, distance):
     pos = state["hero"]["cell"]
     for demand in sorted(found, key=lambda d: distance(pos,d.cell,width)):
         unique.setdefault(demand.kind, demand)
-    return list(unique.values())
+    result=list(unique.values())
+    if not include_deferred:
+        try:
+            from .room_supplies import exhausted
+        except ImportError:
+            from room_supplies import exhausted
+        result=[d for d in result if not exhausted(p,state,d.kind)]
+    return result
 
 
 def frost_recovery_nearby(p,state,distance):
@@ -174,7 +183,7 @@ def stage_known_pool(p,state,demand,item,distance,neighbors):
     if not ready:return opening
     p.room_journey=journey
     p.room_attempts.add((state['depth'],'pool',journey.route[-1]))
-    return p.use(item,'DRINK','room: activate known invisibility for planned piranha chest round trip; verify actual buff')
+    return use_room_supply(p,item,'DRINK','room: activate known invisibility for planned piranha chest round trip; verify actual buff',kind='pool')
 
 
 def revisit_pool(p,state,demand,neighbors):
@@ -220,7 +229,7 @@ def stage_known_gas(p,state,item,neighbors):
     ready,opening=open_journey_entrance(p,state,journey)
     if not ready:return opening
     p.room_journey=journey;p.room_attempts.add((state['depth'],'gas',journey.route[-1]))
-    return p.use(item,'DRINK','room: activate known purity for verified gas-room round trip; verify actual buff')
+    return use_room_supply(p,item,'DRINK','room: activate known purity for verified gas-room round trip; verify actual buff',kind='gas')
 
 
 def refresh_barrier(p,state,demand,paths,distance):
@@ -311,7 +320,7 @@ def stage_known_flight(p,state,item,neighbors):
     ready,opening=open_journey_entrance(p,state,journey)
     if not ready:return opening
     p.room_journey=journey;p.room_attempts.add((state['depth'],'flight',journey.route[-1]))
-    return p.use(item,'DRINK','room: activate known levitation for planned reward round trip; verify actual buff')
+    return use_room_supply(p,item,'DRINK','room: activate known levitation for planned reward round trip; verify actual buff',kind='flight')
 
 
 def stage_sentry(p,state,neighbors,item=None):
@@ -345,7 +354,7 @@ def stage_sentry(p,state,neighbors,item=None):
         ready,opening=open_journey_entrance(p,state,journey)
         if not ready:return opening
         p.room_journey=journey
-        return p.use(item,'DRINK','room: activate known haste for verified sentry round trip; check actual speed buff')
+        return use_room_supply(p,item,'DRINK','room: activate known haste for verified sentry round trip; check actual speed buff',kind='sentry')
     return None
 
 
@@ -499,7 +508,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
             begin(p,state,min(barriers,key=lambda c:distance(hero['cell'],c,width)),neighbors)
             p.potion_probe_permit=(candidate["id"],candidate["name"])
             try:
-                return p.use(candidate,"DRINK","room: test unconfirmed frost beside barrier with one intervening square; verify fire removal")
+                return use_room_supply(p,candidate,"DRINK","room: test unconfirmed frost beside barrier with one intervening square; verify fire removal",kind='frost')
             finally:
                 p.potion_probe_permit=None
         if demand.kind=='flame' and getattr(p,'reserve_floor_puzzle_supplies',False):
@@ -583,7 +592,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
         p.puzzle_probe = {"depth":state["depth"],"kind":demand.kind,"turns":0}
         p.potion_probe_permit = (candidate["id"],candidate["name"])
         try:
-            return p.use(candidate,"DRINK",f"room: test unconfirmed {demand.potion} hypothesis on water; verify actual effect")
+            return use_room_supply(p,candidate,"DRINK",f"room: test unconfirmed {demand.potion} hypothesis on water; verify actual effect",kind=demand.kind)
         finally:
             p.potion_probe_permit = None
     return None
