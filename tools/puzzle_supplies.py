@@ -321,7 +321,8 @@ def open_journey_entrance(p,state,journey):
     door=next((c for c in journey.route[1:] if p.tiles[c]['terrain']==5),None)
     if door is None:return True,None
     if distance(state['hero']['cell'],door,state['map']['width'])==1 and p.tiles[door].get('visible'):
-        return False,p.cell(door,'room: open observed '+journey.kind+' entrance before spending its potion')
+        return False,p.cell(door,'room: open observed '+journey.kind+' entrance before spending its potion',
+                            intent=Intent.REPOSITION)
     return False,None
 
 
@@ -517,7 +518,8 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
             continue
         bank = min(banks,key=lambda c:len(p.route(paths,c)))
         if bank != hero["cell"]:
-            return p.toward(state,bank,"room: stage unconfirmed potion test on safe water",paths)
+            return p.toward(state,bank,"room: stage unconfirmed potion test on safe water",paths,
+                            intent=Intent.REPOSITION)
         if bank in journeys:
             ready,opening=open_journey_entrance(p,state,journeys[bank])
             if not ready:
