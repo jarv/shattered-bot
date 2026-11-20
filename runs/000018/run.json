@@ -1,0 +1,376 @@
+{
+  "schema_version": 1,
+  "id": "000018",
+  "started_at": "2026-11-20T15:41:29Z",
+  "completed_at": "2026-11-20T16:11:04.963143+00:00",
+  "source_commit": "4062f923afbfb21dabf43c63760229a83d1ef2cb",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "b6c86f5f5d24b28005d8611ec04e6fe79f6d9e53501448791b99376cd2e21e54",
+  "outcome": "dead",
+  "outcome_summary": "Starved after mandatory strength-potion retrieval stalled",
+  "outcome_reason": "Hero died",
+  "max_depth": 6,
+  "actions": 3904,
+  "duration_seconds": 1761.559,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000017",
+  "previous_source_commit": "f863ff5982edbec54a570e1cb2efe87970181061",
+  "improvements": [
+    "The bot no longer treats optional food as a permanent reason to block descent. Uncollected food still remains unfinished, while strength potions, upgrade scrolls, and needed keys retain their pickup requirements."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Separate valuable pickup priorities from mandatory progression. Inspect the actual veto targets rather than trusting its upgrade/strength wording. Keep optional hazard-room food unfinished and logged when descent is otherwise admitted; never infer collection, relax fire safety, or guess potion effects. This isolated gate repair does not establish puzzle success or future survival.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended in confirmed starvation: decision 3903's accepted wait reduced HP from 1 to 0, and the public terminal message explicitly reports starvation (log lines 11150–11151). The initiating dead end appeared after the awareness well revealed a potion of strength at cell 999 (decision 2826, line 8000). At decision 2827, recorded diagnostics show this mandatory target outside current paths, with trapped or locked component boundaries and no general threat or inventory veto (line 8002). Descent was refused, then fallback drank the waterskin and subsequently spent advancing turns waiting, interrupted by other actions. Complete source inspection resolves an important ambiguity: tools/priority_resources.py already offers guarded puzzle preparation when ordinary pickup is unavailable; this is not simply a missing call. Independent hunger, staging, protected-trip, and potion-protection requirements remain. No patch is supplied because no validated alternative establishes all required admissions at the initiating state. Reduced snapshot probes are not recovered runtime memory and cannot certify a replacement. The original full suite passed 1540 tests, with four skipped; no new regression or baseline-red/candidate-green comparison is claimed.",
+    "learnings": "Distinguish a genuine mandatory strength target from optional food. Inspect recorded route boundaries and preparation admissions before changing selection. A supply fallback already exists; the next investigation needs an offline, recorded-input-validated state and a safe staging, protected-trip, and potion-protection fixture. Do not waive progression pickup, guess potion effects, or shorten waiting and call the problem solved."
+  },
+  "recommendations": [
+    {
+      "id": "000013-pool-preparation-admission",
+      "priority": "high",
+      "summary": "Establish safe unknown-supply preparation for the mandatory piranha chest.",
+      "evidence": [
+        "Run 000013: decisions 3014–3016 and 4063, retained backlog evidence."
+      ],
+      "status": "deferred",
+      "reason": "This recording does not resolve the earlier pool-specific admission gap. The needed evidence remains a recorded-input-validated preparation state demonstrating a safe dry test bank, budgeted protected trip, and protection of other carried potions, or observed access to non-drinking identification. A strength-room diagnosis does not certify that pool repair.",
+      "origin_run": "000013"
+    },
+    {
+      "id": "000018-strength-preparation-admission",
+      "priority": "high",
+      "summary": "Establish an admitted preparation route for the mandatory strength potion instead of exhausting resources in fallback.",
+      "evidence": [
+        "Decision 2826, log line 8000: publicly revealed strength potion at cell 999.",
+        "Decision 2827, log lines 8002–8005: unreachable mandatory target, descent veto, and waterskin fallback.",
+        "Decisions 2829–2854, log lines 8009–8084: repeated advancing fallback waits.",
+        "Decision 3903, log lines 11150–11151: accepted wait and explicit starvation death."
+      ],
+      "status": "deferred",
+      "reason": "Complete source browsing resolves the selector and helper chain, but not a safe replacement. Recorded diagnostics establish the target and route veto, not an admitted unknown-potion preparation. Needed follow-up is an offline policy state validated against earlier recorded selections and a fixture demonstrating a safe approach/test bank, bounded protected strength retrieval, and protection of the other potions, or observed non-drinking identification. Snapshot-only probes do not establish these conditions; changing movement, potion assumptions, hunger admission, or the mandatory pickup gate would be speculative.",
+      "origin_run": "000018"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000018/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000018/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 167,
+        "turns": 348,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 346,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1145
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 14,
+        "gold_gained": 72,
+        "turns": 252,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 256,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 223
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 43,
+        "gold_gained": 798,
+        "turns": 634,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 642,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 378
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 641
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 323
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 66,
+        "gold_gained": 284,
+        "turns": 568,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 589,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1164
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 339,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 343,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 909
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 113,
+        "gold_gained": 280,
+        "turns": 1575,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 1701,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1172
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 819
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 36,
+    "ending_level": 9,
+    "starving_turns": 725.333984375,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 41,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 678.333984375,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 9,
+    "gold_collected": 1601,
+    "gold_complete": true,
+    "turns": 3716,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 9,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

@@ -158,13 +158,10 @@
     "priority": "high",
     "summary": "Establish safe unknown-supply preparation for the mandatory piranha chest.",
     "evidence": [
-      "Decision 3014, log lines 8669–8671: return to the dry pool approach",
-      "Decision 3015, log lines 8672–8674: mandatory chest veto and near-full-HP waterskin use",
-      "Decision 3016, log lines 8675–8677: fallback waiting begins",
-      "Decision 4063, log lines 11755–11758: final wait, HP loss and explicit starvation message"
+      "Run 000013: decisions 3014–3016 and 4063, retained backlog evidence."
     ],
     "status": "deferred",
-    "reason": "Complete source browsing resolves the selector and fallback chain, but does not establish a safe replacement. The actual initiating inventory has unknown supplies, and no validated alternative simultaneously demonstrates visible dry-bank safety, a budgeted protected trip, and remote protection of the other carried potions. A reduced snapshot probe admitted a hypothetical reward route but did not admit the corresponding test bank or stash. Needed follow-up is an offline, recorded-input-validated preparation state and a fixture demonstrating all three admissions, or observed access to a non-drinking identification resource. Changing only the distance filter, candidate ordering or wait bound would leave independent safety gates unresolved.",
+    "reason": "This recording does not resolve the earlier pool-specific admission gap. The needed evidence remains a recorded-input-validated preparation state demonstrating a safe dry test bank, budgeted protected trip, and protection of other carried potions, or observed access to non-drinking identification. A strength-room diagnosis does not certify that pool repair.",
     "origin_run": "000013"
   },
   {
@@ -209,5 +206,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000017"
+  },
+  {
+    "id": "000018-strength-preparation-admission",
+    "priority": "high",
+    "summary": "Establish an admitted preparation route for the mandatory strength potion instead of exhausting resources in fallback.",
+    "evidence": [
+      "Decision 2826, log line 8000: publicly revealed strength potion at cell 999.",
+      "Decision 2827, log lines 8002–8005: unreachable mandatory target, descent veto, and waterskin fallback.",
+      "Decisions 2829–2854, log lines 8009–8084: repeated advancing fallback waits.",
+      "Decision 3903, log lines 11150–11151: accepted wait and explicit starvation death."
+    ],
+    "status": "deferred",
+    "reason": "Complete source browsing resolves the selector and helper chain, but not a safe replacement. Recorded diagnostics establish the target and route veto, not an admitted unknown-potion preparation. Needed follow-up is an offline policy state validated against earlier recorded selections and a fixture demonstrating a safe approach/test bank, bounded protected strength retrieval, and protection of the other potions, or observed non-drinking identification. Snapshot-only probes do not establish these conditions; changing movement, potion assumptions, hunger admission, or the mandatory pickup gate would be speculative.",
+    "origin_run": "000018"
   }
 ]
