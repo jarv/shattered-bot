@@ -418,9 +418,15 @@ class MagePolicy(SurvivalPolicy):
             if self.unit_strategies_enabled:
                 try:
                     from .priority_resources import targets as progression_targets
+                    from .pickup_priority import food as priority_food
                 except ImportError:
                     from priority_resources import targets as progression_targets
-                if progression_targets(self):
+                    from pickup_priority import food as priority_food
+                # Pickup priority also includes food. It is not a permanent
+                # progression obligation: leave it to the normal strict/deferred
+                # loot handling below, without weakening upgrade/strength or keys.
+                if any(not priority_food(obj.get('top_item',obj))
+                       for obj in progression_targets(self).values()):
                     try:
                         from .priority_resources import diagnostics
                     except ImportError:

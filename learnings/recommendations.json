@@ -195,5 +195,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000015"
+  },
+  {
+    "id": "000017-optional-food-progression-gate",
+    "priority": "high",
+    "summary": "Keep food pickup priority separate from mandatory permanent-progression descent checks.",
+    "evidence": [
+      "Decision 2866, log line 8140: public ration sighting at cell 157.",
+      "Decision 3112–3113, log lines 8863–8866: upgrade pickup confirmed by inventory gain and public message.",
+      "Decision 3442, log lines 9825–9828: sole veto target is unreachable food, followed by healing at 64/65 HP.",
+      "Decisions 3443–3570, log lines 9830–10213: accepted waits advance time, then the run stops alive."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000017"
   }
 ]
