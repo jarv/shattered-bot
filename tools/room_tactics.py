@@ -527,13 +527,19 @@ def prepare_containers(p, state):
             p.allowed_chests.add(target)
             p.room_blocked.discard(target)
             p.room_skipped.discard(target)
+            try:
+                from .keyed_rooms import chest_choice
+            except ImportError:
+                from keyed_rooms import chest_choice
+            chest_choice(p,state,target,[entry[2] for entry in choices])
 
 
 def crystal_choice(p, state, enemies, neighbors):
     """Spend a crystal key on observed rewards, never expected generated prizes."""
-    if enemies or not p.keys.get("crystal", 0):
+    if enemies or p.recent_threats or state.get('danger_cells') or not p.keys.get("crystal", 0):
         return None
-    doors = [c for c, t in p.tiles.items() if t["terrain"] == 31 and t.get("visible")]
+    doors = [c for c, t in p.tiles.items() if t["terrain"] == 31
+             and c not in p.resolved_crystal_alternatives]
     if len(doors) < 2:
         return None  # A single door can be the necessary exit from a pit room.
     baseline = p.paths(state)
@@ -558,22 +564,29 @@ def crystal_choice(p, state, enemies, neighbors):
             visible = obj.get("top_item", {})
             name = visible.get("name", obj["name"]).lower()
             description = obj.get("description", "").replace("_", "").lower()
-            if name == "potion of healing" or visible.get("known_cursed"):
+            if (name == "potion of healing" and p.pharmacophobia) or visible.get("known_cursed"):
                 continue
             reward = 25 if any(k in name for k in ("strength", "scroll of upgrade", "experience")) else \
                      20 if "wand" in name or "a wand" in description else \
                      15 if "artifact" in description or "ring" in name else \
                      12 if any(k in name for k in ("teleportation", "recharging", "invisibility")) else \
-                     8 if any(k in name for k in ("potion", "scroll", "food", "ration")) else 1
+                     8 if any(k in name for k in ("potion", "scroll", "food", "ration")) \
+                     or obj['name'].lower()=='chest' and not suspicious_container(obj) else 1
             value += reward
         if value >= 8 and door in baseline:
             choices.append((value, -len(p.route(baseline, door)), -door, door))
     if choices:
         target = max(choices)[3]
-        p.crystal_choice_groups[target] = set().union(*(branch_cells[d] for d in doors if d!=target))
+        try:
+            from .keyed_rooms import local_alternatives,record_spend
+        except ImportError:
+            from keyed_rooms import local_alternatives,record_spend
+        alternatives=local_alternatives(p,state,target,doors,branch_cells,baseline)
+        p.crystal_choice_groups[target] = alternatives
+        record_spend(p,state,target,'door',alternatives)
         p.deferred_crystal_doors.discard(target)
         p.optional_locks.discard(target)
-        return p.toward(state, target, "room: spend crystal key on highest-value visible branch", baseline)
+        return p.toward(state, target, "room: spend crystal key on highest-value observed branch", baseline)
     p.optional_locks.update(doors)
     p.deferred_crystal_doors.update(doors)
     p.room_notes.append({"kind": "crystal choice", "cells": doors,

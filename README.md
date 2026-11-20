@@ -30,6 +30,9 @@ Collection, crafting and movement require observed receipts rather than assumed
 success. API, runner/startup rules and existing tests are protected from automatic
 review patches.
 
+See [pickup, key-room, and trinket policy](docs/pickup-and-trinket-policy.md)
+for inventory retention tiers and the Mage-specific catalyst/trinket ranking.
+
 ## Fresh run history
 
 The initial commit intentionally contains **no historical runs, recommendations,

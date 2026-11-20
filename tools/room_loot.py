@@ -56,6 +56,9 @@ def room_paths(p,state,region):
 def before_room_exit(p,state,decision):
     if decision.reason.startswith('artifact: deliberate reobserved pickup'):return None
     if decision.reason.startswith('loot: prioritize observed permanent upgrade/strength resource'):return None
+    if decision.reason.startswith('loot: prioritize observed food pickup'):return None
+    if decision.reason.startswith('loot: prioritize observed matching key'):return None
+    if decision.reason.startswith('loot: prioritize observed pickup in a different bag'):return None
     if decision.intent not in {Intent.LOOT,Intent.EXPLORE,Intent.DESCEND}:return None
     step=decision.action.get('cell');plan=p.room_loot_plan
     if not plan and not getattr(p,'strict_observed_loot',False) \

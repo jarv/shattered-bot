@@ -590,9 +590,11 @@ class MagePolicy(SurvivalPolicy):
                 self.snake_route=None
                 self.snake_route_inputs=0
                 self.snake_route_edges.clear()
-        for door,alternatives in list(self.crystal_choice_groups.items()):
-            if self.tiles.get(door,{}).get("terrain") != 31:
-                self.resolved_crystal_alternatives.update(alternatives)
+        try:
+            from .keyed_rooms import observe as observe_keyed_rooms
+        except ImportError:
+            from keyed_rooms import observe as observe_keyed_rooms
+        observe_keyed_rooms(self,state)
         self.deferred_crystal_doors.intersection_update(c for c, t in self.tiles.items() if t["terrain"] == 31)
         self.optional_locks.update(self.deferred_crystal_doors)
         observe_quest(self, state)
@@ -1235,7 +1237,9 @@ class MagePolicy(SurvivalPolicy):
 
     def explore(self, state, enemies):
         choice = crystal_choice(self, state, enemies, neighbors) if state["depth"] not in {6,11,16} or state["depth"] in self.shop_visited_floors else None
-        return choice if choice else super().explore(state, enemies)
+        if choice:return choice
+        keyed = locked_room_route(self,state,enemies) if not enemies and not self.recent_threats and not state.get('danger_cells') else None
+        return keyed or super().explore(state, enemies)
 
     def systematic_exploration_enabled(self,state,enemies):
         # A disabled foe becoming visible must not switch frontier planners

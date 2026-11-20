@@ -1,4 +1,4 @@
-"""Publicly named permanent progression pickups, never potion-color guesses."""
+"""Priority food, permanent progression, and matching-key pickups; no identity guesses."""
 try:
     from .consumable_tactics import base_name
     from .policy_decision import Intent
@@ -13,8 +13,20 @@ NAMES={'scroll of upgrade','potion of strength'}
 
 
 def targets(p):
+    try:
+        from .pickup_priority import food
+        from .inventory_tactics import discarded
+    except ImportError:
+        from pickup_priority import food
+        from inventory_tactics import discarded
+    locks={10:'iron',21:'worn',31:'crystal',38:'skeleton'}
+    kinds={locks[t['terrain']] for t in getattr(p,'tiles',{}).values() if t.get('terrain') in locks}
+    kinds.update('golden' if o.get('name','').lower()=='locked chest' else 'crystal'
+                 for o in p.loot.values() if o.get('name','').lower() in {'locked chest','crystal chest'})
+    needed={f'{kind} key' for kind in kinds if not getattr(p,'keys',{}).get(kind,0)}
     return {c:o for c,o in p.loot.items() if not o.get('for_sale')
-            and base_name(o.get('top_item',o)) in NAMES}
+            and not discarded(p,c,o)
+            and (base_name(o.get('top_item',o)) in NAMES | needed or food(o.get('top_item',o)))}
 
 
 def diagnostics(p,state,enemies=(),paths=None):
@@ -111,13 +123,23 @@ def choose(p,state,enemies):
         except ImportError:
             from puzzle_supplies import prepare_supplies
         return prepare_supplies(p,state,enemies,distance,neighbors)
+    _,cell=min(choices)
     if p.inventory_pressure:
         try:
             from .inventory_tactics import choose as cleanup
+            from .pickup_priority import bag
         except ImportError:
             from inventory_tactics import choose as cleanup
-        room=cleanup(p,state,enemies)
+            from pickup_priority import bag
+        incoming=resources[cell].get('top_item',resources[cell])
+        refused=p.inventory_pressure.get('item')
+        if refused and bag(state,refused)!=bag(state,incoming):
+            # A full specialist pouch does not prove the food backpack is full.
+            return p.toward(state,cell,'loot: prioritize observed pickup in a different bag',paths,intent=Intent.LOOT)
+        room=cleanup(p,state,enemies,incoming_item=incoming)
         if room:return room
         return None  # Do not repeatedly click a known full-pack pickup.
-    _,cell=min(choices)
-    return p.toward(state,cell,'loot: prioritize observed permanent upgrade/strength resource',paths,intent=Intent.LOOT)
+    name=base_name(resources[cell].get('top_item',resources[cell]))
+    reason='loot: prioritize observed permanent upgrade/strength resource' if name in NAMES \
+        else 'loot: prioritize observed matching key' if 'key' in name else 'loot: prioritize observed food pickup'
+    return p.toward(state,cell,reason,paths,intent=Intent.LOOT)

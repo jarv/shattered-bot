@@ -1,4 +1,4 @@
-"""Equipped-power dominance, validated shop sales and observed full-pack relief."""
+"""Validated shop sales and ranked, receipt-backed full-pack relief."""
 import re
 from collections import Counter
 try:
@@ -71,7 +71,7 @@ def candidates(p,state,action):
 
 def discarded(p,cell,obj):
     item=obj.get('top_item',{})
-    return bool(item and p.intentional_discards.get(cell)==(title(item),item.get('description',''),item.get('quantity',1)))
+    return bool(item and getattr(p,'intentional_discards',{}).get(cell)==(title(item),item.get('description',''),item.get('quantity',1)))
 
 
 def quiet(p,state,enemies):
@@ -83,17 +83,26 @@ def quiet(p,state,enemies):
         and not any(getattr(p,k,None) for k in ('potion_stash','trap_payload_return','food_freeze_plan','drop_plan','room_journey','puzzle_probe'))
 
 
-def choose(p,state,enemies):
+def choose(p,state,enemies,*,incoming_item=None):
     if not getattr(p,'unit_strategies_enabled',False) or not quiet(p,state,enemies):return None
     if p.sell_plan:return None
     if p.inventory_pressure and p.inventory_pressure['signature']!=signature(state):p.inventory_pressure=None
-    excess=candidates(p,state,'DROP')
+    incoming=(incoming_item or p.inventory_pressure.get('item')) if p.inventory_pressure else None
+    if incoming:
+        try:
+            from .pickup_priority import replacements
+        except ImportError:
+            from pickup_priority import replacements
+        excess=replacements(p,state,incoming)
+    else:
+        excess=candidates(p,state,'DROP')
+    excess=[i for i in excess if (signature(state),i.get('id')) not in p.inventory_disposal_failures]
     if not excess:return None
-    item=min(excess,key=lambda i:physical_score(i,max(state['hero'].get('strength',0),stats(i)[2])))
+    item=excess[0] if incoming else min(excess,key=lambda i:physical_score(i,max(state['hero'].get('strength',0),stats(i)[2])))
     pos=state['hero']['cell'];width=state['map']['width']
     keepers=[o for o in state.get('objects',[]) if o['name'].lower()=='shopkeeper']
     paths=p.paths(state,{o['cell'] for o in keepers})
-    if keepers:
+    if keepers and not incoming:
         keeper=min(keepers,key=lambda o:distance(pos,o['cell'],width))
         if distance(pos,keeper['cell'],width)<=1:
             p.sell_plan={'stage':'keeper','depth':state['depth'],'branch':state.get('branch',0),
@@ -104,16 +113,19 @@ def choose(p,state,enemies):
                        and not p.tiles[n].get('plant') and not p.effects_block_movement(p.tiles[n]) for n in p.route(paths,c)[1:])]
         if banks:return p.toward(state,min(banks,key=lambda c:len(p.route(paths,c))),
                                 'shop: approach to sell inferior spare equipment',paths,intent=Intent.SHOP)
-    if not p.inventory_pressure or p.inventory_drop_count>=4:return None
+    if not p.inventory_pressure:return None
     if pos in p.loot or p.tiles[pos]['terrain'] not in {1,3,9,11,14,20}:
         banks=[c for c in neighbors(pos,width,state['map']['height']) if c in paths and c not in p.loot
                and p.tiles[c]['terrain'] in {1,3,9,11,14,20} and not p.tiles[c].get('trap')
                and not p.tiles[c].get('plant') and not p.effects_block_movement(p.tiles[c])]
         if banks:return p.cell(min(banks),'inventory: leave valuable pickup on a clean safe disposal bank',intent=Intent.REPOSITION)
         return None
-    p.inventory_disposal_pending={'name':title(item),'quantity':1,'cell':pos,'depth':state['depth'],
-                                  'branch':state.get('branch',0),'item_id':item['id'],'description':item.get('description','')}
-    return p.use(item,'DROP','inventory: full pack; discard gear weaker than equipped gear')
+    p.inventory_disposal_pending={'name':title(item),'quantity':item.get('quantity',1),'cell':pos,'depth':state['depth'],
+                                  'branch':state.get('branch',0),'item_id':item['id'],'description':item.get('description',''),
+                                  'signature':signature(state),
+                                  'kind':'discarded-inferior-gear' if stats(item) and stats(item)[0] in {'melee','armor'}
+                                         else 'discarded-lower-priority-item'}
+    return p.use(item,'DROP','inventory: full pack; discard lower-priority item for observed pickup')
 
 
 def sale_menu(p,state):
@@ -172,12 +184,17 @@ def observe_accepted(p,before,decision,after):
     drop=p.inventory_disposal_pending;p.inventory_disposal_pending=None
     if drop and decision.action=={'type':'item','id':drop['item_id'],'action':'DROP'}:
         ground=next((o.get('top_item',{}) for o in after.get('objects',[]) if o.get('cell')==drop['cell']),{})
-        if same and after['hero']['cell']==drop['cell'] and count(before,drop['name'])-count(after,drop['name'])==1 \
-                and ground and title(ground)==drop['name'] and ground.get('quantity',1)==1:
-            p.intentional_discards[drop['cell']]=(drop['name'],ground.get('description',''),1)
+        if same and after['hero']['cell']==drop['cell'] and count(before,drop['name'])-count(after,drop['name'])==drop['quantity'] \
+                and ground and title(ground)==drop['name'] and ground.get('quantity',1)==drop['quantity']:
+            p.intentional_discards[drop['cell']]=(drop['name'],ground.get('description',''),drop['quantity'])
             p.inventory_pressure=None;p.inventory_drop_count+=1
-            events.append({'kind':'discarded-inferior-gear','name':drop['name'],'cell':drop['cell'],'depth':drop['depth'],
+            events.append({'kind':drop['kind'],'name':drop['name'],'quantity':drop['quantity'],'cell':drop['cell'],'depth':drop['depth'],
                            'evidence':'Inventory removal and matching observed ground item; not new loot or a collection'})
+        else:
+            # A failed or ambiguous drop must not be clicked repeatedly.
+            p.inventory_pressure=None
+            p.inventory_disposal_failures.add((drop['signature'],drop['item_id']))
+            events.append({'kind':'discard-unverified','name':drop['name'],'depth':drop['depth']})
     # A fresh public failed-pickup message, not flat inventory length, admits
     # one cleanup attempt. Old log text and failed movement are insufficient.
     if same and decision.action.get('type')=='cell' and after['hero']['cell']==decision.action.get('cell'):
@@ -187,7 +204,8 @@ def observe_accepted(p,before,decision,after):
             message=f"you can't carry: {name}."
             texts=lambda s:Counter(t.replace('_','').strip().lower() for t in s.get('ui',{}).get('texts',[]))
             if texts(after)[message]>texts(before)[message] and signature(before)==signature(after):
-                p.inventory_pressure={'depth':before['depth'],'cell':obj['cell'],'name':name,'signature':signature(after)}
+                p.inventory_pressure={'depth':before['depth'],'cell':obj['cell'],'name':name,
+                                      'item':dict(obj['top_item']),'signature':signature(after)}
                 events.append({'kind':'full-pack-observed','name':name,'cell':obj['cell'],'depth':before['depth']})
     p.inventory_events.extend(events)
     return events or None

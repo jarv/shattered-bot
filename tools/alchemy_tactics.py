@@ -58,6 +58,9 @@ def plan_brew(state, demands=(), *, barren_land=False):
         return Brew(("potion of purity",), "potion of cleansing", reason, 4)
     if counts.get("scroll of identify", 0) and unknown >= 3:
         return Brew(("scroll of identify",), "scroll of divination", "identify four types without poisonous drink-testing", 6)
+    if counts.get("magical catalyst", 0):
+        return Brew(("magical catalyst",), "trinket",
+                    "turn the observed magical catalyst into the best offered Mage trinket", 6)
     if counts.get("scroll of lullaby", 0) >= 2 and not counts.get("stone of deep sleep"):
         return Brew(("scroll of lullaby",), "stone of deep sleep", "two targeted disengagement stones; retain one recovery scroll")
     if counts.get("scroll of mirror image", 0) >= 2 and state["hero"]["level"] >= 12 and not counts.get("scroll of prismatic image"):
@@ -111,6 +114,18 @@ def context(state):
     return (state["depth"], tuple(sorted((i["name"], i.get("quantity", 1)) for i in state["inventory"])))
 
 
+def inventory_baseline(state, brew):
+    names = {*brew.ingredients, brew.output}
+    if brew.output == 'trinket':
+        try:
+            from .trinket_tactics import TRINKETS
+        except ImportError:
+            from trinket_tactics import TRINKETS
+        names.update(TRINKETS)
+    return {name: sum(i.get('quantity', 1) for i in state['inventory']
+                      if base_name(i) == name) for name in names}
+
+
 def approach_alchemy(p, state, urgent=False):
     if p.alchemy_plan or context(state) in p.alchemy_attempts:
         return None
@@ -133,8 +148,7 @@ def approach_alchemy(p, state, urgent=False):
     if toolkit:
         p.alchemy_attempts.add(context(state))
         p.alchemy_plan = {"brew": brew, "index": 0, "stage": "slot", "steps": 0,
-                          "inventory_before":{name:sum(i.get('quantity',1) for i in state['inventory']
-                              if base_name(i)==name) for name in {*brew.ingredients,brew.output}},
+                          "inventory_before":inventory_baseline(state,brew),
                           "reserve": 0 if "starving" in " ".join(b["name"].lower() for b in state["hero"].get("buffs", [])) else 2}
         return p.use(toolkit, "BREW", f"alchemy: portable toolkit; {brew.reason}")
     paths = p.paths(state)
@@ -154,8 +168,7 @@ def approach_alchemy(p, state, urgent=False):
         return p.toward(state, bank, "alchemy: approach nearby visible station", paths)
     p.alchemy_attempts.add(context(state))
     p.alchemy_plan = {"brew": brew, "index": 0, "stage": "slot", "steps": 0,
-                      "inventory_before":{name:sum(i.get('quantity',1) for i in state['inventory']
-                          if base_name(i)==name) for name in {*brew.ingredients,brew.output}},
+                      "inventory_before":inventory_baseline(state,brew),
                       "reserve": 0 if "starving" in " ".join(b["name"].lower() for b in state["hero"].get("buffs", [])) else 2}
     return p.cell(station, f"alchemy: open station; {brew.reason}")
 
@@ -169,6 +182,14 @@ def alchemy_menu(p, state):
     def button(label):
         return next((b for b in buttons if base_name({"name": b["label"]}) == label), None)
     brew = plan["brew"]
+    if brew.output == 'trinket':
+        try:
+            from .trinket_tactics import trinket_menu
+        except ImportError:
+            from trinket_tactics import trinket_menu
+        choice = trinket_menu(p,state)
+        if choice:
+            return choice
     if plan["steps"] <= 18:
         if plan["stage"] == "slot":
             if plan["index"] < len(brew.ingredients):

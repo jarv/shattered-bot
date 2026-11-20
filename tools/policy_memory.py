@@ -176,10 +176,13 @@ class CombatMemory:
 
 @dataclass
 class ResourceMemory:
+    crystal_spend_plans: dict = local(dict)
+    crystal_key_count: int = value(0, floor=True)
     wood_burn_plan: object = value(None, floor=True)
     wood_probe_attempts: Counter = local(Counter)
     inventory_pressure: object = value(None, floor=True)
     inventory_disposal_pending: object = value(None, floor=True)
+    inventory_disposal_failures: set = local(set)
     inventory_drop_count: int = value(0, floor=True)
     intentional_discards: dict = local(dict)
     trap_attempts: set = local(set)
