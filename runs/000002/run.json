@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "id": "000002",
+  "started_at": "2026-11-20T07:28:53Z",
+  "completed_at": "2026-11-20T07:37:07.684878+00:00",
+  "source_commit": "35b055cb715e75f7943eb61d78f87d96b5a538a9",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2d6e7b4f2433e84e361a92fd80e6540d95a663e43b9269b59cc5fa6a7724cce8",
+  "game_source": "eaf5dcd728b7cd3b72ea0699ead826fb6127b316",
+  "game_checksum": "7c34720677254c09d296c517ecdc47bf1a135fe7f041197b7fb77891d4f6d76f",
+  "supervisor_version": "af878b4006d13e482e18831ec641672338d000378933407ac088e40db6d21cd2",
+  "outcome": "dead",
+  "outcome_summary": "Died after repeated frontier reversals and recovery stalls",
+  "outcome_reason": "Hero died",
+  "max_depth": 3,
+  "actions": 1199,
+  "duration_seconds": 443.599,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000001",
+  "previous_source_commit": "63ac713f147b25d6bd2fb6cb3a5d37ebc06ad770",
+  "improvements": [
+    "Refused underfoot dewdrop pickups defer the loot attempt instead of marking the occupied floor blocked; uncollected loot remains outstanding."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Separate a refused underfoot pickup from failed movement. Keep uncollected loot outstanding, and do not blame a frontier for a room-loot override loop. This repair does not prove exit discovery.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended in death: decision 1198's accepted transition (log line 3417) drops HP from 2 to 0 after melee input. Nearby enemies alone do not establish the killer. An earlier initiating navigation defect is supported by decisions 1056-1057 (lines 2966-2971): persistent region planning moves from 119 to 155 toward frontier 722, then visibility of an explicitly magically sleeping crab switches exploration to the legacy global frontier selector, which returns to 119. Repetition precedes the systematic-route-stall at decision 1062, line 2984. MagePolicy.systematic_exploration_enabled rejects any enemy list, including sleepers; SurvivalPolicy.explore then bypasses the committed region target. Later continuation waits advance game time, rather than demonstrating a frozen clock. One focused selector correction and a new reduced deterministic regression are supplied for independent validation: preserve region planning when all visible foes are explicitly sleeping, without changing occupancy or hazard admission. Original source fails the reversal assertion; the candidate passes all three new tests and the full 1402-test suite (four skips). The fixture is synthetic, derived from public evidence, not reconstructed original runtime memory or a gameplay replay. This establishes selector consistency, not a safe real-run route, puzzle success, collected loot, or prevention of death. The files array is empty because the trusted adapter derives workspace changes.",
+    "learnings": "Do not let visibility of an explicitly sleeping foe alternate frontier planners. Preserve committed navigation while retaining enemy occupancy, active-threat arbitration, hazard checks, and mandatory progression obligations. Validate selector repairs separately from claims of successful exploration or survival."
+  },
+  "recommendations": [
+    {
+      "id": "000002-R1",
+      "priority": "high",
+      "summary": "Keep persistent region exploration when only explicitly sleeping foes are visible.",
+      "evidence": [
+        "Decision 1056, log lines 2966-2968",
+        "Decision 1057, log lines 2969-2971",
+        "Decisions 1058-1062, log lines 2972-2986",
+        "tools/mage_policy.py:1240; tools/survival_policy.py:985-995,1049-1054"
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000002"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000002/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000002/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 48,
+        "turns": 323,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 316,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 455
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 23,
+        "gold_gained": 623,
+        "turns": 423,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 427,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 26,
+        "gold_gained": 93,
+        "turns": 428,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 450,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 14,
+    "ending_level": 4,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  }
+}

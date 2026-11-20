@@ -1238,7 +1238,10 @@ class MagePolicy(SurvivalPolicy):
         return choice if choice else super().explore(state, enemies)
 
     def systematic_exploration_enabled(self,state,enemies):
-        return self.engine=='legacy' and not enemies
+        # A disabled foe becoming visible must not switch frontier planners
+        # and reverse the committed route. explore() still excludes every
+        # enemy-occupied cell; active foes retain the existing admission.
+        return self.engine=='legacy' and not any(not e.get('sleeping') for e in enemies)
 
     def systematic_exploration(self,state,paths,skipped):
         try:
