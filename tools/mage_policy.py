@@ -612,6 +612,11 @@ class MagePolicy(SurvivalPolicy):
         except ImportError:
             from piranha_tactics import observe as observe_piranha_rooms
         observe_piranha_rooms(self,state)
+        try:
+            from .puzzle_supplies import observe_pool_entrance
+        except ImportError:
+            from puzzle_supplies import observe_pool_entrance
+        observe_pool_entrance(self,previous,state)
         remember_missing(self,old_loot)
         if previous and previous.get("depth")==state["depth"] \
                 and previous.get("hero",{}).get("cell")!=state["hero"]["cell"] \

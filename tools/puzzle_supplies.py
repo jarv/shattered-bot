@@ -358,11 +358,36 @@ def stage_sentry(p,state,neighbors,item=None):
     return None
 
 
+def observe_pool_entrance(p,before,state):
+    """Credit scouting only after the selected input visibly enters an open door."""
+    pending=p.pool_entrance_pending
+    if pending is None:return
+    p.pool_entrance_pending=None
+    depth,branch,door=pending
+    decision=p.last_decision
+    if not before or not decision or decision.action != {'type':'cell','cell':door}:return
+    if (before.get('depth'),before.get('branch',0)) != (depth,branch) \
+            or (state.get('depth'),state.get('branch',0)) != (depth,branch):return
+    tile=next((t for t in state.get('map',{}).get('cells',[]) if t['cell']==door),{})
+    if state.get('hero',{}).get('cell')==door and tile.get('visible') \
+            and tile.get('terrain')==6:
+        p.pool_entrance_receipts.add(pending)
+
+
 def open_journey_entrance(p,state,journey):
     """A dry-run closed door is scouting only; open it before any potion is spent."""
-    door=next((c for c in journey.route[1:] if p.tiles[c]['terrain']==5),None)
+    # Ordinary doors close again when stepped off. A receipted pool scout is
+    # not undone by that normal reclosure. The newly planned round trip still
+    # budgets entering the door, and Journey.advance rechecks every step.
+    door=next((c for c in journey.route[1:] if p.tiles[c]['terrain']==5
+               and not (journey.kind=='pool'
+                        and (state['depth'],state.get('branch',0),c) in p.pool_entrance_receipts
+                        and not p.tiles[c].get('trap') and not p.tiles[c].get('plant')
+                        and not p.effects_block_movement(p.tiles[c]))),None)
     if door is None:return True,None
     if distance(state['hero']['cell'],door,state['map']['width'])==1 and p.tiles[door].get('visible'):
+        if journey.kind=='pool':
+            p.pool_entrance_pending=(state['depth'],state.get('branch',0),door)
         return False,p.cell(door,'room: open observed '+journey.kind+' entrance before spending its potion',
                             intent=Intent.REPOSITION)
     return False,None
