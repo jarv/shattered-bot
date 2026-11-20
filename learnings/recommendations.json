@@ -125,5 +125,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000010"
+  },
+  {
+    "id": "000011-missing-exit-after-secret",
+    "priority": "high",
+    "summary": "Retain bounded missing-exit wall searches after a secret discovery.",
+    "evidence": [
+      "Decision 1055, log line 3069: visible wall 565",
+      "Decision 1056, log line 3072: visible closed door 565",
+      "Decision 1075, log lines 3128–3130: zero searches, no reachable exit, accepted fallback wait",
+      "Decision 1330, log lines 3894–3895: final wait advanced time; hero remained alive"
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000011"
   }
 ]

@@ -1101,10 +1101,12 @@ class SurvivalPolicy:
         search_budget = self.search_limit(state, search_budget, optional)
         if self.searches < search_budget and (not optional or self.secret_search_steps < 24):
             scores = wall_scores(self.tiles, width, height, self.searched_walls)
-            if self.secret_area_found:
+            # A discovered secret only ends optional room hunting. Without a
+            # reachable exit, retain the ordinary bounded missing-exit search.
+            if self.secret_area_found and exits:
                 ends=corridor_ends(self.tiles,width,height,self.searched_walls)
                 scores={c:s for c,s in scores.items() if c in ends}
-            if not optional and not self.secret_area_found:
+            if not optional and (not self.secret_area_found or not exits):
                 for wall, tile in self.tiles.items():
                     if tile["terrain"] in (4, 12) and wall not in self.searched_walls:
                         scores.setdefault(wall, 1)  # Broad fallback if no exit is known.
