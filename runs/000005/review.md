@@ -10,9 +10,8 @@ Outcome summary: Blocked alive after repeated sentry staging and no-progress rec
 
 ## Improvements since the last run
 
-- Requires player API version 1, exposes structured failure details, invalidates cached observations on failures, and avoids automatic input retries.
-- Retries only unexecuted observation transport failures during startup.
-- Defers verified full-pack underfoot pickup refusals without marking occupied floor impassable or granting collection credit.
+- After a connection failure, the bot discards stale game information and does not automatically repeat actions that might already have happened. It retries startup observations only when no action was sent.
+- When a full backpack prevents a pickup, the bot leaves the item unfinished without treating its square as impassable.
 
 ## Incoming learnings
 

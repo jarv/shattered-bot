@@ -10,7 +10,7 @@ Outcome summary: Blocked alive with the piranha chest still uncollected
 
 ## Improvements since the last run
 
-- Potion-test staging and observed journey-entrance opening now carry explicit reposition intent for navigation-loop accounting.
+- The bot now tracks moves made while preparing potion tests or opening special-room entrances, so its checks for getting stuck include those moves.
 
 ## Incoming learnings
 

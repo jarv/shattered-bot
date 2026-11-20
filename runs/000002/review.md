@@ -10,7 +10,7 @@ Outcome summary: Died after repeated frontier reversals and recovery stalls
 
 ## Improvements since the last run
 
-- Refused underfoot dewdrop pickups defer the loot attempt instead of marking the occupied floor blocked; uncollected loot remains outstanding.
+- If the bot cannot pick up a dewdrop beneath it, it leaves the pickup unfinished without treating that square as blocked.
 
 ## Incoming learnings
 

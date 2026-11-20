@@ -10,8 +10,8 @@ Outcome summary: Blocked by unresolved piranha-chest preparation, then repeated 
 
 ## Improvements since the last run
 
-- Unknown-potion staging now preflights protection of other carried potions using the same stash-route checks as actual stashing.
-- Infeasible unstarted stash preparation declines locally rather than disabling unrelated floor potion work.
+- Before choosing where to test an unknown potion, the bot checks that it can stash its other potions along a safe route.
+- If one stash plan is not possible, the bot skips that plan without giving up on unrelated potion work elsewhere on the floor.
 
 ## Incoming learnings
 

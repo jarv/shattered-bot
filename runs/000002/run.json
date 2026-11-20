@@ -26,7 +26,7 @@
   "previous_run_id": "000001",
   "previous_source_commit": "63ac713f147b25d6bd2fb6cb3a5d37ebc06ad770",
   "improvements": [
-    "Refused underfoot dewdrop pickups defer the loot attempt instead of marking the occupied floor blocked; uncollected loot remains outstanding."
+    "If the bot cannot pick up a dewdrop beneath it, it leaves the pickup unfinished without treating that square as blocked."
   ],
   "code_changed": true,
   "incoming_learnings": "Separate a refused underfoot pickup from failed movement. Keep uncollected loot outstanding, and do not blame a frontier for a room-loot override loop. This repair does not prove exit discovery.",

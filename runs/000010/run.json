@@ -26,7 +26,10 @@
   "previous_run_id": "000009",
   "previous_source_commit": "6484516ea91b36f5da4c264d0444a805fad0f05e",
   "improvements": [
-    "Added six-energy catalyst-to-trinket planning and saved public inventory baselines for crafting."
+    "When its backpack is full, the bot ranks items before making room for a new pickup. It protects essential supplies and compares spare equipment using upgrades and strength requirements.",
+    "The bot uses held keys and visible room layouts to choose which crystal-room rewards it can pursue, rather than treating every locked reward as available.",
+    "The bot can spend six alchemical energy to turn a magical catalyst into a trinket, then choose among the offered trinkets using a Mage-specific ranking.",
+    "The bot checks whether it is allowed to attack the Great Crab before attempting the hit."
   ],
   "code_changed": true,
   "incoming_learnings": "Special-enemy attack admission must survive recovery target reselection. An awake great crab is not an ordinary damage-scoring target, and regenerated wand charges do not prove a usable attack. Preserve separate evidenced surprise setups; declining blocked attacks does not establish a safe alternative or quest success.",

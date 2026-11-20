@@ -26,7 +26,7 @@
   "previous_run_id": "000008",
   "previous_source_commit": "42c90c4108917a30c1339cec00d711fb67818035",
   "improvements": [
-    "Mimic reward hunting now honors pickup refusal for the current inventory, retains the unfinished obligation, and retries after inventory changes; adds a regression."
+    "If a mimic reward cannot be picked up, the bot stops repeating the attempt until its inventory changes. It still remembers that the reward has not been collected."
   ],
   "code_changed": true,
   "incoming_learnings": "Every reward-specific selector must honor verified pickup refusal for the current inventory. Keep refused rewards unfinished, reopen collection when inventory changes, and distinguish zero-time rejected pickups from subsequent time-consuming recovery. Yielding selection is not proof of a safe alternative.",

@@ -10,7 +10,10 @@ Outcome summary: Died to a lightning bolt after an exhausted ranged retreat
 
 ## Improvements since the last run
 
-- Added six-energy catalyst-to-trinket planning and saved public inventory baselines for crafting.
+- When its backpack is full, the bot ranks items before making room for a new pickup. It protects essential supplies and compares spare equipment using upgrades and strength requirements.
+- The bot uses held keys and visible room layouts to choose which crystal-room rewards it can pursue, rather than treating every locked reward as available.
+- The bot can spend six alchemical energy to turn a magical catalyst into a trinket, then choose among the offered trinkets using a Mage-specific ranking.
+- The bot checks whether it is allowed to attack the Great Crab before attempting the hit.
 
 ## Incoming learnings
 

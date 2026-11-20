@@ -25,7 +25,9 @@
   },
   "previous_run_id": "000005",
   "previous_source_commit": "210d863af4fa331f2ea87b30dbf12fc0b6401617",
-  "improvements": [],
+  "improvements": [
+    "Before approaching a red sentry room to test an unknown potion, the bot checks that it can safely drink the potion from the chosen spot, not just reach the reward."
+  ],
   "code_changed": true,
   "incoming_learnings": "Before committing to puzzle staging, require compatibility with the next action’s existing admission checks. A hypothetical protected reward route does not establish a safe unknown-potion test. Preserve unfinished loot and mandatory progression pickup; never infer protection or collection from movement.",
   "incoming_update_status": "accepted",

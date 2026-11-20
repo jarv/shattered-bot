@@ -10,7 +10,7 @@ Outcome summary: Died while starving under prison guard pressure
 
 ## Improvements since the last run
 
-- Added caustic slime to the bounded weak-target finisher arbitration, with a regression for its existing health, crowding and attempt limits.
+- The bot can now try to finish off a badly wounded caustic slime when its own health and nearby enemies allow it. The existing limit on these attacks still applies.
 
 ## Incoming learnings
 

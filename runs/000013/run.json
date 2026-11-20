@@ -26,8 +26,8 @@
   "previous_run_id": "000012",
   "previous_source_commit": "5b55cf99ff5ec9bec3261dc466ec8346cb7a0099",
   "improvements": [
-    "Unknown-potion staging now preflights protection of other carried potions using the same stash-route checks as actual stashing.",
-    "Infeasible unstarted stash preparation declines locally rather than disabling unrelated floor potion work."
+    "Before choosing where to test an unknown potion, the bot checks that it can stash its other potions along a safe route.",
+    "If one stash plan is not possible, the bot skips that plan without giving up on unrelated potion work elsewhere on the floor."
   ],
   "code_changed": true,
   "incoming_learnings": "An admitted protected reward journey is insufficient for an unknown potion test: verify protection of other carried potions before choosing its staging bank. Local preparation infeasibility must not unnecessarily disable unrelated mandatory room work.",

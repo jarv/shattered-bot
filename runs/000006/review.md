@@ -10,7 +10,7 @@ Outcome summary: Stopped alive on floor 3; automated review hit its request cap
 
 ## Improvements since the last run
 
-Code changed; no supported improvement summary available.
+- Before approaching a red sentry room to test an unknown potion, the bot checks that it can safely drink the potion from the chosen spot, not just reach the reward.
 
 ## Incoming learnings
 

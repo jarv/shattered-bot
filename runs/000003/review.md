@@ -10,7 +10,7 @@ Outcome summary: Died to a slime after prolonged retreats with exhausted magic
 
 ## Improvements since the last run
 
-- Kept the legacy systematic frontier planner active when only explicitly sleeping enemies are visible; enemy occupancy and active-threat admission remain unchanged.
+- The bot keeps exploring when all visible enemies are asleep. It still avoids their occupied squares and handles awake enemies as threats.
 
 ## Incoming learnings
 

@@ -26,9 +26,8 @@
   "previous_run_id": "000004",
   "previous_source_commit": "945d92144e39d48327a18c4b5d191d160bd7576c",
   "improvements": [
-    "Requires player API version 1, exposes structured failure details, invalidates cached observations on failures, and avoids automatic input retries.",
-    "Retries only unexecuted observation transport failures during startup.",
-    "Defers verified full-pack underfoot pickup refusals without marking occupied floor impassable or granting collection credit."
+    "After a connection failure, the bot discards stale game information and does not automatically repeat actions that might already have happened. It retries startup observations only when no action was sent.",
+    "When a full backpack prevents a pickup, the bot leaves the item unfinished without treating its square as impassable."
   ],
   "code_changed": true,
   "incoming_learnings": "A verified underfoot pickup refusal is not evidence that occupied ground is impassable. Preserve honest loot obligations and hazard checks; reopen ordinary collection after inventory changes without granting acquisition or descent credit.",

@@ -26,7 +26,7 @@
   "previous_run_id": "000002",
   "previous_source_commit": "35b055cb715e75f7943eb61d78f87d96b5a538a9",
   "improvements": [
-    "Kept the legacy systematic frontier planner active when only explicitly sleeping enemies are visible; enemy occupancy and active-threat admission remain unchanged."
+    "The bot keeps exploring when all visible enemies are asleep. It still avoids their occupied squares and handles awake enemies as threats."
   ],
   "code_changed": true,
   "incoming_learnings": "Do not let visibility of an explicitly sleeping foe alternate frontier planners. Preserve committed navigation while retaining enemy occupancy, active-threat arbitration, hazard checks, and mandatory progression obligations. Validate selector repairs separately from claims of successful exploration or survival.",

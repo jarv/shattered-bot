@@ -26,7 +26,7 @@
   "previous_run_id": "000014",
   "previous_source_commit": "7554e5072a63d0bdf252f65fa092b6adcd85454d",
   "improvements": [
-    "Potion-test staging and observed journey-entrance opening now carry explicit reposition intent for navigation-loop accounting."
+    "The bot now tracks moves made while preparing potion tests or opening special-room entrances, so its checks for getting stuck include those moves."
   ],
   "code_changed": true,
   "incoming_learnings": "Preparation movement needs explicit navigation semantics. Independently feasible stash and protected-trip plans may still oscillate at an auto-closing entrance. Detect that lack of progress without guessing potion effects or crediting unfinished rewards; choosing preparation is not puzzle success.",

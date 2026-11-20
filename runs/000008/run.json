@@ -26,7 +26,7 @@
   "previous_run_id": "000007",
   "previous_source_commit": "32bc2515322697a9dab89125578625739f675040",
   "improvements": [
-    "New multi-enemy doorway staging honors an exhausted pursuit-loss budget; existing validated routes retain their checks. Added a regression."
+    "When several enemies are chasing it, the bot stops planning new doorway hideouts once it has used up its allowed attempts to lose pursuit."
   ],
   "code_changed": true,
   "incoming_learnings": "Honor exhausted pursuit budgets across every controller that starts an unverified doorway setup. Reaching a door without an observed holding square is not successful cover. Preserve honest unfinished-loot accounting and do not treat an offline alternative as proven safe.",

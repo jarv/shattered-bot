@@ -10,7 +10,10 @@ Outcome summary: Died while starving after potion preparation stalled
 
 ## Improvements since the last run
 
-- Alchemy preparation tracks inventory charge/equipment changes and separates rendered global energy from toolkit charge.
+- On seeing a DM-100, the bot prioritizes fleeing to a visible door and setting up a surprise attack. Losing sight of the enemy no longer immediately makes its recent firing lane safe for healing.
+- The bot remembers uncollected piranha-room chests and returns with invisibility before descending. For potion-gated rooms, it can test more distinct unknown potions from safe positions, but checks the actual protection before entering.
+- Before loading alchemy ingredients, the bot checks that it has enough energy for the recipe. It distinguishes toolkit charge from warm-up progress and avoids repeatedly reopening unaffordable recipes.
+- Finding a secret no longer stops the bot from searching for a missing exit. Searches still have limits, and the existing restrictions for boss floors and fully mapped floors remain.
 
 ## Incoming learnings
 

@@ -10,8 +10,8 @@ Outcome summary: Blocked alive after secret discovery suppressed missing-exit se
 
 ## Improvements since the last run
 
-- Delay new Sad Ghost dialogue and quest preparation until observed exploration and required locks are resolved; preserve reward-return behavior.
-- Route Great Crab combat through a dedicated controller and release its plan on public quest-completion dialogue.
+- The bot explores reachable areas and deals with required locked rooms before starting a new Sad Ghost quest. It can still return to claim a completed quest's reward.
+- Against the Great Crab, the bot looks for a doorway ambush with an escape route. It attempts one strike after breaking sight, rather than repeatedly attacking from the same position.
 
 ## Incoming learnings
 

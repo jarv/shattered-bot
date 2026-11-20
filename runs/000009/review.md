@@ -10,7 +10,7 @@ Outcome summary: Killed by the great crab after repeated blocked attacks
 
 ## Improvements since the last run
 
-- Mimic reward hunting now honors pickup refusal for the current inventory, retains the unfinished obligation, and retries after inventory changes; adds a regression.
+- If a mimic reward cannot be picked up, the bot stops repeating the attempt until its inventory changes. It still remembers that the reward has not been collected.
 
 ## Incoming learnings
 

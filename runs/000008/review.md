@@ -10,7 +10,7 @@ Outcome summary: Died during the Tengu encounter after an earlier refused-loot r
 
 ## Improvements since the last run
 
-- New multi-enemy doorway staging honors an exhausted pursuit-loss budget; existing validated routes retain their checks. Added a regression.
+- When several enemies are chasing it, the bot stops planning new doorway hideouts once it has used up its allowed attempts to lose pursuit.
 
 ## Incoming learnings
 

@@ -26,7 +26,7 @@
   "previous_run_id": "000003",
   "previous_source_commit": "537625d829b698f520495e53fca7c46b8eac7bd4",
   "improvements": [
-    "Added caustic slime to the bounded weak-target finisher arbitration, with a regression for its existing health, crowding and attempt limits."
+    "The bot can now try to finish off a badly wounded caustic slime when its own health and nearby enemies allow it. The existing limit on these attacks still applies."
   ],
   "code_changed": true,
   "incoming_learnings": "Recognized ordinary enemy variants should receive the same bounded weak-target arbitration when their public observations satisfy its gates. Preserve hazard, healing, crowding, attack-admission and mandatory progression-pickup precedence. A selector regression is not evidence of a guaranteed kill or survival.",
