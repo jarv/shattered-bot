@@ -111,5 +111,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000009"
+  },
+  {
+    "id": "000010-dm100-exhausted-sleep",
+    "priority": "high",
+    "summary": "Consider identified deep sleep before exhausted single-DM-100 continuation.",
+    "evidence": [
+      "Decision 2964–2969, log lines 8377–8389: available ranged attacks exhausted",
+      "Decision 2970, log lines 8391–8393: known sleep bypassed before waterskin continuation",
+      "Decision 2979, accepted transition 8434: hidden explosive trap and severe HP loss",
+      "Decision 2985, accepted transition 8457: explicit lethal lightning"
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000010"
   }
 ]

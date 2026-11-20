@@ -4,11 +4,13 @@ try:
     from .policy_decision import Intent
     from .challenge_combat import exposure
     from .combat_items import unencumbered
+    from .consumable_tactics import base_name
 except ImportError:
     from policy_geometry import distance,neighbors,line_clear,projectile_line_clear
     from policy_decision import Intent
     from challenge_combat import exposure
     from combat_items import unencumbered
+    from consumable_tactics import base_name
 
 
 def ranged_enemy(p,enemy):
@@ -218,6 +220,18 @@ def choose(p,state,enemies):
             p.trickster_reposition=True
             attack.reason='quest: gnoll trickster ranged damage without admitted line-breaking cover'
         return attack
+    # The early ranged leaf can abort before the shared runestone controller.
+    # Once damage and verified movement are exhausted, retain the observed
+    # single-caster disable instead of immediately entering ordinary retreat.
+    # Selecting this throw is not evidence of sleep, a hit, or a safe escape.
+    if dm100 and target in active and len(active)==1 and exposed(pos) and not p.stone_cooldown:
+        sleep=next((i for i in state['inventory'] if base_name(i)=='stone of deep sleep'
+                    and i.get('identified') and 'THROW' in i.get('actions',[])),None)
+        if sleep and p.shot_clear(state,target['cell']) and p.target_allowed(sleep,target) \
+                and p.item_action_allowed(sleep,'THROW'):
+            p.stone_cooldown=8
+            return p.use(sleep,'THROW','DM-100: known deep sleep after attacks and verified cover are exhausted',
+                         target=target['cell'])
     if trickster and target in active:
         p.stop_no_safe_action('Gnoll Trickster: no usable ranged attack or verified cover; refusing melee chase')
     if exposed(pos):p.stop_no_safe_action('Ranged exposure: no admitted attack, short melee closure or verified cover; do not wait for recharge in the firing lane')
