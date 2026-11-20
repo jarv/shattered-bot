@@ -97,5 +97,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000008"
+  },
+  {
+    "id": "000009-crab-shared-attack-admission",
+    "priority": "high",
+    "summary": "Preserve great-crab direct-attack restrictions in shared attack eligibility.",
+    "evidence": [
+      "Decision 1325, log lines 3811–3813: quest refusal followed by an attack on a fly",
+      "Decision 1329, log lines 3824–3826: recovery attacks the awake crab and receives blocking feedback",
+      "Decision 1447, log lines 4216–4218: terminal accepted transition and explicit killer message",
+      "tools/tactical_recovery.py:130–144; tools/mage_policy.py:790; tools/survival_policy.py:599"
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000009"
   }
 ]

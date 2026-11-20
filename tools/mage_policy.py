@@ -790,6 +790,13 @@ class MagePolicy(SurvivalPolicy):
         return super().best_attack(state, enemy, reserve, reserve_magic,allowed_kinds=allowed_kinds)
 
     def attack_kind_allowed(self,state,enemy,kind):
+        if enemy["name"].lower()=="great crab":
+            # Shared attacks (including recovery) must not undo the quest
+            # controller's refusal of the visible guard. Doorway surprise is
+            # admitted separately by door_ambush, not by damage scoring.
+            buffs=" ".join(b["name"].lower() for b in state["hero"].get("buffs",[]))
+            if not enemy.get("sleeping") and "invisib" not in buffs:
+                return False
         try:
             from .fly_tactics import physical_attack_unsafe
         except ImportError:
