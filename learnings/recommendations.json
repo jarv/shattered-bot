@@ -161,7 +161,7 @@
       "Run 000013: decisions 3014–3016 and 4063, retained backlog evidence."
     ],
     "status": "deferred",
-    "reason": "This recording does not resolve the earlier pool-specific admission gap. The needed evidence remains a recorded-input-validated preparation state demonstrating a safe dry test bank, budgeted protected trip, and protection of other carried potions, or observed access to non-drinking identification. A strength-room diagnosis does not certify that pool repair.",
+    "reason": "This fire-room recording does not establish a safe pool preparation alternative. The earlier case still needs recorded-input-validated dry test-bank and remote potion-protection admission plus a budgeted protected chest trip, or observed non-drinking identification.",
     "origin_run": "000013"
   },
   {
@@ -215,10 +215,12 @@
       "Decision 2826, log line 8000: publicly revealed strength potion at cell 999.",
       "Decision 2827, log lines 8002–8005: unreachable mandatory target, descent veto, and waterskin fallback.",
       "Decisions 2829–2854, log lines 8009–8084: repeated advancing fallback waits.",
-      "Decision 3903, log lines 11150–11151: accepted wait and explicit starvation death."
+      "Decision 3903, log lines 11150–11151: accepted wait and explicit starvation death.",
+      "Run 000020: decisions 3990 and 3992, log lines 11306 and 11312, reveal strength beyond magical fire with HP below unknown-test admission.",
+      "Run 000020: decision 4438, log lines 12647–12650, retains the mandatory pickup veto; decision 4553, accepted line 12986, ends in confirmed starvation."
     ],
     "status": "deferred",
-    "reason": "Complete source browsing resolves the selector and helper chain, but not a safe replacement. Recorded diagnostics establish the target and route veto, not an admitted unknown-potion preparation. Needed follow-up is an offline policy state validated against earlier recorded selections and a fixture demonstrating a safe approach/test bank, bounded protected strength retrieval, and protection of the other potions, or observed non-drinking identification. Snapshot-only probes do not establish these conditions; changing movement, potion assumptions, hunger admission, or the mandatory pickup gate would be speculative.",
+    "reason": "Full source browsing resolves the selecting helper chain. However, the first-sighting hero is below the unknown-test health threshold, and a public-snapshot probe rejects potion protection at both local test banks. Needed follow-up is a recorded-input-validated bounded preparation state admitting a stash/test approach and subsequent retrieval, or observed non-drinking identification. Neither removing the hazard buffer nor waiving the strength obligation is justified.",
     "origin_run": "000018"
   },
   {
@@ -245,7 +247,7 @@
       "Decision 1966, log lines 5659–5660: lethal accepted wait and explicit crab death message."
     ],
     "status": "deferred",
-    "reason": "The complete selecting chain is available, but no safe replacement has been established. Needed evidence is a recorded-input-validated policy state resolving crab-door attempts, pursuit exhaustion and escape commitment, plus an isolated fixture admitting a bounded surprise approach and second exit under the existing health and hazard checks. Without that, selecting a new route or guessing an unidentified potion would be speculative. This patch addresses only the independent stale-ghost orbit.",
+    "reason": "This fire-room recording does not establish a safe crab surprise alternative. The earlier case still needs recorded-input-validated doorway-attempt, pursuit and escape bookkeeping plus an admitted bounded surprise approach with a second exit under existing health and hazard checks.",
     "origin_run": "000019"
   }
 ]

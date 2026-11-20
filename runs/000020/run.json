@@ -1,0 +1,535 @@
+{
+  "schema_version": 1,
+  "id": "000020",
+  "started_at": "2026-11-20T16:41:10Z",
+  "completed_at": "2026-11-20T17:15:11.209050+00:00",
+  "source_commit": "515dee1a5721898463df9a14bfbb7cf8600458a5",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "b6c86f5f5d24b28005d8611ec04e6fe79f6d9e53501448791b99376cd2e21e54",
+  "outcome": "dead",
+  "outcome_summary": "Starved while mandatory strength loot remained behind magical fire",
+  "outcome_reason": "Hero died",
+  "max_depth": 9,
+  "actions": 4554,
+  "duration_seconds": 2023.22,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000019",
+  "previous_source_commit": "b6ba6a94cf800b216f3f88a02d3084878b688519",
+  "improvements": [
+    "The bot no longer circles a remembered Sad Ghost location after reaching interaction range and seeing it empty. It still approaches distant remembered locations and returns for pending rewards."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Do not orbit a remembered NPC coordinate after reaching interaction range and observing it empty. Preserve distant approach and mandatory reward return. For the crab stall, validate attempt and pursuit bookkeeping against recorded selections before testing a bounded surprise alternative; do not treat recharging or death-revealed potion identities as a solution.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero starved to death: decision 4553, accepted log line 12986, advances a wait from 1 HP to 0, and the final public message explicitly confirms starvation. The initiating unresolved work was the strength potion seen behind magical fire at decisions 3990 and 3992 (log lines 11306 and 11312). Recorded routing diagnostics reject access through the fire buffer. At first sighting HP was 66/75, below the unknown-potion test threshold; indigo and amber potions were unidentified. At decision 4438 (lines 12647–12650), the still-uncollected mandatory resource vetoed descent and fallback continued while starving. Source browsing resolves the priority-pickup, puzzle-supply, recovery and descent-veto chain. A snapshot-only probe finds local test banks but does not admit protecting the other carried potions. No patch is proposed: a safe preparation alternative has not been established, and relaxing hazards, guessing potion effects or waiving the mandatory pickup would be unsupported. No post-death identities are treated as earlier knowledge. The unchanged full unittest suite passes 1,546 tests, with four skipped. Offline bookkeeping reconstruction matched recorded actions and reasons through decision 3989, then stopped before selecting 3990 because its scratch state-export step could not serialize immutable configuration. This was not a gameplay crash. The local preparation probe was snapshot-only, not validated recovered runtime memory; no changed-policy continuation was evaluated. No patch or regression is supplied because a safe replacement preserving potion protection and health admission was not established.",
+    "learnings": "Resolve preparation before health and food are exhausted, but require a demonstrated safe test/stash approach or observed non-drinking identification. Keep mandatory strength pickup, actual-effect verification and honest collection evidence. A preparation selection alone would not prove retrieval or survival."
+  },
+  "recommendations": [
+    {
+      "id": "000019-crab-surprise-recovery",
+      "priority": "high",
+      "summary": "Establish a bounded admitted surprise alternative before crab recovery degenerates into adjacent waits.",
+      "evidence": [
+        "Decisions 1708, 1718 and 1737, accepted log lines 4852, 4885 and 4938: doorway strikes leave the crab alive.",
+        "Decision 1774, log line 5039: no fresh surprise or admitted escape-backed doorway.",
+        "Decisions 1805 and 1863, log lines 5164–5165 and 5352–5353: tactical decline becomes adjacent waiting.",
+        "Decision 1966, log lines 5659–5660: lethal accepted wait and explicit crab death message."
+      ],
+      "status": "deferred",
+      "reason": "This fire-room recording does not establish a safe crab surprise alternative. The earlier case still needs recorded-input-validated doorway-attempt, pursuit and escape bookkeeping plus an admitted bounded surprise approach with a second exit under existing health and hazard checks.",
+      "origin_run": "000019"
+    },
+    {
+      "id": "000018-strength-preparation-admission",
+      "priority": "high",
+      "summary": "Establish an admitted preparation route for the mandatory strength potion instead of exhausting resources in fallback.",
+      "evidence": [
+        "Decision 2826, log line 8000: publicly revealed strength potion at cell 999.",
+        "Decision 2827, log lines 8002–8005: unreachable mandatory target, descent veto, and waterskin fallback.",
+        "Decisions 2829–2854, log lines 8009–8084: repeated advancing fallback waits.",
+        "Decision 3903, log lines 11150–11151: accepted wait and explicit starvation death.",
+        "Run 000020: decisions 3990 and 3992, log lines 11306 and 11312, reveal strength beyond magical fire with HP below unknown-test admission.",
+        "Run 000020: decision 4438, log lines 12647–12650, retains the mandatory pickup veto; decision 4553, accepted line 12986, ends in confirmed starvation."
+      ],
+      "status": "deferred",
+      "reason": "Full source browsing resolves the selecting helper chain. However, the first-sighting hero is below the unknown-test health threshold, and a public-snapshot probe rejects potion protection at both local test banks. Needed follow-up is a recorded-input-validated bounded preparation state admitting a stash/test approach and subsequent retrieval, or observed non-drinking identification. Neither removing the hazard buffer nor waiving the strength obligation is justified.",
+      "origin_run": "000018"
+    },
+    {
+      "id": "000013-pool-preparation-admission",
+      "priority": "high",
+      "summary": "Establish safe unknown-supply preparation for the mandatory piranha chest.",
+      "evidence": [
+        "Run 000013: decisions 3014–3016 and 4063, retained backlog evidence."
+      ],
+      "status": "deferred",
+      "reason": "This fire-room recording does not establish a safe pool preparation alternative. The earlier case still needs recorded-input-validated dry test-bank and remote potion-protection admission plus a budgeted protected chest trip, or observed non-drinking identification.",
+      "origin_run": "000013"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000020/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000020/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 60,
+        "turns": 317,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 321,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 322
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 16,
+        "gold_gained": 337,
+        "turns": 305,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 304,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 684
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 44,
+        "gold_gained": 1200,
+        "turns": 747,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 762,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 754
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 67,
+        "gold_gained": 391,
+        "turns": 551,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 556,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 325
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 249,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 253,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 575
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 725
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 289
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 293
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 46,
+        "gold_gained": 167,
+        "turns": 458,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 464,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 289
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1032
+          }
+        ]
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "experience_gained": 99,
+        "gold_gained": 1,
+        "turns": 629,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 664,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Old Wandmaker",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 646
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 362
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "experience_gained": 98,
+        "gold_gained": 817,
+        "turns": 513,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 564,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 932
+          }
+        ]
+      },
+      {
+        "depth": 9,
+        "branch": 0,
+        "experience_gained": 80,
+        "gold_gained": 147,
+        "turns": 546,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 626,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 13,
+    "ending_experience": 20,
+    "ending_level": 13,
+    "starving_turns": 338.087158203125,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 1,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 9,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "starving_turns": 1,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "starving_turns": 49.521728515625,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 9,
+        "branch": 0,
+        "starving_turns": 271.5654296875,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 13,
+    "gold_collected": 3120,
+    "gold_complete": true,
+    "turns": 4315,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 8,
+        "max_level_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 10,
+        "max_level_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 12,
+        "max_level_complete": true
+      },
+      {
+        "depth": 9,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 13,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
