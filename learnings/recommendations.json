@@ -161,7 +161,7 @@
       "Run 000013: decisions 3014–3016 and 4063, retained backlog evidence."
     ],
     "status": "deferred",
-    "reason": "This fire-room recording does not establish a safe pool preparation alternative. The earlier case still needs recorded-input-validated dry test-bank and remote potion-protection admission plus a budgeted protected chest trip, or observed non-drinking identification.",
+    "reason": "This recording does not establish a safe pool preparation alternative. The earlier case still needs recorded-input-validated dry test-bank and remote potion-protection admission plus a budgeted protected chest trip, or observed non-drinking identification.",
     "origin_run": "000013"
   },
   {
@@ -210,17 +210,17 @@
   {
     "id": "000018-strength-preparation-admission",
     "priority": "high",
-    "summary": "Establish an admitted preparation route for the mandatory strength potion instead of exhausting resources in fallback.",
+    "summary": "Establish admitted preparation for mandatory progression loot instead of exhausting resources in fallback.",
     "evidence": [
-      "Decision 2826, log line 8000: publicly revealed strength potion at cell 999.",
-      "Decision 2827, log lines 8002–8005: unreachable mandatory target, descent veto, and waterskin fallback.",
-      "Decisions 2829–2854, log lines 8009–8084: repeated advancing fallback waits.",
-      "Decision 3903, log lines 11150–11151: accepted wait and explicit starvation death.",
-      "Run 000020: decisions 3990 and 3992, log lines 11306 and 11312, reveal strength beyond magical fire with HP below unknown-test admission.",
-      "Run 000020: decision 4438, log lines 12647–12650, retains the mandatory pickup veto; decision 4553, accepted line 12986, ends in confirmed starvation."
+      "Run 000018: decisions 2826–2827 and 3903, retained backlog evidence.",
+      "Run 000020: decisions 3990, 3992, 4438 and 4553, retained backlog evidence.",
+      "Run 000022: decision 2683, log line 7634, starvation precedes fire-room discovery.",
+      "Run 000022: decision 2756, log line 7847, unreachable upgrade and food with HP 53/55.",
+      "Run 000022: decisions 2909–2910, log lines 8278–8283, mandatory veto, healing and fallback wait.",
+      "Run 000022: decision 3632, accepted log line 10666, explicit starvation death."
     ],
     "status": "deferred",
-    "reason": "Full source browsing resolves the selecting helper chain. However, the first-sighting hero is below the unknown-test health threshold, and a public-snapshot probe rejects potion protection at both local test banks. Needed follow-up is a recorded-input-validated bounded preparation state admitting a stash/test approach and subsequent retrieval, or observed non-drinking identification. Neither removing the hazard buffer nor waiving the strength obligation is justified.",
+    "reason": "The full helper chain is available and already delegates inaccessible pickups to guarded supplies. Here starvation blocks preparation before the frost preflight; a bandolier is present, so missing protection is not established as the blocker. A safe correction needs a contemporaneously known identification/extinguishing resource or a recorded-input-validated preparation alternative satisfying hunger, health, hazard, bank/protection and retrieval budgets. None is certified. Unknown potion identities revealed on death cannot supply that evidence, and neither relaxing test admission nor waiving mandatory pickup is justified.",
     "origin_run": "000018"
   },
   {
@@ -241,13 +241,11 @@
     "priority": "high",
     "summary": "Establish a bounded admitted surprise alternative before crab recovery degenerates into adjacent waits.",
     "evidence": [
-      "Decisions 1708, 1718 and 1737, accepted log lines 4852, 4885 and 4938: doorway strikes leave the crab alive.",
-      "Decision 1774, log line 5039: no fresh surprise or admitted escape-backed doorway.",
-      "Decisions 1805 and 1863, log lines 5164–5165 and 5352–5353: tactical decline becomes adjacent waiting.",
-      "Decision 1966, log lines 5659–5660: lethal accepted wait and explicit crab death message."
+      "Run 000019: decisions 1708, 1718 and 1737, accepted log lines 4852, 4885 and 4938.",
+      "Run 000019: decisions 1774, 1805, 1863 and 1966, retained backlog evidence."
     ],
     "status": "deferred",
-    "reason": "This fire-room recording does not establish a safe crab surprise alternative. The earlier case still needs recorded-input-validated doorway-attempt, pursuit and escape bookkeeping plus an admitted bounded surprise approach with a second exit under existing health and hazard checks.",
+    "reason": "This recording does not establish a safe crab surprise alternative. The earlier case still needs recorded-input-validated doorway-attempt, pursuit and escape bookkeeping plus an admitted bounded surprise approach with a second exit under existing health and hazard checks.",
     "origin_run": "000019"
   },
   {
