@@ -10,7 +10,7 @@ Outcome summary: Starved after unresolved mandatory pool preparation and prolong
 
 ## Improvements since the last run
 
-- Identified invisibility staging can use observed, hazard-checked approach water outside the remembered piranha habitat, with a visible arrival recheck and actionable entrance.
+- When carrying known invisibility, the bot can approach a piranha room through ordinary water outside the pool. It checks the approach for hazards and opens the entrance before drinking, while keeping the stricter rules for testing unknown potions.
 
 ## Incoming learnings
 

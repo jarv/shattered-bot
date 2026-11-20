@@ -26,7 +26,7 @@
   "previous_run_id": "000015",
   "previous_source_commit": "e960c76615c3c4a2212441a8cef538312939bb5b",
   "improvements": [
-    "Identified invisibility staging can use observed, hazard-checked approach water outside the remembered piranha habitat, with a visible arrival recheck and actionable entrance."
+    "When carrying known invisibility, the bot can approach a piranha room through ordinary water outside the pool. It checks the approach for hazards and opens the entrance before drinking, while keeping the stricter rules for testing unknown potions."
   ],
   "code_changed": true,
   "incoming_learnings": "Separate identified protection staging from unknown-potion testing. Ordinary approach water outside the remembered piranha habitat can be considered only with observed hazard checks, a visible arrival recheck, an actionable entrance and a verified protection budget. Preparation is not collection.",
