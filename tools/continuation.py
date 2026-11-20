@@ -20,6 +20,12 @@ def best_effort(p,state,enemies):
     gas_escape=escape(p,state)
     if gas_escape:return gas_escape
     try:
+        from .dm100_escape import choose as door_escape
+    except ImportError:
+        from dm100_escape import choose as door_escape
+    flight=door_escape(p,state,enemies)
+    if flight:return flight
+    try:
         from .exploration_budget import starving_food
     except ImportError:
         from exploration_budget import starving_food

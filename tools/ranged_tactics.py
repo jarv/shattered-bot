@@ -20,19 +20,31 @@ def ranged_enemy(p,enemy):
 def exposed_wait(p,state,enemies):
     if not getattr(p,'unit_strategies_enabled',False):return False
     threats=list(enemies)+[e for c,e in p.recent_threats.items() if c not in {o['cell'] for o in enemies}]
-    return any(ranged_enemy(p,e) and distance(state['hero']['cell'],e['cell'],state['map']['width'])>1
+    try:
+        from .dm100_escape import exposed_memory
+    except ImportError:
+        from dm100_escape import exposed_memory
+    return exposed_memory(p,state) or any(ranged_enemy(p,e) and distance(state['hero']['cell'],e['cell'],state['map']['width'])>1
                and p.enemy_can_see(state,e,state['hero']['cell']) for e in threats)
 
 
-def choose(p,state,enemies):
+def choose(p,state,enemies,*,escape_only=False):
     if not getattr(p,'unit_strategies_enabled',False) or state.get('status')!='ready' or state.get('modal') \
-            or state.get('danger_cells') or state.get('boss_health_text'):return None
+             or state.get('danger_cells') or state.get('boss_health_text'):return None
+    if p.ranged_plan and p.ranged_plan.get('mode')=='door-flight':
+        try:
+            from .dm100_escape import choose as door_flight
+        except ImportError:
+            from dm100_escape import choose as door_flight
+        return door_flight(p,state,enemies)
     active=[e for e in enemies if not e.get('sleeping')]
     targets=[e for e in active if ranged_enemy(p,e)]
     plan=p.ranged_plan
     if not targets:
         targets=[e for e in p.recent_threats.values() if ranged_enemy(p,e) and
                  (e['name'].lower()=='gnoll trickster' or 'ranged-pull' in p.unit_strategies.profile(e).capabilities)]
+    if not targets and p.dm100_threat and plan and plan.get('name')=='dm-100':
+        targets=[{'name':'DM-100','cell':p.dm100_threat['cell']}]
     if not targets and not plan:return None
     if not targets:
         targets=[e for e in p.recent_threats.values() if ranged_enemy(p,e) and plan['name']==e['name'].lower()]
@@ -214,6 +226,7 @@ def choose(p,state,enemies):
             cover.append((sum(exposed(c) for c in route[1:]),not door,len(route),cell))
     if close and (not cover or not cover_first and min(close)[0]<=3):return move(min(close)[1],'close')
     if cover:return move(min(cover)[-1],'cover')
+    if escape_only:return None
     attack=p.best_attack(state,target,allowed_kinds={'magic','thrown'}) if target in active else None
     if attack:
         if trickster:

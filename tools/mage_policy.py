@@ -409,6 +409,12 @@ class MagePolicy(SurvivalPolicy):
         if direct_exit and decision.intent!=Intent.DESCEND:
             self.stop_tactical("unplanned-stairs","Ordinary navigation attempted a stair transition; replan explicit descent or another route")
         if decision.intent == Intent.DESCEND or direct_exit:
+            try:
+                from .piranha_tactics import pending as pending_piranha_rooms
+            except ImportError:
+                from piranha_tactics import pending as pending_piranha_rooms
+            if pending_piranha_rooms(self):
+                self.stop_gameplay('Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending')
             if self.unit_strategies_enabled:
                 try:
                     from .priority_resources import targets as progression_targets
@@ -523,6 +529,11 @@ class MagePolicy(SurvivalPolicy):
     def update(self, state):
         previous = self.last_state
         try:
+            from .alchemy_tactics import observe_energy
+        except ImportError:
+            from alchemy_tactics import observe_energy
+        observe_energy(self,previous,state)
+        try:
             from .hunger_budget import observe
         except ImportError:
             from hunger_budget import observe
@@ -572,6 +583,11 @@ class MagePolicy(SurvivalPolicy):
             from .loot_completion import remember_missing
         except ImportError:
             from loot_completion import remember_missing
+        try:
+            from .piranha_tactics import observe as observe_piranha_rooms
+        except ImportError:
+            from piranha_tactics import observe as observe_piranha_rooms
+        observe_piranha_rooms(self,state)
         remember_missing(self,old_loot)
         if previous and previous.get("depth")==state["depth"] \
                 and previous.get("hero",{}).get("cell")!=state["hero"]["cell"] \
@@ -601,6 +617,11 @@ class MagePolicy(SurvivalPolicy):
         except ImportError:
             from keyed_rooms import observe as observe_keyed_rooms
         observe_keyed_rooms(self,state)
+        try:
+            from .dm100_escape import observe as observe_dm100
+        except ImportError:
+            from dm100_escape import observe as observe_dm100
+        observe_dm100(self,state)
         self.deferred_crystal_doors.intersection_update(c for c, t in self.tiles.items() if t["terrain"] == 31)
         self.optional_locks.update(self.deferred_crystal_doors)
         observe_quest(self, state)

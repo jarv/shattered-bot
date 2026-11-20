@@ -31,6 +31,9 @@ class Demand:
     cell: int
 
 
+MAX_ROOM_POTION_TESTS=12  # Distinct unknown types, at most once each per floor.
+
+
 def demands(p, state, distance):
     width = state["map"]["width"]
     paths = p.paths(state)
@@ -55,6 +58,9 @@ def demands(p, state, distance):
         elif "cloud of toxic gas" in effects and cell not in paths and any(
                 distance(cell, c, width) <= 3 for c in p.loot if c not in paths):
             found.append(Demand("gas", "potion of purity", cell))
+    for cell,room in p.piranha_rooms.items():
+        if not room['collected']:
+            found.append(Demand('pool','potion of invisibility',cell))
     # One hypothesis per visibly/rememberedly recognized puzzle kind; no room IDs.
     unique = {}
     pos = state["hero"]["cell"]
@@ -93,7 +99,7 @@ def safe_test_bank(p, state, cell, distance, neighbors, allow_dry=False, pool_ba
     if pool_bank and (tile.get('terrain')==29 or p.recent_threats
                      or any(p.tiles.get(c,{}).get('terrain')==29 for c in around)):
         return False  # Unknown potion tests belong on dry ground, beyond every known water bank.
-    allowed={1,3,4,6,9,11,12,14,19,20,29}|({0,5,18} if flight_bank else set())
+    allowed={1,3,4,6,9,11,12,14,19,20,29}|({0,5,18} if flight_bank else {5} if pool_bank else set())
     if any(c not in p.tiles or not p.tiles[c].get("visible") or p.tiles[c]["terrain"] not in allowed
            or p.tiles[c].get("plant") or p.tiles[c].get("effects") or c in p.loot for c in around):
         return False
@@ -110,8 +116,17 @@ def stage_known_pool(p,state,demand,item,distance,neighbors):
     """Reserve known invisibility until a safe observed chest round trip exists."""
     if 'DRINK' not in item.get('actions',[]) or p.room_journey or remaining(state,PROTECTION['pool'][1])>0:return None
     paths=p.paths(state);choices=[]
+    try:
+        from .piranha_tactics import staging_bank
+    except ImportError:
+        from piranha_tactics import staging_bank
     for bank in paths:
-        if len(p.route(paths,bank))>10 or not safe_test_bank(p,state,bank,distance,neighbors,allow_dry=True,pool_bank=True):continue
+        route=p.route(paths,bank)
+        if len(route)>41 or p.puzzle_revisit_steps['pool']>=48:continue
+        if any(c in p.room_blocked or p.tiles[c].get('trap') or p.tiles[c].get('plant')
+               or p.effects_block_movement(p.tiles[c]) for c in route[1:]):continue
+        verified=safe_test_bank(p,state,bank,distance,neighbors,allow_dry=True,pool_bank=True)
+        if not verified and (bank==state['hero']['cell'] or not staging_bank(p,state,bank)):continue
         staged=dict(state,hero=dict(state['hero'],cell=bank))
         journey=plan_journey(p,staged,[],neighbors,probe_kind='pool',plan_only=True)
         if journey:choices.append((len(p.route(paths,bank)),bank,journey))
@@ -120,10 +135,59 @@ def stage_known_pool(p,state,demand,item,distance,neighbors):
     p.planner.report['piranha_room']={'potion':'potion of invisibility','floor_supply':'Expected by the piranha-and-chest room rule',
         'bank':bank,'reward':journey.route[-1],'status':'Protected chest round trip planned; actual invisibility still required'}
     if bank!=state['hero']['cell']:
+        p.puzzle_revisit_steps['pool']+=1
         return p.toward(state,bank,'room: stage known invisibility on dry ground outside piranha reach',paths,intent=Intent.REPOSITION)
+    ready,opening=open_journey_entrance(p,state,journey)
+    if not ready:return opening
     p.room_journey=journey
     p.room_attempts.add((state['depth'],'pool',journey.route[-1]))
     return p.use(item,'DRINK','room: activate known invisibility for planned piranha chest round trip; verify actual buff')
+
+
+def revisit_pool(p,state,demand,neighbors):
+    if p.puzzle_revisit_steps['pool']>=48:return None
+    try:
+        from .piranha_tactics import staging_bank
+    except ImportError:
+        from piranha_tactics import staging_bank
+    paths=p.paths(state);choices=[]
+    for bank in paths:
+        route=p.route(paths,bank)
+        if len(route)>41 or not staging_bank(p,state,bank):continue
+        if any(c in p.room_blocked or p.tiles[c].get('trap') or p.tiles[c].get('plant')
+               or p.effects_block_movement(p.tiles[c]) for c in route[1:]):continue
+        staged=dict(state,hero=dict(state['hero'],cell=bank))
+        if plan_journey(p,staged,[],neighbors,probe_kind='pool',plan_only=True):
+            choices.append((len(route),bank))
+    if not choices:return None
+    _,bank=min(choices)
+    if bank==state['hero']['cell']:return None
+    p.puzzle_revisit_steps['pool']+=1
+    return p.toward(state,bank,'room: revisit observed piranha-room dry approach before testing floor supply',
+                    paths,intent=Intent.REPOSITION)
+
+
+def stage_known_gas(p,state,item,neighbors):
+    if 'DRINK' not in item.get('actions',[]) or p.room_journey:return None
+    paths=p.paths(state);choices=[]
+    for bank in paths:
+        route=p.route(paths,bank)
+        if len(route)>41 or p.tiles[bank]['terrain'] not in {1,3,9,11,14,19,20,29}:continue
+        if any(c in p.room_blocked or p.tiles[c].get('trap') or p.tiles[c].get('plant')
+               or p.effects_block_movement(p.tiles[c]) for c in route):continue
+        staged=dict(state,hero=dict(state['hero'],cell=bank))
+        journey=plan_journey(p,staged,[],neighbors,probe_kind='gas',plan_only=True)
+        if journey:choices.append((len(route),bank,journey))
+    if not choices:return None
+    _,bank,journey=min(choices,key=lambda c:(c[0],c[1]))
+    if bank!=state['hero']['cell']:
+        if p.puzzle_revisit_steps['gas']>=48:return None
+        p.puzzle_revisit_steps['gas']+=1
+        return p.toward(state,bank,'room: stage known purity outside gas before protected retrieval',paths,intent=Intent.REPOSITION)
+    ready,opening=open_journey_entrance(p,state,journey)
+    if not ready:return opening
+    p.room_journey=journey;p.room_attempts.add((state['depth'],'gas',journey.route[-1]))
+    return p.use(item,'DRINK','room: activate known purity for verified gas-room round trip; verify actual buff')
 
 
 def refresh_barrier(p,state,demand,paths,distance):
@@ -211,6 +275,8 @@ def stage_known_flight(p,state,item,neighbors):
         if p.puzzle_revisit_steps['known-flight']>=48:return None
         p.puzzle_revisit_steps['known-flight']+=1
         return p.toward(state,bank,'room: stage known levitation near verified reward round trip',paths,intent=Intent.REPOSITION)
+    ready,opening=open_journey_entrance(p,state,journey)
+    if not ready:return opening
     p.room_journey=journey;p.room_attempts.add((state['depth'],'flight',journey.route[-1]))
     return p.use(item,'DRINK','room: activate known levitation for planned reward round trip; verify actual buff')
 
@@ -243,9 +309,20 @@ def stage_sentry(p,state,neighbors,item=None):
         p.puzzle_revisit_steps['sentry']+=1
         return p.toward(state,bank,'room: stage haste test on safe sentry entrance flooring before carpet',paths,intent=Intent.REPOSITION)
     if item:
+        ready,opening=open_journey_entrance(p,state,journey)
+        if not ready:return opening
         p.room_journey=journey
         return p.use(item,'DRINK','room: activate known haste for verified sentry round trip; check actual speed buff')
     return None
+
+
+def open_journey_entrance(p,state,journey):
+    """A dry-run closed door is scouting only; open it before any potion is spent."""
+    door=next((c for c in journey.route[1:] if p.tiles[c]['terrain']==5),None)
+    if door is None:return True,None
+    if distance(state['hero']['cell'],door,state['map']['width'])==1 and p.tiles[door].get('visible'):
+        return False,p.cell(door,'room: open observed '+journey.kind+' entrance before spending its potion')
+    return False,None
 
 
 def prepare_supplies(p, state, enemies, distance, neighbors):
@@ -309,6 +386,9 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
             if demand.kind=='sentry' and getattr(p,'reserve_floor_puzzle_supplies',False):
                 staged=stage_sentry(p,state,neighbors,known)
                 if staged:return staged
+            if demand.kind=='gas' and getattr(p,'reserve_floor_puzzle_supplies',False):
+                staged=stage_known_gas(p,state,known,neighbors)
+                if staged:return staged
             continue
         if demand.kind in PROTECTION and remaining(state,PROTECTION[demand.kind][1]) > 0:
             continue
@@ -340,7 +420,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
         if hero["hp"]<0.95*hero["max_hp"]:
             continue  # Safe identification is not permission for a risky drink.
         if demand.kind=="frost":
-            if sum(d==state["depth"] for d,_ in p.puzzle_drinks)>=2:
+            if sum(d==state["depth"] for d,_ in p.puzzle_drinks)>=MAX_ROOM_POTION_TESTS:
                 continue
             width=state["map"]["width"]
             barriers=[c for c,t in p.tiles.items() if t.get("visible") and fire_barrier(t)]
@@ -388,16 +468,16 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
         # above is explicitly staged beside wood with an immediate water exit.
         if demand.kind not in PROTECTION:
             continue
-        if sum(d == state["depth"] for d,_ in p.puzzle_drinks) >= 2:
+        if sum(d == state["depth"] for d,_ in p.puzzle_drinks) >= MAX_ROOM_POTION_TESTS:
             continue
         if (state["depth"],base_name(candidate)) in p.puzzle_drinks:
             continue
         paths = p.paths(state)
-        banks = [c for c in paths if len(p.route(paths,c)) <= 7
+        banks = [c for c in paths if len(p.route(paths,c)) <= 41
                   and (demand.kind=='flight' or distance(c,demand.cell,state["map"]["width"]) <= 5)
                   and (safe_test_bank(p,state,c,distance,neighbors,allow_dry=True,pool_bank=True)
                         if demand.kind=='pool' and getattr(p,'reserve_floor_puzzle_supplies',False)
-                        else safe_test_bank(p,state,c,distance,neighbors,allow_dry=demand.kind in {'flight','sentry'}
+                        else safe_test_bank(p,state,c,distance,neighbors,allow_dry=demand.kind in {'flight','sentry','gas'}
                                             and getattr(p,'reserve_floor_puzzle_supplies',False),
                                             flight_bank=demand.kind=='flight' and getattr(p,'reserve_floor_puzzle_supplies',False),
                                             sentry_bank=demand.kind=='sentry' and getattr(p,'reserve_floor_puzzle_supplies',False)))]
@@ -421,16 +501,18 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
                 if demand.kind=='sentry':
                     staged=stage_sentry(p,state,neighbors)
                     if staged:return staged
+                if demand.kind=='pool':
+                    staged=revisit_pool(p,state,demand,neighbors)
+                    if staged:return staged
             continue
         bank = min(banks,key=lambda c:len(p.route(paths,c)))
         if bank != hero["cell"]:
             return p.toward(state,bank,"room: stage unconfirmed potion test on safe water",paths)
-        if demand.kind=='flight' and bank in journeys:
-            closed=next((c for c in journeys[bank].route[1:] if p.tiles[c]['terrain']==5),None)
-            if closed is not None:
-                if distance(bank,closed,state['map']['width'])==1 and p.tiles[closed].get('visible'):
-                    return p.cell(closed,'room: open observed flight-room entrance before testing protection')
-                continue  # Do not drink until all door opening fits outside the protection budget.
+        if bank in journeys:
+            ready,opening=open_journey_entrance(p,state,journeys[bank])
+            if not ready:
+                if opening:return opening
+                continue
         stash=protect_potions(p,state,candidate,distance,neighbors,safe_test_bank)
         if stash:
             return stash

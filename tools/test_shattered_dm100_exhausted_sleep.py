@@ -96,16 +96,17 @@ def admitted(p, s):
 
 
 class ExhaustedDM100SleepTests(unittest.TestCase):
-    def test_full_selector_uses_known_sleep_before_no_safe_action(self):
+    def test_full_selector_flees_to_visible_door_before_exhausted_control(self):
         s, p = exhausted_scene()
         try:
             decision = p.choose(s)
         except NoSafeAction:
             decision = None
-        self.assertIsNotNone(decision, 'Known sleep must be considered before continuation')
-        self.assertEqual(dict(type='item', id='item-15', action='THROW'), decision.action)
-        self.assertEqual(558, p.target)
-        self.assertEqual(8, p.stone_cooldown)
+        self.assertIsNotNone(decision, 'Visible door must be considered before continuation')
+        self.assertEqual(dict(type='cell', cell=711), decision.action)
+        self.assertEqual(901,p.ranged_plan['door'])
+        self.assertEqual('dm100-door-escape',decision.controller)
+        self.assertEqual(0, p.stone_cooldown)
         self.assertFalse(p.continuation_errors)
         self.assertFalse(p.completed_room_rewards)
 

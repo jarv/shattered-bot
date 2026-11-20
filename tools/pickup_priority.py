@@ -126,6 +126,9 @@ def replacements(p, state, incoming):
         incoming_rank = 0  # Collect observed keys/utilities, never drop them.
     protected_names = {str(getattr(p, 'upgrade_target', '')).lower(),
                        str(getattr(p, 'ghost_quest', {}).get('selected', '')).lower()}
+    if any(not room['collected'] for room in getattr(p,'piranha_rooms',{}).values()):
+        if sum(i.get('quantity',1) for i in state['inventory'] if name(i)=='potion of invisibility')<=1:
+            protected_names.add('potion of invisibility')
     try:
         from .rose_outfitting import rose_available, spares
     except ImportError:

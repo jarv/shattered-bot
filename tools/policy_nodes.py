@@ -82,6 +82,32 @@ def harmful_effect(c):
         return c.policy.retreat(c.state, c.enemies, danger={c.pos})
 
 
+def dm100_door_escape(c):
+    if c.boss or not getattr(c.policy,'unit_strategies_enabled',False):return None
+    try:
+        from .dm100_escape import choose,exposed_memory
+        from .ranged_tactics import choose as ranged
+    except ImportError:
+        from dm100_escape import choose,exposed_memory
+        from ranged_tactics import choose as ranged
+    present=any(e['name'].lower()=='dm-100' and not e.get('sleeping') for e in c.enemies)
+    if not present and not exposed_memory(c.policy,c.state) and not (
+            c.policy.ranged_plan and c.policy.ranged_plan.get('name')=='dm-100'):return None
+    if c.hp<.3 and present:
+        rescue=critical_transport(c) or healing(c)
+        if rescue:return rescue
+    # Retain the established wall-backed bank flow without allowing its damage
+    # fallback to preempt immediate flight toward a newly visible doorway.
+    plan=c.policy.ranged_plan
+    if plan and plan.get('name')=='dm-100' and plan.get('mode')=='cover':
+        return ranged(c.policy,c.state,c.enemies,escape_only=True)
+    action=choose(c.policy,c.state,c.enemies)
+    if action:return action
+    if not present and exposed_memory(c.policy,c.state):
+        c.policy.stop_no_safe_action('Recent DM-100 lightning lane remains unverified; no ordinary recovery wait or guessed blind attack')
+    return None
+
+
 def well(c):
     return choose_well(c.policy, c.state, c.enemies, distance, neighbors)
 
@@ -164,6 +190,15 @@ def ghost_reward(c):
         except ImportError:
             from ghost_quest import visit_ghost
         return visit_ghost(c.policy,c.state,c.enemies,distance,neighbors)
+
+
+def piranha_supplies(c):
+    if c.active:return None
+    try:
+        from .piranha_tactics import choose
+    except ImportError:
+        from piranha_tactics import choose
+    return choose(c.policy,c.state,c.enemies)
 
 
 def wandmaker(c):
@@ -489,6 +524,11 @@ def preparation_and_recovery(c):
     if c.active:
         return None
     p, state = c.policy, c.state
+    try:
+        from .ranged_tactics import exposed_wait
+    except ImportError:
+        from ranged_tactics import exposed_wait
+    if exposed_wait(p,state,c.enemies):return None
     strength = next((i for i in c.inventory if "potion of strength" in i["name"].lower() and "DRINK" in i["actions"]), None)
     if strength:
         return p.use(strength, "DRINK", "prepare: strength potion")

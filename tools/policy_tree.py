@@ -19,6 +19,7 @@ POLICY = Selector("survival", (
         Leaf("boss-telegraph", n.boss_escape),
         Leaf("warning-escape", n.warned_cell),
         Leaf("harmful-effect-escape", n.harmful_effect),
+        Leaf("dm100-door-escape", n.dm100_door_escape),
     )),
     Selector("survival-and-preparation", (
         Leaf("rule-preparation", lambda c: c.policy.preparation(c.state, c.enemies)),
@@ -35,6 +36,7 @@ POLICY = Selector("survival", (
         Leaf("ranged-survival", n.ranged_survival),
         Leaf("starvation", n.starvation),
         Leaf("priority-progression-pickup", n.priority_resource),
+        Leaf("piranha-room-supplies", n.piranha_supplies),
         Leaf("ghost-reward", n.ghost_reward),
         Leaf("wandmaker-quest", n.wandmaker),
         Leaf("blandfruit", n.blandfruit),

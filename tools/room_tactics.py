@@ -107,7 +107,10 @@ class Journey:
             p.room_journey = None
             return None
         target = self.route[index-1 if self.stage == "return" else index+1]
-        if target in state.get("danger_cells", []) or not safe_tile(p, target, self.kind, occupied) or duration < (index*move_time+2 if self.stage == "return" else 3):
+        tile=p.tiles.get(target,{})
+        reopen=tile.get('terrain')==5 and target not in occupied and target not in p.blocked \
+            and not tile.get('plant') and not tile.get('trap') and not p.effects_block_movement(tile)
+        if target in state.get("danger_cells", []) or not (safe_tile(p, target, self.kind, occupied) or reopen) or duration < (index*move_time+2 if self.stage == "return" else 3):
             p.stop_obligation("room-journey","Protected room return route obstructed or protection budget insufficient")
         if self.stage=='outbound' and index==0:
             p.room_attempts.add((state['depth'],self.kind,self.route[-1]))
@@ -184,6 +187,9 @@ def plan_journey(p, state, enemies, neighbors, *, probe_kind=None, plan_only=Fal
     except ImportError:
         from special_rooms import component
     pool_region = set()
+    for room in p.piranha_rooms.values():
+        pool_region.update(room['water'])
+        pool_region.update(n for c in room['water'] for n in neighbors(c,width,height))
     for actor in p.room_actors.values():
         if "piranha" in actor["name"].lower():
             pool = component(actor["cell"], p.tiles, {29}, width, height)
@@ -196,7 +202,7 @@ def plan_journey(p, state, enemies, neighbors, *, probe_kind=None, plan_only=Fal
         duration = remaining(state,buff)
         if not duration and (not item or "DRINK" not in item.get("actions", [])) and probe_kind!=kind:
             continue
-        if kind == "pool" and not any("piranha" in a["name"].lower() for a in p.room_actors.values()):
+        if kind == "pool" and not pool_region:
             continue
         if kind == "sentry":
             if not sentry_region or pos not in sentry_region:
@@ -216,7 +222,9 @@ def plan_journey(p, state, enemies, neighbors, *, probe_kind=None, plan_only=Fal
                          for c in route[1:])
             key = (state["depth"], kind, cell)
             permitted = loot and not suspicious_container(loot) and cell not in p.combat_deferred_loot and (loot["name"].lower() not in {"tomb", "skeleton", "skeletal remains", "crystal chest", "locked chest"}
-                                  or cell in p.allowed_chests)
+                                   or cell in p.allowed_chests)
+            if kind=='pool' and p.piranha_rooms:
+                permitted=permitted and cell in p.piranha_rooms and not p.piranha_rooms[cell]['collected']
             if kind=='flight' and ordinary_paths is not None and cell in ordinary_paths:
                 permitted=False  # A chasm shortcut to ordinary loot cannot justify the room's levitation supply.
             if permitted and cell != pos and hazard and key not in p.room_attempts and not loot.get("for_sale"):
@@ -234,7 +242,7 @@ def plan_journey(p, state, enemies, neighbors, *, probe_kind=None, plan_only=Fal
                     return p.room_journey.advance(p,state,enemies,neighbors)
                 return p.use(item, "DRINK", f"room: prepare {kind} protection for verified round trip")
             for adjacent in neighbors(cell, width, height):
-                closed_probe = plan_only and kind=='flight' and p.tiles.get(adjacent,{}).get('terrain')==5 \
+                closed_probe = plan_only and kind in PROTECTION and p.tiles.get(adjacent,{}).get('terrain')==5 \
                     and adjacent not in occupied and adjacent not in p.blocked and not p.tiles[adjacent].get('effects') \
                     and not p.tiles[adjacent].get('plant') and not p.tiles[adjacent].get('trap')
                 if adjacent not in paths and (safe_tile(p, adjacent, kind, occupied) or closed_probe):

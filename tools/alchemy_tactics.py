@@ -111,11 +111,45 @@ def plan_brew(state, demands=(), *, barren_land=False):
 
 
 def context(state):
-    return (state["depth"], tuple(sorted((i["name"], i.get("quantity", 1)) for i in state["inventory"])))
+    return (state["depth"],state['hero'].get('level'),
+            tuple(sorted((i["name"], i.get("quantity", 1),i.get('status') or '',bool(i.get('equipped')))
+                         for i in state["inventory"])))
+
+
+def rendered_energy(state):
+    value=state.get('ui',{}).get('energy_text','') or ''
+    match=re.fullmatch(r'energy\s*:?\s*(\d+)(?:\+(\d+))?',value.lower().strip())
+    return tuple(int(v or 0) for v in match.groups()) if match else None
+
+
+def toolkit_energy(item):
+    status=(item or {}).get('status') or ''
+    # Percentages are warm-up progress, not available energy.
+    return int(status) if status.isdigit() and item.get('identified') and not item.get('known_cursed') else 0
+
+
+def observe_energy(p,before,state):
+    energy=rendered_energy(state)
+    if state.get('scene')=='AlchemyScene' and energy:
+        p.alchemy_energy=energy[0]  # Keep global and toolkit reserves separate.
+    if not before or before.get('depth')!=state.get('depth'):return
+    decision=getattr(p,'last_decision',None)
+    action=decision.action if decision else {}
+    cell=action.get('cell')
+    # A plausible ordinary pickup/spending receipt invalidates the cache; it
+    # does not infer the new amount. Inspect the rendered energy label again.
+    pickup=action.get('type')=='cell' and state.get('hero',{}).get('cell')==cell and any(
+        o.get('cell')==cell and 'energy crystal' in base_name(o.get('top_item',o))
+        for o in before.get('objects',[]))
+    spent=action.get('type')=='item' and action.get('action')=='ENERGIZE'
+    if pickup or spent:
+        p.alchemy_energy=None
+        p.alchemy_attempts.clear()
 
 
 def inventory_baseline(state, brew):
     names = {*brew.ingredients, brew.output}
+    if brew.fallback:names.add(brew.fallback)
     if brew.output == 'trinket':
         try:
             from .trinket_tactics import TRINKETS
@@ -144,10 +178,22 @@ def approach_alchemy(p, state, urgent=False):
         return None
     toolkit = next((i for i in state["inventory"] if i.get("equipped")
                     and "alchemist's toolkit" in i["name"].lower()
-                    and "BREW" in i.get("actions", [])), None)
+                     and "BREW" in i.get("actions", [])), None)
+    if toolkit and (toolkit.get('status') or '').endswith('%'):
+        toolkit=None  # Warming toolkit cannot brew even though BREW is displayed.
+    reserve=0 if "starving" in " ".join(b["name"].lower() for b in state["hero"].get("buffs", [])) else 2
+    global_energy=getattr(p,'alchemy_energy',None)
+    if brew.energy and global_energy is not None and global_energy+toolkit_energy(toolkit)<brew.energy+reserve:
+        if brew.fallback:
+            brew=Brew(brew.ingredients,brew.fallback,brew.reason+'; affordable free fallback')
+        else:
+            p.planner.report['alchemy_energy']={'status':'deferred','required':brew.energy+reserve,
+                'global_energy':global_energy,'toolkit_energy':toolkit_energy(toolkit),
+                'reason':'Continue ordinary play until energy changes; no ingredients or energizing spent'}
+            return None
     if toolkit:
         p.alchemy_attempts.add(context(state))
-        p.alchemy_plan = {"brew": brew, "index": 0, "stage": "slot", "steps": 0,
+        p.alchemy_plan = {"brew": brew, "index": 0, "stage": "energy" if brew.energy else "slot", "steps": 0,
                           "inventory_before":inventory_baseline(state,brew),
                           "reserve": 0 if "starving" in " ".join(b["name"].lower() for b in state["hero"].get("buffs", [])) else 2}
         return p.use(toolkit, "BREW", f"alchemy: portable toolkit; {brew.reason}")
@@ -167,7 +213,7 @@ def approach_alchemy(p, state, urgent=False):
     if pos != bank:
         return p.toward(state, bank, "alchemy: approach nearby visible station", paths)
     p.alchemy_attempts.add(context(state))
-    p.alchemy_plan = {"brew": brew, "index": 0, "stage": "slot", "steps": 0,
+    p.alchemy_plan = {"brew": brew, "index": 0, "stage": "energy" if brew.energy else "slot", "steps": 0,
                       "inventory_before":inventory_baseline(state,brew),
                       "reserve": 0 if "starving" in " ".join(b["name"].lower() for b in state["hero"].get("buffs", [])) else 2}
     return p.cell(station, f"alchemy: open station; {brew.reason}")
@@ -182,6 +228,20 @@ def alchemy_menu(p, state):
     def button(label):
         return next((b for b in buttons if base_name({"name": b["label"]}) == label), None)
     brew = plan["brew"]
+    energy=rendered_energy(state)
+    if energy:p.alchemy_energy=energy[0]
+    if plan['stage']=='energy':
+        required=brew.energy+plan.get('reserve',2)
+        if not energy or sum(energy)<required:
+            if energy and brew.fallback:
+                brew=plan['brew']=Brew(brew.ingredients,brew.fallback,brew.reason+'; affordable free fallback')
+            else:
+                p.planner.report['alchemy_energy']={'status':'deferred','required':required,
+                    'available':sum(energy) if energy else None,
+                    'reason':'Inspected energy only; no ingredient selection or craft attempted'}
+                p.alchemy_plan=None
+                return leave_alchemy(p,state,'alchemy: defer until minimum recipe energy is observed')
+        plan['stage']='slot'
     if brew.output == 'trinket':
         try:
             from .trinket_tactics import trinket_menu

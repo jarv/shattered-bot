@@ -2,7 +2,7 @@ import unittest
 
 from tools.test_challenge_systems import ready, item
 from tools.survival_bot import distance, neighbors, Finished
-from tools.puzzle_supplies import demands, prepare_supplies, recover_probe, identify_menu, safe_test_bank
+from tools.puzzle_supplies import demands, prepare_supplies, recover_probe, identify_menu, safe_test_bank,MAX_ROOM_POTION_TESTS
 from tools.drop_tactics import fall_budget, prepare_drop, drop_menu, recover_drop
 from tools.alchemy_tactics import plan_brew
 from tools.room_tactics import plan_journey
@@ -164,7 +164,7 @@ class PuzzleIdentificationTests(unittest.TestCase):
                 p.tiles[25]["effects"]=p.tiles[26].pop("effects")
             elif mode=="hp":s["hero"]["hp"]=10
             elif mode=="enemy":enemies=[{"name":"marsupial rat","cell":32}]
-            elif mode=="budget":p.puzzle_drinks={(1,"golden potion"),(1,"silver potion")}
+            elif mode=="budget":p.puzzle_drinks={(1,f"tested potion {n}") for n in range(MAX_ROOM_POTION_TESTS)}
             elif mode=="flammable":p.tiles[23]["terrain"]=2
             elif mode=="loot":p.loot[23]={"name":"ration of food"}
             self.assertIsNone(prepare_supplies(p,s,enemies,distance,neighbors),mode)
@@ -201,7 +201,7 @@ class PuzzleIdentificationTests(unittest.TestCase):
 
     def test_floor_test_budget_prevents_unbounded_experimentation(self):
         s,p=puzzle()
-        p.puzzle_drinks={(s["depth"],"silver potion"),(s["depth"],"azure potion")}
+        p.puzzle_drinks={(s["depth"],f"tested potion {n}") for n in range(MAX_ROOM_POTION_TESTS)}
         self.assertIsNone(prepare_supplies(p,s,[],distance,neighbors))
 
     def test_room_supply_is_only_hypothesis_and_does_not_read_hidden_room_ids(self):

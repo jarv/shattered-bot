@@ -127,6 +127,8 @@ class CombatMemory:
     chain_setup_steps: int = value(0, floor=True)
     ranged_cover_waits: Counter = local(Counter)
     ranged_plan: object = value(None, floor=True)
+    dm100_threat: object = value(None, floor=True)
+    dm100_failed_doors: set = local(set)
     trickster_reposition: bool = value(False, floor=True)
     hunger_projection: object = value(None)
     ranged_failed_cover: set = local(set)
@@ -176,6 +178,8 @@ class CombatMemory:
 
 @dataclass
 class ResourceMemory:
+    piranha_rooms: dict = local(dict)
+    alchemy_energy: object = value(None, floor=True)
     great_crab_plan: object = value(None, floor=True)
     great_crab_attempts: Counter = local(Counter)
     crystal_spend_plans: dict = local(dict)

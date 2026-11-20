@@ -34,6 +34,9 @@ See [pickup, key-room, and trinket policy](docs/pickup-and-trinket-policy.md)
 for inventory retention tiers and the Mage-specific catalyst/trinket ranking.
 The [Sad Ghost policy](docs/ghost-quest-policy.md) covers exploration-first
 quest timing and escape-backed Great Crab doorway ambushes.
+See [DM-100 door escape](docs/dm100-door-escape.md) and
+[room supplies and alchemy energy](docs/room-supplies-and-alchemy.md) for
+lightning response, potion testing/retrieval, and minimum-energy crafting gates.
 
 ## Fresh run history
 
