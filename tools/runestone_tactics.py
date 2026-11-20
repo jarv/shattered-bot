@@ -143,19 +143,26 @@ def intuition_menu(p, state):
     return p.decision({"type": "back"}, "stone: cancel unavailable intuition hypothesis")
 
 
-def prepare_mapping(p, state):
+def prepare_mapping(p, state, *, required=False):
     try:
         from .mapping_knowledge import complete
     except ImportError:
         from mapping_knowledge import complete
     if complete(p,state):return None
-    if p.searches < 2 or state["depth"] in p.mapping_attempts or state["hero"]["hp"] <= 3:
+    if state["depth"] in p.mapping_attempts or state["hero"]["hp"] <= 3:
+        return None
+    if required and any("magic immun" in b["name"].lower() for b in state["hero"].get("buffs",[])):
+        return None
+    scroll = next((i for i in state["inventory"] if base_name(i) == "scroll of magic mapping" and "READ" in i.get("actions", [])), None)
+    if required and scroll:
+        p.mapping_attempts.add(state["depth"])
+        return p.use(scroll,"READ","scroll: reveal connecting passages to an observed mandatory strength/upgrade pickup")
+    if p.searches < 2:
         return None
     stone = next((i for i in state["inventory"] if base_name(i) == "stone of clairvoyance" and "THROW" in i.get("actions", [])), None)
     if stone:
         p.mapping_attempts.add(state["depth"])
         return p.use(stone, "THROW", "stone: reveal surrounding geometry after bounded unsuccessful search", target=state["hero"]["cell"])
-    scroll = next((i for i in state["inventory"] if base_name(i) == "scroll of magic mapping" and "READ" in i.get("actions", [])), None)
     if scroll:
         p.mapping_attempts.add(state["depth"])
         return p.use(scroll, "READ", "scroll: map missing exit instead of prolonged hunger-cost search")

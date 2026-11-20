@@ -122,7 +122,19 @@ def choose(p,state,enemies):
             from .puzzle_supplies import prepare_supplies
         except ImportError:
             from puzzle_supplies import prepare_supplies
-        return prepare_supplies(p,state,enemies,distance,neighbors)
+        preparation=prepare_supplies(p,state,enemies,distance,neighbors)
+        if preparation:return preparation
+        # Awareness may reveal the reward without revealing its connecting
+        # passage. A known mapping scroll is useful discovery, not a receipt or
+        # permission to walk across the traps around the reward.
+        if any(cell not in paths and base_name(obj.get('top_item',obj)) in NAMES
+               for cell,obj in resources.items()):
+            try:
+                from .runestone_tactics import prepare_mapping
+            except ImportError:
+                from runestone_tactics import prepare_mapping
+            return prepare_mapping(p,state,required=True)
+        return None
     _,cell=min(choices)
     if p.inventory_pressure:
         try:

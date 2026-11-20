@@ -535,6 +535,11 @@ class MagePolicy(SurvivalPolicy):
     def update(self, state):
         previous = self.last_state
         try:
+            from .potion_stash import observe_bandolier
+        except ImportError:
+            from potion_stash import observe_bandolier
+        observe_bandolier(self,state)
+        try:
             from .alchemy_tactics import observe_energy
         except ImportError:
             from alchemy_tactics import observe_energy

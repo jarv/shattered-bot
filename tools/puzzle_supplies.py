@@ -11,7 +11,7 @@ try:
     from .room_tactics import PROTECTION, remaining, plan_journey,sentry_geometry
     from .runestone_tactics import prepare_intuition
     from .special_rooms import fire_barrier
-    from .potion_stash import protect_potions, can_protect_potions
+    from .potion_stash import protect_potions, can_protect_potions, bandolier_protected
     from .policy_decision import Intent
     from .policy_geometry import distance
 except ImportError:
@@ -19,7 +19,7 @@ except ImportError:
     from room_tactics import PROTECTION, remaining, plan_journey,sentry_geometry
     from runestone_tactics import prepare_intuition
     from special_rooms import fire_barrier
-    from potion_stash import protect_potions, can_protect_potions
+    from potion_stash import protect_potions, can_protect_potions, bandolier_protected
     from policy_decision import Intent
     from policy_geometry import distance
 
@@ -424,6 +424,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
                                 "room: seek observed floor potion for unresolved puzzle",paths,intent=Intent.LOOT)
             continue
         candidate = max(candidates,key=lambda i: (
+            i.get("quantity",1)==1 or bandolier_protected(p,state),
             state["depth"] in p.consumable_sources.get(base_name(i),set()),i.get("quantity",1)))
         identify = next((i for i in inventory if base_name(i)=="scroll of identify" and "READ" in i.get("actions",[])),None)
         key = (state["depth"],demand.kind,base_name(candidate))
@@ -435,6 +436,8 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
         if guess:
             p.puzzle_guesses.add(key)
             return guess
+        if candidate.get("quantity",1)>1 and not bandolier_protected(p,state):
+            continue  # Safe identification above is still allowed; an unprotected stack is not a drink test.
         if hero["hp"]<0.95*hero["max_hp"]:
             continue  # Safe identification is not permission for a risky drink.
         if demand.kind=="frost":
@@ -492,7 +495,9 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
             continue
         paths = p.paths(state)
         banks = [c for c in paths if len(p.route(paths,c)) <= 41
-                  and (demand.kind=='flight' or distance(c,demand.cell,state["map"]["width"]) <= 5)
+                  and (demand.kind=='flight'
+                       or demand.kind=='pool' and getattr(p,'reserve_floor_puzzle_supplies',False)
+                       or distance(c,demand.cell,state["map"]["width"]) <= 5)
                   and (safe_test_bank(p,state,c,distance,neighbors,allow_dry=True,pool_bank=True)
                         if demand.kind=='pool' and getattr(p,'reserve_floor_puzzle_supplies',False)
                         else safe_test_bank(p,state,c,distance,neighbors,allow_dry=demand.kind in {'flight','sentry','gas'}

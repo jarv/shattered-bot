@@ -178,6 +178,7 @@ class CombatMemory:
 
 @dataclass
 class ResourceMemory:
+    bandolier_inventory: object = value(None)  # (owned, possible overflow); persists across floors.
     piranha_rooms: dict = local(dict)
     alchemy_energy: object = value(None, floor=True)
     great_crab_plan: object = value(None, floor=True)

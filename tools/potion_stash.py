@@ -8,7 +8,40 @@ except ImportError:
 
 
 def potions(state):
-    return [i for i in state["inventory"] if any(k in base_name(i) for k in ("potion", "elixir of ", " brew"))]
+    return [i for i in state["inventory"] if base_name(i) != "potion bandolier"
+            and any(k in base_name(i) for k in ("potion", "elixir of ", " brew"))]
+
+
+def bandolier_slots(state):
+    return len(potions(state)) + sum(base_name(i) in {"waterskin", "liquid metal"}
+                                     for i in state["inventory"])
+
+
+def observe_bandolier(p,state):
+    """Track public acquisition and any possible overflow, across floor changes.
+
+    A snapshot of an already-owned bag is not proof of where potions are stored.
+    Nor does later consuming a potion prove that earlier overflow was repacked.
+    """
+    if not state.get("hero") or "inventory" not in state:return
+    owned=any(base_name(i)=="potion bandolier" for i in state["inventory"])
+    before=getattr(p,"bandolier_inventory",None)
+    if not owned:
+        p.bandolier_inventory=(False,False)
+    else:
+        uncertain=before is None or before[0] and before[1]
+        p.bandolier_inventory=(True,bool(uncertain or bandolier_slots(state)>19))
+
+
+def bandolier_protected(p,state):
+    """The known bag collects potions and protects them from cold.
+
+    Inventory is flattened: require observed acquisition and no possible overflow
+    since that acquisition. Count slots, not doses; include other bag liquids.
+    """
+    if not any(base_name(i) == "potion bandolier" and i.get("identified") for i in state["inventory"]):
+        return False
+    return getattr(p,"bandolier_inventory",None)==(True,False) and bandolier_slots(state)<=19
 
 
 def stash_cells(p,state,distance,neighbors,safe_bank):
@@ -25,6 +58,8 @@ def stash_cells(p,state,distance,neighbors,safe_bank):
 
 def can_protect_potions(p,state,candidate,distance,neighbors,safe_bank):
     """No drops, receipts, or inferred effects: only preparation feasibility."""
+    if bandolier_protected(p,state) and not p.potion_stash:
+        return True
     if candidate.get("quantity",1)>1:
         return False
     others=[i for i in potions(state) if i["id"]!=candidate["id"]]
@@ -36,6 +71,8 @@ def can_protect_potions(p,state,candidate,distance,neighbors,safe_bank):
 
 
 def protect_potions(p,state,candidate,distance,neighbors,safe_bank):
+    if bandolier_protected(p,state) and not p.potion_stash:
+        return None  # No remote drops, stack splitting or bag disposal are needed.
     others=[i for i in potions(state) if i["id"]!=candidate["id"]]
     # DROP detaches an entire stack. Do not pretend we can retain one dose of
     # an unknown stack while protecting its remaining doses through this API.

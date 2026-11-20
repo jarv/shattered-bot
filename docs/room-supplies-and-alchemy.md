@@ -45,6 +45,43 @@ Record chest collection only from an accepted pickup receipt. Do not descend
 while that chest remains pending; ordinary unfinished-loot descent permission
 does not waive this specific requirement.
 
+### Unknown supplies: the bandolier is protection, not a potion
+
+Run 16 never identified its invisibility supply before the pool stall. Its
+inventory did include a potion bandolier, but the old stash helper classified
+the bag itself as a potion and still required remote drops. The largest unknown
+stack also failed the single-dose rule, even though a protected stack does not
+need splitting.
+
+Track the bag's acquisition through public inventory observations. When it has
+not possibly overflowed since acquisition, its cold protection replaces remote
+potion stashing, including for stacked candidates. Count all 19 bag slots,
+including waterskin and liquid metal, not individual doses. Keep possible
+overflow uncertain across consumption and floor changes. A standalone snapshot
+of an already-owned bag is not a container receipt. Without confirmed bag
+protection, retain ordinary stashing and single-dose drinking requirements;
+safe identification of stacks is still allowed.
+
+Unknown pool testing still requires a visible dry bank, near-full health,
+no threats and a planned protected return. Choose the bank using the actual
+round-trip budget, not the old five-cell distance to the remembered chest:
+run 16's admitted dry approach was seven cells from its reward. Open observed
+entrances before drinking, verify the actual buff, and retain pickup receipts.
+
+### Unreachable strength rewards: discover the connecting passage
+
+Run 18's awareness well revealed a strength potion without revealing its entire
+connecting route. It had a known magic-mapping scroll, but mapping required two
+earlier searches while the mandatory-pickup path never initiated those searches.
+
+If an observed strength potion or upgrade scroll has no admitted ordinary
+pickup route, first offer existing protected-room preparation. If that declines,
+allow a known mapping scroll without the optional-search prerequisite. Retain
+threat/status checks, the per-floor attempt limit and actual mapping receipts.
+Do not spend this exception on optional food, repeat it on a fully mapped floor,
+guess a hidden entrance, cross a trap unprotected or waive the pickup obligation.
+Reassess routes from the new observation; mapping is discovery, not collection.
+
 ## Minimum energy before crafting
 
 There is no universal crafting minimum: costs depend on the recipe. The magical
