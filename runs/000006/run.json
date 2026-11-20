@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "id": "000006",
+  "started_at": "2026-11-20T09:08:44Z",
+  "completed_at": "2026-11-20T09:17:07.460871+00:00",
+  "source_commit": "4ec002ce3677c1787affef7cad04e2f96503a444",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "c9505c85465cf135251cfacfee0fe4bdcb2b6b16cba325e7014116e02a3c279d",
+  "outcome": "blocked",
+  "outcome_summary": "Stopped alive on floor 3; automated review hit its request cap",
+  "outcome_reason": "Fallback stopped after 128 accepted waits without observed gameplay progress",
+  "max_depth": 3,
+  "actions": 1334,
+  "duration_seconds": 498.297,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000005",
+  "previous_source_commit": "210d863af4fa331f2ea87b30dbf12fc0b6401617",
+  "improvements": [],
+  "code_changed": true,
+  "incoming_learnings": "Before committing to puzzle staging, require compatibility with the next action’s existing admission checks. A hypothetical protected reward route does not establish a safe unknown-potion test. Preserve unfinished loot and mandatory progression pickup; never infer protection or collection from movement.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "Operator-authorized review-only disposition. The automated investigation exhausted its 32-request safety cap without producing a completed review. The user explicitly authorized publication without bot policy changes. No automated gameplay conclusions or policy patch are accepted from the incomplete investigation. The original recording, failed investigation, dispatch markers, and request/budget audits are retained; no model request was retried or refunded.",
+    "learnings": "No new gameplay lesson is claimed by this operator disposition. Investigate the failed automated review separately. Continue with the unchanged bot policy and a separately configured audio-recording trial."
+  },
+  "recommendations": [],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000006/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000006/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 76,
+        "turns": 273,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 274,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 466
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 18,
+        "gold_gained": 271,
+        "turns": 396,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 409,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 377
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 18,
+        "gold_gained": 405,
+        "turns": 672,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 645,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 547
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 1,
+    "ending_level": 4,
+    "starving_turns": 12,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 9,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 4,
+    "gold_collected": 752,
+    "gold_complete": true,
+    "turns": 1341,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
