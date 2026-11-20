@@ -95,7 +95,8 @@ class PlayerAPITest(unittest.TestCase):
         import tempfile
 
         process.return_value.poll.return_value = None
-        with tempfile.TemporaryDirectory(dir="/tmp/opencode", prefix="spd-launch-test-") as temp:
+        base = "/tmp/opencode" if Path("/tmp/opencode").is_dir() else None
+        with tempfile.TemporaryDirectory(dir=base, prefix="spd-launch-test-") as temp:
             game_dir = Path(temp) / "game"
             game_dir.mkdir()
             (game_dir / "gradlew").touch()
