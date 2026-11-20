@@ -450,6 +450,14 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
                    and safe_test_bank(p,state,c,distance,neighbors,allow_dry=True)
                    and any((c%width==b%width or c//width==b//width)
                            and distance(c,b,width)==2 for b in barriers)]
+            # Preflight a new frost approach: a safe drink square alone does
+            # not protect the other potions. Decline futile staging locally.
+            # At the current bank, retain the real protection/receipt checks
+            # below; an already-started stash retains its recovery path too.
+            if not p.potion_stash:
+                banks=[c for c in banks if c==hero["cell"] or can_protect_potions(
+                    p,dict(state,hero=dict(hero,cell=c)),candidate,
+                    distance,neighbors,safe_test_bank)]
             if not banks:
                 if not barriers:
                     # Healing/exploration may have taken us away from the

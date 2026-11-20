@@ -249,5 +249,18 @@
     "status": "deferred",
     "reason": "This fire-room recording does not establish a safe crab surprise alternative. The earlier case still needs recorded-input-validated doorway-attempt, pursuit and escape bookkeeping plus an admitted bounded surprise approach with a second exit under existing health and hazard checks.",
     "origin_run": "000019"
+  },
+  {
+    "id": "000021-frost-approach-stash-admission",
+    "priority": "high",
+    "summary": "Check potion protection before starting a remote frost-test approach.",
+    "evidence": [
+      "Decision 219, log 609: frost staging begins without an admitted stash route.",
+      "Decisions 221–222, logs 615–620: arrival leads to stash veto and floor-wide potion-preparation deferral.",
+      "Decision 247, logs 695–698: uncollected matching key prevents descent."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000021"
   }
 ]

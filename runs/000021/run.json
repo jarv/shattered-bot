@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "id": "000021",
+  "started_at": "2026-11-20T17:34:33Z",
+  "completed_at": "2026-11-20T17:37:11.356283+00:00",
+  "source_commit": "f91ecf358b7d899aab51c07c42e44eca03b27e13",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "b6c86f5f5d24b28005d8611ec04e6fe79f6d9e53501448791b99376cd2e21e54",
+  "outcome": "blocked",
+  "outcome_summary": "Blocked after frost preparation failed and an uncollected key prevented descent",
+  "outcome_reason": "Fallback stopped after 128 accepted waits without observed gameplay progress",
+  "max_depth": 1,
+  "actions": 443,
+  "duration_seconds": 154.799,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000020",
+  "previous_source_commit": "515dee1a5721898463df9a14bfbb7cf8600458a5",
+  "improvements": [
+    "The bot now tracks potion-bandolier protection when preparing unknown potion tests, including stacked potions. It still requires observed acquisition and treats possible overflow cautiously.",
+    "When a strength potion or upgrade scroll has no admitted pickup route, the bot can use a known mapping scroll after puzzle preparation declines, without first requiring optional searches."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Resolve preparation before health and food are exhausted, but require a demonstrated safe test/stash approach or observed non-drinking identification. Keep mandatory strength pickup, actual-effect verification and honest collection evidence. A preparation selection alone would not prove retrieval or survival.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run blocked alive, rather than dying. Decision 219 (log 609) began a frost-test approach without an admitted route for protecting the other unidentified potions. Decisions 220–222 (logs 612–620) reached the bank, failed the stash check and deferred potion preparation for the floor. Decision 247 (logs 695–698) then hit the descent obligation; its diagnostics identify an iron key, not a newly observed strength potion. The generic progression warning covers keys too. Fallback advanced the game clock but did not resolve that obligation. Offline bookkeeping reconstructed from this source and recorded public inputs matches original actions and reasons through decision 222. Isolated probes on validated state find no stash route from the selected banks. The proposed correction checks protection before starting a remote frost approach, while preserving actual current-bank checks, hazard restrictions and mandatory progression pickup. Candidate reconstruction stops at its first changed decision, 219; no later observations are fed to it. This establishes an approach-admission defect, not a safe replacement route or puzzle success.",
+    "learnings": "Check potion-protection feasibility before walking toward an unknown frost test. An infeasible unstarted approach should not consume floor-wide preparation availability. Continue to require real stash, effect and collection evidence; selecting another action does not establish retrieval or survival."
+  },
+  "recommendations": [
+    {
+      "id": "000019-crab-surprise-recovery",
+      "priority": "high",
+      "summary": "Establish a bounded admitted surprise alternative before crab recovery degenerates into adjacent waits.",
+      "evidence": [
+        "Decisions 1708, 1718 and 1737, accepted log lines 4852, 4885 and 4938: doorway strikes leave the crab alive.",
+        "Decision 1774, log line 5039: no fresh surprise or admitted escape-backed doorway.",
+        "Decisions 1805 and 1863, log lines 5164–5165 and 5352–5353: tactical decline becomes adjacent waiting.",
+        "Decision 1966, log lines 5659–5660: lethal accepted wait and explicit crab death message."
+      ],
+      "status": "deferred",
+      "reason": "This fire-room recording does not establish a safe crab surprise alternative. The earlier case still needs recorded-input-validated doorway-attempt, pursuit and escape bookkeeping plus an admitted bounded surprise approach with a second exit under existing health and hazard checks.",
+      "origin_run": "000019"
+    },
+    {
+      "id": "000018-strength-preparation-admission",
+      "priority": "high",
+      "summary": "Establish an admitted preparation route for the mandatory strength potion instead of exhausting resources in fallback.",
+      "evidence": [
+        "Decision 2826, log line 8000: publicly revealed strength potion at cell 999.",
+        "Decision 2827, log lines 8002–8005: unreachable mandatory target, descent veto, and waterskin fallback.",
+        "Decisions 2829–2854, log lines 8009–8084: repeated advancing fallback waits.",
+        "Decision 3903, log lines 11150–11151: accepted wait and explicit starvation death.",
+        "Run 000020: decisions 3990 and 3992, log lines 11306 and 11312, reveal strength beyond magical fire with HP below unknown-test admission.",
+        "Run 000020: decision 4438, log lines 12647–12650, retains the mandatory pickup veto; decision 4553, accepted line 12986, ends in confirmed starvation."
+      ],
+      "status": "deferred",
+      "reason": "Full source browsing resolves the selecting helper chain. However, the first-sighting hero is below the unknown-test health threshold, and a public-snapshot probe rejects potion protection at both local test banks. Needed follow-up is a recorded-input-validated bounded preparation state admitting a stash/test approach and subsequent retrieval, or observed non-drinking identification. Neither removing the hazard buffer nor waiving the strength obligation is justified.",
+      "origin_run": "000018"
+    },
+    {
+      "id": "000013-pool-preparation-admission",
+      "priority": "high",
+      "summary": "Establish safe unknown-supply preparation for the mandatory piranha chest.",
+      "evidence": [
+        "Run 000013: decisions 3014–3016 and 4063, retained backlog evidence."
+      ],
+      "status": "deferred",
+      "reason": "This fire-room recording does not establish a safe pool preparation alternative. The earlier case still needs recorded-input-validated dry test-bank and remote potion-protection admission plus a budgeted protected chest trip, or observed non-drinking identification.",
+      "origin_run": "000013"
+    },
+    {
+      "id": "000021-frost-approach-stash-admission",
+      "priority": "high",
+      "summary": "Check potion protection before starting a remote frost-test approach.",
+      "evidence": [
+        "Decision 219, log 609: frost staging begins without an admitted stash route.",
+        "Decisions 221–222, logs 615–620: arrival leads to stash veto and floor-wide potion-preparation deferral.",
+        "Decision 247, logs 695–698: uncollected matching key prevents descent."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000021"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000021/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000021/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 430,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 437,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 210
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 430,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
