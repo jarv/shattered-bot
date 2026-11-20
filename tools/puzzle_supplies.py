@@ -13,6 +13,7 @@ try:
     from .special_rooms import fire_barrier
     from .potion_stash import protect_potions
     from .policy_decision import Intent
+    from .policy_geometry import distance
 except ImportError:
     from consumable_tactics import base_name, unknown_potion
     from room_tactics import PROTECTION, remaining, plan_journey,sentry_geometry
@@ -20,6 +21,7 @@ except ImportError:
     from special_rooms import fire_barrier
     from potion_stash import protect_potions
     from policy_decision import Intent
+    from policy_geometry import distance
 
 
 @dataclass(frozen=True)
@@ -222,6 +224,14 @@ def stage_sentry(p,state,neighbors,item=None):
     for bank in region & paths.keys():
         tile=p.tiles[bank];route=p.route(paths,bank)
         if tile['terrain']==14 or len(route)>41 or tile.get('trap') or tile.get('plant') or tile.get('effects'):continue
+        if item is None:
+            # Unknown supplies must meet the same test-bank admission as
+            # prepare_supplies. A protected reward route alone cannot justify
+            # staging where the subsequent potion test will always decline.
+            sentry=next(a for a in p.room_actors.values() if a['name'].lower()=='red sentry')
+            if distance(bank,sentry['cell'],state['map']['width'])>5 or not safe_test_bank(
+                    p,state,bank,distance,neighbors,allow_dry=True,sentry_bank=True):
+                continue
         if any(c in p.room_blocked or p.tiles[c].get('trap') or p.tiles[c].get('plant')
                or p.effects_block_movement(p.tiles[c]) for c in route[1:]):continue
         staged=dict(state,hero=dict(state['hero'],cell=bank))

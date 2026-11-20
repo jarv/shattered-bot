@@ -55,5 +55,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000004"
+  },
+  {
+    "id": "000005-sentry-test-admission",
+    "priority": "high",
+    "summary": "Require unknown-supply sentry staging to satisfy the existing potion-test bank gates.",
+    "evidence": [
+      "Decision 633, log line 1820",
+      "Decisions 640–642, log lines 1840–1847",
+      "Decisions 679–687, log lines 1961–1989",
+      "Decision 946, log lines 2768–2770",
+      "Decision 1074, accepted transition at log line 3154"
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000005"
   }
 ]
