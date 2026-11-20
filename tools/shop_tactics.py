@@ -110,6 +110,17 @@ def visit_entrance_shop(p, state, previous, neighbors):
             if c not in body and (terrain in interior or (terrain in {5, 6} and c in p.entrance_doors_checked)):
                 body.add(c)
                 queue.append(c)
+    # Finish revealing the observed entrance-side component before committing
+    # to a door branch. Otherwise one revealed exit can consume the entire
+    # visit budget in distant rooms while entrance frontiers remain untouched.
+    # Use only the existing admitted paths, never unknown cells or a route
+    # through an unchecked door to reach a supposedly local frontier.
+    frontiers = [c for c in body if c != pos and c in previous and c not in p.exhausted
+                 and all(n in body for n in p.route(previous, c))
+                 and any(n not in p.tiles for n in neighbors(c, width, height))]
+    if frontiers:
+        return p.toward(state, min(frontiers, key=lambda c: len(p.route(previous, c))),
+                         "shop: reveal entrance chamber doors", previous, intent=Intent.SHOP)
     doors = {c for cell in body for c in neighbors(cell, width, height)
              if p.tiles.get(c, {}).get("terrain") in {5, 6} and c not in p.entrance_doors_checked}
     for door in sorted(doors, key=lambda c: len(p.route(previous, c)) if c in previous else 9999):
@@ -124,9 +135,4 @@ def visit_entrance_shop(p, state, previous, neighbors):
                 return p.cell(min(beyond, key=lambda c: p.visits[c]), "shop: inspect entrance-door branch")
             continue
         return p.toward(state, door, "shop: check entrance door before descent", previous, intent=Intent.SHOP)
-    frontiers = [c for c in body if c in previous and c not in p.exhausted
-                 and any(n not in p.tiles for n in neighbors(c, width, height))]
-    if frontiers:
-        return p.toward(state, min(frontiers, key=lambda c: len(p.route(previous, c))),
-                         "shop: reveal entrance chamber doors", previous, intent=Intent.SHOP)
     raise ShopVisitBlocked("Expected shop at this floor's entrance, but no safe unexamined entrance branch remains")

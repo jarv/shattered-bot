@@ -358,5 +358,19 @@
     "status": "deferred",
     "reason": "Source establishes the cumulative search-ceiling gate, not a safe replacement. The concrete blocker is validating a remaining target with its safe approach/return, current threat bookkeeping, hunger cost, and bounded search receipts. The incomplete observed map does not prove where progression lies; the known trap-blocked connection also lacks a validated protected traversal. A larger search or waiting bound, speculative movement, or guessed potion effect would not supply that evidence. No policy or test changes are proposed.",
     "origin_run": "000030"
+  },
+  {
+    "id": "000031-entrance-scout-before-branches",
+    "priority": "high",
+    "summary": "Reveal remaining admitted entrance frontiers before spending shop-search movement on door branches.",
+    "evidence": [
+      "Decision 2240, selection line 6539: door-directed movement while entrance frontiers remain.",
+      "Decisions 2244–2355, selection lines 6547–6806: successive door branches dominate shop scouting.",
+      "Decision 2373, lines 6846–6848: exhausted entrance-shop budget triggers fallback waiting.",
+      "Decision 2812, lines 8131–8132: final wait ends in explicitly reported starvation."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000031"
   }
 ]

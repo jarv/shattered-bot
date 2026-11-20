@@ -1,0 +1,422 @@
+{
+  "schema_version": 1,
+  "id": "000031",
+  "started_at": "2026-11-20T22:37:41Z",
+  "completed_at": "2026-11-20T23:00:19.616329+00:00",
+  "source_commit": "7828de022fb468ca8a6652213efb91bb69b801ce",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "17479146b5bf2aa52ebb7cdb14ff8f5474f6de7ba14ab7842a98a8ff090a2702",
+  "outcome": "dead",
+  "outcome_summary": "Starved after entrance-shop scouting stalled",
+  "outcome_reason": "Hero died",
+  "max_depth": 6,
+  "actions": 2813,
+  "duration_seconds": 1346.808,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000030",
+  "previous_source_commit": "16651328a19d68413ec7209873da317b9628a72c",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Distinguish exhausted ordinary frontiers from a verified completed floor. Investigate resource-funded missing-exit search admission when hunger reduces a cumulative search ceiling. Validate the actual safe route and work budget before changing admission; further searching is not proof of finding the exit. Preserve mandatory progression pickups, hazard exclusions and honest potion-effect receipts.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The Mage defeated Goo, then starved after entrance-shop scouting stalled. At decision 2240 (selection line 6539), the shop controller chose a door branch while observed, reachable entrance frontiers remained. Subsequent branch exploration consumed the visit budget; decision 2373 (lines 6846–6848) begins fallback waiting after the shop-search veto. Decision 2812 (lines 8131–8132) records the final wait from 1 HP to zero, with an explicit starvation message. This is advancing-time failure, not an execution deadlock. The initiating ordering defect is in tools/shop_tactics.py: entrance doors are considered before unfinished entrance frontiers. The proposed correction reverses that ordering only for existing admitted paths wholly inside the observed entrance-side component. It does not claim the shop was found, credit unfinished loot, raise budgets, or identify unknown potions. A condensed public-geometry regression fails on the original policy and passes on the candidate; all 1596 Python tests pass, with four skipped. Full historical policy memory at decision 2240 was not recovered; a separate public-map fixture admits the alternative without claiming recorded runtime memory or a successful counterfactual run.",
+    "learnings": "Finish reachable scouting within the entrance-side chamber before exploring its door branches. Keep shop visitation dependent on actual nearby stock or a shopkeeper, preserve mandatory progression pickups, and do not mistake an admitted scouting move for finding the shop or surviving the floor."
+  },
+  "recommendations": [
+    {
+      "id": "000030-missing-exit-search-admission",
+      "priority": "high",
+      "summary": "Establish an admitted missing-exit search alternative at the eight-search hunger transition.",
+      "evidence": [
+        "Decision 4547, line 12920: ordinary region tasks are exhausted and wall searching begins.",
+        "Decision 4645, lines 13203-13204: the eighth search leaves health full but changes hunger phase.",
+        "Decision 4646, lines 13205-13206: no reachable exit is reported and fallback waits begin.",
+        "Decision 5799, lines 16655-16656: a starving hero falls from 1 HP to zero while waiting."
+      ],
+      "status": "deferred",
+      "reason": "Source establishes the cumulative search-ceiling gate, not a safe replacement. The concrete blocker is validating a remaining target with its safe approach/return, current threat bookkeeping, hunger cost, and bounded search receipts. The incomplete observed map does not prove where progression lies; the known trap-blocked connection also lacks a validated protected traversal. A larger search or waiting bound, speculative movement, or guessed potion effect would not supply that evidence. No policy or test changes are proposed.",
+      "origin_run": "000030"
+    },
+    {
+      "id": "000027-goo-water-engagement",
+      "priority": "medium",
+      "summary": "Establish an admitted dry-engagement or charge-preservation alternative before changing Goo combat priorities.",
+      "evidence": [
+        "Decision 1453, selection line 4015: wakes Goo on water with full health and six staff charges.",
+        "Decisions 1460–1464, lines 4029–4046: melee trades on water consume health while four charges remain.",
+        "Decisions 1469–1470, lines 4055–4062: health falls from 27 to 12 during further melee trades.",
+        "Decision 1481, line 4087: exhausted-magic withdrawal starts; decision 1493, line 4136: fallback retreat follows."
+      ],
+      "status": "deferred",
+      "reason": "Complete source explains the selection but establishes no discrete implementation defect or validated safe replacement. At decision 1460 the observed adjacent dry steps do not provide the separating landing required by the existing lure rule. A repair needs an admitted multi-turn dry-engagement route or a public-input-validated attack/resource alternative preserving warning escape and health/hunger budgets. Arbitrarily preferring magic, extending preparation, or guessing potion identities is not sufficient evidence.",
+      "origin_run": "000027"
+    },
+    {
+      "id": "000026-pool-preparation-feasibility",
+      "priority": "medium",
+      "summary": "Resolve pool preparation feasibility before adding food spending or additional staging movement.",
+      "evidence": [
+        "Decision 806, log line 2413: observed chest and piranhas.",
+        "Decision 1000, log line 2957: pool supplies declined while hungry.",
+        "Decision 1044, log lines 3087–3089: mandatory chest blocks descent; fallback waits begin.",
+        "Decisions 1076–1078, log lines 3183–3189: eating and healing do not restore progress."
+      ],
+      "status": "deferred",
+      "reason": "No safe focused replacement is established. The public geometry admits protected chest trips from some approaches, but not an unknown-drink bank satisfying the existing dry-surroundings gates; no carried known invisibility or safe identification supply is recorded at the block. A repair needs evidence of an admissible identification/test-and-inventory-protection route, or additional public observations establishing one. Merely adding a pool meal would not resolve the recorded post-meal failure, and speculative movement or weakened hazard checks is not justified.",
+      "origin_run": "000026"
+    },
+    {
+      "id": "000025-scroll-discovery-readiness",
+      "priority": "high",
+      "summary": "Establish evidence-backed preparation criteria for unknown-scroll discovery that can cause displacement.",
+      "evidence": [
+        "Decision 833, selection line 2357 and accepted transition line 2358.",
+        "Decisions 834–836, lines 2359–2364.",
+        "Decisions 839–841, lines 2375–2386.",
+        "Decision 879, accepted transition line 2547."
+      ],
+      "status": "deferred",
+      "reason": "The complete selecting source explains the risky read, but no validated preparation or replacement action is established. A minimum charge threshold would be arbitrary, and neither full charges nor a quiet origin guarantees a safe teleport destination. A focused repair needs bounded readiness criteria plus public-input-validated preparation or recovery alternatives that preserve discovery and mandatory progression; hidden potion identities cannot supply that evidence.",
+      "origin_run": "000025"
+    },
+    {
+      "id": "000024-pool-approach-receipt",
+      "priority": "medium",
+      "summary": "Remember observed pool-approach arrivals instead of restarting completed scouting detours.",
+      "evidence": [
+        "Run 000024: decisions 845–848, selection lines 2413, 2416, 2419 and 2422.",
+        "Run 000024: decisions 851 and 855, selection lines 2431 and 2445.",
+        "Incoming backlog records that candidate validation failed and code was not promoted."
+      ],
+      "status": "deferred",
+      "reason": "This proposal verifies a specific door-opening receipt, not the earlier approach-scouting lifecycle. The earlier rejected case still needs its own public-input validation across interrupted approach scouting, without collection credit or weakened potion-test admission.",
+      "origin_run": "000024"
+    },
+    {
+      "id": "000019-crab-surprise-recovery",
+      "priority": "high",
+      "summary": "Establish a bounded admitted surprise alternative before crab recovery degenerates into adjacent waits.",
+      "evidence": [
+        "Run 000019: decisions 1708, 1718 and 1737, accepted lines 4852, 4885 and 4938.",
+        "Run 000019: decisions 1774, 1805, 1863 and 1966, retained backlog evidence."
+      ],
+      "status": "deferred",
+      "reason": "This recording establishes no safe crab surprise alternative. The earlier case still needs public-input-validated doorway-attempt, pursuit and escape bookkeeping and a bounded surprise approach with a second exit under existing health and hazard checks. Current source browsing does not certify that replacement.",
+      "origin_run": "000019"
+    },
+    {
+      "id": "000018-strength-preparation-admission",
+      "priority": "high",
+      "summary": "Establish admitted preparation for mandatory progression loot instead of exhausting resources in fallback.",
+      "evidence": [
+        "Run 000018: decisions 2826–2827 and 3903, retained backlog evidence.",
+        "Run 000020: decisions 3990, 3992, 4438 and 4553, retained backlog evidence.",
+        "Run 000022: decisions 2683, 2756, 2909–2910 and 3632, retained backlog evidence."
+      ],
+      "status": "deferred",
+      "reason": "The current fatal encounter supplies no validated mandatory-loot preparation alternative. The earlier case still requires a contemporaneously known identification or extinguishing resource, or validated preparation satisfying hunger, health, hazard, protection and retrieval budgets. Unknown potion identities and waived mandatory pickup cannot justify a repair.",
+      "origin_run": "000018"
+    },
+    {
+      "id": "000031-entrance-scout-before-branches",
+      "priority": "high",
+      "summary": "Reveal remaining admitted entrance frontiers before spending shop-search movement on door branches.",
+      "evidence": [
+        "Decision 2240, selection line 6539: door-directed movement while entrance frontiers remain.",
+        "Decisions 2244–2355, selection lines 6547–6806: successive door branches dominate shop scouting.",
+        "Decision 2373, lines 6846–6848: exhausted entrance-shop budget triggers fallback waiting.",
+        "Decision 2812, lines 8131–8132: final wait ends in explicitly reported starvation."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000031"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000031/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000031/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 74,
+        "turns": 295,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 297,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 350
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 39,
+        "gold_gained": 282,
+        "turns": 729,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 743,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "objective-completed-dialogue"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 505
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 36,
+        "gold_gained": 359,
+        "turns": 372,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 386,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 367
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 57,
+        "gold_gained": 307,
+        "turns": 490,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 506,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1302
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 288,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 294,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 33,
+        "gold_gained": 0,
+        "turns": 570,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 579,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt/choice container",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 10,
+    "ending_level": 8,
+    "starving_turns": 579,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 4,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 569,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 8,
+    "gold_collected": 1022,
+    "gold_complete": true,
+    "turns": 2744,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 8,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
