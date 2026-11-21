@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "id": "000045",
+  "started_at": "2026-11-21T11:23:42Z",
+  "completed_at": "2026-11-21T11:28:10.655264+00:00",
+  "source_commit": "56cff0cdb8441ccdcf33dd34d4ee6112a8b9f506",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 610,
+  "duration_seconds": 264.933,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000044",
+  "previous_source_commit": "c3f11a7c4b3e347acdd5e045b428e9825e94cee0",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Mandatory pool retrieval needs an executable preparation route. Check hunger admission, safe unknown-drink geometry, inventory protection, entrance readiness and the protected return budget together. A floor-supply expectation does not identify any potion. Preserve the chest obligation and terminal planner-failure label. Other backlog cases were not re-investigated here.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero stopped alive at full health because the planner exhausted recovery, not because the game clock froze. A completed pool-approach scout repeatedly preempted key collection: decision 470 reached cell 637, decision 471 resumed key work, and decision 472 restarted the same scout. Subsequent route-stall and loop exclusions accumulated before planner failure at decision 610. Offline source-pinned reconstruction matched original actions and reasons through decision 476. The proposed arrival-receipt correction matches through 471, then selects the existing key-progress step at 472; reconstruction stops there. The new regression fails by the expected assertion on original policy and passes on the candidate. The full suite passes. This establishes removal of a stale scouting detour, not successful key collection, pool preparation or survival. Potion identities, hazard admission, mandatory pickups and the terminal failure label remain unchanged.",
+    "learnings": "Remember an actually observed scouting arrival separately from protection or collection. Returning to other floor work must not restart that completed detour. Pool supply feasibility remains a separate problem: validate an admitted entrance scout, return and inventory protection before any unknown drink. Other backlog cases were not re-investigated."
+  },
+  "recommendations": [
+    {
+      "id": "000024-pool-approach-receipt",
+      "priority": "high",
+      "summary": "Remember completed pool-approach scouting so it does not repeatedly interrupt key collection.",
+      "evidence": [
+        "Decision 470, lines 1388–1389: approach selection and accepted arrival at 637.",
+        "Decisions 471–472, lines 1391–1394: key work leaves the bank, then preparation immediately restarts the completed detour.",
+        "Decision 477, line 1409: interrupted key target exceeds bounded route progress; decision 482, line 1426: pool detour triggers the navigation-loop guard.",
+        "Decision 610, line 1832: hungry recovery exhaustion terminates the living hero's planner.",
+        "tools/puzzle_supplies.py:189–213,365–382; tools/test_shattered_pool_approach_receipt.py."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000024"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000045/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000045/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 237,
+        "turns": 346,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 347,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 962
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 8,
+        "gold_gained": 73,
+        "turns": 259,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 257,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1126
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 943
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 9,
+    "ending_level": 2,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 310,
+    "gold_complete": true,
+    "turns": 605,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

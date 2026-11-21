@@ -38,6 +38,8 @@ class NavigationMemory:
     rose_outfit_attempts: set = local(set)
     puzzle_flight_bank: object = value(None, floor=True)
     puzzle_sentry_bank: object = value(None, floor=True)
+    pool_approach_pending: object = value(None, floor=True)
+    pool_approach_receipts: set = local(set)
     pool_entrance_pending: object = value(None, floor=True)
     pool_entrance_receipts: set = local(set)
     flight_entrance_pending: object = value(None, floor=True)

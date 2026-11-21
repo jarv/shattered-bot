@@ -188,6 +188,8 @@ def stage_known_pool(p,state,demand,item,distance,neighbors):
 
 def revisit_pool(p,state,demand,neighbors):
     if p.puzzle_revisit_steps['pool']>=48:return None
+    key=(state['depth'],state.get('branch',0),demand.cell)
+    if any(receipt[:3]==key for receipt in p.pool_approach_receipts):return None
     try:
         from .piranha_tactics import staging_bank
     except ImportError:
@@ -205,8 +207,10 @@ def revisit_pool(p,state,demand,neighbors):
     _,bank=min(choices)
     if bank==state['hero']['cell']:return None
     p.puzzle_revisit_steps['pool']+=1
-    return p.toward(state,bank,'room: revisit observed piranha-room dry approach before testing floor supply',
-                    paths,intent=Intent.REPOSITION)
+    decision=p.toward(state,bank,'room: revisit observed piranha-room dry approach before testing floor supply',
+                      paths,intent=Intent.REPOSITION)
+    if decision:p.pool_approach_pending=(*key,bank)
+    return decision
 
 
 def stage_known_gas(p,state,item,neighbors):
@@ -360,6 +364,22 @@ def stage_sentry(p,state,neighbors,item=None):
 
 def observe_pool_entrance(p,before,state):
     """Observe pool and flight scouts; only actual open-door arrivals count."""
+    # A dry approach scout is an observation task, not a protection or loot
+    # receipt. Once actually reached, leaving it for other floor work must not
+    # restart that same detour. Supply/test admission still runs on every input.
+    pending=p.pool_approach_pending
+    if pending is not None:
+        p.pool_approach_pending=None
+        depth,branch,_,bank=pending
+        decision=p.last_decision
+        tile=next((t for t in state.get('map',{}).get('cells',[]) if t['cell']==bank),{})
+        if before and decision and decision.action=={'type':'cell','cell':bank} \
+                and decision.intent==Intent.REPOSITION \
+                and (before.get('depth'),before.get('branch',0))==(depth,branch) \
+                and (state.get('depth'),state.get('branch',0))==(depth,branch) \
+                and before.get('hero',{}).get('cell')!=bank \
+                and state.get('hero',{}).get('cell')==bank and tile.get('visible'):
+            p.pool_approach_receipts.add(pending)
     for kind in ('pool','flight'):
         pending=getattr(p,kind+'_entrance_pending')
         if pending is None:continue
