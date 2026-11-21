@@ -1055,5 +1055,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000080"
+  },
+  {
+    "id": "000081-boxed-summoning-escape",
+    "priority": "high",
+    "summary": "Establish an evidence-backed escape-opening response to a boxed summoning ambush.",
+    "evidence": [
+      "Decision 466, log lines 1349–1350: approaching skeletal remains triggers an unseen summoning trap; twelve enemies appear.",
+      "Decision 467, log lines 1352–1353: no admitted retreat; the return doorway is occupied by a gnoll scout.",
+      "Source-pinned offline reconstruction matches all 477 selections; the first ambush state has no reachable movement destination outside the hero's cell.",
+      "Decisions 468, 470 and 472, accepted transitions 1356, 1361 and 1366: three snake zaps exhaust the staff while health falls to 14.",
+      "Decision 476, accepted transition 1377: health falls from four to zero; the full public message confirms a gnoll scout killed the hero.",
+      "tools/room_tactics.py:529–546; tools/trap_field_tactics.py:25–35; tools/multi_enemy_tactics.py:97–147; tools/tactical_recovery.py:recover."
+    ],
+    "status": "deferred",
+    "reason": "Complete source and validated reconstruction resolve the packet's target, trap-memory and retreat gaps, but do not establish a safe replacement. Before entry no trap was public. After activation every neighboring step is occupied, doorway scout health is unobserved, and no known displacement or protection consumable is carried. Switching targets alone does not establish timely clearance or survival. Next derive the decision-467 fixture and a bounded door-blocker attack plan with conservative resource/loss admission, fresh public clearance evidence and a freshly admitted retreat. Preserve collateral, hazard and mandatory-pickup gates. No policy or regression change is proposed.",
+    "origin_run": "000081"
   }
 ]
