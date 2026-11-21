@@ -998,15 +998,17 @@
   {
     "id": "000076-terminal-supply-arbitration",
     "priority": "high",
-    "summary": "Isolate the terminal missing-supply obligation before changing mandatory discovery arbitration.",
+    "summary": "Resolve the shelf-driven missing-flame obligation without bypassing safe discovery or retrieval.",
     "evidence": [
-      "Decision 140, log line 389: bookshelves are publicly observed.",
-      "Decision 387, accepted transition at line 1132: collection advances time and leaves full health.",
-      "Decision 388, log line 1134: recognized-room supply or retrieval preservation blocks mandatory discovery.",
-      "tools/puzzle_supplies.py:40–65; tools/descent_potions.py:186–193; tools/test_wooden_barrier.py:26–35."
+      "Decision 188, log line 517: bookshelves first appear in a selecting public observation; remembered cells 577–582 are terrain 27.",
+      "Decisions 190–194, lines 523–532: the read scroll exposes a cleanse-item selector and is publicly identified as remove curse, not identify.",
+      "Decision 276, accepted transition line 773: exploration advances the clock at full health.",
+      "Decision 277, line 775: missing liquid flame at 581 blocks mandatory discovery; all three preparation prerequisites decline.",
+      "Source-pinned offline reconstruction matches all 277 selected actions, reasons, controllers and intents, then reproduces the terminal blocker; this is reconstructed bookkeeping, not recorded runtime memory.",
+      "tools/puzzle_supplies.py:39–56,671–679; tools/wooden_barrier.py:24–25; tools/descent_potions.py:283–317; tools/mage_policy.py:440–496."
     ],
     "status": "deferred",
-    "reason": "Historical backlog, not revalidated or addressed in run 000089. Historical backlog, not revalidated or addressed in this recording. Historical context from the supplied backlog, not revalidated in this review: Historical backlog; not revalidated or addressed in this recording. The terminal message combines missing supplies with journey, drop and trap-retrieval flags; original terminal memory was not fully reconstructed. Observation-only accumulation finds a missing liquid-flame demand from bookshelves, but is not validated selecting memory. Existing behavior intentionally reserves carried flame for shelves, so deleting that reservation is not a certified fix. Next validate original selections through decision 388, isolate the blocking flags, and test a distinction between optional fuel reservation and genuine barricade supply obligations while preserving mandatory collection.",
+    "reason": "Revalidated in this recording. Full selecting source and matching reconstruction resolve the combined-blocker ambiguity: only a shelf-derived missing-flame demand remains, with no active stash, journey, drop or trap retrieval. No known identification or reconnaissance resource remains, and no currently visible bank passes admission. A safe replacement is not established: unknown-fire preparation admits barricades, not shelves; removing shelf reservation could consume flame needed for an unresolved far-side reward. The pinned game source contains both ordinary libraries without a supplied flame potion and flame-supplied secret shelf rooms, while the recorded shelf far side is unobserved. Next derive a decision-188 fixture and a positive public-evidence distinction between optional fuel and genuine shelf-separated retrieval, testing both geometries. Otherwise establish nonconsumptive identification with an actual known resource before changing arbitration. Preserve mandatory pickup, known-supply reservation, inventory protection and hazard checks. No policy or regression patch is submitted.",
     "origin_run": "000076"
   },
   {
