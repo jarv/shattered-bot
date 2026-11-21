@@ -1022,5 +1022,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000077"
+  },
+  {
+    "id": "000079-gas-inventory-protection",
+    "priority": "high",
+    "summary": "Establish executable inventory-protected identification before gas-room preparation exhausts mandatory discovery.",
+    "evidence": [
+      "Decision 275, log lines 817–818: gas entrance and unresolved rewards observed; escape accepted.",
+      "Decision 276, log line 820: exploration resumes with jade and turquoise still unidentified.",
+      "Source-pinned offline reconstruction: bank 241 admits the hypothetical chest trip but has no remote stash in corridor 240/241/269.",
+      "Decision 292, accepted transition line 869: clock advances at full health.",
+      "Decision 293, log line 871: missing purity supply blocks mandatory discovery.",
+      "tools/puzzle_supplies.py:prepare_supplies; tools/potion_stash.py:47–80; tools/descent_potions.py:240–255."
+    ],
+    "status": "deferred",
+    "reason": "Complete source and matching reconstruction isolate the blocker, but neither a safe remote stash reachable inside the admitted corridor nor a remaining identification resource is established. Allowing the singleton drink risks the other color; generic distant discovery can waste room protection before retrieval. Next derive a deterministic decision-276 fixture and establish an identification-only preparation route with protected inventory, accepted identification/retrieval receipts and a separately admitted return using actual known protection. Preserve mandatory pickup and every hazard gate; no safe focused patch is certified.",
+    "origin_run": "000079"
   }
 ]
