@@ -147,7 +147,7 @@ def main(policy_factory=None):
     parser.add_argument("--engine", choices=("legacy", "planner"), default="legacy",
                         help="Use legacy tactics or experimental utility combat under the same priority tree")
     parser.add_argument("--goal", choices=("survival", "two-floors", "floor-four", "goo"), default="survival",
-                        help="Stop at a checkpoint/Goo, or keep playing until death (survival); unsupported UI/API faults pause")
+                         help="Stop at a checkpoint/Goo, or play until death or planner exhaustion (survival); unsupported UI/API faults pause")
     parser.add_argument("--log", help="New observation/decision JSONL file (never overwrites an existing log)")
     parser.add_argument("--seed", help="Optional custom seed, e.g. ABC-DEF-GHI; entered/verified through ordinary UI")
     try:
@@ -209,7 +209,7 @@ def main(policy_factory=None):
         print(str(error), file=sys.stderr)
         return 1
     finally:
-        terminal=result and result.get('outcome') in {'dead','success','deadlocked'}
+        terminal=result and result.get('outcome') in {'dead','success','deadlocked','stuck-planner'}
         persistent=getattr(policy,'goal','survival')=='survival'
         if process and not args.keep_open and (not persistent or terminal):
             stop_game(process)

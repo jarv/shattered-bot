@@ -35,16 +35,17 @@ class DamageAPI:
 
 
 class ContinuationTests(unittest.TestCase):
-    def test_default_continues_no_escape_until_observed_death(self):
+    def test_default_ends_exhausted_planning_without_waiting_for_death(self):
         api=DamageAPI();p=NoEscapePolicy()
         with tempfile.TemporaryDirectory() as temp:
             path=Path(temp)/'decisions.jsonl';result=run(api,p,10,0,path)
             log=path.read_text()
-        self.assertEqual('dead',result['outcome'])
-        self.assertEqual(3,len(api.actions))
-        self.assertTrue(all(a=={'type':'wait'} for a in api.actions))
-        self.assertEqual(3,result['continuation_errors'][0]['occurrences'])
-        self.assertIn('continuation_error',log)
+        self.assertEqual('stuck-planner',result['outcome'])
+        self.assertFalse(api.actions)
+        self.assertEqual(1,result['continuation_errors'][0]['occurrences'])
+        self.assertIn('planner_failure',log)
+        self.assertIn('Test danger',result['planner_failure']['reason'])
+        self.assertEqual('stuck planner (bot unable to proceed)',result['death_reason'])
         self.assertFalse(result['stop_policy']['stop_on_no_safe_action'])
 
     def test_strict_opt_in_preserves_no_escape_stop(self):
@@ -63,7 +64,8 @@ class ContinuationTests(unittest.TestCase):
         def fail(action):
             api.actions.append(action);raise PlayerAPIError(500,'execution state unknown')
         api.step=fail
-        with tempfile.TemporaryDirectory() as temp:
+        with tempfile.TemporaryDirectory() as temp, patch('tools.until_death.best_effort',
+                return_value=Decision({'type':'cell','cell':25},'admitted retreat')):
             with self.assertRaises(PlayerAPIError):run(api,p,10,0,Path(temp)/'log.jsonl')
         self.assertEqual(1,len(api.actions))
 

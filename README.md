@@ -40,6 +40,13 @@ lightning response, potion testing/retrieval, and minimum-energy crafting gates.
 The [special-room status list](docs/special-room-status.md) lists recognized
 room families, required supplies, known limits, and the shared reserve-or-defer rule.
 
+If normal planning and admitted rescue actions are exhausted, survival runs end
+as **stuck planner (bot unable to proceed)** instead of spending fallback turns
+until starvation. This is a terminal bot failure (`stuck-planner`), not a claim
+that the hero died. The final observation, original blocker and policy report
+are retained for high-priority diagnosis and regression-backed repair. Ordinary
+bounded healing, tactical approach waits and safe rescue actions remain available.
+
 ## Fresh run history
 
 The initial commit intentionally contains **no historical runs, recommendations,

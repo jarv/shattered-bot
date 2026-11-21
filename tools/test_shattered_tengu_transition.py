@@ -211,10 +211,10 @@ class FallbackProgressTests(unittest.TestCase):
         api.step = step
         with TemporaryDirectory() as temp, contextlib.redirect_stdout(io.StringIO()):
             result = run(api, StalledPolicy(), 1, 0, Path(temp)/"trace.jsonl")
-        self.assertEqual("blocked", result["outcome"])
-        self.assertEqual(128, result["actions"])
-        self.assertEqual(128, result["fallback_waits_without_progress"])
-        self.assertEqual(128, len(api.actions))
+        self.assertEqual("stuck-planner", result["outcome"])
+        self.assertEqual(0, result["actions"])
+        self.assertEqual("stuck planner (bot unable to proceed)", result["death_reason"])
+        self.assertFalse(api.actions)
 
 
 if __name__ == "__main__":

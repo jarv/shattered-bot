@@ -3,11 +3,11 @@ import json
 try:
     from .continuation import best_effort
     from .survival_policy import is_hostile
-    from .policy_decision import GameplayBlocked,TacticalBlocked,NoSafeAction
+    from .policy_decision import GameplayBlocked,TacticalBlocked,NoSafeAction,PlannerStuck
 except ImportError:
     from continuation import best_effort
     from survival_policy import is_hostile
-    from policy_decision import GameplayBlocked,TacticalBlocked,NoSafeAction
+    from policy_decision import GameplayBlocked,TacticalBlocked,NoSafeAction,PlannerStuck
 
 
 def recover(p,state,error):
@@ -18,8 +18,10 @@ def recover(p,state,error):
     p.log_continuation_error(state,'until-death-gameplay-continuation',error.reason)
     try:
         decision=best_effort(p,state,[o for o in state.get('objects',[]) if is_hostile(o)])
-    except (GameplayBlocked,TacticalBlocked,NoSafeAction):
-        decision=p.decision({'type':'wait'},'until death: advance time after admitted gameplay recovery is exhausted')
+    except (GameplayBlocked,TacticalBlocked,NoSafeAction) as rescue_error:
+        raise PlannerStuck(error.reason + "; rescue declined: " + rescue_error.reason) from None
+    if decision is None:
+        raise PlannerStuck(error.reason)
     if decision:decision.controller='until-death-continuation'
     return decision
 

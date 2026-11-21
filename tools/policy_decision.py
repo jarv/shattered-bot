@@ -61,3 +61,10 @@ class GameplayBlocked(Finished):
     """Known ready-game planning failure, never an API/UI/startup validation gate."""
     def __init__(self,reason):
         super().__init__('blocked',reason)
+
+
+class PlannerStuck(Finished):
+    """Terminal planner exhaustion, not an observed in-game hero death."""
+    def __init__(self, blocker):
+        super().__init__('stuck-planner', 'stuck planner (bot unable to proceed)')
+        self.blocker = blocker

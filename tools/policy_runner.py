@@ -6,14 +6,14 @@ from itertools import count
 
 try:
     from .player_api import PlayerAPIError
-    from .policy_decision import Finished, Intent, TacticalBlocked, NoSafeAction
+    from .policy_decision import Finished, Intent, TacticalBlocked, NoSafeAction, PlannerStuck
     from .policy_runtime import Transaction
     from .survival_policy import SurvivalPolicy, NavigationLoopGuard, MenuLoopGuard
     from .decision_engine import source_revision
     from .combat_observation import observe_accepted_attack
 except ImportError:
     from player_api import PlayerAPIError
-    from policy_decision import Finished, Intent, TacticalBlocked, NoSafeAction
+    from policy_decision import Finished, Intent, TacticalBlocked, NoSafeAction, PlannerStuck
     from policy_runtime import Transaction
     from survival_policy import SurvivalPolicy, NavigationLoopGuard, MenuLoopGuard
     from decision_engine import source_revision
@@ -37,8 +37,8 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
         from .until_death import recover as continue_alive,ClockDeadlock
     except ImportError:
         from until_death import recover as continue_alive,ClockDeadlock
-    # Survival runs always continue until death. Explicit bounds are for unit
-    # tests/checkpoint evaluation, not a selectable survival mode.
+    # Survival runs continue until death or explicit planner exhaustion. Bounds
+    # are for tests/checkpoint evaluation, not a selectable survival mode.
     until_death=getattr(policy,'goal',None)=='survival' and not bounded;deadlock=ClockDeadlock()
     try:
         from .fallback_progress import FallbackProgress
@@ -76,17 +76,10 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                         try:
                             loop_guard.check(state,decision)
                             menu_guard.check(state,decision)
-                        except Finished:
-                            try:
-                                from .ranged_tactics import exposed_wait
-                            except ImportError:
-                                from ranged_tactics import exposed_wait
-                            if exposed_wait(policy,state,state.get('objects',[])):
-                                decision=policy.recover_no_safe_action(state,NoSafeAction('Navigation recovery cannot wait under ranged fire'))
-                            else:
-                                decision=policy.decision({"type":"wait"},"recovery: break rejected navigation cycle and observe recharge")
-                                decision.controller="tactical-recovery"
-                        log.write(json.dumps({"index":index,"soft_failure":{"code":done.code,"reason":done.reason,
+                        except Finished as rejected:
+                            decision = None
+                            done = NoSafeAction("Recovery rejected by loop guard: " + rejected.reason)
+                        log.write(json.dumps({"index":index,"soft_failure":{"code":getattr(done,"code","recovery-loop"),"reason":done.reason,
                                                 "policy_report":report}},ensure_ascii=False)+"\n")
                         log.flush()
                 if decision is None and isinstance(done,NoSafeAction) and isinstance(policy,SurvivalPolicy):
@@ -103,6 +96,18 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                         done=hard
                 if decision is None:
                     result.update(outcome=done.outcome, reason=done.reason)
+                    if isinstance(done, PlannerStuck):
+                        report = dict(policy.planner.report)
+                        result["death_reason"] = done.reason
+                        result["planner_failure"] = {
+                            "kind": "stuck-planner", "reason": done.blocker,
+                            "depth": state.get("depth"), "cell": state.get("hero", {}).get("cell"),
+                            "review_priority": "high",
+                        }
+                        log.write(json.dumps({"index": index, "state": state,
+                            "planner_failure": result["planner_failure"],
+                            "policy_report": report}, ensure_ascii=False) + "\n")
+                        log.flush()
                     if isinstance(policy,SurvivalPolicy):result["terminal_policy_report"]=report
                     break
             # Recovery inside the exception handlers can bypass the priority
@@ -260,8 +265,10 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                 result.update(outcome='deadlocked',reason='Execution deadlock: 32 accepted waits produced no public clock or gameplay-state progress; death cannot advance while execution is frozen')
                 break
             if stalled_fallback:
-                result.update(outcome="blocked",
-                              reason="Fallback stopped after 128 accepted waits without observed gameplay progress")
+                stuck = PlannerStuck("Legacy fallback exhausted 128 accepted waits without gameplay progress")
+                result.update(outcome=stuck.outcome, reason=stuck.reason, death_reason=stuck.reason)
+                result["planner_failure"] = {"kind": "stuck-planner", "reason": stuck.blocker,
+                                             "review_priority": "high"}
                 result["fallback_waits_without_progress"] = fallback_progress.waits
                 break
         result.update(depth=state.get("depth"), hero=state.get("hero"),

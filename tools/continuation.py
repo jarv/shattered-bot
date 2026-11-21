@@ -62,4 +62,4 @@ def best_effort(p,state,enemies):
         if attack:
             attack.reason='last resort: admitted attack while accepting unresolved danger'
             return attack
-    return p.decision({'type':'wait'},'last resort: advance time and accept damage; no verified safe action',intent=Intent.RECOVER)
+    return None  # No admitted rescue remains; do not manufacture a wait to die.

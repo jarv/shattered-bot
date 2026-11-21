@@ -5,7 +5,7 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch,MagicMock
 from tools.mage_policy import MagePolicy
-from tools.policy_decision import Finished,GameplayBlocked
+from tools.policy_decision import Finished,GameplayBlocked,Decision
 from tools.policy_runner import run
 from tools.player_api import PlayerAPIError
 from tools.test_continuation import DamageAPI
@@ -26,10 +26,10 @@ class UntilDeathTests(unittest.TestCase):
     def execute(self,api,policy,budget=1):
         with TemporaryDirectory() as temp:return run(api,policy,budget,0,Path(temp)/'trace.jsonl')
 
-    def test_gameplay_block_and_action_budget_do_not_end_live_run(self):
+    def test_exhausted_gameplay_ends_alive_instead_of_spending_action_budget(self):
         api=DamageAPI();r=self.execute(api,StalledPolicy())
-        self.assertEqual('dead',r['outcome']);self.assertEqual(3,r['actions'])
-        self.assertTrue(r['until_death']);self.assertEqual(3,len(api.actions))
+        self.assertEqual('stuck-planner',r['outcome']);self.assertEqual(0,r['actions'])
+        self.assertTrue(r['until_death']);self.assertFalse(api.actions)
 
     def test_long_hp_plateau_is_not_proof_of_immortality(self):
         api=DamageAPI();api.observation['evaluation_stats']={'elapsed_turns':0}
@@ -41,14 +41,18 @@ class UntilDeathTests(unittest.TestCase):
                 api.observation['hero']['hp']-=1
                 if api.observation['hero']['hp']<=0:api.observation['status']='dead'
             return api.observation
-        api.step=step;r=self.execute(api,StalledPolicy())
+        api.step=step
+        with patch('tools.until_death.best_effort',return_value=Decision({'type':'wait'},'combat: bounded approach')):
+            r=self.execute(api,StalledPolicy())
         self.assertEqual('dead',r['outcome']);self.assertEqual(82,r['actions'])
 
     def test_identical_public_state_and_nonadvancing_clock_can_deadlock(self):
         api=DamageAPI();api.observation['evaluation_stats']={'elapsed_turns':0}
         def step(action):
             api.actions.append(action);return copy.deepcopy(api.observation)
-        api.step=step;r=self.execute(api,StalledPolicy())
+        api.step=step
+        with patch('tools.until_death.best_effort',return_value=Decision({'type':'wait'},'combat: bounded approach')):
+            r=self.execute(api,StalledPolicy())
         self.assertEqual('deadlocked',r['outcome']);self.assertEqual(32,r['actions'])
         self.assertGreater(r['hero']['hp'],0)
 
@@ -70,7 +74,8 @@ class UntilDeathTests(unittest.TestCase):
         def step(action):
             api.actions.append(action);raise PlayerAPIError(500,'execution unknown')
         api.step=step
-        with self.assertRaises(PlayerAPIError):self.execute(api,StalledPolicy())
+        with patch('tools.until_death.best_effort',return_value=Decision({'type':'cell','cell':25},'admitted retreat')):
+            with self.assertRaises(PlayerAPIError):self.execute(api,StalledPolicy())
         self.assertEqual(1,len(api.actions))
 
     def test_survival_has_no_separate_until_death_mode_or_early_stop_flags(self):
@@ -82,7 +87,7 @@ class UntilDeathTests(unittest.TestCase):
         with self.assertRaises(ValueError):configured_policy(args)
 
     def test_cli_keeps_live_game_open_on_technical_pause_but_closes_after_death(self):
-        for outcome in ('blocked','dead'):
+        for outcome in ('blocked','dead','stuck-planner'):
             with TemporaryDirectory() as temp:
                 sock=MagicMock();sock.__enter__.return_value.connect_ex.return_value=1
                 with patch('sys.argv',['survival_bot.py','--launch']), \
@@ -92,7 +97,7 @@ class UntilDeathTests(unittest.TestCase):
                         patch('tools.survival_bot.run',return_value={'outcome':outcome}), \
                         patch('tools.survival_bot.stop_game') as stop:
                     main()
-                self.assertEqual(outcome=='dead',stop.called)
+                self.assertEqual(outcome in {'dead','stuck-planner'},stop.called)
 
 
 if __name__=='__main__':unittest.main()

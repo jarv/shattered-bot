@@ -27,10 +27,10 @@ class EmptyHostileContinuationTests(unittest.TestCase):
                           SimpleNamespace(action=action, reason=reason, **kw))
         return p
 
-    def test_no_enemies_or_warning_uses_wait_without_retreat(self):
+    def test_no_enemies_or_warning_returns_exhaustion_without_retreat(self):
         p = self.policy()
         result = best_effort(p, self.state(), [])
-        self.assertEqual(result.action, {'type': 'wait'})
+        self.assertIsNone(result)
         p.retreat.assert_not_called()
 
     def test_warning_without_enemies_still_requests_escape(self):
