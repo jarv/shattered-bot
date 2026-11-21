@@ -3,7 +3,7 @@ try:
     from .policy_geometry import distance,neighbors,line_clear
     from .policy_decision import Intent
     from .incoming_damage import priority
-    from .challenge_combat import exposure
+    from .challenge_combat import exposure,reach
     from .necromancer_tactics import choose_necromancer,NecromancerStalemate
     from .ghost_quest import quest_combat
     from .mimic_hunt import crystal_mimic
@@ -16,7 +16,7 @@ except ImportError:
     from policy_geometry import distance,neighbors,line_clear
     from policy_decision import Intent
     from incoming_damage import priority
-    from challenge_combat import exposure
+    from challenge_combat import exposure,reach
     from necromancer_tactics import choose_necromancer,NecromancerStalemate
     from ghost_quest import quest_combat
     from mimic_hunt import crystal_mimic
@@ -95,12 +95,25 @@ def choose(p,state,enemies):
         return None
     pos=state['hero']['cell'];width=state['map']['width']
     target=min(active,key=lambda e:(-priority(p,state,active,e),-book.profile(e).urgency,distance(pos,e['cell'],width),e['cell']))
+    contact_attack=None
+    # Species urgency must not spend the remaining bolts on a remote swarm
+    # while a revealed mimic is already biting. Only replace that remote-fly
+    # shot with an admitted magic attack, never physical splitting or a move.
+    # Contact/next-step flies retain their existing protected strategy.
+    if book.profile(target).strategy=='fly-swarm' and distance(pos,target['cell'],width)>reach(target)+1:
+        contacts=sorted((e for e in active if book.profile(e).strategy=='mimic'
+                         and distance(pos,e['cell'],width)==1),key=lambda e:e['cell'])
+        for mimic in contacts:
+            attack=p.best_attack(state,mimic,allowed_kinds={'magic'})
+            if attack:
+                target=mimic;contact_attack=attack
+                break
     profile=book.profile(target)
     p.planner.report['unit_target']=target['cell']
     selection={'name':target['name'],'cell':target['cell'],'strategy':profile.strategy,
                'movement':profile.movement,'status':'selected; admitted action or shared fallback'}
     p.planner.report['unit_strategy_selection']=selection
-    action=dedicated(p,state,enemies,target,profile.strategy)
+    action=contact_attack or dedicated(p,state,enemies,target,profile.strategy)
     if action:
         selection['status']='unit strategy selected an action'
         return action

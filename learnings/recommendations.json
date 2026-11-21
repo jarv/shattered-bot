@@ -865,5 +865,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000066"
+  },
+  {
+    "id": "000067-contact-mimic-before-distant-fly",
+    "priority": "high",
+    "summary": "Use an admitted magic shot on a biting mimic before spending bolts on a distant fly.",
+    "evidence": [
+      "Decision 1443, log line 4413: suspicious chest test begins with four known staff charges and no visible enemy.",
+      "Decision 1444, accepted transition line 4416: the chest reveals a mimic.",
+      "Decisions 1445–1450, lines 4417–4429: three remaining bolts target the approaching fly while the mimic is adjacent; the first accepted shot costs nine HP.",
+      "Decision 1485, accepted transition line 4571: retreat triggers a previously hidden burning trap.",
+      "Decision 1490, accepted transition line 4591: public death text confirms fire death.",
+      "tools/unit_strategies.py:87–116; tools/unit_profiles.py:38,54; tools/incoming_damage.py:43–46."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000067"
   }
 ]
