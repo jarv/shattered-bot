@@ -184,6 +184,11 @@ def choose(p,state,enemies):
            and distance(c,foe['cell'],width)>1 and distance(c,foe['cell'],width)>=distance(pos,foe['cell'],width)
            and escape_route(p,state,c,pos,occupied)]
     if moves:
-        target=max(moves,key=lambda c:(distance(c,foe['cell'],width),-p.visits[c]))
+        # Equal separation is not equal escape progress: a less-visited side
+        # square can add a step to the very same second-exit route. Prefer the
+        # shorter admitted route before exploration novelty, without predicting
+        # crab movement or weakening any movement/escape admission.
+        target=max(moves,key=lambda c:(distance(c,foe['cell'],width),
+                   -len(escape_route(p,state,c,pos,occupied)),-p.visits[c]))
         return p.cell(target,'quest: draw great crab toward known exits, never into a dead-end pocket',intent=Intent.RETREAT)
     p.stop_tactical('quest-combat','Great crab: no fresh surprise or observed escape-backed doorway; refuse blocked attacks and confined-room lure')
