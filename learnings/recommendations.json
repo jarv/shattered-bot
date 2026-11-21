@@ -621,5 +621,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000049"
+  },
+  {
+    "id": "000050-purity-burning-rescue",
+    "priority": "high",
+    "summary": "Admit known purity self-splash before declaring burning recovery exhausted.",
+    "evidence": [
+      "Decision 822, log lines 2393–2394: exploration triggers an unrevealed burning trap.",
+      "Decision 823, log line 2396: identified throwable purity remains carried while burning recovery exhausts.",
+      "Log line 2397: living hero and unchanged clock at planner termination.",
+      "tools/combat_positioning.py:98–183; PotionOfPurity.java:55–94; Potion.java:419–429."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000050"
   }
 ]

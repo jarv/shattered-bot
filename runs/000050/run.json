@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "id": "000050",
+  "started_at": "2026-11-21T13:04:26Z",
+  "completed_at": "2026-11-21T13:10:50.311108+00:00",
+  "source_commit": "1d45ad3d1d19731ce0959e844e11496d4d9d2442",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 3,
+  "actions": 823,
+  "duration_seconds": 379.733,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000049",
+  "previous_source_commit": "498aa66e1c79618018c84e47927f147df76d5e18",
+  "improvements": [
+    "When escaping a prison guard, the bot now checks every step toward cover against the guard’s melee reach, including when continuing a previously chosen route."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "A covered destination does not make the journey safe. When escaping a guard, check every transit cell against its current melee reach as well as ranged sight, and recheck committed routes after each observation. Static separation is not a guarantee against pursuit or chain pulls.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at 15/30 HP when planning stopped. Decision 822 (log lines 2393–2394) explored onto an unrevealed burning trap; the next observation showed Burning and fire blocking the admitted route out. Decision 823 (2396), followed by terminal observation 2397, exhausted the planner rather than recording a death. The burning-recovery selector checked water routes and known frost but omitted the identified, throwable potion of purity already carried. The exact played game source confirms that throwing purity onto the hero’s triggered-trap cell clears fire and removes Burning; drinking it is not equivalent. Unknown colored potions were not usable evidence of an extinguishing effect. The proposed focused correction adds known purity self-splash to emergency recovery while preserving hazard checks, existing frost priority, adjacent-water preference, honest pickup accounting and the stuck-planner terminal outcome. A new reduced public-observation regression produced three expected assertion failures on original policy and passed all six tests after the fix. The full suite passed 1675 tests with four skips. These are isolated selector tests, not recovered original memory or gameplay replay; they establish action selection, not successful execution or survival.",
+    "learnings": "An identified potion of purity can extinguish Burning when shattered on the hero, even when fire blocks every safe water route. Do not substitute drinking, guess an unknown potion’s identity, or claim rescue or room completion before observing the result."
+  },
+  "recommendations": [
+    {
+      "id": "000050-purity-burning-rescue",
+      "priority": "high",
+      "summary": "Admit known purity self-splash before declaring burning recovery exhausted.",
+      "evidence": [
+        "Decision 822, log lines 2393–2394: exploration triggers an unrevealed burning trap.",
+        "Decision 823, log line 2396: identified throwable purity remains carried while burning recovery exhausts.",
+        "Log line 2397: living hero and unchanged clock at planner termination.",
+        "tools/combat_positioning.py:98–183; PotionOfPurity.java:55–94; Potion.java:419–429."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000050"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000050/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000050/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 42,
+        "turns": 339,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 344,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 170
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 18,
+        "gold_gained": 226,
+        "turns": 314,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 309,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 793
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Armored statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 310
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 14,
+        "gold_gained": 85,
+        "turns": 164,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 164,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 17,
+    "ending_level": 3,
+    "starving_turns": 6,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 353,
+    "gold_complete": true,
+    "turns": 817,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

@@ -102,7 +102,7 @@ def rinse_ooze(p, state, enemies, distance, neighbors):
     if not burning:
         p.burning_water_plan=None
     if burning and ('levitat' in buffs or 'flying' in buffs):
-        frost=emergency_frost(p,state)
+        frost=emergency_splash(p,state)
         if frost:return frost
         p.stop_no_safe_action('Burning while airborne: water cannot rinse; no known frost splash')
     if not ("ooze" in buffs or burning) or "levitat" in buffs or "flying" in buffs or p.tiles[pos]["terrain"] == 29:
@@ -141,7 +141,7 @@ def rinse_ooze(p, state, enemies, distance, neighbors):
         if burning and plan and plan['cell'] in candidates:
             cell=plan['cell']
         if burning and len(p.route(previous,cell))>2:
-            frost=emergency_frost(p,state)
+            frost=emergency_splash(p,state)
             if frost:return frost
         if burning:
             if not plan:plan=p.burning_water_plan={'cell':cell,'steps':0}
@@ -155,7 +155,7 @@ def rinse_ooze(p, state, enemies, distance, neighbors):
             reason = "survival: extinguish burning in nearby water"
         return p.toward(state, cell, reason, previous, intent=Intent.RETREAT)
     if burning:
-        frost=emergency_frost(p,state)
+        frost=emergency_splash(p,state)
         if frost:return frost
     if rejected_burning_route:
         p.stop_no_safe_action("Critical burning: water requires another dry turn; no verified immediate extinguishing route")
@@ -164,8 +164,8 @@ def rinse_ooze(p, state, enemies, distance, neighbors):
     return None
 
 
-def emergency_frost(p,state):
-    """Known identity only. Splash is immediate; freezing/inventory risks remain."""
+def emergency_splash(p,state):
+    """Known identities only; preserve the existing frost rescue priority."""
     try:
         from .consumable_tactics import base_name
     except ImportError:
@@ -180,6 +180,23 @@ def emergency_frost(p,state):
         except ImportError:
             from room_supplies import use as use_room_supply
         return use_room_supply(p,frost,'THROW','survival: emergency known frost self-splash to extinguish burning',
+                               kind='emergency',target=state['hero']['cell'])
+    # Purity shatters with the normal splash, removing Burning and clearing
+    # fire. Drinking only grants blob immunity; it is not this rescue.
+    # Do not certify shattering into a well/pit, or press an active plate.
+    tile=p.tiles.get(state['hero']['cell'],{})
+    if tile.get('terrain') not in {1,2,3,5,6,9,14,15,19,20,29,30}:
+        return None
+    purity=next((i for i in state['inventory'] if base_name(i)=='potion of purity'
+                 and i.get('identified') and 'THROW' in i.get('actions',[])),None)
+    if purity:
+        p.planner.report['emergency_extinguishing']={'method':'known purity self-splash',
+            'caveat':'Rescue selection only; observe the splash and status removal before further progress'}
+        try:
+            from .room_supplies import use as use_room_supply
+        except ImportError:
+            from room_supplies import use as use_room_supply
+        return use_room_supply(p,purity,'THROW','survival: emergency known purity self-splash to extinguish burning',
                                kind='emergency',target=state['hero']['cell'])
 
 
