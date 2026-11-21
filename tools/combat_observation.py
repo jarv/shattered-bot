@@ -36,6 +36,51 @@ def capture(state,enemy,key):
     return {"cell":enemy["cell"],"name":enemy["name"],"context":context(state,enemy),"source":key,"before":before}
 
 
+def dm100_missile_receipt(before,after,pending):
+    """Narrow public kill receipt when floating XP replaces the defeat text.
+
+    A normal DM-100 grants six XP. Require a known single-target missile,
+    one turn, and visibility over its entire one-step neighborhood, not just
+    disappearance into fog. This is not an exact damage sample.
+    """
+    if pending["name"].lower()!="dm-100" or pending["source"][0]!="magic":
+        return False
+    item=next((i for i in before.get("inventory",[])
+               if i["name"]==pending["source"][1]),None)
+    if not item or not item.get("identified") or not item.get("curse_known") \
+            or item.get("known_cursed") or "of magic missile" not in item["name"].lower():
+        return False
+    actors=[o for o in before.get("objects",[]) if not o.get("top_item")]
+    if len(actors)!=1 or actors[0].get("cell")!=pending["cell"] \
+            or actors[0].get("name","").lower()!="dm-100" or actors[0].get("sleeping") \
+            or actors[0].get("status_icons") or pending["context"][2]:
+        return False
+    if before["depth"]!=after["depth"] or before.get("branch",0)!=after.get("branch",0) \
+            or before["hero"]["cell"]!=after["hero"]["cell"] \
+            or before["hero"].get("level")!=after["hero"].get("level") \
+            or not 1<=before["hero"].get("level",0)<=13:
+        return False
+    b=before.get("evaluation_stats",{});a=after.get("evaluation_stats",{})
+    if not all(isinstance(s.get(k),(int,float)) for s in (b,a)
+               for k in ("experience","elapsed_turns")) \
+            or a["experience"]-b["experience"]!=6 or a["elapsed_turns"]-b["elapsed_turns"]!=1:
+        return False
+    try:
+        from .policy_geometry import neighbors,distance
+    except ImportError:
+        from policy_geometry import neighbors,distance
+    width=after["map"]["width"];height=after["map"]["height"]
+    if before["map"]["width"]!=width or before["map"]["height"]!=height \
+            or distance(before["hero"]["cell"],pending["cell"],width)!=1:
+        return False
+    tiles={t["cell"]:t for t in after["map"]["cells"]}
+    region={pending["cell"],*neighbors(pending["cell"],width,height)}
+    return all(tiles.get(c,{}).get("visible") is True
+               and tiles[c].get("observed") is not False and not tiles[c].get("effects")
+               for c in region) and not any(o.get("name","").lower()=="dm-100"
+                                            for o in after.get("objects",[]))
+
+
 def observe_accepted_attack(p,before,decision,after):
     """Called only after a confirmed API execution; targeting menus cost no sample."""
     action=decision.action
@@ -61,6 +106,11 @@ def observe_accepted_attack(p,before,decision,after):
     p.damage_pending=None
     if not pending or after.get("status")!="ready":return
     before_texts=set(before.get("ui",{}).get("texts",[]))
+    memory=getattr(p,"dm100_threat",None)
+    if memory and memory["cell"]==pending["cell"] and dm100_missile_receipt(before,after,pending):
+        p.dm100_threat=None
+        if p.ranged_plan and p.ranged_plan.get("name")=="dm-100":
+            p.ranged_plan=None
     defeated=any("you defeated" in t.lower() and pending["name"].lower() in t.lower()
                  for t in after.get("ui",{}).get("texts",[]) if t not in before_texts)
     key=(pending["context"],pending["source"])

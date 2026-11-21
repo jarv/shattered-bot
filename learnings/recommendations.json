@@ -591,5 +591,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000047"
+  },
+  {
+    "id": "000048-dm100-missile-receipt",
+    "priority": "high",
+    "summary": "Retire a matching DM-100 lightning memory on a tightly verified magic-missile defeat receipt without requiring missing combat text.",
+    "evidence": [
+      "Decision 2907, log line 7940: known magic missile selected against the adjacent DM-100 with an 8/21 health bar.",
+      "Decision 2908, accepted transition at log line 7943: six XP gained in one turn, staff charge spent, caster absent and its complete neighboring area visible; no defeat message appears.",
+      "Decisions 2911–2914, log lines 7950–7960: empty-scene flight and exploration revisit the remembered lightning lane.",
+      "Decision 2915, log line 7962: planner exhaustion at 14/60 HP because the remembered lane remains unverified.",
+      "tools/combat_observation.py; tools/dm100_escape.py:15–46; tools/policy_nodes.py:85–108."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000048"
   }
 ]
