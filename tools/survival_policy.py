@@ -715,6 +715,12 @@ class SurvivalPolicy:
             self.ambush_attempts[plan['door']]+=1
             plan=self.ambush_plan=None
             return None
+        # A fresh lure must meet its own continuation health floor too.
+        # Otherwise a snake dispatch can start an approach that the next tick
+        # immediately aborts, even while an admitted wand shot is available.
+        if not plan and getattr(self,'unit_strategies_enabled',False) \
+                and state['hero']['hp']<.5*state['hero']['max_hp']:
+            return None
         if plan and pos==plan["door"]:
             closed=dict(self.tiles)
             closed[plan["door"]]={"terrain":5}

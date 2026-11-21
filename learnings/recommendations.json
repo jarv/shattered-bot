@@ -651,5 +651,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000051"
+  },
+  {
+    "id": "000052-snake-lure-start-health",
+    "priority": "high",
+    "summary": "Apply the existing lure continuation health floor before initiating a fresh doorway approach.",
+    "evidence": [
+      "Decision 464, lines 1346–1347: snake strike leaves twelve of twenty-five HP.",
+      "Decision 465, lines 1349–1350: fresh snake lure moves to 93 and loses two HP despite an available staff charge.",
+      "Decisions 466–467, lines 1354–1357: the low-health plan aborts and existing magic fallback targets the visible snake.",
+      "tools/unit_strategies.py:63–66; tools/mage_policy.py:888; tools/survival_policy.py:706–776."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000052"
   }
 ]
