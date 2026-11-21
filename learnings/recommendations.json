@@ -372,5 +372,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000031"
+  },
+  {
+    "id": "000032-shop-frontier-arrival",
+    "priority": "high",
+    "summary": "Retain observed entrance-scouting arrivals across preparation interruptions.",
+    "evidence": [
+      "Decision 2054, lines 5968–5969: entrance scouting moves from 892 to 931.",
+      "Decision 2055, lines 5970–5971: earlier loot preparation moves back toward 892.",
+      "Decisions 2056–2064, lines 5973–5993: scouting and loot repeatedly reverse the same approach.",
+      "Decision 2180, line 6252: entrance-shop search budget is exhausted.",
+      "Decision 3351, lines 9720 and 9723: terminal transition and public message confirm starvation."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000032"
   }
 ]

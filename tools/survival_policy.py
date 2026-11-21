@@ -358,6 +358,21 @@ class SurvivalPolicy:
             self.tiles[tile["cell"]] = remembered
             if tile["visible"] and tile.get("name", "").lower() == "distant well":
                 self.drop_room_expected_on.add(depth + 1)
+        # Receipt for an entrance-scouting step belongs to observation, not to
+        # the next peaceful-preparation selection. Loot or safety can preempt
+        # that leaf on arrival; forgetting the arrival then sends us back to
+        # the same frontier whenever the interrupt moves us away.
+        if self.last_state and self.last_state.get("depth") == depth \
+                and self.last_state.get("branch", 0) == state.get("branch", 0) \
+                and self.last_state["hero"]["cell"] != pos and self.last_decision \
+                and self.last_decision.intent == Intent.SHOP \
+                and self.last_decision.reason == "shop: reveal entrance chamber doors" \
+                and self.last_decision.action == {"type": "cell", "cell": pos} \
+                and any(t["cell"] == pos and t.get("visible") and t.get("observed") is not False
+                        for t in state["map"]["cells"]):
+            # Only suppress a repeated scouting approach. This is not shop
+            # visitation, door-check, loot collection, or floor-clear credit.
+            self.exhausted.add(pos)
         counts = {kind: sum(k.get("quantity", 0) for k in state.get("keys", [])
                             if k.get("depth") == depth and f"{kind} key" in k.get("name", "").lower())
                   for kind in ("iron", "golden", "crystal", "worn", "skeleton")}
