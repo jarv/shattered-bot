@@ -8,11 +8,16 @@ departure phase, not an exploration activity: it does not require revisiting
 every optional tile that the floor policy has already elected to leave.
 Prefer a nearby safe water tile; a dry alternative requires an adjacent observed
 water escape. Tests retain health, threat, impairment, Pharmacophobia, safe-route
-and potion-inventory protection checks. Unsafe tests are explicitly deferred,
-not forced and not represented as successful identification.
+and potion-inventory protection checks. Discovery is a hard departure gate:
+unsafe tests are not forced, but also cannot silently fall through to descent.
+If no admissible discovery/recovery action exists, report an explicit
+`stuck-planner` blocker.
 
-Do not spend unknown supplies on this phase while a recognized potion-room
-requirement or an unrelated retrieval/journey remains. Safe room-specific tests
+Use an available Identify scroll before risky drinking. Missing recognized
+room supplies or an unrelated retrieval/journey still block drink tests.
+An unfinished room whose known reserved supplies are already carried does not
+blanket-veto testing unrelated colors; its supplies stay protected in the stash.
+Safe room-specific tests
 retain their own purpose and protection checks. Ordinary generic strength drink
 tests no longer run during Mage exploration. Safe scroll identification remains
 available earlier; when the preferred potion is inside a bag, open the bag
@@ -22,7 +27,25 @@ Accepted inventory loss confirms each test. An observed standard strength gain
 from that drink, or a publicly named strength potion, ends the search across
 later floors too. Color, stack counts and floor-placement clues never establish
 identity. Recover from actual test effects before another experiment, and
-retrieve any stashed potions even when the test finds strength.
+retrieve any stashed potions even when the test finds strength. Consume remaining
+known strength doses before departure.
+
+### Run 57: isolate colors and resume after temporary effects
+
+Without verified bandolier protection, drop every other color's entire stack
+at a safe stash at least three cells away. Retain only the candidate color and
+drink one dose through the ordinary action. An explicitly isolated candidate
+may itself be stacked: if it proves to be frost, only remaining doses of that
+same frost color are exposed. No stack-splitting API or hidden potion identity
+is assumed. Retrieve all other colors before selecting the next candidate.
+The stricter single-dose rule remains in place for room-specific experiments.
+
+Temporary blindness, levitation or magic immunity pauses the departure plan
+instead of canceling it. On harmless observed ground, wait at most 64 accepted
+inputs, then resume once the actual effect clears. Existing effect recovery
+handles clouds and damaging impairments first. Never descend merely because
+a test granted a temporary effect. Threat interruptions likewise retain the
+discovery obligation; all health and hazard checks still apply.
 
 ## Same-floor room supplies
 

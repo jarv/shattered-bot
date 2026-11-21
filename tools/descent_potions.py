@@ -2,7 +2,7 @@
 try:
     from .consumable_tactics import base_name, unknown_potion, discovery_score
     from .policy_geometry import distance, neighbors
-    from .policy_decision import Intent
+    from .policy_decision import Intent, PlannerStuck
     from .puzzle_supplies import safe_test_bank
     from .potion_stash import can_protect_potions, protect_potions, advance_stash, potions
     from .room_supplies import requirements
@@ -10,7 +10,7 @@ try:
 except ImportError:
     from consumable_tactics import base_name, unknown_potion, discovery_score
     from policy_geometry import distance, neighbors
-    from policy_decision import Intent
+    from policy_decision import Intent, PlannerStuck
     from puzzle_supplies import safe_test_bank
     from potion_stash import can_protect_potions, protect_potions, advance_stash, potions
     from room_supplies import requirements
@@ -27,9 +27,32 @@ def cancel(p, reason):
     p.descent_potion_plan = None
 
 
+def pause(p, reason):
+    """Keep the discovery obligation; safety arbitration may run before resuming."""
+    p.planner.report["descent_potion_testing"] = {"status": "paused", "reason": reason}
+
+
+def wait_effect(p, state):
+    plan = p.descent_potion_plan
+    tile = p.tiles.get(state["hero"]["cell"], {})
+    if plan.get("waits", 0) >= 64:
+        raise PlannerStuck("Pre-descent potion discovery: temporary effect did not clear within recovery budget")
+    if tile.get("terrain") not in {1, 3, 9, 11, 14, 19, 20, 29} or tile.get("effects") \
+            or tile.get("plant") or tile.get("trap") or state["hero"]["cell"] in p.room_blocked:
+        return None
+    decision = p.decision({"type": "wait"}, "identify: pause mandatory discovery until temporary potion effect clears",
+                          intent=Intent.RECOVER)
+    decision.descent_potion_wait = True
+    return decision
+
+
 def begin(p, state):
     """Called only after descent has passed progression/quest/room hard gates."""
-    if p.strength_identified or not any(unknown_potion(i) for i in state["inventory"]):
+    owned_strength = next((i for i in state["inventory"] if base_name(i) == "potion of strength"), None)
+    stash = p.potion_stash and p.potion_stash.get("purpose") == PURPOSE
+    if p.strength_identified and not owned_strength and not stash:
+        return None
+    if not any(unknown_potion(i) for i in state["inventory"]) and not owned_strength and not stash:
         return None
     if p.stop_on_incomplete_loot:
         try:
@@ -39,8 +62,16 @@ def begin(p, state):
         if pending_collections(p):
             return None  # The existing strict descent gate has not admitted departure.
     if not p.descent_potion_plan:
-        p.descent_potion_plan = {"depth": state["depth"], "steps": 0, "candidate": None, "bank": None, "pending": False}
-    return advance(p, state)
+        p.descent_potion_plan = {"depth": state["depth"], "steps": 0, "waits": 0,
+                                "candidate": None, "bank": None, "pending": False}
+    action = advance(p, state)
+    if action:
+        return action
+    stash = p.potion_stash and p.potion_stash.get("purpose") == PURPOSE
+    if stash or owned_strength or not p.strength_identified and any(unknown_potion(i) for i in state["inventory"]):
+        reason = p.planner.report.get("descent_potion_testing", {}).get("reason", "discovery/retrieval incomplete")
+        raise PlannerStuck("Cannot descend before potion discovery: " + reason)
+    return None
 
 
 def advance(p, state):
@@ -49,8 +80,11 @@ def advance(p, state):
         return None
     # This controller is admitted only by a descent decision. It does not need
     # the obsolete "every reachable tile visited" condition that vetoed run 37.
-    if plan["depth"] != state["depth"] or p.strength_identified:
-        cancel(p, "Strength identified or floor changed")
+    if plan["depth"] != state["depth"]:
+        raise PlannerStuck("Mandatory potion discovery crossed floors before completion")
+    if p.strength_identified and not p.potion_stash \
+            and not any(base_name(i) == "potion of strength" for i in state["inventory"]):
+        cancel(p, "Strength identified and all known strength doses consumed")
         return None
     if plan["pending"]:
         p.stop_gameplay("Pre-descent potion test lacks an accepted consumption receipt; never repeat it")
@@ -60,18 +94,43 @@ def advance(p, state):
         return None  # Existing observed-effect recovery runs before this controller.
     if any(is_hostile(o) for o in state.get("objects", [])) or p.recent_threats \
             or state.get("danger_cells") or p.unseen_damage_turns:
-        cancel(p, "Threats or unexplained damage interrupt potion discovery")
+        pause(p, "Threats or unexplained damage interrupt potion discovery")
         return None
-    if p.pharmacophobia or hero["hp"] < .85 * hero["max_hp"] or any(
-            t in buffs for t in ("starving", "burn", "poison", "bleed", "ooze", "blind", "vertigo",
-                                "paral", "root", "frozen", "chill", "levitat", "magic immun", "drowsy", "sleep")):
-        cancel(p, "Health, impairment or challenge rules do not admit a safe unknown drink")
+    if hero["hp"] < .85 * hero["max_hp"] or any(
+            t in buffs for t in ("starving", "burn", "poison", "bleed", "ooze", "vertigo",
+                                "paral", "root", "frozen", "chill", "drowsy", "sleep")):
+        pause(p, "Health or impairment does not admit a safe unknown drink")
         return None
-    if requirements(p, state) or p.room_journey or p.drop_plan or p.trap_payload_return:
-        cancel(p, "Preserve supplies for an unfinished recognized potion room or retrieval")
+    if any(t in buffs for t in ("blind", "levitat", "magic immun")):
+        pause(p, "Temporary potion effect; resume discovery after it expires")
+        return wait_effect(p, state)
+    identify = next((i for i in state["inventory"] if base_name(i) == "scroll of identify"
+                     and "READ" in i.get("actions", []) and p.item_action_allowed(i, "READ")), None)
+    if identify and not p.strength_identified and not p.potion_stash:
+        try:
+            from .consumable_tactics import identify_retry_allowed
+        except ImportError:
+            from consumable_tactics import identify_retry_allowed
+        if identify_retry_allowed(p, state):
+            p.menu_plan = "discover-scroll"
+            p.consumable_menu_bags = set()
+            return p.use(identify, "READ", "identify: mandatory pre-descent strength discovery")
+    if p.pharmacophobia:
+        pause(p, "Pharmacophobia forbids discovery drinking; a safe identification resource is required")
+        return None
+    # Known reserved supplies can remain safely in the stash. Do not let a
+    # deferred room blanket-veto unrelated colors when its supplies are held.
+    needed = {}
+    for demand in requirements(p, state):
+        needed[demand.potion] = needed.get(demand.potion, 0) + 1
+    own_stash = p.potion_stash and p.potion_stash.get("purpose") == PURPOSE
+    if (not own_stash and any(
+            sum(i.get("quantity", 1) for i in state["inventory"] if base_name(i) == name) < count
+            for name, count in needed.items())) or p.room_journey or p.drop_plan or p.trap_payload_return:
+        pause(p, "Preserve missing supplies for an unfinished recognized potion room or retrieval")
         return None
     if p.potion_stash and p.potion_stash.get("purpose") != PURPOSE:
-        cancel(p, "An existing potion stash must be retrieved first")
+        pause(p, "An existing potion stash must be retrieved first")
         return None
     plan["steps"] += 1
     if plan["steps"] > 128:
@@ -82,6 +141,13 @@ def advance(p, state):
             return action
         if p.potion_stash and p.potion_stash["phase"] != "ready":
             return None
+    strength = next((i for i in state["inventory"] if base_name(i) == "potion of strength"
+                     and "DRINK" in i.get("actions", []) and p.item_action_allowed(i, "DRINK")), None)
+    if strength:
+        return p.use(strength, "DRINK", "prepare: consume known strength before descending")
+    if p.strength_identified:
+        cancel(p, "Strength identified and stash retrieved")
+        return None
     candidates = sorted((i for i in state["inventory"] if unknown_potion(i)
                          and "DRINK" in i.get("actions", [])
                          and p.item_action_allowed(i, "DRINK")
@@ -111,12 +177,13 @@ def advance(p, state):
                    or p.tiles[c]["terrain"] not in {1, 3, 9, 11, 14, 19, 20, 29} for c in route[1:]):
                 continue
             staged = dict(state, hero=dict(hero, cell=cell))
-            if not p.potion_stash and not can_protect_potions(p, staged, item, distance, neighbors, safe_test_bank):
+            if not p.potion_stash and not can_protect_potions(
+                    p, staged, item, distance, neighbors, safe_test_bank, isolated_stack=True):
                 continue
             choices.append((p.tiles[cell]["terrain"] != 29, len(route),
                             -discovery_score(item, p.consumable_sources), cell, item))
     if not choices:
-        cancel(p, "No safe water/water-escape bank with verified potion-inventory protection")
+        pause(p, "No safe water/water-escape bank with verified potion-inventory protection")
         return None
     _, _, _, bank, candidate = min(choices, key=lambda c: c[:4])
     plan.update(candidate=base_name(candidate), bank=bank)
@@ -124,7 +191,7 @@ def advance(p, state):
         return p.toward(state, bank, "identify: stage pre-descent strength discovery on safe water",
                         paths, intent=Intent.REPOSITION)
     if not p.potion_stash:
-        stash = protect_potions(p, state, candidate, distance, neighbors, safe_test_bank)
+        stash = protect_potions(p, state, candidate, distance, neighbors, safe_test_bank, isolated_stack=True)
         if p.potion_stash:
             p.potion_stash["purpose"] = PURPOSE
         if stash:
@@ -140,6 +207,14 @@ def advance(p, state):
 
 def observe(p, before, decision, after):
     """Only accepted inventory/effect observations confirm a drink or strength."""
+    if getattr(decision, "descent_potion_wait", False):
+        if p.descent_potion_plan and decision.action == {"type": "wait"} \
+                and before.get("depth") == after.get("depth") == p.descent_potion_plan["depth"] \
+                and before.get("branch", 0) == after.get("branch", 0):
+            p.descent_potion_plan["waits"] = p.descent_potion_plan.get("waits", 0) + 1
+            return {"purpose": PURPOSE, "recovery_waits": p.descent_potion_plan["waits"],
+                    "strength_identified": p.strength_identified, "collection_credited": False}
+        return None
     item = next((i for i in before.get("inventory", []) if i.get("id") == decision.action.get("id")), None)
     if decision.action.get("action") != "DRINK" or not item or not unknown_potion(item):
         return None

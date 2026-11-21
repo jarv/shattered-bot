@@ -56,11 +56,11 @@ def stash_cells(p,state,distance,neighbors,safe_bank):
                     and n not in p.loot for n in p.route(paths,c))]
 
 
-def can_protect_potions(p,state,candidate,distance,neighbors,safe_bank):
+def can_protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isolated_stack=False):
     """No drops, receipts, or inferred effects: only preparation feasibility."""
     if bandolier_protected(p,state) and not p.potion_stash:
         return True
-    if candidate.get("quantity",1)>1:
+    if candidate.get("quantity",1)>1 and not isolated_stack:
         return False
     others=[i for i in potions(state) if i["id"]!=candidate["id"]]
     if not others:
@@ -70,13 +70,15 @@ def can_protect_potions(p,state,candidate,distance,neighbors,safe_bank):
     return bool(stash_cells(p,state,distance,neighbors,safe_bank))
 
 
-def protect_potions(p,state,candidate,distance,neighbors,safe_bank):
+def protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isolated_stack=False):
     if bandolier_protected(p,state) and not p.potion_stash:
         return None  # No remote drops, stack splitting or bag disposal are needed.
     others=[i for i in potions(state) if i["id"]!=candidate["id"]]
     # DROP detaches an entire stack. Do not pretend we can retain one dose of
     # an unknown stack while protecting its remaining doses through this API.
-    if candidate.get("quantity",1)>1:
+    # Discovery may explicitly accept risking only the tested color's remaining
+    # doses if it is frost. Every OTHER color is still remotely protected.
+    if candidate.get("quantity",1)>1 and not isolated_stack:
         p.stop_obligation("potion-stash","Potential frost test requires a single candidate dose; stack splitting unavailable")
     if not others:
         return None

@@ -6,7 +6,7 @@ from unittest.mock import patch
 from tools.challenge_rules import ChallengeRules
 from tools.consumable_tactics import discovery_menu, choose_consumable, learn_sources
 from tools.descent_potions import begin, advance, observe, PURPOSE
-from tools.policy_decision import Decision, Intent, GameplayBlocked
+from tools.policy_decision import Decision, Intent, GameplayBlocked, PlannerStuck
 from tools.policy_geometry import distance, neighbors
 from tools.policy_runtime import Transaction
 from tools.potion_stash import advance_stash
@@ -108,18 +108,17 @@ class StrengthBeforeDescentTests(unittest.TestCase):
         self.assertEqual({"type": "cell", "cell": 61}, action.action)
         self.assertEqual(61, p.descent_potion_plan["bank"])
 
-    def test_no_safe_water_escape_or_inventory_protection_defers_without_drinking(self):
-        for kind in ("no-water", "unprotected-stack", "trap"):
-            s, p = ready(bag=kind != "unprotected-stack", water=kind != "no-water")
-            if kind == "unprotected-stack":
-                s["inventory"][-1]["quantity"] = 2
+    def test_no_safe_water_escape_blocks_descent_without_drinking(self):
+        for kind in ("no-water", "trap"):
+            s, p = ready(water=kind != "no-water")
             if kind == "trap":
                 for tile in s["map"]["cells"]:
                     if tile["terrain"] != 4:
                         tile["trap"] = "dart trap"
             p.update(s)
-            self.assertIsNone(begin(p, s), kind)
-            self.assertIsNone(p.descent_potion_plan)
+            with self.assertRaises(PlannerStuck, msg=kind):
+                begin(p, s)
+            self.assertIsNotNone(p.descent_potion_plan)
 
     def test_no_discovery_spends_an_unfinished_room_supply_even_if_room_was_deferred(self):
         for kind, name in [("pool", "potion of invisibility"), ("frost", "potion of frost"),
@@ -128,8 +127,9 @@ class StrengthBeforeDescentTests(unittest.TestCase):
             s, p = ready()
             p.deferred_room_controllers.add("potion-supplies")
             with patch("tools.descent_potions.requirements", return_value=[Demand(kind, name, 90)]):
-                self.assertIsNone(begin(p, s))
-            self.assertIsNone(p.descent_potion_plan)
+                with self.assertRaises(PlannerStuck):
+                    begin(p, s)
+            self.assertIsNotNone(p.descent_potion_plan)
 
     def test_health_threats_and_challenge_checks_are_not_bypassed(self):
         for kind in ("wounded", "starving", "poison", "enemy", "recent", "danger", "unseen", "challenge"):
@@ -142,7 +142,8 @@ class StrengthBeforeDescentTests(unittest.TestCase):
             elif kind == "unseen": p.unseen_damage_turns = 2
             elif kind == "challenge":
                 p = verified(ChallengeRules(pharmacophobia=True)); p.update(s)
-            self.assertIsNone(begin(p, s), kind)
+            with self.assertRaises(PlannerStuck, msg=kind):
+                begin(p, s)
 
     def test_proposals_do_not_confirm_consumption_and_rejection_rolls_back_plan(self):
         s, p = ready()
