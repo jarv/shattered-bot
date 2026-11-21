@@ -560,5 +560,21 @@
     "status": "deferred",
     "reason": "No safe focused replacement is established. A reduced public-snapshot geometry probe at decision 1694 found three budgeted chest-trip origins: doorway 719 and water 675/676. All fail the existing unknown-potion test-bank gate; the doorway also fails potion-stash feasibility. A meal alone therefore does not establish executable preparation. No carried identification supply or known invisibility was observed at exhaustion. Next, establish a safe remote identification/test-and-inventory-protection route with a verified subsequent retrieval budget, or obtain public evidence of an available identification resource. Do not weaken water-bank admission, guess potion effects, or waive collection. Offline selection reconstruction matched actions and reasons through decision 1200, then stopped at a serialization error before this episode; later runtime memory is not certified.",
     "origin_run": "000043"
+  },
+  {
+    "id": "000046-pool-key-preparation",
+    "priority": "high",
+    "summary": "Establish an admitted retrieval plan for a matching key inside remembered piranha reach.",
+    "evidence": [
+      "Decision 2117, log line 5887: a giant piranha is observed at 683.",
+      "Decision 2395, log line 6657: iron key 716 is visible but excluded by the room hazard barrier; pool preparation reports no protected reward trip.",
+      "Decision 2530, accepted transition at line 7052: healing restores 41 HP to 50 without collecting the key.",
+      "Decision 2531, accepted transition at line 7054: a puzzle meal removes hunger, but decision 2532 still has the same key obligation.",
+      "Decision 2532, lines 7055–7057: the matching key remains inaccessible and the living hero exhausts the planner.",
+      "tools/special_rooms.py:72–92; tools/priority_resources.py:107–156; tools/puzzle_supplies.py:588–629; tools/mage_policy.py:431–449."
+    ],
+    "status": "deferred",
+    "reason": "No safe focused replacement is certified. The required item is a key, not an observed piranha chest. The recorded inventory has no known invisibility or carried identify/intuition resource at exhaustion. Unknown pool tests require a dry, fully observed bank beyond water reach and a budgeted protected return; more food or healing does not establish that combination. Removing the habitat buffer, treating the key as collected, or guessing a potion would violate safety. Full source resolves the selecting chain; it does not prove a replacement route. Next, validate a public-observation-backed dry firing position and approach for ranged piranha control, including visible target, remembered threats, charge budget and pickup/return; otherwise establish an actual identification supply and protected key trip. Do not assume an invisibility potion is guaranteed merely because a piranha was observed. Source-pinned offline reconstruction matched all 2,532 selected inputs and the terminal failure; a copied terminal-state probe found zero admitted current dry test banks and no prior pool approach attempt. Runtime-state recovery therefore resolves that evidence gap, but not the safe replacement requirement.",
+    "origin_run": "000046"
   }
 ]
