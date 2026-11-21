@@ -499,6 +499,15 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
             and p.food_items(state) and hero['hp']>=.95*hero['max_hp'] \
             and not any(t in buffs for t in ('burn','poison','bleed','blind','vertigo','paral','root','levitat')):
         for demand in pending:
+            # This hungry scout bypasses the normal candidate selection below.
+            # Without a carried flight supply it can only pull us back from
+            # other floor work, then yield at the bank and repeat indefinitely.
+            if not any('DRINK' in i.get('actions',[]) and (
+                    base_name(i)==demand.potion or unknown_potion(i)
+                    and (state['depth'],base_name(i)) not in p.puzzle_drinks
+                    and sum(d==state['depth'] for d,_ in p.puzzle_drinks)<MAX_ROOM_POTION_TESTS)
+                    for i in state['inventory']):
+                continue
             staged=revisit_flight_room(p,state,demand,distance)
             if staged:return staged
     if hero["hp"] < 0.5*hero["max_hp"] or ('hungry' in buffs and not p.puzzle_hungry_frost) or any(t in buffs for t in (
