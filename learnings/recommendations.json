@@ -791,17 +791,18 @@
   {
     "id": "000061-descent-bank-return",
     "priority": "high",
-    "summary": "Establish safe, bounded return-to-bank preparation for mandatory pre-descent potion discovery.",
+    "summary": "Establish bounded multi-stage return and fresh inventory-protection admission for mandatory pre-descent discovery.",
     "evidence": [
-      "Decisions 214–219, selection lines 597–612: exploration leaves visible water approaches.",
-      "Decisions 233–237, lines 654–667: keyed-room approach and ring collection precede discovery admission.",
-      "Decision 238, accepted transition line 670: hero remains at full health while the clock advances.",
-      "Decision 239, line 671: departure is blocked by the absence of an admitted water or water-escape test bank.",
-      "Offline source-pinned reconstruction matches all 239 selected inputs and the terminal blocker; nearest water route is 18 cells and remembered bank 288 requires 19, with closed doors and grass.",
-      "tools/descent_potions.py:81–82,159–187; tools/puzzle_supplies.py:97–121; tools/mage_policy.py:414–468."
+      "Decision 215, line 621: last reconstructed bank receipt at 94 covers only turquoise potion.",
+      "Decision 216, accepted transition line 625: bistre potion is collected.",
+      "Decision 220, accepted transition line 634: the bistre strength hypothesis fails without revealing its full identity.",
+      "Decision 273, accepted transition line 792: the clock advances at full health.",
+      "Decision 274, line 794: mandatory discovery blocks departure.",
+      "Offline reconstruction matches all 274 selected inputs; nearest water route has 20 cells and the old receipt route has 33.",
+      "tools/descent_potions.py:51-88,110-253; tools/puzzle_supplies.py:97-121; tools/potion_stash.py:51-76."
     ],
     "status": "deferred",
-    "reason": "The exact blocker is an unvalidated staging-and-arrival contract, not missing source or controller memory. Existing drink admission requires current visibility, a route no longer than 13 cells, restricted transit terrain and verified protection. The remembered 288 route exceeds that bound and crosses closed doors and grass. A distance increase or visibility/terrain relaxation would not certify safe discovery. Next, implement and validate a separate bounded ordinary return phase on the reconstructed terminal state, including door-opening receipts, hazard and hunger budgets, and independent arrival rechecks before any drink. No such safe multi-stage replacement is established here, so no policy patch or new regression is proposed.",
+    "reason": "The exact blocker is an unvalidated multi-stage transit-and-arrival/protection contract, not missing selecting source or runtime bookkeeping. The only verified bank receipt predates the second potion; both its route and the nearest water route exceed the short-return contract and cross excluded grass and doors. No currently visible bank is admitted. Next, derive a deterministic fixture from the recorded 513-to-423 or 513-to-94 geometry and validate ordinary transit separately from testing, including hazards, door-opening receipts, total travel budget and fresh two-color stash admission on arrival. Increasing bounds or discarding inventory compatibility alone would not certify safe discovery. No speculative movement repair is submitted.",
     "origin_run": "000061"
   },
   {
