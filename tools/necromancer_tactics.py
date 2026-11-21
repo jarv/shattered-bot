@@ -126,6 +126,13 @@ def choose_necromancer(p, state, enemies, distance, neighbors, line_clear):
                 if not near and not firing:
                     continue
                 step = route[1]
+                # A remembered caster is only an observation clue, not a
+                # live support target worth trading low-health hits to
+                # approach. Use the emergency-item health gate above and
+                # let existing withdrawal/blocker handling preserve spacing.
+                if not is_visible and hero["hp"] < 0.5 * hero["max_hp"] \
+                        and any(distance(step, e["cell"], width) <= 1 for e in threats):
+                    continue
                 if sum(distance(step, e["cell"], width) <= 1 for e in threats) > 1:
                     continue
                 exposure = sum(distance(c, e["cell"], width) <= 1 for c in route[1:] for e in threats)

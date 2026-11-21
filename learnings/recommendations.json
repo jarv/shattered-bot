@@ -1163,5 +1163,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000087"
+  },
+  {
+    "id": "000088-necro-memory-contact",
+    "priority": "high",
+    "summary": "Prevent low-health remembered-caster pursuit from overriding contact-breaking spacing.",
+    "evidence": [
+      "Decision 2554, log lines 7301–7302: retreat at 3 HP preserves health.",
+      "Decision 2555, log line 7306: unit engagement moves beside the visible summon toward an offscreen caster clue.",
+      "Decision 2555, accepted transition 7307 and terminal observation 7308: health falls to zero; the public death message identifies the summon.",
+      "tools/necromancer_tactics.py:104–158; tools/unit_strategies.py:63–70; tools/multi_enemy_tactics.py:79–85.",
+      "New deterministic regression: original helper fails both low-health subcases; candidate and full Python suite pass."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000088"
   }
 ]
