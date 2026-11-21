@@ -562,7 +562,9 @@ def crystal_choice(p, state, enemies, neighbors):
             cell = queue.popleft()
             for n in neighbors(cell, width, height):
                 terrain = p.tiles.get(n, {}).get("terrain")
-                if n not in paths and (n == door or terrain in GROUND and p.walkable(n)):
+                # Ordinary closed doors are transit in the real paths too.
+                # Excluding them here erases distant observed branch rewards.
+                if n not in paths and (n == door or terrain in GROUND | {5} and p.walkable(n)):
                     paths[n] = cell
                     queue.append(n)
         branch_cells[door] = (set(paths)-set(baseline)) | {door}

@@ -921,5 +921,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000070"
+  },
+  {
+    "id": "000072-remote-crystal-supply",
+    "priority": "high",
+    "summary": "Keep ordinary closed transit doors from hiding observed crystal-room supplies.",
+    "evidence": [
+      "Decision 109, log line 306: potion rewards observed beyond crystal door 444.",
+      "Decision 265, log line 828: first changed selection in the isolated candidate reconstruction.",
+      "Decision 313, log line 970: mandatory discovery blocked by missing room supplies despite a held crystal key.",
+      "tools/room_tactics.py:547-604; tools/survival_policy.py:431-463."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000072"
   }
 ]

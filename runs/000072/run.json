@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "id": "000072",
+  "started_at": "2026-11-21T18:20:44Z",
+  "completed_at": "2026-11-21T18:22:45.236328+00:00",
+  "source_commit": "9cd806ecc66aab77728abc8d9488661b4088fe7c",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 313,
+  "duration_seconds": 117.815,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000071",
+  "previous_source_commit": "af4ac4538a303bde1b9fb717cbc47d19dc8ced66",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Mandatory discovery needs an executable return plan before exploration leaves the verified testing area. A remembered bank is not current permission to drink: separate bounded transit, fresh visible safety checks, inventory protection, accepted consumption and retrieval receipts.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended with a living, full-health hero and a stuck planner, not an observed death (decision 313, log line 970). Gas-room supplies remained unresolved, so mandatory potion discovery correctly refused to spend unknown colors as unrelated strength tests. An earlier supply opportunity was incorrectly excluded: crystal-branch valuation could not traverse ordinary closed doors, although normal navigation could. This hid already observed potion rewards behind doors 444/520 while a crystal key was held. Original-source offline bookkeeping reconstruction matched recorded actions 0–312 and reproduced the terminal blocker; this is reconstructed memory, not recorded memory. A focused correction makes branch valuation admit ordinary closed-door transit under the existing safety checks. The new regression failed on original source and passed with the correction; all 1,768 suite tests passed, with four skipped. Candidate reconstruction first changed decision 265 (log line 828), selecting an approach to the crystal branch; reconstruction stopped there. This establishes an available preparation choice, not potion acquisition, identity, gas-room success or survival.",
+    "learnings": "Evaluate observed crystal-room rewards through ordinary closed transit doors before abandoning a held key. Keep supply conservation, fresh potion-test safety checks, actual protection verification and pickup receipts separate: choosing a supply approach is not completing the puzzle."
+  },
+  "recommendations": [
+    {
+      "id": "000072-remote-crystal-supply",
+      "priority": "high",
+      "summary": "Keep ordinary closed transit doors from hiding observed crystal-room supplies.",
+      "evidence": [
+        "Decision 109, log line 306: potion rewards observed beyond crystal door 444.",
+        "Decision 265, log line 828: first changed selection in the isolated candidate reconstruction.",
+        "Decision 313, log line 970: mandatory discovery blocked by missing room supplies despite a held crystal key.",
+        "tools/room_tactics.py:547-604; tools/survival_policy.py:431-463."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000072"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000072/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000072/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 307,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 307,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 327
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 307,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
