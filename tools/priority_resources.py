@@ -135,6 +135,17 @@ def choose(p,state,enemies):
         # permission to walk across the traps around the reward.
         if any(cell not in paths and base_name(obj.get('top_item',obj)) in NAMES
                for cell,obj in resources.items()):
+            # General preparation yields to this leaf while required loot is
+            # pending. Unknown-supply preparation deliberately skips a known
+            # frost potion, so also admit the existing guarded extinguisher.
+            # This neither crosses the fire nor receipts the blocked pickup.
+            if not (p.puzzle_probe or p.potion_stash or p.room_journey):
+                try:
+                    from .room_tactics import extinguish
+                except ImportError:
+                    from room_tactics import extinguish
+                preparation=extinguish(p,state,enemies,distance)
+                if preparation:return preparation
             try:
                 from .runestone_tactics import prepare_mapping
             except ImportError:

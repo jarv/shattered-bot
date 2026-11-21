@@ -428,5 +428,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000035"
+  },
+  {
+    "id": "000036-known-frost-priority-preparation",
+    "priority": "high",
+    "summary": "Allow guarded known-frost preparation when mandatory progression loot blocks ordinary preparation.",
+    "evidence": [
+      "Decision 282, line 806: upgrade scroll beyond magical fire; identified frost potion carried; exploration selected.",
+      "Decisions 283–284, lines 809–812: visible fire remains while exploration moves away.",
+      "Decision 300, lines 860–861: fire-buffer exclusions block the upgrade and planner exhaustion terminates the run.",
+      "tools/mage_policy.py:1134–1138; tools/priority_resources.py:124–153; tools/puzzle_supplies.py:448–467; tools/room_tactics.py:265–314."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000036"
   }
 ]
