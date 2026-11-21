@@ -65,6 +65,7 @@ class PotionStashTests(unittest.TestCase):
         candidate["quantity"]=2
         with self.assertRaises(Finished):protect_potions(p,s,candidate,distance,neighbors,safe)
         candidate["quantity"]=1
+        for c in (21,22,23):p.tiles[c]["effects"]=["fire"]
         with self.assertRaises(Finished):protect_potions(p,s,candidate,distance,neighbors,lambda *a,**k:False)
 
     def test_rejected_drop_rolls_back_owned_plan(self):

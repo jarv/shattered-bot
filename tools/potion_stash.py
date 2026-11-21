@@ -2,9 +2,57 @@
 try:
     from .consumable_tactics import base_name
     from .policy_decision import Intent
+    from .policy_geometry import neighbors, distance
 except ImportError:
     from consumable_tactics import base_name
     from policy_decision import Intent
+    from policy_geometry import neighbors, distance
+
+
+STASH_TRANSIT = {1,2,3,9,11,14,15,19,20,29,30}
+FLAMMABLE = {2,5,6,13,15,27,30}
+
+
+def fire_footprint(p, state, bank):
+    """Conservative liquid-flame footprint; unknown terrain can carry fire.
+
+    Pinned Fire.evolve spreads cardinally onto flammable terrain. The potion
+    seeds NEIGHBOURS9. Seeding walls here deliberately overestimates the cloud.
+    Freezing itself never diffuses beyond its initially seeded footprint.
+    """
+    width, height = state["map"]["width"], state["map"]["height"]
+    seen = {bank, *neighbors(bank, width, height)}
+    queue = list(seen)
+    while queue:
+        cell = queue.pop()
+        for n in neighbors(cell, width, height):
+            if n % width != cell % width and n // width != cell // width:
+                continue
+            tile = p.tiles.get(n, {})
+            if n not in seen and (not tile.get("observed", tile.get("visible", False))
+                                  or tile.get("terrain") in FLAMMABLE or tile.get("plant")):
+                seen.add(n)
+                queue.append(n)
+    return seen
+
+
+def fire_reaches_stash(p, state, bank, stash):
+    return stash in fire_footprint(p, state, bank)
+
+
+def storage_safe(p, state, bank, cell, footprint=None):
+    """A drop site need not be a drink site; protect it from test collateral."""
+    tile = p.tiles.get(cell, {})
+    if not tile.get("visible") or tile.get("terrain") not in STASH_TRANSIT \
+            or any(tile.get(k) for k in ("effects", "trap", "plant")) \
+            or cell in p.loot or cell in p.blocked or cell in p.room_blocked \
+            or cell in p.neutral_actor_cells or cell in state.get("danger_cells", []):
+        return False
+    if any(distance(cell,o["cell"],state["map"]["width"]) <= 4
+           for o in list(state.get("objects", [])) + list(p.recent_threats.values())
+           if not o.get("top_item") and o["cell"] not in p.loot):
+        return False
+    return cell not in (fire_footprint(p,state,bank) if footprint is None else footprint)
 
 
 def potions(state):
@@ -47,7 +95,7 @@ def bandolier_protected(p,state):
 def stash_paths(p,state):
     """Search inside the admitted stash corridor, not through rejected shortcuts."""
     excluded={c for c,t in p.tiles.items()
-              if t["terrain"] not in {1,3,9,11,14,19,20,29}
+               if t["terrain"] not in STASH_TRANSIT
               or t.get("trap") or t.get("plant") or t.get("effects") or c in p.loot}
     return p.paths(state,excluded)
 
@@ -57,15 +105,22 @@ def stash_cells(p,state,distance,neighbors,safe_bank):
     bank=state["hero"]["cell"]
     width=state["map"]["width"]
     paths=stash_paths(p,state)
-    return [c for c in paths if 3<=distance(c,bank,width)<=5 and len(p.route(paths,c))<=7
-            and safe_bank(p,state,c,distance,neighbors,allow_dry=True)
-            and all(p.tiles[n]["terrain"] in {1,3,9,11,14,19,20,29}
+    footprint=fire_footprint(p,state,bank)
+    cells = [c for c in paths if 3<=distance(c,bank,width)<=5 and len(p.route(paths,c))<=7
+             and (safe_bank(p,state,c,distance,neighbors,allow_dry=True)
+                  or storage_safe(p,state,bank,c,footprint))
+             and c not in footprint
+             and all(p.tiles[n]["terrain"] in STASH_TRANSIT
                     and not p.tiles[n].get("trap") and not p.tiles[n].get("effects")
-                    and n not in p.loot for n in p.route(paths,c))]
+                     and n not in p.loot for n in p.route(paths,c))]
+    preferred = [c for c in cells if safe_bank(p,state,c,distance,neighbors,allow_dry=True)]
+    return preferred or cells
 
 
 def can_protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isolated_stack=False):
     """No drops, receipts, or inferred effects: only preparation feasibility."""
+    if p.potion_stash and fire_reaches_stash(p,state,state["hero"]["cell"],p.potion_stash["cell"]):
+        return False
     if bandolier_protected(p,state) and not p.potion_stash:
         return True
     if candidate.get("quantity",1)>1 and not isolated_stack:
@@ -79,6 +134,8 @@ def can_protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isola
 
 
 def protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isolated_stack=False):
+    if p.potion_stash and fire_reaches_stash(p,state,state["hero"]["cell"],p.potion_stash["cell"]):
+        p.stop_obligation("potion-stash","Potion test collateral can now reach the stash; retrieve before replanning")
     if bandolier_protected(p,state) and not p.potion_stash:
         return None  # No remote drops, stack splitting or bag disposal are needed.
     others=[i for i in potions(state) if i["id"]!=candidate["id"]]
@@ -128,6 +185,15 @@ def advance_stash(p,state,enemies,distance):
     if plan["phase"]=="drop":
         if pos!=plan["cell"]:
             return p.toward(state,plan["cell"],"potion: approach remote safe stash",stash_paths(p,state),intent=Intent.REPOSITION)
+        # Recheck after arrival, before changing inventory. Existing own drops
+        # occupy this square on subsequent steps and are verified below.
+        tile=p.tiles.get(pos,{})
+        if tile.get("terrain") not in STASH_TRANSIT or not tile.get("visible") \
+                or any(tile.get(k) for k in ("trap","plant","effects")) \
+                or pos in p.room_blocked or pos in p.blocked \
+                or pos in p.loot and not plan["dropped"] \
+                or fire_reaches_stash(p,state,plan["bank"],pos):
+            p.stop_obligation("potion-stash","Stash arrival lost its hazard/collateral admission")
         other=next((i for i in potions(state) if base_name(i)!=plan["candidate"]),None)
         if other:
             plan["pending"]=(base_name(other),other.get("quantity",1))

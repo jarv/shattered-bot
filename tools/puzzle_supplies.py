@@ -571,7 +571,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
         if guess:
             p.puzzle_guesses.add(key)
             return guess
-        if candidate.get("quantity",1)>1 and not bandolier_protected(p,state):
+        if candidate.get("quantity",1)>1 and not bandolier_protected(p,state) and demand.kind != 'gas':
             continue  # Safe identification above is still allowed; an unprotected stack is not a drink test.
         if hero["hp"]<0.95*hero["max_hp"]:
             continue  # Safe identification is not permission for a risky drink.
@@ -693,7 +693,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
         # a stash obligation that disables all other floor potion supplies.
         banks = [bank for bank in banks if can_protect_potions(
             p,dict(state,hero=dict(hero,cell=bank)),candidate,
-            distance,neighbors,safe_test_bank)]
+            distance,neighbors,safe_test_bank,isolated_stack=demand.kind=='gas')]
         if not banks:
             continue
         bank = min(banks,key=lambda c:len(p.route(paths,c)))
@@ -705,7 +705,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
             if not ready:
                 if opening:return opening
                 continue
-        stash=protect_potions(p,state,candidate,distance,neighbors,safe_test_bank)
+        stash=protect_potions(p,state,candidate,distance,neighbors,safe_test_bank,isolated_stack=demand.kind=='gas')
         if stash:
             return stash
         if p.potion_stash:

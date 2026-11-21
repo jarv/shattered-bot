@@ -26,6 +26,22 @@ drink the only possible purity supply far from a gas-room reward without an
 admitted protection/return plan. Run 79's exact inventory-protection dead end is
 not claimed solved merely by adding structured scheduling.
 
+The subsequent run-79 storage repair separates drinking-site admission from
+storage-site admission. An observed grass pocket can hold other potion colors
+when reachable within the existing stash budget and outside a conservative
+test-fire footprint. Unknown terrain is treated as potentially flammable;
+cardinal fire propagation follows the pinned `Fire.evolve` implementation.
+Freezing does not diffuse beyond its seeded footprint. Arrival and pre-drink
+checks revalidate collateral protection. Existing drop and retrieval receipts
+remain mandatory. Gas-room tests may keep an isolated same-color stack while
+whole stacks of other colors are protected.
+
+In the original D276 observation, bank 241 can use storage 327 or 355. The old
+admission rejects the inventory-protected experiment; the new admission selects
+travel to bank 241. Sequence tests separately verify whole-stack drop, return,
+and retrieval. This establishes preparation feasibility, not a replayed room
+completion.
+
 ## Transit versus experiment
 
 Returning to a remembered preparation area uses a terrain-constrained path search
