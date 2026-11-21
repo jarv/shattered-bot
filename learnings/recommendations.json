@@ -548,15 +548,15 @@
   {
     "id": "000043-pool-supply-preparation",
     "priority": "high",
-    "summary": "Resolve the pool's unknown-supply preparation gap before mandatory retrieval blocks descent.",
+    "summary": "Establish executable, safe preparation for the mandatory piranha chest.",
     "evidence": [
-      "Decision 1095, log line 3171: hungry, full-health hero observes the pool chest while carrying an unidentified potion and food.",
-      "Decision 1187, log line 3431: accepted movement advances the clock with the hero still at full health.",
-      "Decision 1188, log line 3433: unfinished piranha chest causes planner exhaustion.",
-      "tools/piranha_tactics.py:36-59; tools/puzzle_supplies.py:434-455, 568-611; tools/mage_policy.py:429-430."
+      "Decision 1694, log line 4839: first observed piranha chest on this floor; hero is hungry at full health with unknown potions.",
+      "Decision 1725, accepted transition at log line 4933: ordinary exploration advances the clock without health loss.",
+      "Decision 1726, log line 4935: unfinished chest blocks descent and rescue yields no action.",
+      "tools/puzzle_supplies.py:434-455,568-611; tools/piranha_tactics.py:36-59; tools/mage_policy.py:429-430."
     ],
     "status": "deferred",
-    "reason": "Source browsing and selection reconstruction resolved the missing controller chain, but no safe replacement action was established. Validated-state probes at decisions 1095 and 1188 found only two budgeted trip origins: approach water and the entrance doorway. Both failed unknown-test and stash admission; removing hunger or requesting the existing revisit produced no preparation action. No identification resource was observed. Next, build a reduced fixture of this exact approach and establish either an observation-backed identification method or a safe remote test/stash route with a verified protection budget. Relaxing water-bank checks, guessing the potion, or releasing the chest obligation would not be a safe focused repair.",
+    "reason": "No safe focused replacement is established. A reduced public-snapshot geometry probe at decision 1694 found three budgeted chest-trip origins: doorway 719 and water 675/676. All fail the existing unknown-potion test-bank gate; the doorway also fails potion-stash feasibility. A meal alone therefore does not establish executable preparation. No carried identification supply or known invisibility was observed at exhaustion. Next, establish a safe remote identification/test-and-inventory-protection route with a verified subsequent retrieval budget, or obtain public evidence of an available identification resource. Do not weaken water-bank admission, guess potion effects, or waive collection. Offline selection reconstruction matched actions and reasons through decision 1200, then stopped at a serialization error before this episode; later runtime memory is not certified.",
     "origin_run": "000043"
   }
 ]
