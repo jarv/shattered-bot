@@ -100,6 +100,7 @@ def visit_entrance_shop(p, state, previous, neighbors):
     # not prevent revealing that chamber. The overall movement budget bounds
     # this search, without generated room IDs or hidden shop positions.
     body, queue = {p.entrance_cell}, deque([p.entrance_cell])
+    layers = {p.entrance_cell: 0}
     interior = {1, 2, 3, 9, 11, 14, 15, 19, 20, 29, 30, 32}
     while queue:
         cell = queue.popleft()
@@ -107,9 +108,17 @@ def visit_entrance_shop(p, state, previous, neighbors):
             if c % width != cell % width and c // width != cell // width:
                 continue
             terrain = p.tiles.get(c, {}).get("terrain")
-            if c not in body and (terrain in interior or (terrain in {5, 6} and c in p.entrance_doors_checked)):
+            if terrain in interior or (terrain in {5, 6} and c in p.entrance_doors_checked):
+                cost = int(terrain in {5, 6})
+                layer = layers[cell] + cost
+                if c in layers and layers[c] <= layer:
+                    continue
                 body.add(c)
-                queue.append(c)
+                layers[c] = layer
+                if cost:
+                    queue.append(c)
+                else:
+                    queue.appendleft(c)
     # Finish revealing the observed entrance-side component before committing
     # to a door branch. Otherwise one revealed exit can consume the entire
     # visit budget in distant rooms while entrance frontiers remain untouched.
@@ -118,11 +127,22 @@ def visit_entrance_shop(p, state, previous, neighbors):
     frontiers = [c for c in body if c != pos and c in previous and c not in p.exhausted
                  and all(n in body for n in p.route(previous, c))
                  and any(n not in p.tiles for n in neighbors(c, width, height))]
+    doors = {c for cell in body for c in neighbors(cell, width, height)
+             if p.tiles.get(c, {}).get("terrain") in {5, 6} and c not in p.entrance_doors_checked}
+    # Checking an annex exit must not let its entire downstream component
+    # monopolize the entrance visit. Finish admitted work at the shallowest
+    # observed door layer first; within that layer, reveal frontiers as before.
+    # This changes target ordering only, not paths, hazards or visit receipts.
+    door_layers = {c: min(layers[n] for n in neighbors(c, width, height) if n in body)
+                   for c in doors if c in previous}
+    work_layers = [layers[c] for c in frontiers] + list(door_layers.values())
+    if work_layers:
+        layer = min(work_layers)
+        frontiers = [c for c in frontiers if layers[c] == layer]
+        doors = {c for c in door_layers if door_layers[c] == layer}
     if frontiers:
         return p.toward(state, min(frontiers, key=lambda c: len(p.route(previous, c))),
                          "shop: reveal entrance chamber doors", previous, intent=Intent.SHOP)
-    doors = {c for cell in body for c in neighbors(cell, width, height)
-             if p.tiles.get(c, {}).get("terrain") in {5, 6} and c not in p.entrance_doors_checked}
     for door in sorted(doors, key=lambda c: len(p.route(previous, c)) if c in previous else 9999):
         if door not in previous:
             continue
