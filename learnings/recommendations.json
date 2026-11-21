@@ -901,5 +901,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000069"
+  },
+  {
+    "id": "000070-frost-observation-commitment",
+    "priority": "high",
+    "summary": "Preserve admitted fire-observation travel when the barrier becomes visible midway.",
+    "evidence": [
+      "Decision 628, log line 1826: priority preparation revisits remembered fire through cell 1267.",
+      "Decision 629, log line 1829: fire is visible but exploration reverses that preparation.",
+      "Decisions 630-644, log lines 1832-1872: repeated return/exploration alternation.",
+      "Decision 646, log lines 1879-1881: mandatory matching key remains behind the fire buffer; planner exhaustion with a living hero.",
+      "tools/puzzle_supplies.py:243-270,566-610; tools/priority_resources.py:124-148."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000070"
   }
 ]

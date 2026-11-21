@@ -569,6 +569,21 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
             width=state["map"]["width"]
             barriers=[c for c,t in p.tiles.items() if t.get("visible") and fire_barrier(t)]
             paths=p.paths(state)
+            # Seeing the fire from an intermediate route square does not mean
+            # the committed observation vantage was reached. Finish that
+            # admitted travel before visible-only bank checks can yield to
+            # unrelated exploration and repeatedly pull us back.
+            plan=p.frost_view_plan
+            if plan and fire_barrier(p.tiles.get(plan['barrier'],{})):
+                if hero['cell']==plan['view']:
+                    p.frost_view_attempts.add((plan['barrier'],plan['view']))
+                    p.frost_view_plan=None
+                else:
+                    # The nearest tile in a multi-tile fire wall may change
+                    # mid-route. The existing plan owns its original anchor.
+                    anchor=Demand('frost','potion of frost',plan['barrier'])
+                    refresh=refresh_barrier(p,state,anchor,paths,distance)
+                    if refresh:return refresh
             banks=[c for c in paths if len(p.route(paths,c))<=12
                    and safe_test_bank(p,state,c,distance,neighbors,allow_dry=True)
                    and any((c%width==b%width or c//width==b//width)
