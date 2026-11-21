@@ -161,8 +161,10 @@ def choose(p, state):
     if action:
         return action
     mixed = bool(tile.get("effects")) and not gas
-    calm = not threats(p, state) and not state.get("danger_cells") and not mixed \
+    calm_environment = not state.get("danger_cells") and not mixed \
         and not getattr(p, "unseen_damage_turns", 0) and state["hero"]["hp"] > .35 * state["hero"]["max_hp"]
+    foes = threats(p, state)
+    calm = not foes and calm_environment
     try:
         from .room_tactics import remaining as duration
     except ImportError:
@@ -176,7 +178,11 @@ def choose(p, state):
             and (gas or pos not in p.room_blocked):
         return mark(p, state, p.decision({"type": "wait"}, "vertigo: bounded wait outside renewing exposure", intent=Intent.RECOVER), "wait")
     impaired = " ".join(b["name"].lower() for b in state["hero"].get("buffs", []))
-    if calm and (gas or plan["stale"] >= 2 or plan["waits"] >= MAX_WAITS) \
+    # A distant sleeper is not an active pursuit veto. Keep stationary waits
+    # unchanged; safe_tile still rejects every landing near any sleeper, and
+    # landings checks all random directions before permitting a single input.
+    escape_calm = calm_environment and not any(not foe.get("sleeping") for foe in foes)
+    if escape_calm and (gas or plan["stale"] >= 2 or plan["waits"] >= MAX_WAITS) \
             and not any(b in impaired for b in ("root", "paral", "frozen")) and plan["moves"] < MAX_MOVES:
         route = exit_route(p, state, random=vertigo)
         if route:

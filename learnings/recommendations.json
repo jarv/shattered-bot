@@ -746,5 +746,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000058"
+  },
+  {
+    "id": "000059-sleeping-vertigo-escape",
+    "priority": "high",
+    "summary": "Allow all-direction-checked vertigo escape despite distant sleeping enemies.",
+    "evidence": [
+      "Decision 815, log lines 2357–2358: previously plain floor reveals a confusion trap and vertigo after movement.",
+      "Decision 816, log lines 2360–2362: requested escape lands unexpectedly at 1223; one accepted move is recorded.",
+      "Decision 817, log line 2364: the hero remains at 30/30 HP; a sleeping gnoll at 1624 globally vetoes escape despite admissible landing geometry.",
+      "tools/vertigo_tactics.py:35–105,164–188: global threat veto precedes per-landing sleeper separation checks."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000059"
   }
 ]
