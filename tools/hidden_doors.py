@@ -147,6 +147,55 @@ def continue_search_vantage(p,state,enemies,paths):
     return p.decision({'type':'search'},'explore: complete committed visible-wall search before frontier work')
 
 
+def light_corridor_approach(p, state, wall, route, buffs):
+    """One known-uncursed light attempt before walking to an unsearched tip.
+
+    Aim at the observed solid end wall, not beyond an open-ended corridor.
+    This is preparation only: neither a cast nor a fizzle credits a search,
+    trap discovery, or collection. Reobserve and use ordinary path safety next.
+    """
+    pos = state['hero']['cell']
+    width = state['map']['width']
+    if wall in p.corridor_light_attempts or len(route) < 2 or len(route) > 7 \
+            or not p.tiles[wall].get('visible') or 'magic immun' in buffs \
+            or p.tiles[pos].get('trap') or p.tiles[pos].get('plant') \
+            or p.effects_block_movement(p.tiles[pos]) or pos in p.room_blocked \
+            or not p.shot_clear(state, wall):
+        return None
+    # Public major-axis projectile geometry, matching projectile_line_clear.
+    dx, dy = abs(wall % width-pos % width), abs(wall//width-pos//width)
+    sx, sy = (1 if wall % width > pos % width else -1), (1 if wall//width > pos//width else -1)
+    major, minor, a, b = (dx,dy,sx,sy*width) if dx > dy else (dy,dx,sy*width,sx)
+    error, cell, ray = major//2, pos, [pos]
+    for _ in range(major):
+        cell += a
+        error += minor
+        if error >= major:
+            cell += b
+            error -= major
+        ray.append(cell)
+    actors = {o['cell'] for o in state.get('objects', []) if not o.get('top_item')}
+    if any(not p.tiles.get(c, {}).get('visible') or c in actors for c in ray):
+        return None
+    # The light reveals radius one around its traversed cells. Do not pretend
+    # a ray that misses the walking route is a useful preflight.
+    if any(not any(max(abs(c % width-r % width), abs(c//width-r//width)) <= 1
+                   for r in ray[:-1]) for c in route[1:]):
+        return None
+    for item in state.get('inventory', []):
+        if not item['name'].lower().startswith('wand of prismatic light') \
+                or not item.get('curse_known') or item.get('known_cursed') \
+                or 'ZAP' not in item.get('actions', []) or not p.item_action_allowed(item, 'ZAP'):
+            continue
+        charge = (item.get('status') or '?').split('/')[0]
+        if charge.isdigit() and int(charge) < 2 or p.unknown_magic_cooldowns[item['name']]:
+            continue
+        p.corridor_light_attempts.add(wall)
+        return p.use(item, 'ZAP', 'explore: illuminate required corridor approach before walking; reobserve for traps',
+                     target=wall)
+    return None
+
+
 def seek_required_corridor_tip(p,state,enemies,distance):
     if not secret_search_allowed(state,p):return None
     hero=state['hero'];pos=hero['cell'];buffs=' '.join(b['name'].lower() for b in hero.get('buffs',[]))
@@ -172,6 +221,9 @@ def seek_required_corridor_tip(p,state,enemies,distance):
     p.planner.report['corridor_dead_end']={'wall':wall,'tip':tip,'status':'Required observed narrow-tip search',
         'qualification':'One search per observed end; no hidden door or room assumed; safety and boss-floor rules remain'}
     if tip!=pos:
+        light = light_corridor_approach(p, state, wall, p.route(paths, tip), buffs)
+        if light:
+            return light
         p.corridor_tip_routes[wall]+=1
         return p.toward(state,tip,'explore: reach observed one-wide corridor dead end for required search',paths,intent=Intent.EXPLORE)
     p.searches+=1;p.corridor_tip_searches+=1;p.wall_searches[pos]+=1

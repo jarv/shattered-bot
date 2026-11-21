@@ -92,6 +92,7 @@ class NavigationMemory:
 class ExplorationMemory:
     secret_search_goal: object = value(None, floor=True)
     corridor_tip_routes: Counter = local(Counter)
+    corridor_light_attempts: set = local(set)
     trap_scan_cells: Counter = local(Counter)
     trap_scan_pending: object = value(None, floor=True)
     hazard_recheck_edges: Counter = local(Counter)
