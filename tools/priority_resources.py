@@ -130,14 +130,14 @@ def choose(p,state,enemies):
             from puzzle_supplies import prepare_supplies
         preparation=prepare_supplies(p,state,enemies,distance,neighbors)
         if preparation:return preparation
-        # Awareness may reveal the reward without revealing its connecting
-        # passage. A known mapping scroll is useful discovery, not a receipt or
-        # permission to walk across the traps around the reward.
-        if any(cell not in paths and base_name(obj.get('top_item',obj)) in NAMES
+        if any(cell not in paths and (base_name(obj.get('top_item',obj)) in NAMES
+                                     or base_name(obj.get('top_item',obj)).endswith(' key'))
                for cell,obj in resources.items()):
             # General preparation yields to this leaf while required loot is
             # pending. Unknown-supply preparation deliberately skips a known
             # frost potion, so also admit the existing guarded extinguisher.
+            # Matching keys are mandatory targets too; do not strand their
+            # known frost supply behind the upgrade/strength-only branch.
             # This neither crosses the fire nor receipts the blocked pickup.
             if not (p.puzzle_probe or p.potion_stash or p.room_journey):
                 try:
@@ -146,6 +146,10 @@ def choose(p,state,enemies):
                     from room_tactics import extinguish
                 preparation=extinguish(p,state,enemies,distance)
                 if preparation:return preparation
+        if any(cell not in paths and base_name(obj.get('top_item',obj)) in NAMES
+               for cell,obj in resources.items()):
+            # Awareness may reveal a reward without its connecting passage.
+            # Mapping discovers routes; it is not a pickup or hazard permit.
             try:
                 from .runestone_tactics import prepare_mapping
             except ImportError:

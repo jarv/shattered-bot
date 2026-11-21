@@ -576,5 +576,20 @@
     "status": "deferred",
     "reason": "No safe focused replacement is certified. The required item is a key, not an observed piranha chest. The recorded inventory has no known invisibility or carried identify/intuition resource at exhaustion. Unknown pool tests require a dry, fully observed bank beyond water reach and a budgeted protected return; more food or healing does not establish that combination. Removing the habitat buffer, treating the key as collected, or guessing a potion would violate safety. Full source resolves the selecting chain; it does not prove a replacement route. Next, validate a public-observation-backed dry firing position and approach for ranged piranha control, including visible target, remembered threats, charge budget and pickup/return; otherwise establish an actual identification supply and protected key trip. Do not assume an invisibility potion is guaranteed merely because a piranha was observed. Source-pinned offline reconstruction matched all 2,532 selected inputs and the terminal failure; a copied terminal-state probe found zero admitted current dry test banks and no prior pool approach attempt. Runtime-state recovery therefore resolves that evidence gap, but not the safe replacement requirement.",
     "origin_run": "000046"
+  },
+  {
+    "id": "000047-matching-key-known-frost",
+    "priority": "high",
+    "summary": "Allow guarded known-frost preparation for a matching key blocked by eternal fire.",
+    "evidence": [
+      "Decision 170, log line 465: iron key 1004 remains beyond observed magical fire.",
+      "Decision 230, log line 627: potion of frost is identified and carried while the key remains inaccessible.",
+      "Decision 250, log lines 687–688: ordinary navigation starts at 836 near an existing bounded throwing-vantage approach.",
+      "Decision 287, log lines 798–800: the key obligation prevents descent and the living hero exhausts the planner.",
+      "tools/priority_resources.py:124–158; tools/puzzle_supplies.py:482–501; tools/mage_policy.py:1136–1146; tools/room_tactics.py:265–307."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000047"
   }
 ]
