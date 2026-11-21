@@ -109,6 +109,62 @@ def wait_effect(p, state):
     return decision
 
 
+def reveal_incomplete_sentry(p, state, needed):
+    """One stationary known-stone scout, not a potion or protection hypothesis."""
+    if not any(d.kind == "sentry" for d in needed) \
+            or p.descent_potion_plan.get("sentry_reveal_attempted"):
+        return None
+    try:
+        from .room_tactics import sentry_geometry
+        from .special_rooms import component
+        from .hunger_budget import admits
+    except ImportError:
+        from room_tactics import sentry_geometry
+        from special_rooms import component
+        from hunger_budget import admits
+    if sentry_geometry(p, state)[0]:
+        return None
+    pos = state["hero"]["cell"]
+    tile = p.tiles.get(pos, {})
+    buffs = " ".join(b["name"].lower() for b in state["hero"].get("buffs", []))
+    # Throwing dispels invisibility; never spend it or act from exposed carpet.
+    if "invisib" in buffs or tile.get("terrain") not in {1, 3, 6, 9, 11, 19, 20, 29} \
+            or not tile.get("visible") or not tile.get("observed") \
+            or any(tile.get(k) for k in ("effects", "plant", "trap")) \
+            or pos in p.room_blocked or pos in p.blocked or pos in p.loot \
+            or pos in p.neutral_actor_cells:
+        return None
+    stone = next((i for i in state["inventory"] if base_name(i) == "stone of clairvoyance"
+                  and i.get("identified") and "THROW" in i.get("actions", [])
+                  and p.item_action_allowed(i, "THROW")), None)
+    if not stone:
+        return None
+    width, height = state["map"]["width"], state["map"]["height"]
+    # Only missing neighbors of the observed sentry component justify this
+    # scout. The stone's radius is 20; use an interior radius of 18, not an
+    # assumed room rectangle, reward coordinate, or remotely targeted throw.
+    nearby_gap = False
+    for demand in needed:
+        if demand.kind != "sentry":
+            continue
+        region = component(demand.cell, p.tiles, {1, 11, 14, 25, 26}, width, height)
+        for cell in {n for c in region for n in neighbors(c, width, height)} - region:
+            known = p.tiles.get(cell, {})
+            if known.get("observed") or known.get("mapped"):
+                continue
+            if (cell % width - pos % width)**2 + (cell // width - pos // width)**2 <= 18**2:
+                nearby_gap = True
+                break
+    if not nearby_gap or not admits(p, state, 1):
+        return None
+    p.descent_potion_plan["sentry_reveal_attempted"] = True
+    p.planner.report["descent_potion_testing"] = {
+        "status": "reconnaissance", "reason": "Reveal missing nearby sentry geometry before supply veto",
+        "collection_credited": False, "identity_inferred": False}
+    return p.use(stone, "THROW", "room: reveal incomplete sentry geometry from safe ground before potion discovery",
+                 target=pos, intent=Intent.REPOSITION)
+
+
 def begin(p, state):
     """Called only after descent has passed progression/quest/room hard gates."""
     owned_strength = next((i for i in state["inventory"] if base_name(i) == "potion of strength"), None)
@@ -183,13 +239,18 @@ def advance(p, state):
         return None
     # Known reserved supplies can remain safely in the stash. Do not let a
     # deferred room blanket-veto unrelated colors when its supplies are held.
+    room_needs = requirements(p, state)
     needed = {}
-    for demand in requirements(p, state):
+    for demand in room_needs:
         needed[demand.potion] = needed.get(demand.potion, 0) + 1
     own_stash = p.potion_stash and p.potion_stash.get("purpose") == PURPOSE
     if (not own_stash and any(
             sum(i.get("quantity", 1) for i in state["inventory"] if base_name(i) == name) < count
             for name, count in needed.items())) or p.room_journey or p.drop_plan or p.trap_payload_return:
+        if not p.potion_stash and not p.room_journey and not p.drop_plan and not p.trap_payload_return:
+            scout = reveal_incomplete_sentry(p, state, room_needs)
+            if scout:
+                return scout
         pause(p, "Preserve missing supplies for an unfinished recognized potion room or retrieval")
         return None
     if p.potion_stash and p.potion_stash.get("purpose") != PURPOSE:
