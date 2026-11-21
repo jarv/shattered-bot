@@ -411,6 +411,21 @@ class MagePolicy(SurvivalPolicy):
         direct_exit = state.get("status")=="ready" and decision.action.get("type")=="cell" \
             and self.tiles.get(exit_cell,{}).get("terrain") in {8,22} \
             and not any(is_hostile(o) and o["cell"]==exit_cell for o in state.get("objects",[]))
+        if direct_exit and decision.intent==Intent.LOOT:
+            try:
+                from .mimic_tactics import suspicious_container
+            except ImportError:
+                from mimic_tactics import suspicious_container
+            # Hero.handle picks up a fresh heap before checking transitions.
+            # Honor only the existing adjacent LOOT admission, never remembered
+            # stairs, exploration transit, or a batch continuing past the heap.
+            if not state.get("modal") and not decision.movement_batch \
+                    and not any(is_hostile(o) for o in state.get("objects",[])) \
+                    and exit_cell not in self.navigation_barriers(state,Intent.LOOT) \
+                    and any(o.get("cell")==exit_cell and o.get("top_item")
+                            and not o.get("for_sale") and not suspicious_container(o)
+                            for o in state.get("objects",[])):
+                direct_exit = False
         if direct_exit and decision.intent!=Intent.DESCEND:
             self.stop_tactical("unplanned-stairs","Ordinary navigation attempted a stair transition; replan explicit descent or another route")
         if decision.intent == Intent.DESCEND or direct_exit:

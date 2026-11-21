@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "id": "000077",
+  "started_at": "2026-11-21T19:30:06Z",
+  "completed_at": "2026-11-21T19:38:08.189196+00:00",
+  "source_commit": "32a178410156514f86cc72c6da887a7789057a05",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 3,
+  "actions": 1313,
+  "duration_seconds": 476.666,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000076",
+  "previous_source_commit": "114b0f85bf0593af7eae394e166bbf530b8b683b",
+  "improvements": [
+    "The bot now remembers scouting a gas-room entrance even if toxic gas forces it back and the door closes again. It can then prepare known protection from clear ground instead of repeating the unprotected scout."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "An observed entrance remains scouted when its ordinary door recloses. Use that observation to prepare known protection from clear ground, never to assume a buff or reward. Separately validate terminal supply obligations and protected gas-controller arbitration before claiming retrieval or descent success.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended with a living hero at full health, not an observed death. The initiating terminal-episode bug was contradictory stair-pickup handling. Decision 1228 (accepted transition, log line 3755) reached an ordinary square adjacent to visible mystery meat on the exit. Decision 1229 (soft failure, line 3757) explicitly selected that fresh heap for collection, but the final guard rejected it as an unplanned descent. Recovery moved away instead. Repeated reobservation and recovery eventually exhausted the hungry planner; decision 1312 healed to full health before terminal decision 1313 (lines 4043–4044). The clock advanced. Pinned game source selects ordinary heap pickup before transition handling when enemies do not suppress pickup. The proposed correction narrowly recognizes an already admitted, fresh adjacent LOOT interaction rather than treating it as descent. It preserves threat checks, unplanned-transition rejection, mandatory progression pickup, collection receipts and terminal exhaustion. A new reduced public-evidence fixture fails by assertion on original policy and passes on the candidate; all 1779 Python tests pass, with four skipped. This is selector/wrapper validation, not reconstructed runtime memory or proof of subsequent collection or descent. Historical backlog episodes were not revalidated. Policy and regression changes are supplied separately for trusted extraction; files is intentionally empty.",
+    "learnings": "Distinguish fresh adjacent heap pickup from actually using the stairs. Preserve the existing threat and observation requirements, and require an accepted collection receipt before considering the heap finished. Choosing this interaction does not establish collection or subsequent descent success."
+  },
+  "recommendations": [
+    {
+      "id": "000077-stair-pickup-admission",
+      "priority": "high",
+      "summary": "Allow an admitted fresh adjacent stair-heap pickup through the final transition guard without admitting ordinary stair transit.",
+      "evidence": [
+        "Decision 1228, accepted transition at log line 3755: arrival beside the exit heap advances time and restores one HP.",
+        "Decision 1229, soft failure at log line 3757: the selected fresh stair-heap pickup is rejected as unplanned-stairs.",
+        "Decisions 1311–1313, log lines 4038–4044: reobservation and healing precede living planner exhaustion with the heap still visible.",
+        "tools/region_navigation.py:121–137; tools/mage_policy.py:411–431; pinned Hero.java:1965–1998."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000077"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000077/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000077/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 214,
+        "turns": 413,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 379,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 421
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 20,
+        "gold_gained": 242,
+        "turns": 411,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 417,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1211
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 36,
+        "gold_gained": 467,
+        "turns": 512,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 511,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 505
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 21,
+    "ending_level": 4,
+    "starving_turns": 6,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 4,
+    "gold_collected": 923,
+    "gold_complete": true,
+    "turns": 1336,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

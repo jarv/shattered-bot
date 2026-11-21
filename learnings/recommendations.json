@@ -1007,5 +1007,19 @@
     "status": "deferred",
     "reason": "The terminal message combines missing supplies with journey, drop and trap-retrieval flags; original terminal memory was not fully reconstructed. Observation-only accumulation finds a missing liquid-flame demand from bookshelves, but is not validated selecting memory. Existing behavior intentionally reserves carried flame for shelves, so deleting that reservation is not a certified fix. Next validate original selections through decision 388, isolate the blocking flags, and test a distinction between optional fuel reservation and genuine barricade supply obligations while preserving mandatory collection.",
     "origin_run": "000076"
+  },
+  {
+    "id": "000077-stair-pickup-admission",
+    "priority": "high",
+    "summary": "Allow an admitted fresh adjacent stair-heap pickup through the final transition guard without admitting ordinary stair transit.",
+    "evidence": [
+      "Decision 1228, accepted transition at log line 3755: arrival beside the exit heap advances time and restores one HP.",
+      "Decision 1229, soft failure at log line 3757: the selected fresh stair-heap pickup is rejected as unplanned-stairs.",
+      "Decisions 1311–1313, log lines 4038–4044: reobservation and healing precede living planner exhaustion with the heap still visible.",
+      "tools/region_navigation.py:121–137; tools/mage_policy.py:411–431; pinned Hero.java:1965–1998."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000077"
   }
 ]
