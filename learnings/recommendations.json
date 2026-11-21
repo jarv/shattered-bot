@@ -935,5 +935,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000072"
+  },
+  {
+    "id": "000073-discovery-preparation-envelope",
+    "priority": "high",
+    "summary": "Resolve mandatory discovery's preparation dead end without bypassing potion protection or progression pickup.",
+    "evidence": [
+      "Decision 258, log line 751: last compatible bank receipt reconstructed from accepted public inputs.",
+      "Decisions 117–125, log lines 334–359: nearby bank observations preceded the later multi-potion inventory.",
+      "Decision 273, log lines 796–797: accepted exploration move before exhaustion.",
+      "Decision 274, log line 799: mandatory discovery has no admitted bank or return action."
+    ],
+    "status": "deferred",
+    "reason": "No safe focused replacement was established. Current visible banks have no admitted remote stash; the compatible receipt's route exceeds the return envelope and crosses excluded grass, while nearby older receipts cover only one potion. Fresh-state probes show that opening one door alone is insufficient. Next, derive a selecting fixture at decision 258 and the terminal input for an inventory-aware, preparation-only bank/stash reservation before exploration leaves the verified return envelope. Require baseline assertion failure and candidate success while preserving fresh arrival checks, reserved supplies, actual pickup receipts, and mandatory progression pickup. Do not infer safety from stale visibility or changed-inventory receipts.",
+    "origin_run": "000073"
   }
 ]

@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "id": "000073",
+  "started_at": "2026-11-21T18:29:58Z",
+  "completed_at": "2026-11-21T18:31:47.607724+00:00",
+  "source_commit": "49466b79e1621c0cc7171aca84e09ab220ee0f19",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 274,
+  "duration_seconds": 106.733,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000072",
+  "previous_source_commit": "9cd806ecc66aab77728abc8d9488661b4088fe7c",
+  "improvements": [
+    "The bot now considers observed rewards beyond ordinary closed doors when choosing which crystal-locked branch to open."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Evaluate observed crystal-room rewards through ordinary closed transit doors before abandoning a held key. Keep supply conservation, fresh potion-test safety checks, actual protection verification and pickup receipts separate: choosing a supply approach is not completing the puzzle.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health. Decision 274 (log line 799) exhausted mandatory pre-descent strength discovery; decision 273's accepted move (lines 796–797) advanced the clock normally. Offline bookkeeping reconstruction against the played source matched all 274 earlier actions and reasons and reproduced the terminal blocker. This is reconstructed memory, not originally recorded memory. The inventory held two unidentified potion colors and known liquid flame, without an identify scroll or verified potion bandolier. Fresh terminal preflight found safe bank geometry but no admitted remote stash protecting the other colors. The last compatible bank receipt, refreshed at decision 258, was 15 moves away; its return route also crossed grass excluded by the existing corridor safety gate. Nearby older bank receipts covered a different, single-potion inventory. Thus mandatory discovery and its available preparation rules contradicted continued progress; this does not establish an impossible game state. No patch is supplied: enlarging the return bound alone, treating changed-inventory receipts as protection, or opening one ordinary door does not establish a safe replacement. Fresh-state isolated door probes still failed. Source browsing and reconstruction resolved the packet's source and bank-memory gaps, but did not demonstrate a preparation corridor satisfying all protection and visibility gates. The unchanged full suite passed 1768 tests with four skipped; no repair red/green result is claimed.",
+    "learnings": "Keep mandatory strength discovery, actual stash protection, and progression pickup separate. Investigate reserving an already verified bank-and-stash preparation corridor before exploration leaves its return envelope. Recheck with fresh observations: rolled-back policy visibility can make an isolated alternative appear safer than it is. Do not identify potion colors by inference or replace planner exhaustion with idle waiting."
+  },
+  "recommendations": [
+    {
+      "id": "000073-discovery-preparation-envelope",
+      "priority": "high",
+      "summary": "Resolve mandatory discovery's preparation dead end without bypassing potion protection or progression pickup.",
+      "evidence": [
+        "Decision 258, log line 751: last compatible bank receipt reconstructed from accepted public inputs.",
+        "Decisions 117–125, log lines 334–359: nearby bank observations preceded the later multi-potion inventory.",
+        "Decision 273, log lines 796–797: accepted exploration move before exhaustion.",
+        "Decision 274, log line 799: mandatory discovery has no admitted bank or return action."
+      ],
+      "status": "deferred",
+      "reason": "No safe focused replacement was established. Current visible banks have no admitted remote stash; the compatible receipt's route exceeds the return envelope and crosses excluded grass, while nearby older receipts cover only one potion. Fresh-state probes show that opening one door alone is insufficient. Next, derive a selecting fixture at decision 258 and the terminal input for an inventory-aware, preparation-only bank/stash reservation before exploration leaves the verified return envelope. Require baseline assertion failure and candidate success while preserving fresh arrival checks, reserved supplies, actual pickup receipts, and mandatory progression pickup. Do not infer safety from stale visibility or changed-inventory receipts.",
+      "origin_run": "000073"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000073/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000073/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 96,
+        "turns": 269,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 268,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 341
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded storage",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 96,
+    "gold_complete": true,
+    "turns": 269,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
