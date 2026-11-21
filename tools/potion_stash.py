@@ -44,11 +44,19 @@ def bandolier_protected(p,state):
     return getattr(p,"bandolier_inventory",None)==(True,False) and bandolier_slots(state)<=19
 
 
+def stash_paths(p,state):
+    """Search inside the admitted stash corridor, not through rejected shortcuts."""
+    excluded={c for c,t in p.tiles.items()
+              if t["terrain"] not in {1,3,9,11,14,19,20,29}
+              or t.get("trap") or t.get("plant") or t.get("effects") or c in p.loot}
+    return p.paths(state,excluded)
+
+
 def stash_cells(p,state,distance,neighbors,safe_bank):
     """Read-only admission shared by test-bank preflight and actual stashing."""
     bank=state["hero"]["cell"]
     width=state["map"]["width"]
-    paths=p.paths(state)
+    paths=stash_paths(p,state)
     return [c for c in paths if 3<=distance(c,bank,width)<=5 and len(p.route(paths,c))<=7
             and safe_bank(p,state,c,distance,neighbors,allow_dry=True)
             and all(p.tiles[n]["terrain"] in {1,3,9,11,14,19,20,29}
@@ -86,7 +94,7 @@ def protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isolated_
     if plan:
         p.stop_obligation("potion-stash","Potion stash incomplete: other potions remain before potential frost drink")
     bank=state["hero"]["cell"]
-    paths=p.paths(state)
+    paths=stash_paths(p,state)
     stashes=stash_cells(p,state,distance,neighbors,safe_bank)
     if not stashes or any("DROP" not in i.get("actions",[]) for i in others):
         p.stop_obligation("potion-stash","Potential frost test has no verified remote potion stash/drop route")
@@ -119,7 +127,7 @@ def advance_stash(p,state,enemies,distance):
         plan["pending"]=None
     if plan["phase"]=="drop":
         if pos!=plan["cell"]:
-            return p.toward(state,plan["cell"],"potion: approach remote safe stash",intent=Intent.REPOSITION)
+            return p.toward(state,plan["cell"],"potion: approach remote safe stash",stash_paths(p,state),intent=Intent.REPOSITION)
         other=next((i for i in potions(state) if base_name(i)!=plan["candidate"]),None)
         if other:
             plan["pending"]=(base_name(other),other.get("quantity",1))
@@ -127,7 +135,7 @@ def advance_stash(p,state,enemies,distance):
         plan["phase"]="ready"
     if plan["phase"]=="ready":
         if pos!=plan["bank"]:
-            return p.toward(state,plan["bank"],"potion: leave stash outside frost-test radius",intent=Intent.REPOSITION)
+            return p.toward(state,plan["bank"],"potion: leave stash outside frost-test radius",stash_paths(p,state),intent=Intent.REPOSITION)
         return None
     if plan["phase"]=="retrieve":
         counts={base_name(i):i.get("quantity",1) for i in potions(state)}

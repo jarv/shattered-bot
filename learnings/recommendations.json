@@ -850,5 +850,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000064"
+  },
+  {
+    "id": "000066-frost-stash-alternate-route",
+    "priority": "high",
+    "summary": "Search admissible potion-stash routes before rejecting a door shortcut.",
+    "evidence": [
+      "Decision 293, lines 829–830: the upgrade scroll becomes visible and exploration enters the fire-room approach.",
+      "Decision 294, lines 832–834: mandatory upgrade pickup blocks departure while the hero remains alive at full health.",
+      "Source-pinned offline reconstruction matches all 294 selected inputs and the terminal blocker; the floor-only route between banks 1144 and 1148 satisfies existing stash constraints.",
+      "tools/potion_stash.py:47–103; tools/puzzle_supplies.py:557–586; tools/mage_policy.py:431–449.",
+      "New regression: original policy fails three assertions; candidate passes. Full suite: 1756 tests, OK, four skipped."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000066"
   }
 ]
