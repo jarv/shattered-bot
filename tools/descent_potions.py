@@ -46,8 +46,14 @@ def remember_bank(p, state):
     if any(unknown_potion(i) and "DRINK" in i.get("actions", [])
            and can_protect_potions(p, state, i, distance, neighbors, safe_test_bank,
                                   isolated_stack=True) for i in state["inventory"]):
-        p.descent_potion_bank_receipt = (state["depth"], state.get("branch", 0),
-                                         cell, potion_inventory(state))
+        receipt = (state["depth"], state.get("branch", 0), cell, potion_inventory(state))
+        # A later feasible bank may have no admitted return route. Preserve
+        # other actually witnessed banks, not hypothetical drink locations.
+        history = [r for r in getattr(p, "descent_potion_bank_history", ())
+                   if (r[0], r[1], r[3]) == (receipt[0], receipt[1], receipt[3])
+                   and r[2] != cell]
+        p.descent_potion_bank_history = history + [receipt]
+        p.descent_potion_bank_receipt = receipt
 
 
 def revisit_bank(p, state, paths):
@@ -56,6 +62,19 @@ def revisit_bank(p, state, paths):
     if not receipt or p.potion_stash or p.descent_potion_plan.get("return_steps", 0) >= 64 \
             or exhausted(p, "discovery-transit", 64, 8):
         return None
+    history = getattr(p, "descent_potion_bank_history", ())
+    # Keep compatibility with a single receipt. Every historical alternative
+    # passes exactly the same current inventory, transit and hunger admission.
+    receipts = list(reversed(history)) if history and history[-1] == receipt else [receipt]
+    for candidate in receipts:
+        decision = revisit_receipt(p, state, paths, candidate)
+        if decision:
+            return decision
+    return None
+
+
+def revisit_receipt(p, state, paths, receipt):
+    """Admit transit only; arrival still needs fresh bank/stash validation."""
     depth, branch, bank, inventory = receipt
     if (depth, branch, inventory) != (state["depth"], state.get("branch", 0), potion_inventory(state)) \
             or bank == state["hero"]["cell"] or bank not in paths:
