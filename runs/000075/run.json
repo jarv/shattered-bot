@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "id": "000075",
+  "started_at": "2026-11-21T19:10:16Z",
+  "completed_at": "2026-11-21T19:12:31.000484+00:00",
+  "source_commit": "732100b919cc1e731a07d873c4a0387652bbcd77",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 324,
+  "duration_seconds": 132.331,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000074",
+  "previous_source_commit": "99982bed90fb7937b9e228369e7ada61542954d1",
+  "improvements": [
+    "If a piranha blocks the next step toward a protected chest, the bot now looks for a visible, safe detour that does not lengthen the trip. It keeps the same reward and return bank."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Distinguish temporary occupied waypoints from failed protection preparation. Revalidate a bounded protected route before abandoning its mandatory chest, preserving the same bank, observed protection budget and actual pickup receipts. A selected bypass is not evidence that the puzzle was completed.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The living hero exhausted the planner, rather than dying. Decision 315's accepted entrance move (log line 901) revealed a sentry. Decision 316 spent a puzzle-backed meal, but neither potion identification nor usable room geometry followed. Decisions 321–323 explored the admitted grass strip and collected a seed; the final accepted action (line 924) advanced turns 317 to 318 at 25/25 HP. Decision 324 (line 926) stopped because mandatory potion discovery would risk supplies reserved for the unfinished sentry room. The initiating problem is missing observation/identification preparation: room testing requires a verified protected reward trip, but the enclosure and reward remain incompletely observed. Source-pinned offline bookkeeping reconstruction matched all 324 selected actions, reasons and intents, then reproduced the terminal blocker. Isolated copied-state probes found no admitted sentry test bank or protected journey origin. The public inventory held two unidentified singleton potions, no known haste and no identification resource. Their effects cannot be inferred from color. Relevant gates are tools/room_tactics.py:148–184, tools/puzzle_supplies.py:343–375,642–684, tools/descent_potions.py:186–194, and tools/mage_policy.py:416–470. No patch or new regression is supplied: complete source resolves the selecting-state gap but does not establish a safe replacement action. Guessing unseen geometry, crossing exposed flooring, or testing elsewhere and potentially wasting the required haste would bypass safety. The unchanged Python suite passed 1773 tests with four skipped; this is not red/green validation of a repair.",
+    "learnings": "Recognizing a sentry room is not enough to authorize a potion test or retrieve its reward. Separate safe observation preparation from protected retrieval, and require public evidence for both. Full health and a puzzle meal do not resolve missing geometry or unknown potion identities."
+  },
+  "recommendations": [
+    {
+      "id": "000075-sentry-observation-preparation",
+      "priority": "high",
+      "summary": "Establish safe observation or identification preparation before incomplete sentry geometry exhausts mandatory discovery.",
+      "evidence": [
+        "Decision 315, accepted transition at log line 901: entrance observation precedes recognition of the sentry.",
+        "Decision 316, log lines 903–904: a puzzle meal advances time without establishing protection or identification.",
+        "Decisions 321–323, accepted transitions at lines 918, 921 and 924: exploration finishes the admitted grass strip while health remains full.",
+        "Decision 324, log line 926: missing recognized-room supplies block mandatory discovery.",
+        "Offline reconstruction matches all 324 selected actions, reasons and intents; copied-state probes find no admitted test bank or sentry journey origin."
+      ],
+      "status": "deferred",
+      "reason": "No safe focused repair is established. The exact blockers are unobserved enclosure interior/perimeter and reward, no admitted sentry test bank, and no known haste or carried identification resource. Complete selecting source and reconstruction resolve the memory gap, not those safety prerequisites. Next, derive a deterministic fixture from decision 321 and inspect the pinned sensing and grass/obstacle rules for a bounded observation-only action from the admitted entrance strip. Require evidence that it reveals the missing geometry without exposed-floor entry before adding preparation arbitration and a red/green regression. If that contract cannot be established, pursue a public identification-resource plan instead. Do not guess potion effects, waive mandatory pickup, or restore death-waits.",
+      "origin_run": "000075"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000075/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000075/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 288,
+        "turns": 318,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 318,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1309
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 288,
+    "gold_complete": true,
+    "turns": 318,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
