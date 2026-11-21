@@ -25,7 +25,13 @@ def before_move(p,state,decision,enemies):
     traps=[c for c,t in p.tiles.items() if t.get('trap') and t['terrain']==18
            and (t.get('visible') or t.get('observed')) and distance(step,c,width)<=4
            and p.shot_clear(state,c)]
-    if len(traps)<3 or distance(pos,step,width)!=1:return None
+    # A single revealed summoning trap is already a local crowding hazard:
+    # summons can press neighboring traps. Inspect the immediate approach
+    # without inferring any hidden trap or declaring the loot route safe.
+    adjacent_summoning=any(p.tiles[c].get('visible')
+        and p.tiles[c]['trap'].lower()=='summoning trap'
+        and distance(pos,c,width)==1 and distance(step,c,width)<=1 for c in traps)
+    if (len(traps)<3 and not adjacent_summoning) or distance(pos,step,width)!=1:return None
     if min(distance(step,c,width) for c in traps)>min(distance(pos,c,width) for c in traps):return None
     p.planner.report['trap_field']={'observed_traps':sorted(traps),'status':'Observed trap-density hypothesis; hidden cells remain unknown'}
     if p.trap_scan_cells[pos]>=2 or sum(p.trap_scan_cells.values())>=6:return None
