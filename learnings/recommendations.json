@@ -442,5 +442,31 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000036"
+  },
+  {
+    "id": "000037-doorway-start-health",
+    "priority": "high",
+    "summary": "Apply the existing doorway-setup health floor to initial admission.",
+    "evidence": [
+      "Decision 3552, selection line 10112: starts route 380–346–312–279–246–213 at 13/65 HP.",
+      "Decision 3552, accepted line 10113: displacement to 277 and health falls to 4.",
+      "tools/multi_enemy_tactics.py:142–166: continuation rejects health below 35%, but initial admission omitted that gate."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000037"
+  },
+  {
+    "id": "000037-fear-escape-reassessment",
+    "priority": "high",
+    "summary": "Establish an admitted alternative before chaining teleportation after successful fear.",
+    "evidence": [
+      "Decision 3549–3550, lines 10106–10109: fear sends the adjacent guard away without further health loss.",
+      "Decision 3551, lines 10110–10111: the only observed enemy is separated and terrified, yet teleportation is consumed and health falls from 20 to 13.",
+      "tools/consumable_tactics.py:62,77,127–143: frightened enemies remain active and critical health bypasses cooldown."
+    ],
+    "status": "deferred",
+    "reason": "Source browsing resolves why teleportation was selected, but simply vetoing it does not establish a safe follow-up: terror duration is not publicly recorded here, attacks can shorten terror, and current policy memory was not reconstructed. Next, validate earlier selections against the saved inputs through decision 3550, then probe admitted contact-breaking or recovery alternatives on copies at decision 3551, accounting for remembered threats, guard pull and control expiry. Stop at any reconstruction divergence. This candidate changes only the separately proven doorway health inconsistency.",
+    "origin_run": "000037"
   }
 ]
