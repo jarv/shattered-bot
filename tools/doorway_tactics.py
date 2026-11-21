@@ -108,7 +108,15 @@ def hold_doorway(p,state,enemies,distance,neighbors,line_clear):
             return None
         reserve=target["name"].lower() in {"marsupial rat","albino rat"} and not champion(target) \
             and hero["hp"]>=0.65*hero["max_hp"]
-        action=p.best_attack(state,target,reserve=reserve,reserve_magic=reserve)
+        # An established choke limits approach slots, not the enemy's armor
+        # or death blast. Retain the undead dispatcher's admitted ranged-first
+        # choice instead of preempting it with ordinary melee damage scoring.
+        action=None
+        if getattr(p,'unit_strategies_enabled',False) \
+                and p.unit_strategies.profile(target).strategy=='undead':
+            action=p.best_attack(state,target,allowed_kinds={'magic','thrown'})
+        if not action:
+            action=p.best_attack(state,target,reserve=reserve,reserve_magic=reserve)
         if action:
             if evasive_empty and action.action.get("type")=="cell" and not target.get("health_bar"):
                 hold["unconfirmed_snake_strikes"]=hold.get("unconfirmed_snake_strikes",0)+1
