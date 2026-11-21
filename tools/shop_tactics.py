@@ -119,9 +119,8 @@ def visit_entrance_shop(p, state, previous, neighbors):
                     queue.append(c)
                 else:
                     queue.appendleft(c)
-    # Finish revealing the observed entrance-side component before committing
-    # to a door branch. Otherwise one revealed exit can consume the entire
-    # visit budget in distant rooms while entrance frontiers remain untouched.
+    # Reveal the observed entrance-side component without letting either a
+    # door branch or a distant connected frontier monopolize the visit budget.
     # Use only the existing admitted paths, never unknown cells or a route
     # through an unchecked door to reach a supposedly local frontier.
     frontiers = [c for c in body if c != pos and c in previous and c not in p.exhausted
@@ -140,6 +139,14 @@ def visit_entrance_shop(p, state, previous, neighbors):
         layer = min(work_layers)
         frontiers = [c for c in frontiers if layers[c] == layer]
         doors = {c for c in door_layers if door_layers[c] == layer}
+    # At the same door layer, check a strictly nearer admitted door rather
+    # than repeatedly crossing a large open component to scout its perimeter.
+    # Local/equidistant frontiers still win; paths and visit receipts are
+    # unchanged, and deeper branches still wait for shallower work.
+    if frontiers and doors:
+        if min(len(p.route(previous, c)) for c in doors) < min(
+                len(p.route(previous, c)) for c in frontiers):
+            frontiers = []
     if frontiers:
         return p.toward(state, min(frontiers, key=lambda c: len(p.route(previous, c))),
                          "shop: reveal entrance chamber doors", previous, intent=Intent.SHOP)

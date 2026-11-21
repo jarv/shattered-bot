@@ -1038,5 +1038,22 @@
     "status": "deferred",
     "reason": "Complete source and matching reconstruction isolate the blocker, but neither a safe remote stash reachable inside the admitted corridor nor a remaining identification resource is established. Allowing the singleton drink risks the other color; generic distant discovery can waste room protection before retrieval. Next derive a deterministic decision-276 fixture and establish an identification-only preparation route with protected inventory, accepted identification/retrieval receipts and a separately admitted return using actual known protection. Preserve mandatory pickup and every hazard gate; no safe focused patch is certified.",
     "origin_run": "000079"
+  },
+  {
+    "id": "000080-shop-near-door",
+    "priority": "high",
+    "summary": "Check a nearer admitted entrance door before a more distant frontier at the same search layer.",
+    "evidence": [
+      "Decision 2051, log line 5852: frontier 1051 is preferred over the shorter admitted route to observed door 1094.",
+      "Decision 2095, log line 5941: the first checked branch is door 1164 after extensive frontier travel.",
+      "Decision 2096, log line 5943: scouting resumes toward distant frontier 776 while original doors remain unchecked.",
+      "Decision 2145, accepted transition at line 6046: movement advances the clock at full health.",
+      "Decision 2146, log line 6047: entrance shop search exhausts its budget with the hero alive.",
+      "Source-pinned offline reconstruction matches all 2146 original selections and terminal exhaustion; copied-state probe first selects the nearer door at decision 2051.",
+      "tools/shop_tactics.py:122–153; tools/test_shattered_shop_near_door.py."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000080"
   }
 ]
