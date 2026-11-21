@@ -35,7 +35,7 @@ class ShopBranchBreadthTests(unittest.TestCase):
         self.assertEqual("shop: check entrance door before descent", d.reason)
         self.assertEqual({31}, p.entrance_doors_checked)
         self.assertNotIn(6, p.shop_visited_floors)
-        self.assertEqual(1, p.entrance_visit_steps)
+        self.assertEqual(0, p.entrance_visit_steps)
 
     def test_unreachable_shallow_door_does_not_preempt_admitted_frontier(self):
         p, s = self.fixture()

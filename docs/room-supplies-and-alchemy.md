@@ -2,6 +2,11 @@
 
 ## Strength identification before descent
 
+Preparation scheduling and transit receipts are described in
+[objective planning](objective-planning.md). Missing supplies are reported as
+explicit prerequisites; available room preparation/reconnaissance is tried
+before terminal exhaustion.
+
 Until strength is publicly identified, an otherwise admitted descent first
 triggers one-at-a-time drink tests of carried unidentified potions. This is a
 departure phase, not an exploration activity: it does not require revisiting

@@ -31,7 +31,7 @@ class EntranceFrontierTests(unittest.TestCase):
         self.assertEqual(1316, d.action["cell"])
         self.assertNotIn(6, p.shop_visited_floors)
         self.assertEqual(set(), p.entrance_doors_checked)
-        self.assertEqual(1, p.entrance_visit_steps)
+        self.assertEqual(0, p.entrance_visit_steps)
 
     def test_exhausted_frontier_still_allows_door_search(self):
         p, s = self.fixture()

@@ -4,8 +4,10 @@ from collections import deque
 
 try:
     from .policy_decision import Intent
+    from .objective_planning import Status, Result, publish, mark, exhausted
 except ImportError:
     from policy_decision import Intent
+    from objective_planning import Status, Result, publish, mark, exhausted
 
 BAGS = ("scroll holder", "potion bandolier", "velvet pouch", "magical holster")
 
@@ -73,6 +75,65 @@ class ShopVisitBlocked(RuntimeError):
 
 
 def visit_entrance_shop(p, state, previous, neighbors):
+    """Commit to an admitted search target until arrival or invalidation."""
+    depth, pos = state["depth"], state["hero"]["cell"]
+    if depth in p.shop_visited_floors:
+        p.shop_search_target = None
+        return None
+    plan = p.shop_search_target
+    if plan and plan["target"] in p.exhausted and p.tiles.get(plan["target"], {}).get("terrain") not in {5, 6}:
+        p.shop_search_target = plan = None
+    stock = [o for o in state.get("objects", []) if o.get("for_sale") or o["name"].lower() == "shopkeeper"]
+    if plan and not stock:
+        target = plan["target"]
+        key = "shop-target:"+str(target)
+        if exhausted(p, key, 80, 6):
+            p.shop_search_failed.add(target)
+            p.shop_search_target = None
+            publish(p, "entrance-shop", Result(Status.BLOCKED, "target made no progress or exhausted travel",
+                                               prerequisites=[dict(target=target)]))
+        elif target != pos and target in previous and p.entrance_visit_steps < 80:
+            route = p.route(previous, target)
+            if _shop_route(p, state, route):
+                action = p.toward(state, target, plan["reason"], previous, intent=Intent.SHOP)
+                if action:
+                    return _track_shop(p, state, action)
+            p.shop_search_target = None
+        else:
+            p.shop_search_target = None
+    try:
+        action = _visit_entrance_shop(p, state, previous, neighbors)
+    except ShopVisitBlocked as error:
+        publish(p, "entrance-shop", Result(Status.EXHAUSTED, str(error),
+                prerequisites=[dict(failed_targets=sorted(p.shop_search_failed),
+                                    accepted_search_inputs=p.entrance_visit_steps)]))
+        raise
+    if action:
+        return _track_shop(p, state, action)
+    if depth in p.shop_visited_floors:
+        publish(p, "entrance-shop", Result(Status.COMPLETE, "observed proximity to shop stock or keeper"))
+        p.shop_search_target = None
+    return None
+
+
+def _shop_route(p, state, route):
+    forbidden = p.navigation_barriers(state, Intent.SHOP)
+    return len(route) > 1 and all(c not in forbidden and c not in state.get("danger_cells", [])
+        and not p.tiles[c].get("trap") and not p.tiles[c].get("plant")
+        and not p.effects_block_movement(p.tiles[c]) for c in route[1:]) \
+        and p.tiles[route[1]].get("visible") and p.escape_step_allowed(state, route[1])
+
+
+def _track_shop(p, state, action):
+    route = list(action.navigation_route) or [state["hero"]["cell"], action.action.get("cell")]
+    target = route[-1]
+    p.shop_search_target = dict(target=target, reason=action.reason)
+    publish(p, "entrance-shop", Result(Status.READY, "continue admitted search target",
+                                       prerequisites=[dict(target=target, route=route)]))
+    return mark(p, state, action, "shop-target:"+str(target), target, route)
+
+
+def _visit_entrance_shop(p, state, previous, neighbors):
     depth = state["depth"]
     stock = [o for o in state.get("objects", []) if o.get("for_sale")]
     keepers = [o for o in state.get("objects", []) if o["name"].lower() == "shopkeeper"]
@@ -87,7 +148,6 @@ def visit_entrance_shop(p, state, previous, neighbors):
         return None
     if p.entrance_visit_steps >= 80:
         raise ShopVisitBlocked("Entrance shop visit exhausted its safe search budget; refusing to silently skip the store")
-    p.entrance_visit_steps += 1
     if stock or keepers:
         targets = [c for c in previous if c != pos and p.tiles[c]["terrain"] not in {5, 7, 8, 21, 22, 37}
                    and not p.loot.get(c, {}).get("for_sale")
@@ -123,11 +183,12 @@ def visit_entrance_shop(p, state, previous, neighbors):
     # door branch or a distant connected frontier monopolize the visit budget.
     # Use only the existing admitted paths, never unknown cells or a route
     # through an unchecked door to reach a supposedly local frontier.
-    frontiers = [c for c in body if c != pos and c in previous and c not in p.exhausted
+    frontiers = [c for c in body if c != pos and c in previous and c not in p.exhausted and c not in p.shop_search_failed
                  and all(n in body for n in p.route(previous, c))
                  and any(n not in p.tiles for n in neighbors(c, width, height))]
     doors = {c for cell in body for c in neighbors(cell, width, height)
-             if p.tiles.get(c, {}).get("terrain") in {5, 6} and c not in p.entrance_doors_checked}
+              if p.tiles.get(c, {}).get("terrain") in {5, 6} and c not in p.entrance_doors_checked
+              and c not in p.shop_search_failed}
     # Checking an annex exit must not let its entire downstream component
     # monopolize the entrance visit. Finish admitted work at the shallowest
     # observed door layer first; within that layer, reveal frontiers as before.

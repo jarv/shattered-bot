@@ -69,7 +69,7 @@ class ShopNearDoorTests(unittest.TestCase):
         self.assertEqual(Intent.SHOP, d.intent)
         self.assertEqual(set(), p.entrance_doors_checked)
         self.assertNotIn(6, p.shop_visited_floors)
-        self.assertEqual(1, p.entrance_visit_steps)
+        self.assertEqual(0, p.entrance_visit_steps)  # Proposals do not spend accepted-input budget.
 
     def test_equal_distance_still_reveals_local_frontier_first(self):
         p, s = self.fixture(unknown=22)

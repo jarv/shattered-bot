@@ -7,6 +7,7 @@ try:
     from .potion_stash import can_protect_potions, protect_potions, advance_stash, potions
     from .room_supplies import requirements
     from .survival_policy import is_hostile
+    from .objective_planning import Status, Result, publish, resolve, available, mark, exhausted
 except ImportError:
     from consumable_tactics import base_name, unknown_potion, discovery_score
     from policy_geometry import distance, neighbors
@@ -15,6 +16,7 @@ except ImportError:
     from potion_stash import can_protect_potions, protect_potions, advance_stash, potions
     from room_supplies import requirements
     from survival_policy import is_hostile
+    from objective_planning import Status, Result, publish, resolve, available, mark, exhausted
 
 
 PURPOSE = "pre-descent-strength"
@@ -51,16 +53,25 @@ def remember_bank(p, state):
 def revisit_bank(p, state, paths):
     """Reobserve a previously admitted bank; never authorize a drink from memory."""
     receipt = getattr(p, "descent_potion_bank_receipt", None)
-    if not receipt or p.potion_stash or p.descent_potion_plan.get("return_steps", 0) >= 12:
+    if not receipt or p.potion_stash or p.descent_potion_plan.get("return_steps", 0) >= 64 \
+            or exhausted(p, "discovery-transit", 64, 8):
         return None
     depth, branch, bank, inventory = receipt
     if (depth, branch, inventory) != (state["depth"], state.get("branch", 0), potion_inventory(state)) \
             or bank == state["hero"]["cell"] or bank not in paths:
         return None
-    route = p.route(paths, bank)
-    if len(route) > 13:
-        return None
     forbidden = p.navigation_barriers(state, Intent.REPOSITION)
+    # Transit is a separate prerequisite: search the allowed graph rather than
+    # rejecting an otherwise reachable bank because the shortest path is unsafe.
+    excluded = {c for c, t in p.tiles.items() if c in forbidden or not t.get("observed")
+                or t.get("terrain") not in {1, 3, 5, 6, 9, 11, 14, 19, 20, 29}
+                or any(t.get(k) for k in ("effects", "plant", "trap")) or c in p.loot}
+    paths = p.paths(state, excluded)
+    if bank not in paths:
+        return None
+    route = p.route(paths, bank)
+    if len(route)-1 + p.descent_potion_plan.get("return_steps", 0) > 64:
+        return None
     # A closed door is admitted only as ordinary transit, not as a test bank.
     if any(c in forbidden or not p.tiles[c].get("observed")
            or p.tiles[c]["terrain"] not in {1, 3, 5, 6, 9, 11, 14, 19, 20, 29}
@@ -80,6 +91,10 @@ def revisit_bank(p, state, paths):
                         paths, intent=Intent.REPOSITION)
     if decision:
         decision.descent_bank_return = True
+        mark(p, state, decision, "discovery-transit", bank, route)
+        publish(p, "potion-discovery", Result(Status.READY, "reobserve preparation area after admitted transit",
+                prerequisites=[dict(objective="fresh-bank-and-stash-admission", target=bank,
+                                    route=route, identity_inferred=False)]))
     return decision
 
 
@@ -88,11 +103,14 @@ def cancel(p, reason):
     if p.potion_stash and p.potion_stash.get("purpose") == PURPOSE:
         p.potion_stash["phase"] = "retrieve"
     p.descent_potion_plan = None
+    publish(p, "potion-discovery", Result(
+        Status.COMPLETE if p.strength_identified and not p.potion_stash else Status.BLOCKED, reason))
 
 
 def pause(p, reason):
     """Keep the discovery obligation; safety arbitration may run before resuming."""
     p.planner.report["descent_potion_testing"] = {"status": "paused", "reason": reason}
+    publish(p, "potion-discovery", Result(Status.PAUSED, reason))
 
 
 def wait_effect(p, state):
@@ -189,6 +207,10 @@ def begin(p, state):
     stash = p.potion_stash and p.potion_stash.get("purpose") == PURPOSE
     if stash or owned_strength or not p.strength_identified and any(unknown_potion(i) for i in state["inventory"]):
         reason = p.planner.report.get("descent_potion_testing", {}).get("reason", "discovery/retrieval incomplete")
+        # Keep the full prerequisite results in the terminal planner report.
+        previous = p.objective_results.get("potion-discovery", {})
+        publish(p, "potion-discovery", Result(Status.EXHAUSTED, reason,
+                prerequisites=previous.get("prerequisites", [])))
         raise PlannerStuck("Cannot descend before potion discovery: " + reason)
     return None
 
@@ -244,14 +266,40 @@ def advance(p, state):
     for demand in room_needs:
         needed[demand.potion] = needed.get(demand.potion, 0) + 1
     own_stash = p.potion_stash and p.potion_stash.get("purpose") == PURPOSE
+    missing = [dict(kind=d.kind, potion=d.potion, cell=d.cell,
+                    held=sum(i.get("quantity", 1) for i in state["inventory"] if base_name(i) == d.potion))
+               for d in room_needs if sum(i.get("quantity", 1) for i in state["inventory"]
+                                          if base_name(i) == d.potion) < needed[d.potion]]
     if (not own_stash and any(
             sum(i.get("quantity", 1) for i in state["inventory"] if base_name(i) == name) < count
             for name, count in needed.items())) or p.room_journey or p.drop_plan or p.trap_payload_return:
-        if not p.potion_stash and not p.room_journey and not p.drop_plan and not p.trap_payload_return:
-            scout = reveal_incomplete_sentry(p, state, room_needs)
-            if scout:
-                return scout
         pause(p, "Preserve missing supplies for an unfinished recognized potion room or retrieval")
+        if not p.potion_stash and not p.room_journey and not p.drop_plan and not p.trap_payload_return:
+            try:
+                from .puzzle_supplies import prepare_supplies
+                from .preparation_prerequisites import reconnaissance
+            except ImportError:
+                from puzzle_supplies import prepare_supplies
+                from preparation_prerequisites import reconnaissance
+            action = resolve(p, "potion-discovery", [
+                ("room-supply-preparation", lambda: available(
+                    prepare_supplies(p, state, [], distance, neighbors),
+                    "existing room planner must admit protection, inventory and reward return")),
+                ("missing-room-geometry", lambda: available(
+                    reveal_incomplete_sentry(p, state, room_needs),
+                    "known reconnaissance for incomplete sentry geometry")),
+                ("preparation-geometry", lambda: available(
+                    reconnaissance(p, state) if any(d.kind != "sentry" for d in room_needs) else None,
+                    "known information resource and observed reachable frontier required")),
+            ])
+            record = p.objective_results["potion-discovery"]
+            record["prerequisites"].append(dict(objective="reserved-room-supplies", status="blocked",
+                                                missing_supplies=missing, active_retrievals=[]))
+            return action
+        publish(p, "potion-discovery", Result(Status.BLOCKED, "finish owned retrieval before new experiment",
+            prerequisites=[dict(missing_supplies=missing, journey=bool(p.room_journey),
+                                stash=bool(p.potion_stash), drop=bool(p.drop_plan),
+                                trap_return=bool(p.trap_payload_return))]))
         return None
     if p.potion_stash and p.potion_stash.get("purpose") != PURPOSE:
         pause(p, "An existing potion stash must be retrieved first")
@@ -307,10 +355,20 @@ def advance(p, state):
             choices.append((p.tiles[cell]["terrain"] != 29, len(route),
                             -discovery_score(item, p.consumable_sources), cell, item))
     if not choices:
-        returning = revisit_bank(p, state, paths)
+        try:
+            from .preparation_prerequisites import reconnaissance
+        except ImportError:
+            from preparation_prerequisites import reconnaissance
+        returning = resolve(p, "potion-discovery", [
+            ("return-to-preparation-area", lambda: available(revisit_bank(p, state, paths),
+                "requires remembered feasibility, admitted transit and fresh arrival validation")),
+            ("preparation-geometry", lambda: available(reconnaissance(p, state),
+                "requires known information resource and reachable frontier")),
+        ])
         if returning:
             return returning
-        pause(p, "No safe water/water-escape bank with verified potion-inventory protection")
+        p.planner.report["descent_potion_testing"] = {"status": "blocked",
+            "reason": "No safe water/water-escape bank with verified potion-inventory protection"}
         return None
     _, _, _, bank, candidate = min(choices, key=lambda c: c[:4])
     plan.update(candidate=base_name(candidate), bank=bank)
@@ -329,6 +387,9 @@ def advance(p, state):
     p.puzzle_probe = {"depth": state["depth"], "kind": PURPOSE, "turns": 0}
     decision = p.use(candidate, "DRINK", "identify: test unknown potion before descending until strength is identified")
     decision.potion_purpose = PURPOSE
+    publish(p, "potion-discovery", Result(Status.READY, "test isolated color; await actual consumption/effect receipt",
+            prerequisites=[dict(candidate=base_name(candidate), bank=bank,
+                                stash=bool(p.potion_stash), identity_inferred=False)]))
     return decision
 
 

@@ -5,13 +5,26 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from tools.policy_decision import Decision, Finished, GameplayBlocked
+from tools.policy_decision import Decision, Finished, GameplayBlocked, PlannerStuck
 from tools.policy_runner import run
 from tools.test_continuation import DamageAPI
 from tools.test_until_death import StalledPolicy
 
 
 class StuckPlannerTests(unittest.TestCase):
+    def test_terminal_keeps_structured_blockers_after_transaction_rollback(self):
+        from tools.objective_planning import publish, Result, Status
+        class BlockedObjective(StalledPolicy):
+            def choose(self, state):
+                publish(self, "discovery", Result(Status.BLOCKED, "no stash",
+                    prerequisites=[{"objective": "inventory-protection", "status": "blocked"}]))
+                raise PlannerStuck("discovery prerequisites exhausted")
+        result, log = self.execute(DamageAPI(), BlockedObjective())
+        self.assertEqual("stuck-planner", result["outcome"])
+        terminal = next(row for row in log if "planner_failure" in row)
+        attempt = terminal["policy_report"]["failed_objective_attempt"]["objectives"]["discovery"]
+        self.assertEqual("inventory-protection", attempt["prerequisites"][0]["objective"])
+
     def execute(self, api, policy):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "decisions.jsonl"

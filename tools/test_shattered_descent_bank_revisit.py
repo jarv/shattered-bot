@@ -90,7 +90,7 @@ class DescentBankRevisitTests(unittest.TestCase):
                 for item in s["inventory"]: item["actions"].remove("DROP")
             elif kind=="budget":
                 p.descent_potion_plan = dict(depth=1,steps=0,waits=0,candidate=None,
-                                            bank=None,pending=False,return_steps=12)
+                                             bank=None,pending=False,return_steps=64)
             elif kind=="floor": s["depth"] = 2
             with self.assertRaises(PlannerStuck,msg=kind):
                 begin(p,s)

@@ -246,6 +246,8 @@ class ShopMemory:
     entrance_cell: object = None
     entrance_doors_checked: set = local(set)
     entrance_visit_steps: int = value(0, floor=True)
+    shop_search_target: object = value(None, floor=True)
+    shop_search_failed: set = local(set)
     shop_visited_floors: set = field(default_factory=set)
 
 
@@ -263,6 +265,9 @@ class InteractionMemory:
 
 @dataclass
 class RunMemory:
+    objective_results: dict = local(dict)
+    objective_progress: dict = local(dict)
+    objective_stack: list = local(list)
     inventory_events: list = field(default_factory=list)
     continuation_errors: list = field(default_factory=list)
     missed_loot: list = field(default_factory=list)
