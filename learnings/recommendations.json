@@ -796,7 +796,7 @@
   {
     "id": "000061-descent-bank-return",
     "priority": "high",
-    "summary": "Establish bounded multi-stage return and fresh inventory-protection admission for mandatory pre-descent discovery.",
+    "summary": "Establish bounded multi-stage return and fresh inventory protection for mandatory pre-descent discovery.",
     "evidence": [
       "Decision 215, line 621: last reconstructed bank receipt at 94 covers only turquoise potion.",
       "Decision 216, accepted transition line 625: bistre potion is collected.",
@@ -804,10 +804,15 @@
       "Decision 273, accepted transition line 792: the clock advances at full health.",
       "Decision 274, line 794: mandatory discovery blocks departure.",
       "Offline reconstruction matches all 274 selected inputs; nearest water route has 20 cells and the old receipt route has 33.",
-      "tools/descent_potions.py:51-88,110-253; tools/puzzle_supplies.py:97-121; tools/potion_stash.py:51-76."
+      "tools/descent_potions.py:51-88,110-253; tools/puzzle_supplies.py:97-121; tools/potion_stash.py:51-76.",
+      "Run 000071 decision 197, line 550, followed by decision 198, line 552: identification reveals frost, leaving azure and charcoal unknown.",
+      "Run 000071 decision 224, line 630: last reconstructed compatible bank receipt is at 361.",
+      "Run 000071 decision 238, accepted transition line 673: movement advances the clock at 25/25 HP.",
+      "Run 000071 decision 239, line 675: mandatory potion discovery exhausts the living planner.",
+      "Source-pinned offline reconstruction matches all 239 selected actions, reasons and intents, then the terminal blocker. Bank 361 needs 16 route cells; the short-return contract admits at most 13."
     ],
     "status": "deferred",
-    "reason": "Historical backlog, not revalidated or addressed in this recording. The exact blocker is an unvalidated multi-stage transit-and-arrival/protection contract, not missing selecting source or runtime bookkeeping. The only verified bank receipt predates the second potion; both its route and the nearest water route exceed the short-return contract and cross excluded grass and doors. No currently visible bank is admitted. Next, derive a deterministic fixture from the recorded 513-to-423 or 513-to-94 geometry and validate ordinary transit separately from testing, including hazards, door-opening receipts, total travel budget and fresh two-color stash admission on arrival. Increasing bounds or discarding inventory compatibility alone would not certify safe discovery. No speculative movement repair is submitted.",
+    "reason": "Revalidated in this recording. Complete source and offline reconstruction resolve the selecting-state gap: a compatible bank receipt exists at 361, but its 16-cell return exceeds the short-return contract. The ordinary shortest route also crosses excluded grass; a terrain-constrained alternative is still 16 cells. Visible safe test banks lack adjacent water, while nearby visible water fails the observed statue/collateral gate. No identification resource remains. No patch is submitted because a bounded multi-stage transit-and-arrival/protection contract is not established. Next, build a deterministic fixture from the recorded 612-to-361 geometry and validate accepted door/movement receipts, fresh next-step hazard admission, total hunger/travel budget, and fresh three-color stash admission on arrival. Increasing bounds alone, guessing potion effects or waiving discovery is unsafe.",
     "origin_run": "000061"
   },
   {
