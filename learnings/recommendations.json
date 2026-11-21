@@ -400,5 +400,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000033"
+  },
+  {
+    "id": "000034-supported-doorway-admission",
+    "priority": "high",
+    "summary": "Establish an admitted alternative to sustained doorway fighting against a supported skeleton.",
+    "evidence": [
+      "Decisions 3005–3007, lines 8570–8575: guard attacks while a necromancer is visible; melee loses 15 HP.",
+      "Decisions 3010–3019, lines 8584–8609: preparation retains the doorway and repeatedly attacks the summon.",
+      "Decision 3020, lines 8610–8611: guard-pull announcement accompanies displacement and loss of the choke.",
+      "Decisions 3024–3025, lines 8620–8626: no admitted ranged action, last dew consumed, then exposed retreat.",
+      "Decision 3050, lines 8707–8708: terminal attack and publicly confirmed bone-explosion death."
+    ],
+    "status": "deferred",
+    "reason": "The full selecting source explains early doorway retention and ranged preemption, but no validated safe replacement is established. A focused repair needs a contemporaneous admitted caster shot, bounded approach, or contact-breaking route accounting for guard pull, current and remembered threats, impairment, hazards, health and hunger costs. Existing summoner approach scoring counts melee adjacency and does not itself certify safety against guard control. Validate earlier selections in a source-pinned reconstruction before probing alternatives on copies; stop at the first divergence. Neither extra charges, unknown potion identities, nor simply moving summoner priority earlier supplies that evidence.",
+    "origin_run": "000034"
   }
 ]
