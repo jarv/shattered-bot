@@ -931,21 +931,13 @@ class SurvivalPolicy:
         pos, width, height = state["hero"]["cell"], state["map"]["width"], state["map"]["height"]
         tile = self.tiles.get(pos, {})
         effects = tile.get("effects", [])
-        confusion = bool(effects) and all("cloud of confusion gas" in e.lower() for e in effects)
-        vertigo = any("vertigo" in b["name"].lower() for b in state["hero"].get("buffs", []))
-        if not confusion and not vertigo:
-            self.temporary_confusion_waits = 0
-        elif (not effects or confusion) and tile.get("terrain") in FLOOR - TRANSITIONS \
-                and not tile.get("plant") and not state.get("danger_cells") \
-                and (confusion or pos not in self.room_blocked) \
-                and state["hero"]["hp"] > 0.35 * state["hero"]["max_hp"] \
-                and not any(o["name"].lower() in ENEMIES | ROOM_ACTORS
-                            and (not o.get("sleeping") or distance(pos, o["cell"], width) <= 3)
-                            for o in state.get("objects", [])):
-            if self.temporary_confusion_waits >= 40:
-                self.stop_gameplay("Confusion gas/vertigo did not clear within safe waiting budget")
-            self.temporary_confusion_waits += 1
-            return self.decision({"type": "wait"}, "obstacle: wait safely for confusion gas and vertigo to clear")
+        try:
+            from .vertigo_tactics import choose as vertigo_response
+        except ImportError:
+            from vertigo_tactics import choose as vertigo_response
+        recovery = vertigo_response(self, state)
+        if recovery:
+            return recovery
         def cold_only(tile):
             effects = tile.get("effects", [])
             return bool(effects) and all("unnaturally frigid" in effect.lower() for effect in effects)

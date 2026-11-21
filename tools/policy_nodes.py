@@ -39,6 +39,14 @@ def rinse(c):
     return rinse_ooze(c.policy, c.state, c.enemies, distance, neighbors)
 
 
+def vertigo_response(c):
+    try:
+        from .vertigo_tactics import choose
+    except ImportError:
+        from vertigo_tactics import choose
+    return choose(c.policy, c.state)
+
+
 def toxic_gas(c):
     try:
         from .toxic_escape import escape

@@ -13,6 +13,7 @@ except ImportError:
 
 POLICY = Selector("survival", (
     Selector("immediate-safety", (
+        Leaf("vertigo-response", n.vertigo_response),
         Leaf("toxic-gas-escape", n.toxic_gas),
         Leaf("burning-recovery", n.burning),
         Leaf("hazardous-room-escape", lambda c: c.policy.escape_special_room(c.state)),

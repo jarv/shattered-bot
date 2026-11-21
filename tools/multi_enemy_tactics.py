@@ -76,6 +76,24 @@ def single_file(p,state,enemies,cell):
     return False
 
 
+def needs_retreat(p, state, enemies):
+    """Act before simultaneous contact when distinct awake fronts are closing."""
+    if not getattr(p, 'unit_strategies_enabled', False):
+        return False
+    active = [e for e in enemies if not e.get('sleeping')]
+    if len(active) < 2:
+        return False
+    pos = state['hero']['cell']
+    current = sum(can_attack(p, state, e, pos) for e in active)
+    if current > 1:
+        return True
+    if single_file(p, state, active, pos) and approach_pressure(p, state, active, pos) <= 1:
+        return False  # Do not abandon an actually verified single-file hold.
+    close = [e for e in active if distance(pos, e['cell'], state['map']['width']) <= 4]
+    return approach_pressure(p, state, active, pos) > 1 or (
+        len(close) >= 2 and (current > 0 or any(distance(pos, e['cell'], state['map']['width']) <= 3 for e in close)))
+
+
 def choose(p,state,enemies):
     p.multi_retreat_pending=None
     if not getattr(p,'unit_strategies_enabled',False) or state.get('status')!='ready' or state.get('modal'):return None
@@ -86,11 +104,16 @@ def choose(p,state,enemies):
     if p.multi_door_plan:
         committed=doorway_route(p,state,active,current)
         if committed:return committed
-    if current<=1:
+    if not needs_retreat(p,state,active):
         p.multi_retreat_streak=0
         return None
     buffs=' '.join(b['name'].lower() for b in state['hero'].get('buffs',[]))
     if any(b in buffs for b in ('root','paral','vertigo')):return None
+    # A usable door is the first retreat objective, not a last resort after
+    # spending several turns in an open-room exchange. Preserve all doorway
+    # route, health-loss, flight-aware hold and accepted-input checks below.
+    doorway=doorway_route(p,state,active,max(current,approach_pressure(p,state,active,pos)))
+    if doorway:return doorway
     paths=p.paths(state,{e['cell'] for e in active});choices=[]
     for cell in paths:
         route=p.route(paths,cell)
@@ -100,13 +123,11 @@ def choose(p,state,enemies):
                or c in state.get('danger_cells',[]) for c in route[1:]):continue
         next_pressure=approach_pressure(p,state,active,route[1])
         if p.multi_retreat_streak>=3 and next_pressure>1:continue
-        if count(cell)>1 or approach_pressure(p,state,active,cell)>1 or count(route[1])>current or next_pressure>current:continue
+        if count(cell)>1 or approach_pressure(p,state,active,cell)>1 or count(route[1])>max(1,current) \
+                or next_pressure>max(1,current,approach_pressure(p,state,active,pos)):continue
         if next_pressure>1 and p.multi_retreat_edges[(pos,route[1])]>=3:continue
         choke=single_file(p,state,active,cell)
         choices.append(((next_pressure>1,not choke,count(cell),max(count(c) for c in route[1:]),len(route),p.visits[cell],cell),route,choke))
-    if not any(choice[2] for choice in choices):
-        doorway=doorway_route(p,state,active,current)
-        if doorway:return doorway
     if not choices:
         p.log_continuation_error(state,'no-single-attacker-retreat',
             'Multiple observed attackers, but no admitted single-attacker square/approach route; continue best-effort combat rather than invent safety',
@@ -137,7 +158,9 @@ def doorway_route(p,state,enemies,current):
     def admitted(route):
         return 2<=len(route)<=9 and not any(c in p.loot or c in state.get('danger_cells',[])
             or p.tiles[c]['terrain'] in {7,8,10,18,21,22,31,37,38} or p.tiles[c].get('trap')
-            or p.tiles[c].get('plant') or p.effects_block_movement(p.tiles[c]) for c in route[1:])
+            or p.tiles[c].get('plant') or p.effects_block_movement(p.tiles[c]) for c in route[1:]) \
+            and sum(can_attack(p,state,e,route[1]) for e in enemies) <= max(
+                1,sum(can_attack(p,state,e,pos) for e in enemies))
     def pressure(cell):return approach_pressure(p,state,enemies,cell)
     if plan:
         if plan['depth']!=state['depth'] or plan['branch']!=state.get('branch',0) or plan['steps']>=12 \

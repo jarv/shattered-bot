@@ -1,3 +1,4 @@
+import copy
 import unittest
 
 from tools.survival_bot import Finished, SurvivalPolicy
@@ -51,13 +52,13 @@ class FreezingEscapeTests(unittest.TestCase):
         s["hero"]["hp"] = 7
         self.assertEqual(25, SurvivalPolicy().choose(s).action["cell"])
 
-    def test_confusion_gas_waits_without_random_vertigo_movement(self):
+    def test_confusion_gas_escapes_when_every_random_landing_is_observed_safe(self):
         s, p = self.corridor(), SurvivalPolicy()
         s["hero"]["buffs"] = [{"name": "vertigo"}]
         for tile in s["map"]["cells"]:
             if tile["cell"] in {24, 25}:
                 tile["effects"] = ["A cloud of confusion gas is swirling here."]
-        self.assertEqual("wait", p.choose(s).action["type"])
+        self.assertEqual({"type": "cell", "cell": 25}, p.choose(s).action)
         for tile in s["map"]["cells"]:
             tile["effects"] = []
         self.assertEqual("wait", p.choose(s).action["type"])
@@ -65,13 +66,18 @@ class FreezingEscapeTests(unittest.TestCase):
         p.choose(s)
         self.assertEqual(0, p.temporary_confusion_waits)
 
-    def test_confusion_wait_is_bounded(self):
+    def test_confusion_escape_attempts_are_bounded_by_accepted_inputs(self):
+        from tools.vertigo_tactics import observe, MAX_MOVES
         s, p = self.corridor(), SurvivalPolicy()
+        s["hero"]["buffs"] = [{"name": "vertigo"}]
         for tile in s["map"]["cells"]:
             if tile["cell"] in {24, 25}:
                 tile["effects"] = ["A cloud of confusion gas is swirling here."]
-        for _ in range(40):
-            self.assertEqual("wait", p.choose(s).action["type"])
+        for _ in range(MAX_MOVES):
+            action = p.choose(s)
+            self.assertEqual("cell", action.action["type"])
+            # An accepted wall bump is possible even when the intended step is clear.
+            observe(p, s, action, copy.deepcopy(s))
         with self.assertRaises(Finished):
             p.choose(s)
 

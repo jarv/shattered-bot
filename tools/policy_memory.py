@@ -114,6 +114,8 @@ class ExplorationMemory:
     temporary_block_waits: int = value(0, floor=True)
     temporary_freeze_waits: int = value(0, floor=True)
     temporary_confusion_waits: int = value(0, floor=True)
+    vertigo_plan: object = value(None, floor=True)
+    vertigo_pending: object = value(None, floor=True)
     hazard_recheck_steps: int = value(0, floor=True)
     hazard_recheck_waits: int = value(0, floor=True)
 

@@ -1024,6 +1024,12 @@ class MagePolicy(SurvivalPolicy):
         self.warp_cooldown = max(0, self.warp_cooldown - 1)
         if state.get("danger_cells"):
             return None
+        try:
+            from .multi_enemy_tactics import needs_retreat
+        except ImportError:
+            from multi_enemy_tactics import needs_retreat
+        if needs_retreat(self, state, enemies):
+            return None  # Emergency healing/control, then doorway retreat before optional setup/loot.
         if self.wandmaker_quest.get('stage') in {'return','claiming','collect_dropped'}:
             return None  # Safety/healing, then quest return before optional work.
         if self.completed_maze_cells:
