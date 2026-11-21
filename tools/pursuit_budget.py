@@ -24,6 +24,8 @@ def observe_accepted(p,before,decision,after):
         return None
     if 'hero' not in before or 'hero' not in after:return None
     moved=before['hero']['cell']!=after['hero']['cell']
+    elapsed=[s.get('evaluation_stats',{}).get('elapsed_turns') for s in (before,after)]
+    timed=all(isinstance(t,(int,float)) for t in elapsed) and elapsed[1]>elapsed[0]
     active=any(is_hostile(o) and not o.get('sleeping') for o in before.get('objects',[]))
     following=any(is_hostile(o) and not o.get('sleeping') for o in after.get('objects',[]))
     try:
@@ -48,8 +50,10 @@ def observe_accepted(p,before,decision,after):
             return {'accepted_retreat_moves':p.pursuit_retreat_moves,
                     'moves_since_intervention':p.pursuit_retreat_moves-p.pursuit_last_intervention_move,
                     'interventions':p.pursuit_interventions}
-    elif moved or decision.action.get('type')=='wait':
+    elif moved or decision.action.get('type')=='wait' or timed:
         # A brief visibility flicker or free inspection must not erase pursuit.
+        # Accepted pickups and searches also provide quiet observation time when
+        # the public clock advances; do not require extra idle recovery inputs.
         p.pursuit_quiet_moves+=1
         if getattr(p,'unit_strategies_enabled',False) and p.pursuit_quiet_moves>=3 \
                 and not p.recent_threats and not p.unseen_damage_turns \
@@ -62,7 +66,7 @@ def observe_accepted(p,before,decision,after):
             p.pursuit_outcome=None
             p.pursuit_lure_exhausted=False
             p.pursuit_reassessed_move=0
-            return {'reset':'three accepted quiet movement/wait inputs; no kill inferred'}
+            return {'reset':'three accepted quiet movement/wait or timed inputs; no kill inferred'}
     return None
 
 
