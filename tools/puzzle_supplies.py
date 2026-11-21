@@ -282,7 +282,7 @@ def revisit_flight_room(p,state,demand,distance):
         # trip, then reobserve the bank before permitting any potion drink.
         staged=dict(state,hero=dict(hero,cell=cell))
         journey=plan_journey(p,staged,[],neighbors,probe_kind='flight',plan_only=True)
-        if not journey:continue
+        if not journey or not entrance_actionable(p,staged,journey):continue
         around={cell,*neighbors(cell,width,state['map']['height'])}
         if any(c not in p.tiles or p.tiles[c]['terrain'] not in {0,1,3,4,5,6,9,11,12,14,18,19,20,29}
                or p.tiles[c].get('plant') or p.tiles[c].get('effects')
@@ -375,17 +375,28 @@ def observe_pool_entrance(p,before,state):
             getattr(p,kind+'_entrance_receipts').add(pending)
 
 
-def open_journey_entrance(p,state,journey):
-    """A dry-run closed door is scouting only; open it before any potion is spent."""
+def unscouted_entrance(p,state,journey):
+    """Read-only door prerequisite shared by bank selection and arrival."""
     # Ordinary doors close again when stepped off. A receipted entrance scout is
     # not undone by that normal reclosure. The newly planned round trip still
     # budgets entering the door, and Journey.advance rechecks every step.
-    door=next((c for c in journey.route[1:] if p.tiles[c]['terrain']==5
+    return next((c for c in journey.route[1:] if p.tiles[c]['terrain']==5
                and not (journey.kind in {'pool','flight'}
                         and (state['depth'],state.get('branch',0),c)
                             in getattr(p,journey.kind+'_entrance_receipts')
                         and not p.tiles[c].get('trap') and not p.tiles[c].get('plant')
                         and not p.effects_block_movement(p.tiles[c]))),None)
+
+
+def entrance_actionable(p,state,journey):
+    door=unscouted_entrance(p,state,journey)
+    return door is None or (distance(state['hero']['cell'],door,state['map']['width'])==1
+                            and p.tiles[door].get('visible'))
+
+
+def open_journey_entrance(p,state,journey):
+    """A dry-run closed door is scouting only; open it before any potion is spent."""
+    door=unscouted_entrance(p,state,journey)
     if door is None:return True,None
     if distance(state['hero']['cell'],door,state['map']['width'])==1 and p.tiles[door].get('visible'):
         if journey.kind in {'pool','flight'}:
@@ -573,7 +584,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
             for bank in banks:
                 staged=dict(state,hero=dict(hero,cell=bank))
                 journey=plan_journey(p,staged,[],neighbors,probe_kind=demand.kind,plan_only=True)
-                if journey:journeys[bank]=journey
+                if journey and entrance_actionable(p,staged,journey):journeys[bank]=journey
             banks=[bank for bank in banks if bank in journeys]
         if not banks:
             if getattr(p,'reserve_floor_puzzle_supplies',False):
