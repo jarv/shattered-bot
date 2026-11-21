@@ -220,7 +220,7 @@
       "Run 000022: decisions 2683, 2756, 2909–2910 and 3632, retained backlog evidence."
     ],
     "status": "deferred",
-    "reason": "Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. The current fatal encounter supplies no validated mandatory-loot preparation alternative. The earlier case still requires a contemporaneously known identification or extinguishing resource, or validated preparation satisfying hunger, health, hazard, protection and retrieval budgets. Unknown potion identities and waived mandatory pickup cannot justify a repair.",
+    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. The current fatal encounter supplies no validated mandatory-loot preparation alternative. The earlier case still requires a contemporaneously known identification or extinguishing resource, or validated preparation satisfying hunger, health, hazard, protection and retrieval budgets. Unknown potion identities and waived mandatory pickup cannot justify a repair.",
     "origin_run": "000018"
   },
   {
@@ -245,7 +245,7 @@
       "Run 000019: decisions 1774, 1805, 1863 and 1966, retained backlog evidence."
     ],
     "status": "deferred",
-    "reason": "Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. This recording establishes no safe crab surprise alternative. The earlier case still needs public-input-validated doorway-attempt, pursuit and escape bookkeeping and a bounded surprise approach with a second exit under existing health and hazard checks. Current source browsing does not certify that replacement.",
+    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. This recording establishes no safe crab surprise alternative. The earlier case still needs public-input-validated doorway-attempt, pursuit and escape bookkeeping and a bounded surprise approach with a second exit under existing health and hazard checks. Current source browsing does not certify that replacement.",
     "origin_run": "000019"
   },
   {
@@ -287,7 +287,7 @@
       "Decision 879, accepted transition line 2547."
     ],
     "status": "deferred",
-    "reason": "Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. The complete selecting source explains the risky read, but no validated preparation or replacement action is established. A minimum charge threshold would be arbitrary, and neither full charges nor a quiet origin guarantees a safe teleport destination. A focused repair needs bounded readiness criteria plus public-input-validated preparation or recovery alternatives that preserve discovery and mandatory progression; hidden potion identities cannot supply that evidence.",
+    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. The complete selecting source explains the risky read, but no validated preparation or replacement action is established. A minimum charge threshold would be arbitrary, and neither full charges nor a quiet origin guarantees a safe teleport destination. A focused repair needs bounded readiness criteria plus public-input-validated preparation or recovery alternatives that preserve discovery and mandatory progression; hidden potion identities cannot supply that evidence.",
     "origin_run": "000025"
   },
   {
@@ -301,7 +301,7 @@
       "Decisions 1076–1078, log lines 3183–3189: eating and healing do not restore progress."
     ],
     "status": "deferred",
-    "reason": "Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. No safe focused replacement is established. The public geometry admits protected chest trips from some approaches, but not an unknown-drink bank satisfying the existing dry-surroundings gates; no carried known invisibility or safe identification supply is recorded at the block. A repair needs evidence of an admissible identification/test-and-inventory-protection route, or additional public observations establishing one. Merely adding a pool meal would not resolve the recorded post-meal failure, and speculative movement or weakened hazard checks is not justified.",
+    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. No safe focused replacement is established. The public geometry admits protected chest trips from some approaches, but not an unknown-drink bank satisfying the existing dry-surroundings gates; no carried known invisibility or safe identification supply is recorded at the block. A repair needs evidence of an admissible identification/test-and-inventory-protection route, or additional public observations establishing one. Merely adding a pool meal would not resolve the recorded post-meal failure, and speculative movement or weakened hazard checks is not justified.",
     "origin_run": "000026"
   },
   {
@@ -315,7 +315,7 @@
       "Decision 1481, line 4087: exhausted-magic withdrawal starts; decision 1493, line 4136: fallback retreat follows."
     ],
     "status": "deferred",
-    "reason": "Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. Complete source explains the selection but establishes no discrete implementation defect or validated safe replacement. At decision 1460 the observed adjacent dry steps do not provide the separating landing required by the existing lure rule. A repair needs an admitted multi-turn dry-engagement route or a public-input-validated attack/resource alternative preserving warning escape and health/hunger budgets. Arbitrarily preferring magic, extending preparation, or guessing potion identities is not sufficient evidence.",
+    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. Complete source explains the selection but establishes no discrete implementation defect or validated safe replacement. At decision 1460 the observed adjacent dry steps do not provide the separating landing required by the existing lure rule. A repair needs an admitted multi-turn dry-engagement route or a public-input-validated attack/resource alternative preserving warning escape and health/hunger budgets. Arbitrarily preferring magic, extending preparation, or guessing potion identities is not sufficient evidence.",
     "origin_run": "000027"
   },
   {
@@ -358,7 +358,7 @@
       "Decision 5799, lines 16655-16656: a starving hero falls from 1 HP to zero while waiting."
     ],
     "status": "deferred",
-    "reason": "Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. Source establishes the cumulative search-ceiling gate, not a safe replacement. The concrete blocker is validating a remaining target with its safe approach/return, current threat bookkeeping, hunger cost, and bounded search receipts. The incomplete observed map does not prove where progression lies; the known trap-blocked connection also lacks a validated protected traversal. A larger search or waiting bound, speculative movement, or guessed potion effect would not supply that evidence. No policy or test changes are proposed.",
+    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. Source establishes the cumulative search-ceiling gate, not a safe replacement. The concrete blocker is validating a remaining target with its safe approach/return, current threat bookkeeping, hunger cost, and bounded search receipts. The incomplete observed map does not prove where progression lies; the known trap-blocked connection also lacks a validated protected traversal. A larger search or waiting bound, speculative movement, or guessed potion effect would not supply that evidence. No policy or test changes are proposed.",
     "origin_run": "000030"
   },
   {
@@ -415,7 +415,7 @@
       "Decision 3050, lines 8707–8708: terminal attack and publicly confirmed bone-explosion death."
     ],
     "status": "deferred",
-    "reason": "Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. The full selecting source explains early doorway retention and ranged preemption, but no validated safe replacement is established. A focused repair needs a contemporaneous admitted caster shot, bounded approach, or contact-breaking route accounting for guard pull, current and remembered threats, impairment, hazards, health and hunger costs. Existing summoner approach scoring counts melee adjacency and does not itself certify safety against guard control. Validate earlier selections in a source-pinned reconstruction before probing alternatives on copies; stop at the first divergence. Neither extra charges, unknown potion identities, nor simply moving summoner priority earlier supplies that evidence.",
+    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. The full selecting source explains early doorway retention and ranged preemption, but no validated safe replacement is established. A focused repair needs a contemporaneous admitted caster shot, bounded approach, or contact-breaking route accounting for guard pull, current and remembered threats, impairment, hazards, health and hunger costs. Existing summoner approach scoring counts melee adjacency and does not itself certify safety against guard control. Validate earlier selections in a source-pinned reconstruction before probing alternatives on copies; stop at the first divergence. Neither extra charges, unknown potion identities, nor simply moving summoner priority earlier supplies that evidence.",
     "origin_run": "000034"
   },
   {
@@ -468,7 +468,7 @@
       "tools/consumable_tactics.py:62,77,127–143: frightened enemies remain active and critical health bypasses cooldown."
     ],
     "status": "deferred",
-    "reason": "Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. Source browsing resolves why teleportation was selected, but simply vetoing it does not establish a safe follow-up: terror duration is not publicly recorded here, attacks can shorten terror, and current policy memory was not reconstructed. Next, validate earlier selections against the saved inputs through decision 3550, then probe admitted contact-breaking or recovery alternatives on copies at decision 3551, accounting for remembered threats, guard pull and control expiry. Stop at any reconstruction divergence. This candidate changes only the separately proven doorway health inconsistency.",
+    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. Source browsing resolves why teleportation was selected, but simply vetoing it does not establish a safe follow-up: terror duration is not publicly recorded here, attacks can shorten terror, and current policy memory was not reconstructed. Next, validate earlier selections against the saved inputs through decision 3550, then probe admitted contact-breaking or recovery alternatives on copies at decision 3551, accounting for remembered threats, guard pull and control expiry. Stop at any reconstruction divergence. This candidate changes only the separately proven doorway health inconsistency.",
     "origin_run": "000037"
   },
   {
@@ -483,7 +483,7 @@
       "Decisions 2201–2202, accepted transitions at lines 6260 and 6265: health falls from 12 to seven, then zero."
     ],
     "status": "deferred",
-    "reason": "Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. The blocker is an unvalidated replacement, not omitted selecting source. Existing shock admission excludes two enemies while magic remains, and adjacent damage retains explosion risk. Reconstruction matched through decision 2093 but stopped at scratch serialization. Next, retain reconstruction in-process through decisions 2181–2187 and probe the existing control selector on copies, verifying a throw footprint outside the hero, allies and loot before proposing earlier arbitration. Stop at any selecting divergence. No safe control target or contact-breaking route is certified, so neither a policy patch nor a fabricated regression is supplied.",
+    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. The blocker is an unvalidated replacement, not omitted selecting source. Existing shock admission excludes two enemies while magic remains, and adjacent damage retains explosion risk. Reconstruction matched through decision 2093 but stopped at scratch serialization. Next, retain reconstruction in-process through decisions 2181–2187 and probe the existing control selector on copies, verifying a throw footprint outside the hero, allies and loot before proposing earlier arbitration. Stop at any selecting divergence. No safe control target or contact-breaking route is certified, so neither a policy patch nor a fabricated regression is supplied.",
     "origin_run": "000038"
   },
   {
@@ -530,7 +530,7 @@
       "tools/combat_items.py:39–45; tools/room_tactics.py:177–180; tools/puzzle_supplies.py:453–505; tools/mage_policy.py:429–430."
     ],
     "status": "deferred",
-    "reason": "Prior-review context, not revalidated in this recording: Complete source establishes an unresolved timed-equipment prerequisite, not a certified replacement. The concrete safety blocker is the absence of a validated combination of known usable armor, dry unknown-potion bank, protected inventory, actionable entrance and budgeted chest return. Reconstruction validated earlier selections but stopped at serialization before the pool episode; later attempts were terminated by the isolated shell. Continue in-process through decision 2770, then probe existing gates on copies. Do not lower health or hazard checks, guess invisibility, add general early eating, or waive the chest obligation.",
+    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: Complete source establishes an unresolved timed-equipment prerequisite, not a certified replacement. The concrete safety blocker is the absence of a validated combination of known usable armor, dry unknown-potion bank, protected inventory, actionable entrance and budgeted chest return. Reconstruction validated earlier selections but stopped at serialization before the pool episode; later attempts were terminated by the isolated shell. Continue in-process through decision 2770, then probe existing gates on copies. Do not lower health or hazard checks, guess invisibility, add general early eating, or waive the chest obligation.",
     "origin_run": "000041"
   },
   {
@@ -564,7 +564,7 @@
       "tools/puzzle_supplies.py:97–124,189–213,592–635; tools/room_tactics.py:171–264; tools/mage_policy.py:418–430."
     ],
     "status": "deferred",
-    "reason": "Prior-review context, not revalidated in this recording: No safe focused replacement is established. In this recording, complete source and offline reconstruction resolve the missing runtime-state question: all selections and the terminal blocker match. At first pool sight, nine reachable hypothetical chest-trip origins all fail the dry unknown-drink and dry-approach gates; no visible dry test bank is admitted. At exhaustion, safe visible banks exist elsewhere but none admits the protected chest return. No identify, intuition or known invisibility supply is carried at either point. Health and hunger are not the blocker. Next, use the validated first-sight state to establish an identification-only preparation route with inventory protection and an executable subsequent retrieval budget, or validate a separate ranged-control plan including known charge budget and defeat-backed habitat retirement. Neither route is established here. Weakening water checks, guessing magenta, waiving pickup or restoring death-waits is unsafe; no patch or regression is supplied.",
+    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: No safe focused replacement is established. In this recording, complete source and offline reconstruction resolve the missing runtime-state question: all selections and the terminal blocker match. At first pool sight, nine reachable hypothetical chest-trip origins all fail the dry unknown-drink and dry-approach gates; no visible dry test bank is admitted. At exhaustion, safe visible banks exist elsewhere but none admits the protected chest return. No identify, intuition or known invisibility supply is carried at either point. Health and hunger are not the blocker. Next, use the validated first-sight state to establish an identification-only preparation route with inventory protection and an executable subsequent retrieval budget, or validate a separate ranged-control plan including known charge budget and defeat-backed habitat retirement. Neither route is established here. Weakening water checks, guessing magenta, waiving pickup or restoring death-waits is unsafe; no patch or regression is supplied.",
     "origin_run": "000043"
   },
   {
@@ -580,7 +580,7 @@
       "tools/special_rooms.py:72–92; tools/priority_resources.py:107–156; tools/puzzle_supplies.py:588–629; tools/mage_policy.py:431–449."
     ],
     "status": "deferred",
-    "reason": "Prior-review context, not revalidated in this recording: No safe focused replacement is certified. The required item is a key, not an observed piranha chest. The recorded inventory has no known invisibility or carried identify/intuition resource at exhaustion. Unknown pool tests require a dry, fully observed bank beyond water reach and a budgeted protected return; more food or healing does not establish that combination. Removing the habitat buffer, treating the key as collected, or guessing a potion would violate safety. Full source resolves the selecting chain; it does not prove a replacement route. Next, validate a public-observation-backed dry firing position and approach for ranged piranha control, including visible target, remembered threats, charge budget and pickup/return; otherwise establish an actual identification supply and protected key trip. Do not assume an invisibility potion is guaranteed merely because a piranha was observed. Source-pinned offline reconstruction matched all 2,532 selected inputs and the terminal failure; a copied terminal-state probe found zero admitted current dry test banks and no prior pool approach attempt. Runtime-state recovery therefore resolves that evidence gap, but not the safe replacement requirement.",
+    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: No safe focused replacement is certified. The required item is a key, not an observed piranha chest. The recorded inventory has no known invisibility or carried identify/intuition resource at exhaustion. Unknown pool tests require a dry, fully observed bank beyond water reach and a budgeted protected return; more food or healing does not establish that combination. Removing the habitat buffer, treating the key as collected, or guessing a potion would violate safety. Full source resolves the selecting chain; it does not prove a replacement route. Next, validate a public-observation-backed dry firing position and approach for ranged piranha control, including visible target, remembered threats, charge budget and pickup/return; otherwise establish an actual identification supply and protected key trip. Do not assume an invisibility potion is guaranteed merely because a piranha was observed. Source-pinned offline reconstruction matched all 2,532 selected inputs and the terminal failure; a copied terminal-state probe found zero admitted current dry test banks and no prior pool approach attempt. Runtime-state recovery therefore resolves that evidence gap, but not the safe replacement requirement.",
     "origin_run": "000046"
   },
   {
@@ -716,5 +716,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000056"
+  },
+  {
+    "id": "000057-key-tour-arbitration",
+    "priority": "high",
+    "summary": "Preserve admitted key pickup priority when a quiet-room chest tour becomes eligible.",
+    "evidence": [
+      "Decision 3926, line 11342: sleeping DM-100 visible; committed key route moves toward 436.",
+      "Decision 3927, lines 11345–11346: key goal remains 436, but the room tour reverses toward chest 366.",
+      "Decisions 3928–3931, lines 11348–11358: visibility changes alternate the two routes.",
+      "Decision 3932, line 11360: repeated edges trigger systematic-route-stall and defer the uncollected key.",
+      "tools/mage_policy.py:393–396; tools/region_navigation.py:139–146,179–224; tools/room_loot.py:56–91."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000057"
   }
 ]

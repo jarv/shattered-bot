@@ -55,6 +55,10 @@ def room_paths(p,state,region):
 
 def before_room_exit(p,state,decision):
     if decision.reason.startswith('artifact: deliberate reobserved pickup'):return None
+    # Region navigation gives keys priority over ordinary chests. Preserve its
+    # admitted route even when a sleeping enemy flickers out of sight and makes
+    # this quiet-room wrapper eligible; otherwise the two selectors reverse it.
+    if decision.intent == Intent.LOOT and decision.reason == 'loot: collect key':return None
     if decision.reason.startswith('loot: prioritize observed permanent upgrade/strength resource'):return None
     if decision.reason.startswith('loot: prioritize observed food pickup'):return None
     if decision.reason.startswith('loot: prioritize observed matching key'):return None
