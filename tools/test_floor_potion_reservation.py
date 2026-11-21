@@ -52,10 +52,15 @@ class FloorPotionReservationTests(unittest.TestCase):
             with patch.object(p,'exploration_report',return_value=report):
                 self.assertFalse(room_ready(p,s),key)
 
-    def test_blind_testing_can_resume_after_survey_without_puzzle_obligations(self):
+    def test_blind_testing_waits_for_descent_even_after_survey_without_puzzle_obligations(self):
         s,p=surveyed();s['inventory'].append(potion())
         self.assertTrue(room_ready(p,s))
         action=choose_consumable(p,s,[],distance,neighbors)
+        self.assertIsNone(action)
+        next(t for t in s['map']['cells'] if t['cell']==s['hero']['cell'])['terrain']=29
+        p.update(s)
+        from tools.descent_potions import begin
+        action=begin(p,s)
         self.assertEqual('DRINK',action.action['action'])
 
     def test_identification_scroll_and_known_strength_are_not_reserved(self):

@@ -462,6 +462,13 @@ class MagePolicy(SurvivalPolicy):
                 self.stop_gameplay('Starving: current-floor food search is unfinished; cannot descend while '
                                  f'known safe unexplored branches remain: {food_work}')
             try:
+                from .descent_potions import begin as test_before_descent
+            except ImportError:
+                from descent_potions import begin as test_before_descent
+            testing = test_before_descent(self, state)
+            if testing:
+                return testing
+            try:
                 from .loot_completion import required_loot,missing_keys,pending_collections
             except ImportError:
                 from loot_completion import required_loot,missing_keys,pending_collections
@@ -1145,6 +1152,13 @@ class MagePolicy(SurvivalPolicy):
         battery = shield_battery(self, state, enemies)
         if battery:
             return battery
+        try:
+            from .descent_potions import advance as advance_descent_potions
+        except ImportError:
+            from descent_potions import advance as advance_descent_potions
+        testing = advance_descent_potions(self, state)
+        if testing:
+            return testing
         stash=advance_stash(self,state,enemies,distance)
         if stash:
             return stash

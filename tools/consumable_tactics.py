@@ -34,6 +34,9 @@ def identify_retry_allowed(p, state):
 
 def learn_sources(p, state):
     depth = state["depth"]
+    if any(base_name(i) == "potion of strength" for i in state["inventory"]) or any(
+            base_name(o.get("top_item") or o) == "potion of strength" for o in state.get("objects", [])):
+        p.strength_identified = True
     for obj in state.get("objects", []):
         item = obj.get("top_item")
         if item and not obj.get("for_sale") and (unknown_potion(item) or unknown_scroll(item)):
@@ -104,7 +107,8 @@ def choose_consumable(p, state, enemies, distance, neighbors):
             return p.use(item, "READ", reason)
         exits = [c for c in neighbors(pos, width, height) if p.walkable(c) and p.tiles[c]["terrain"] not in {5, 7, 8, 21, 22, 37}
                  and not p.tiles[c].get("plant") and not p.loot.get(c, {}).get("for_sale")]
-        if unknown and len(exits) >= 2 and not getattr(p, "pharmacophobia", False) and not any(o.get("top_item") and distance(pos, o["cell"], width) <= 1 for o in state.get("objects", [])):
+        if unknown and not getattr(p, "reserve_floor_puzzle_supplies", False) \
+                and len(exits) >= 2 and not getattr(p, "pharmacophobia", False) and not any(o.get("top_item") and distance(pos, o["cell"], width) <= 1 for o in state.get("objects", [])):
             try:
                 from .potion_discovery import room_ready
             except ImportError:
@@ -206,7 +210,10 @@ def discovery_menu(p, state):
                                       i.get("known_cursed", False), i.get("equipped", False)), reverse=True)
     else:
         items = []  # In particular, do not blindly transmute valuable equipment.
-    for item in items:
+    # Preserve the preferred potion target across bag navigation. A lower-ranked
+    # backpack scroll must not consume an Identify intended for a bagged potion.
+    preferred_potion = bool(items and unknown_potion(items[0]))
+    for item in items[:1] if preferred_potion else items:
         button = next((b for b in buttons if b["label"].lower() == item["name"].lower()), None)
         if button:
             p.menu_plan = None

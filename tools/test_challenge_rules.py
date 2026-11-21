@@ -131,6 +131,11 @@ class ConfiguredRuleAdmissionTests(unittest.TestCase):
         s['inventory'].append(potion)
         self.assertTrue(p.item_action_allowed(potion,'DRINK'))
         action=choose_consumable(p,s,[],distance,neighbors)
+        self.assertIsNone(action)  # Normal discovery now waits for admitted descent.
+        next(t for t in s['map']['cells'] if t['cell']==s['hero']['cell'])['terrain']=29
+        p.update(s)
+        from tools.descent_potions import begin
+        action=begin(p,s)
         self.assertEqual('DRINK',action.action['action'])
         self.assertEqual('unknown',action.action['id'])
         challenged=MagePolicy(rules=ChallengeRules(pharmacophobia=True))

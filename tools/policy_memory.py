@@ -219,6 +219,9 @@ class ResourceMemory:
     seed_plan: object = value(None, floor=True)
     seed_cooldown: int = value(0, floor=True)
     consumable_sources: dict = field(default_factory=dict)
+    strength_identified: bool = False
+    descent_potion_plan: object = value(None, floor=True)
+    descent_potion_tests: set = local(set)
     consumable_inventory_counts: dict = field(default_factory=dict)
     consumable_cooldown: int = 0
     consumable_menu_bags: set = field(default_factory=set)

@@ -177,6 +177,7 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                     from .corruption_tactics import observe as observe_corruption
                     from .movement_batching import observe as observe_movement_batch
                     from .room_supplies import observe as observe_room_supply
+                    from .descent_potions import observe as observe_descent_potion
                 except ImportError:
                     from fly_tactics import observe_fallback
                     from multi_enemy_tactics import observe_accepted as observe_multi_retreat
@@ -185,13 +186,15 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                     from corruption_tactics import observe as observe_corruption
                     from movement_batching import observe as observe_movement_batch
                     from room_supplies import observe as observe_room_supply
+                    from descent_potions import observe as observe_descent_potion
                 for label,feedback in (('observed_fly_fallback',observe_fallback(policy,state,decision,next_state)),
                                        ('observed_multi_retreat',observe_multi_retreat(policy,state,decision,next_state)),
                                        ('observed_seed_input',observe_seed(policy,state,decision,next_state)),
                                        ('observed_full_mapping',observe_mapping(policy,state,decision,next_state)),
                                        ('observed_corruption_input',observe_corruption(policy,state,decision,next_state)),
                                        ('observed_movement_batch',observe_movement_batch(policy,state,decision,next_state)),
-                                       ('observed_room_supply',observe_room_supply(policy,state,decision,next_state))):
+                                       ('observed_room_supply',observe_room_supply(policy,state,decision,next_state)),
+                                       ('observed_descent_potion',observe_descent_potion(policy,state,decision,next_state))):
                     if feedback:log.write(json.dumps({'index':index,label:feedback})+'\n');log.flush()
                 try:
                     from .inventory_tactics import observe_accepted as observe_inventory

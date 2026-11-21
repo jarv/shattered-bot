@@ -1,5 +1,29 @@
 # Potion-room supplies and alchemy energy
 
+## Strength identification before descent
+
+Until strength is publicly identified, an otherwise admitted descent first
+triggers one-at-a-time drink tests of carried unidentified potions. This is a
+departure phase, not an exploration activity: it does not require revisiting
+every optional tile that the floor policy has already elected to leave.
+Prefer a nearby safe water tile; a dry alternative requires an adjacent observed
+water escape. Tests retain health, threat, impairment, Pharmacophobia, safe-route
+and potion-inventory protection checks. Unsafe tests are explicitly deferred,
+not forced and not represented as successful identification.
+
+Do not spend unknown supplies on this phase while a recognized potion-room
+requirement or an unrelated retrieval/journey remains. Safe room-specific tests
+retain their own purpose and protection checks. Ordinary generic strength drink
+tests no longer run during Mage exploration. Safe scroll identification remains
+available earlier; when the preferred potion is inside a bag, open the bag
+instead of spending Identify on a lower-ranked visible backpack item.
+
+Accepted inventory loss confirms each test. An observed standard strength gain
+from that drink, or a publicly named strength potion, ends the search across
+later floors too. Color, stack counts and floor-placement clues never establish
+identity. Recover from actual test effects before another experiment, and
+retrieve any stashed potions even when the test finds strength.
+
 ## Same-floor room supplies
 
 The pinned game's potion-gated special rooms place a matching potion on the
