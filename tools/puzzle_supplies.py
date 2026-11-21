@@ -223,7 +223,11 @@ def stage_known_gas(p,state,item,neighbors):
                or p.effects_block_movement(p.tiles[c]) for c in route):continue
         staged=dict(state,hero=dict(state['hero'],cell=bank))
         journey=plan_journey(p,staged,[],neighbors,probe_kind='gas',plan_only=True)
-        if journey:choices.append((len(route),bank,journey))
+        # A budgeted trip is not executable if its closed entrance cannot be
+        # scouted from this bank. Apply the arrival prerequisite before travel,
+        # rather than repeatedly staging here and yielding back to exploration.
+        if journey and entrance_actionable(p,staged,journey):
+            choices.append((len(route),bank,journey))
     if not choices:return None
     _,bank,journey=min(choices,key=lambda c:(c[0],c[1]))
     if bank!=state['hero']['cell']:

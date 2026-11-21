@@ -635,5 +635,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000050"
+  },
+  {
+    "id": "000051-gas-entrance-preflight",
+    "priority": "high",
+    "summary": "Require an actionable entrance before selecting a known-purity gas-room staging bank.",
+    "evidence": [
+      "Decision 132, selection line 373 and accepted transition line 374: purity preparation reaches bank 166.",
+      "Decisions 133-134, selection lines 376 and 379: exploration reverses the preparation move.",
+      "Decisions 139 and 147, soft-failure lines 394 and 420: persistent exploration targets stall.",
+      "Decisions 153 and 155, soft-failure lines 440 and 448: remaining frontier and door navigation is rejected.",
+      "Decision 302, line 897: hungry recovery exhausts with the hero alive at 20/20 HP.",
+      "tools/puzzle_supplies.py:216-240,415-431; tools/room_tactics.py:171-262; tools/region_navigation.py:65-74,222; tools/tactical_recovery.py:159-166."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000051"
   }
 ]
