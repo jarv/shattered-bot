@@ -700,5 +700,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000055"
+  },
+  {
+    "id": "000056-multifront-charge-reserve",
+    "priority": "high",
+    "summary": "Do not reserve the staff by waiting while multiple awake enemies converge outside the nearby crowding radius.",
+    "evidence": [
+      "Decision 277, line 792: a hidden alarm activation is publicly reported.",
+      "Decision 284, lines 814–815: a gnoll and two rats are awake, the staff has one known charge, and charge conservation selects a wait.",
+      "Decision 285, lines 816–817: another reserve wait advances time as the enemies approach.",
+      "Decision 288, lines 824–825: two attackers are reported and no single-attacker retreat is admitted.",
+      "Decision 297, accepted transition line 857: HP falls from three to zero.",
+      "tools/policy_nodes.py:425–486; tools/survival_policy.py:613–637."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000056"
   }
 ]

@@ -450,7 +450,10 @@ def ordinary_combat(c):
     weak = bar and bar[1] > 0 and bar[0] / bar[1] < 0.22
     crowded = sum(distance(c.pos, e["cell"], c.width) <= 2 for e in c.active) > 1
     charges = (p.staff(state).get("status") or "").split("/")
-    reserve = (not crowded and charges[0].isdigit() and int(charges[0]) <= 2 and c.hp > 0.6
+    # Do not wait for an ordinary enemy to approach while other awake enemies
+    # are converging too. A distant second front is missed by the local radius.
+    # Lone-enemy conservation and the separate queued-snake reserve remain.
+    reserve = (len(c.active) <= 1 and not crowded and charges[0].isdigit() and int(charges[0]) <= 2 and c.hp > 0.6
                and enemy["name"].lower() in {"marsupial rat", "albino rat", "gnoll scout"})
     adjacent = sum(distance(c.pos, e["cell"], c.width) == 1 for e in c.active)
     queued = [e for e in c.active if e["name"].lower() == "sewer snake" and distance(c.pos, e["cell"], c.width) > 1]
