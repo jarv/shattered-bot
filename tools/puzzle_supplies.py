@@ -246,11 +246,19 @@ def refresh_barrier(p,state,demand,paths,distance):
     plan=p.frost_view_plan
     if plan and plan['barrier']!=demand.cell:p.frost_view_plan=plan=None
     if plan:
-        if pos==plan['view'] or plan['view'] not in paths or plan['steps']>=12:
+        remote=plan.get('remote',False)
+        route=p.route(paths,plan['view']) if plan['view'] in paths else []
+        unsafe=remote and (p.recent_threats or any(
+            p.tiles[n]['terrain'] in {7,8,10,18,21,22,31,37,38}
+            or p.tiles[n].get('trap') or p.tiles[n].get('plant')
+            or p.effects_block_movement(p.tiles[n]) for n in route[1:]))
+        if pos==plan['view'] or not route or unsafe or plan['steps']>=plan.get('budget',12) \
+                or remote and p.puzzle_revisit_steps['frost']>=48:
             p.frost_view_attempts.add((demand.cell,plan['view']))
             p.frost_view_plan=plan=None
         else:
             plan['steps']+=1
+            if remote:p.puzzle_revisit_steps['frost']+=1
             return p.toward(state,plan['view'],'room: finish committed fire-barrier observation vantage',paths,intent=Intent.EXPLORE)
     tried={view for barrier,view in p.frost_view_attempts if barrier==demand.cell}
     views=[c for c in paths if c!=pos and c not in tried
@@ -265,6 +273,30 @@ def refresh_barrier(p,state,demand,paths,distance):
         view=min(views,key=lambda c:(distance(c,demand.cell,width),len(p.route(paths,c))))
         p.frost_view_plan={'barrier':demand.cell,'view':view,'steps':1}
         return p.toward(state,view,'room: revisit observed fire barrier for safe frost staging',paths,intent=Intent.EXPLORE)
+    # A remembered barrier can be beyond the local refresh envelope after
+    # ordinary floor work. Admit bounded *observation travel* over a fully
+    # known safe route, not a drink bank or permission to enter the fire.
+    # Keep its own finite travel account and revalidate on each selection.
+    if len(tried)<3 and not p.recent_threats and p.puzzle_revisit_steps['frost']<48:
+        remote_views=[c for c in paths if c!=pos and c not in tried
+            and 2<=distance(c,demand.cell,width)<=4
+            and distance(c,demand.cell,width)<distance(pos,demand.cell,width)
+            and 13<len(p.route(paths,c))<=41
+            and len(p.route(paths,c))-1<=48-p.puzzle_revisit_steps['frost']
+            and p.tiles[c]['terrain'] in {1,3,9,11,14,19,20,29}
+            and c not in p.loot
+            and all(p.tiles[n]['terrain'] not in {7,8,10,18,21,22,31,37,38}
+                    and not p.tiles[n].get('trap') and not p.tiles[n].get('plant')
+                    and not p.effects_block_movement(p.tiles[n])
+                    for n in p.route(paths,c)[1:])
+            and p.shot_clear(dict(state,hero=dict(state['hero'],cell=c)),demand.cell)]
+        if remote_views:
+            view=min(remote_views,key=lambda c:(len(p.route(paths,c)),distance(c,demand.cell,width),c))
+            p.frost_view_plan={'barrier':demand.cell,'view':view,'steps':1,
+                              'remote':True,'budget':len(p.route(paths,view))-1}
+            p.puzzle_revisit_steps['frost']+=1
+            return p.toward(state,view,'room: approach remembered fire over observed safe ground before rechecking frost staging',
+                            paths,intent=Intent.EXPLORE)
     p.defer_obligations(state,[{'kind':'unrefreshed fire barrier','cell':demand.cell}],
         'No bounded closer observation vantage; remembered fire remains hazardous, not cleared')
     return None

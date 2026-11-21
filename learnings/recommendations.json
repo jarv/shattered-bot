@@ -1147,5 +1147,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000086"
+  },
+  {
+    "id": "000087-remote-fire-observation",
+    "priority": "high",
+    "summary": "Allow bounded safe observation travel back to a distant remembered fire barrier blocking required loot.",
+    "evidence": [
+      "Decision 65, log line 184: scroll of upgrade observed at 1296; last sighting at decision 83, line 231.",
+      "Decision 307, log line 902: puzzle-backed meal selected, but no potion test follows.",
+      "Decision 340, accepted transition line 1000: ordinary exploration advances the clock at full health.",
+      "Decision 341, log lines 1002–1003: fire-buffer boundaries exclude the mandatory reward; no active threats, warnings or preparation workflow.",
+      "Original-source offline reconstruction matches all 341 selected actions, reasons and intents, then the terminal blocker. Observation vantages require 17–20 route cells, exceeding the local 13-cell refresh envelope.",
+      "tools/priority_resources.py:108–167; tools/puzzle_supplies.py:243–301; tools/mage_policy.py:458–476."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000087"
   }
 ]
