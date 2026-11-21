@@ -544,5 +544,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000042"
+  },
+  {
+    "id": "000043-pool-supply-preparation",
+    "priority": "high",
+    "summary": "Resolve the pool's unknown-supply preparation gap before mandatory retrieval blocks descent.",
+    "evidence": [
+      "Decision 1095, log line 3171: hungry, full-health hero observes the pool chest while carrying an unidentified potion and food.",
+      "Decision 1187, log line 3431: accepted movement advances the clock with the hero still at full health.",
+      "Decision 1188, log line 3433: unfinished piranha chest causes planner exhaustion.",
+      "tools/piranha_tactics.py:36-59; tools/puzzle_supplies.py:434-455, 568-611; tools/mage_policy.py:429-430."
+    ],
+    "status": "deferred",
+    "reason": "Source browsing and selection reconstruction resolved the missing controller chain, but no safe replacement action was established. Validated-state probes at decisions 1095 and 1188 found only two budgeted trip origins: approach water and the entrance doorway. Both failed unknown-test and stash admission; removing hunger or requesting the existing revisit produced no preparation action. No identification resource was observed. Next, build a reduced fixture of this exact approach and establish either an observation-backed identification method or a safe remote test/stash route with a verified protection budget. Relaxing water-bank checks, guessing the potion, or releasing the chest obligation would not be a safe focused repair.",
+    "origin_run": "000043"
   }
 ]
