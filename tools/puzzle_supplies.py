@@ -376,7 +376,7 @@ def stage_sentry(p,state,neighbors,item=None):
 
 
 def observe_pool_entrance(p,before,state):
-    """Observe pool and flight scouts; only actual open-door arrivals count."""
+    """Observe entrance scouts; only actual visible open-door arrivals count."""
     # Ordinary exploration can perform the very same entrance scout. Its
     # visible open-door arrival remains evidence after the door recloses;
     # requiring a controller-specific pending token loses that observation.
@@ -395,6 +395,18 @@ def observe_pool_entrance(p,before,state):
             receipt=(state['depth'],state.get('branch',0),door)
             for kind in ('pool','flight'):
                 getattr(p,kind+'_entrance_receipts').add(receipt)
+        # Gas can spread onto an opened doorway, forcing immediate retreat.
+        # That is still an observed entrance scout, not evidence that another
+        # unprotected entry is needed after the ordinary door recloses.
+        # This receipt never admits a hazard: bank/route planning still checks
+        # fresh tiles, and execution still requires the actual protective buff.
+        if hasattr(p,'gas_entrance_receipts') \
+                and old.get('visible') and old.get('terrain') in {5,6} \
+                and tile.get('visible') and tile.get('terrain')==6 \
+                and not old.get('effects') \
+                and not any(t.get('trap') or t.get('plant') for t in (old,tile)) \
+                and all('cloud of toxic gas' in e.lower() for e in tile.get('effects',[])):
+            p.gas_entrance_receipts.add((state['depth'],state.get('branch',0),door))
     # A dry approach scout is an observation task, not a protection or loot
     # receipt. Once actually reached, leaving it for other floor work must not
     # restart that same detour. Supply/test admission still runs on every input.
@@ -432,7 +444,7 @@ def unscouted_entrance(p,state,journey):
     # not undone by that normal reclosure. The newly planned round trip still
     # budgets entering the door, and Journey.advance rechecks every step.
     return next((c for c in journey.route[1:] if p.tiles[c]['terrain']==5
-               and not (journey.kind in {'pool','flight'}
+               and not (journey.kind in {'pool','flight','gas'}
                         and (state['depth'],state.get('branch',0),c)
                             in getattr(p,journey.kind+'_entrance_receipts')
                         and not p.tiles[c].get('trap') and not p.tiles[c].get('plant')

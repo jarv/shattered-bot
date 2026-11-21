@@ -979,5 +979,33 @@
     "status": "deferred",
     "reason": "No safe focused repair is established. The exact blockers are unobserved enclosure interior/perimeter and reward, no admitted sentry test bank, and no known haste or carried identification resource. Complete selecting source and reconstruction resolve the memory gap, not those safety prerequisites. Next, derive a deterministic fixture from decision 321 and inspect the pinned sensing and grass/obstacle rules for a bounded observation-only action from the admitted entrance strip. Require evidence that it reveals the missing geometry without exposed-floor entry before adding preparation arbitration and a red/green regression. If that contract cannot be established, pursue a public identification-resource plan instead. Do not guess potion effects, waive mandatory pickup, or restore death-waits.",
     "origin_run": "000075"
+  },
+  {
+    "id": "000076-gas-scout-reclosure",
+    "priority": "high",
+    "summary": "Remember a visibly scouted gas entrance after retreat and door reclosure.",
+    "evidence": [
+      "Decisions 43–44, log lines 118–122: actual door entry reveals gas and is followed by retreat.",
+      "Decisions 202–204, log lines 565–572: known purity is carried, but the same unprotected scout restarts after retreat.",
+      "Decisions 241–242, log lines 688–694: repeated scouting reaches navigation-loop rejection.",
+      "tools/puzzle_supplies.py:216–240,378–451; tools/room_tactics.py:68–96,197–293."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000076"
+  },
+  {
+    "id": "000076-terminal-supply-arbitration",
+    "priority": "high",
+    "summary": "Isolate the terminal missing-supply obligation before changing mandatory discovery arbitration.",
+    "evidence": [
+      "Decision 140, log line 389: bookshelves are publicly observed.",
+      "Decision 387, accepted transition at line 1132: collection advances time and leaves full health.",
+      "Decision 388, log line 1134: recognized-room supply or retrieval preservation blocks mandatory discovery.",
+      "tools/puzzle_supplies.py:40–65; tools/descent_potions.py:186–193; tools/test_wooden_barrier.py:26–35."
+    ],
+    "status": "deferred",
+    "reason": "The terminal message combines missing supplies with journey, drop and trap-retrieval flags; original terminal memory was not fully reconstructed. Observation-only accumulation finds a missing liquid-flame demand from bookshelves, but is not validated selecting memory. Existing behavior intentionally reserves carried flame for shelves, so deleting that reservation is not a certified fix. Next validate original selections through decision 388, isolate the blocking flags, and test a distinction between optional fuel reservation and genuine barricade supply obligations while preserving mandatory collection.",
+    "origin_run": "000076"
   }
 ]
