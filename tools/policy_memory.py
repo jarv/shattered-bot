@@ -214,6 +214,7 @@ class ResourceMemory:
     wand_usage: dict = field(default_factory=dict)
     wand_observation_clock: int = 0
     trap_payload_return: object = value(None, floor=True)
+    summoning_pending: object = value(None, floor=True)
     food_recovery_until: int = value(0, floor=True)
     food_recovery_source: object = value(None, floor=True)
     transfusion_names: set = local(set)

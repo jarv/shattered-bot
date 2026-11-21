@@ -8,6 +8,8 @@ except ImportError:
 
 
 def before_move(p,state,decision,enemies):
+    if decision.controller == 'trap-field-scan' or getattr(decision,'summoning_scan',False):
+        return None  # Keep the accepted-search receipt selected by preparation.
     p.trap_scan_pending=None
     try:
         from .mapping_knowledge import complete
@@ -51,7 +53,8 @@ def before_move(p,state,decision,enemies):
 
 def observe_accepted(p,before,decision,after):
     plan=p.trap_scan_pending;p.trap_scan_pending=None
-    if not plan or decision.controller!='trap-field-scan' or decision.action!={'type':'search'}:return
+    if not plan or not (decision.controller=='trap-field-scan' or getattr(decision,'summoning_scan',False)) \
+            or decision.action!={'type':'search'}:return
     if before.get('depth')!=after.get('depth') or before.get('branch',0)!=after.get('branch',0) \
             or before['hero']['cell']!=after['hero']['cell'] or after['hero']['cell']!=plan['cell']:return
     p.trap_scan_cells[plan['cell']]+=1

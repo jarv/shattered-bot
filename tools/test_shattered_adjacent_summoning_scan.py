@@ -32,11 +32,12 @@ def approach():
 
 
 class AdjacentSummoningScanTests(unittest.TestCase):
-    def test_full_selector_preflights_the_loot_approach(self):
+    def test_full_selector_defers_unprepared_summoning_field(self):
         s, p, _ = approach()
         scan = p.choose(s)
-        self.assertEqual("trap-field-scan", scan.controller)
-        self.assertEqual({"type": "search"}, scan.action)
+        self.assertEqual({"type": "cell", "cell": 945}, scan.action)
+        self.assertNotIn(1014,p.paths(s))
+        self.assertIn(1049,p.loot)
 
     def test_single_revealed_summoning_trap_merits_search_before_adjacent_loot_step(self):
         s, p, move = approach()

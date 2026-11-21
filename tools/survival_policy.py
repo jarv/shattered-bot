@@ -409,6 +409,11 @@ class SurvivalPolicy:
             state["map"]["width"], state["map"]["height"], harmless_effect=self.harmless_effect,
             rot_quest=getattr(self,'wandmaker_quest',{}).get('variant')=='berry'
             and getattr(self,'wandmaker_quest',{}).get('stage') in {'active','return'})
+        try:
+            from .summoning_tactics import quarantine
+        except ImportError:
+            from summoning_tactics import quarantine
+        quarantine(self,state)
         self.crystal_doors_seen.update(c for c, tile in self.tiles.items() if tile["terrain"] == 31)
         opened_crystal_choice = (len(self.crystal_doors_seen) >= 2 and any(
             self.tiles[c]["terrain"] != 31 for c in self.crystal_doors_seen))

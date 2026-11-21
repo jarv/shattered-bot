@@ -401,6 +401,18 @@ class MagePolicy(SurvivalPolicy):
                     for e in self.recent_threats.values()):
                 self.stop_tactical("recent-pursuit","Recent pursuit: refusing wounded loot/exploration re-entry into observed enemy reach")
         exit_cell = decision.action.get("cell")
+        if decision.action.get("type") == "cell" and exit_cell != state["hero"]["cell"] \
+                and not any(is_hostile(o) and o["cell"] == exit_cell for o in state.get("objects",[])):
+            try:
+                from .summoning_tactics import rooms, suspected_rooms
+            except ImportError:
+                from summoning_tactics import rooms, suspected_rooms
+            w,h = state["map"]["width"],state["map"]["height"]
+            fields = rooms(self.tiles,w,h) + [area for area,_ in suspected_rooms(self.tiles,self.loot,w,h)]
+            tile = self.tiles.get(exit_cell,{})
+            if tile.get("terrain") == 18 and tile.get("trap","").lower() == "summoning trap" \
+                    or any(exit_cell in area and state["hero"]["cell"] not in area for area in fields):
+                self.stop_tactical("summoning-entry","Summoning room requires remote activation from a prepared exterior choke")
         if decision.intent in {Intent.LOOT,Intent.EXPLORE,Intent.REPOSITION}:
             try:
                 from .escape_commitment import reverses
@@ -1191,14 +1203,16 @@ class MagePolicy(SurvivalPolicy):
         try:
             from .garden_tactics import choose as garden
             from .environment_tactics import clear_blocking_trap
+            from .summoning_tactics import choose as prepare_summoning
             from .seed_tactics import choose_seed
             from .resource_tactics import choose_meat
         except ImportError:
             from garden_tactics import choose as garden
             from environment_tactics import clear_blocking_trap
+            from summoning_tactics import choose as prepare_summoning
             from seed_tactics import choose_seed
             from resource_tactics import choose_meat
-        resource=garden(self,state,enemies) or choose_seed(self,state,enemies,distance,neighbors) \
+        resource=prepare_summoning(self,state,enemies) or garden(self,state,enemies) or choose_seed(self,state,enemies,distance,neighbors) \
             or choose_meat(self,state,enemies,distance,neighbors) or clear_blocking_trap(self,state,enemies,distance,neighbors)
         if resource:return resource
         try:

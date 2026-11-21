@@ -96,4 +96,18 @@ def assess(tiles, actors, loot, width, height, harmless_effect=None, rot_quest=F
             blocked.add(cell)
             notes.append({"kind": "crypt/choice container", "cell": cell, "reason": "Do not open on a transit route; preparation or a resource choice is needed"})
     skipped.update(blocked)
+    try:
+        from .summoning_tactics import rooms, suspected_rooms
+    except ImportError:
+        from summoning_tactics import rooms, suspected_rooms
+    for room in rooms(tiles, width, height):
+        blocked.update(room)
+        skipped.update(room)
+        notes.append({"kind":"summoning room", "cell":min(room),
+                      "reason":"Remote activation from prepared exterior choke; never enter the active field"})
+    for room,door in suspected_rooms(tiles,loot,width,height):
+        blocked.update(room)
+        skipped.update(room)
+        notes.append({"kind":"suspected summoning room","cell":min(room),"door":door,
+                      "reason":"Central bones in plain enclosed chamber; search from doorway before entry"})
     return blocked, skipped, notes
