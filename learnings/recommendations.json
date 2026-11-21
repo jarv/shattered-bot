@@ -606,5 +606,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000048"
+  },
+  {
+    "id": "000049-guard-cover-transit",
+    "priority": "high",
+    "summary": "Reject guard cover routes that traverse the selected guard’s melee reach, including committed routes.",
+    "evidence": [
+      "Decision 2458, selection line 7025 and accepted transition line 7026: cover routing steps beside the guard and health falls from 24 to 20.",
+      "Decision 2459, lines 7029–7030: continued cover transit remains adjacent and health falls from 20 to 11.",
+      "Decision 2461, lines 7037–7038: another cover move is followed by a guard pull and crippling.",
+      "Decision 2466, accepted transition line 7054: public text confirms the prison guard killed the hero.",
+      "tools/ranged_tactics.py:120–145,190–200,221–235; tools/challenge_combat.py:56–74."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000049"
   }
 ]

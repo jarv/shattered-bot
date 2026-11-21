@@ -125,9 +125,16 @@ def choose(p,state,enemies,*,escape_only=False):
                 <=exposure(p,state,[e for e in threats if e is not target],pos,distance,line_clear)['exposure']
             for c in route[1:])
 
+    def safe_cover(route):
+        # Pull control is not ranged damage, but the guard still hits adjacent
+        # cells. The target is excluded from safe_route's other-threat check;
+        # do not score a walk through its melee reach as an unexposed escape.
+        return not pull or all(exposure(p,state,[target],c,distance,line_clear)['melee']==0
+                               for c in route[1:])
+
     def move(destination,mode):
         route=p.route(paths,destination)
-        if len(route)<2 or not safe_route(route):return None
+        if len(route)<2 or not safe_route(route) or mode=='cover' and not safe_cover(route):return None
         if dm100 and mode=='cover' and hp<=10*sum(exposed(c) for c in route[1:]):return None
         p.ranged_plan={'name':target['name'].lower(),'goal':destination,'mode':mode,'steps':1,'waits':0,'hp':hp,'dot':dot,
                        'harmful':sorted(harmful)}
@@ -187,7 +194,7 @@ def choose(p,state,enemies,*,escape_only=False):
             if dm100:
                 affordable=affordable and not exposed(plan['goal']) and door_bank(plan['goal']) is not None \
                     and hp>10*sum(exposed(c) for c in route[1:])
-            if len(route)>1 and safe_route(route) and affordable:
+            if len(route)>1 and safe_route(route) and affordable and (plan['mode']!='cover' or safe_cover(route)):
                 report_dm('continue revalidated doorway-bank route',route)
                 return p.cell(route[1],'ranged: finish committed '+plan['mode']+' route',
                               intent=Intent.APPROACH if plan['mode']=='close' else Intent.RETREAT)
@@ -219,7 +226,7 @@ def choose(p,state,enemies,*,escape_only=False):
                 and hp>.35*maximum+(len(route)-1)*estimate \
                 and all(distance(b,target['cell'],width)<distance(a,target['cell'],width) for a,b in zip(route,route[1:])):
             close.append((len(route),cell))
-        if p.tiles[cell]['terrain'] not in {5,6} and not exposed(cell) and risk(cell)==0 and (target['name'].lower(),cell) not in p.ranged_failed_cover \
+        if safe_cover(route) and p.tiles[cell]['terrain'] not in {5,6} and not exposed(cell) and risk(cell)==0 and (target['name'].lower(),cell) not in p.ranged_failed_cover \
                 and (not dm100 or door_bank(cell) is not None
                      and hp>10*sum(exposed(c) for c in route[1:])):
             door=any(p.tiles[c]['terrain'] in {5,6} for c in route)
