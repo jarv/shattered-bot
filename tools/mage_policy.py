@@ -671,6 +671,17 @@ class MagePolicy(SurvivalPolicy):
                                  if c not in seen and not self.tiles.get(c,{}).get("visible")
                                  and e["observations_ago"]<6}
             self.recent_threats.update(seen)
+            # Accepted quiet inputs may have reached the release threshold
+            # while the last sighting was still retained. Recheck after its
+            # ordinary expiry, before route arbitration can reject progress
+            # and roll this fresh observation back during tactical recovery.
+            if self.unit_strategies_enabled and self.pursuit_quiet_moves >= 3 \
+                    and not self.recent_threats and not self.unseen_damage_turns \
+                    and not state.get("danger_cells") \
+                    and previous and previous.get("depth") == state["depth"] \
+                    and hero["hp"] >= previous.get("hero", {}).get("hp", hero["hp"]) \
+                    and not any(t in buffs for t in ("poison", "burn", "bleed")):
+                self.escape_commitment = None  # Route release, not a kill receipt.
             if not self.recent_threats and not seen:
                 self.snake_route=None
                 self.snake_route_inputs=0

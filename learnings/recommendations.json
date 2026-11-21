@@ -1132,5 +1132,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000085"
+  },
+  {
+    "id": "000086-expired-threat-escape-release",
+    "priority": "high",
+    "summary": "Release already-quiet escape protection when the final stale threat expires before selection.",
+    "evidence": [
+      "Decisions 353 and 355, log lines 1001–1009: earlier escape-reversal recovery.",
+      "Decisions 389 and 391, log lines 1102–1110: repeated reversal vetoes consume alternate recovery edges.",
+      "Decisions 396–402, log lines 1124–1139: doorway retreat, interception and accepted quiet waits.",
+      "Decision 403, log line 1141: planner exhaustion with a living full-health hero.",
+      "Validated offline terminal-state probe: existing food route selects door 398 after obsolete protection is released."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000086"
   }
 ]
