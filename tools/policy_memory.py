@@ -40,6 +40,8 @@ class NavigationMemory:
     puzzle_sentry_bank: object = value(None, floor=True)
     pool_entrance_pending: object = value(None, floor=True)
     pool_entrance_receipts: set = local(set)
+    flight_entrance_pending: object = value(None, floor=True)
+    flight_entrance_receipts: set = local(set)
     artifact_extension_pending: object = value(None, floor=True)
     artifact_extension_attempts: Counter = local(Counter)
     artifact_pickup_routes: Counter = local(Counter)

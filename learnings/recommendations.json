@@ -387,5 +387,18 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000032"
+  },
+  {
+    "id": "000033-flight-entrance-reclosure",
+    "priority": "high",
+    "summary": "Retain verified flight-entrance scouting when the door closes after leaving it.",
+    "evidence": [
+      "Decisions 654–657, selection lines 1870, 1873, 1876 and 1879; accepted transitions at lines 1871, 1874, 1877 and 1880.",
+      "Decision 665, lines 1903–1905: entrance repetition reaches navigation-loop recovery.",
+      "Decision 901, lines 2648–2650, and decision 1028, line 3031: fallback advances time and ends without death."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000033"
   }
 ]
