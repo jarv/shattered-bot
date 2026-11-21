@@ -20,6 +20,69 @@ except ImportError:
 PURPOSE = "pre-descent-strength"
 
 
+def potion_inventory(state):
+    return tuple(sorted((base_name(i), i.get("quantity", 1),
+                         tuple(sorted(i.get("actions", [])))) for i in potions(state)))
+
+
+def remember_bank(p, state):
+    """Remember actual drink/stash feasibility, not hypothetical visibility."""
+    if not hasattr(p, "puzzle_probe"):
+        return  # The shared runner also observes policies without Mage discovery.
+    if p.potion_stash or p.puzzle_probe or p.recent_threats or p.unseen_damage_turns \
+            or state.get("danger_cells") or any(is_hostile(o) for o in state.get("objects", [])):
+        return
+    cell = state["hero"]["cell"]
+    if not safe_test_bank(p, state, cell, distance, neighbors, allow_dry=True):
+        return
+    width, height = state["map"]["width"], state["map"]["height"]
+    if p.tiles[cell]["terrain"] != 29 and not any(
+            p.tiles.get(n, {}).get("terrain") == 29 and p.walkable(n)
+            and not any(p.tiles[n].get(k) for k in ("effects", "trap", "plant"))
+            for n in neighbors(cell, width, height)):
+        return
+    if any(unknown_potion(i) and "DRINK" in i.get("actions", [])
+           and can_protect_potions(p, state, i, distance, neighbors, safe_test_bank,
+                                  isolated_stack=True) for i in state["inventory"]):
+        p.descent_potion_bank_receipt = (state["depth"], state.get("branch", 0),
+                                         cell, potion_inventory(state))
+
+
+def revisit_bank(p, state, paths):
+    """Reobserve a previously admitted bank; never authorize a drink from memory."""
+    receipt = getattr(p, "descent_potion_bank_receipt", None)
+    if not receipt or p.potion_stash or p.descent_potion_plan.get("return_steps", 0) >= 12:
+        return None
+    depth, branch, bank, inventory = receipt
+    if (depth, branch, inventory) != (state["depth"], state.get("branch", 0), potion_inventory(state)) \
+            or bank == state["hero"]["cell"] or bank not in paths:
+        return None
+    route = p.route(paths, bank)
+    if len(route) > 13:
+        return None
+    forbidden = p.navigation_barriers(state, Intent.REPOSITION)
+    # A closed door is admitted only as ordinary transit, not as a test bank.
+    if any(c in forbidden or not p.tiles[c].get("observed")
+           or p.tiles[c]["terrain"] not in {1, 3, 5, 6, 9, 11, 14, 19, 20, 29}
+           or any(p.tiles[c].get(k) for k in ("effects", "plant", "trap"))
+           or c in p.loot for c in route[1:]):
+        return None
+    step = route[1]
+    if not p.tiles[step].get("visible") or not p.escape_step_allowed(state, step):
+        return None
+    try:
+        from .hunger_budget import admits, travel_cost
+    except ImportError:
+        from hunger_budget import admits, travel_cost
+    if not admits(p, state, 2 * travel_cost(state, p, route) + 14):
+        return None
+    decision = p.toward(state, bank, "identify: reobserve previously verified pre-descent bank",
+                        paths, intent=Intent.REPOSITION)
+    if decision:
+        decision.descent_bank_return = True
+    return decision
+
+
 def cancel(p, reason):
     p.planner.report["descent_potion_testing"] = {"status": "deferred", "reason": reason}
     if p.potion_stash and p.potion_stash.get("purpose") == PURPOSE:
@@ -183,6 +246,9 @@ def advance(p, state):
             choices.append((p.tiles[cell]["terrain"] != 29, len(route),
                             -discovery_score(item, p.consumable_sources), cell, item))
     if not choices:
+        returning = revisit_bank(p, state, paths)
+        if returning:
+            return returning
         pause(p, "No safe water/water-escape bank with verified potion-inventory protection")
         return None
     _, _, _, bank, candidate = min(choices, key=lambda c: c[:4])
@@ -207,6 +273,13 @@ def advance(p, state):
 
 def observe(p, before, decision, after):
     """Only accepted inventory/effect observations confirm a drink or strength."""
+    if before.get("depth") == after.get("depth") and before.get("branch", 0) == after.get("branch", 0) \
+            and before.get("status") == "ready" and not before.get("modal") \
+            and p.last_state and p.last_state.get("hero", {}).get("cell") == before.get("hero", {}).get("cell"):
+        remember_bank(p, before)
+        if getattr(decision, "descent_bank_return", False) and p.descent_potion_plan:
+            plan = p.descent_potion_plan
+            plan["return_steps"] = plan.get("return_steps", 0) + 1
     if getattr(decision, "descent_potion_wait", False):
         if p.descent_potion_plan and decision.action == {"type": "wait"} \
                 and before.get("depth") == after.get("depth") == p.descent_potion_plan["depth"] \

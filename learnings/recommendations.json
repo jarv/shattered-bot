@@ -834,5 +834,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000063"
+  },
+  {
+    "id": "000064-door-hidden-discovery-bank",
+    "priority": "high",
+    "summary": "Admit bounded reobservation of a previously verified discovery bank when an ordinary door hides it.",
+    "evidence": [
+      "Decision 247, selection line 737 and accepted transition 738: visible bank 1135 is left for open door 1170.",
+      "Decision 248, selection line 740 and accepted transition 741: movement to 1171 advances time and the door recloses.",
+      "Decision 249, line 743: the living hero exhausts mandatory discovery with no visible admitted bank.",
+      "tools/mage_policy.py:414-468; original tools/descent_potions.py:159-187; tools/puzzle_supplies.py:97-121; tools/potion_stash.py:47-70.",
+      "Offline candidate reconstruction matches the preceding 249 selections and first differs at decision 249; the new four-test regression passes, and the full suite passes."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000064"
   }
 ]
