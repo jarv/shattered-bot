@@ -555,10 +555,16 @@
       "Decision 1694, log line 4839: first observed piranha chest on this floor; hero is hungry at full health with unknown potions.",
       "Decision 1725, accepted transition at log line 4933: ordinary exploration advances the clock without health loss.",
       "Decision 1726, log line 4935: unfinished chest blocks descent and rescue yields no action.",
-      "tools/puzzle_supplies.py:434-455,568-611; tools/piranha_tactics.py:36-59; tools/mage_policy.py:429-430."
+      "tools/puzzle_supplies.py:434-455,568-611; tools/piranha_tactics.py:36-59; tools/mage_policy.py:429-430.",
+      "Run 000053 decision 475, line 1344: first pool sight includes Chest 1048 and three piranhas; the hero has full health, no hunger, one unknown magenta potion and no carried identification supply.",
+      "Run 000053 decision 475, accepted transition line 1345: exploration leaves the pool approach without preparation.",
+      "Run 000053 decision 529, accepted transition line 1497: search advances turns 536 to 538 at 30/30 HP.",
+      "Run 000053 decision 530, lines 1498–1499: pending chest blocks descent and the living hero exhausts the planner.",
+      "Source-pinned offline bookkeeping matched all 530 selected actions, reasons and intents, then the terminal blocker; copied-state probes found no origin satisfying both unknown-potion bank and protected chest-trip admission.",
+      "tools/puzzle_supplies.py:97–124,189–213,592–635; tools/room_tactics.py:171–264; tools/mage_policy.py:418–430."
     ],
     "status": "deferred",
-    "reason": "No safe focused replacement is established. A reduced public-snapshot geometry probe at decision 1694 found three budgeted chest-trip origins: doorway 719 and water 675/676. All fail the existing unknown-potion test-bank gate; the doorway also fails potion-stash feasibility. A meal alone therefore does not establish executable preparation. No carried identification supply or known invisibility was observed at exhaustion. Next, establish a safe remote identification/test-and-inventory-protection route with a verified subsequent retrieval budget, or obtain public evidence of an available identification resource. Do not weaken water-bank admission, guess potion effects, or waive collection. Offline selection reconstruction matched actions and reasons through decision 1200, then stopped at a serialization error before this episode; later runtime memory is not certified.",
+    "reason": "No safe focused replacement is established. In this recording, complete source and offline reconstruction resolve the missing runtime-state question: all selections and the terminal blocker match. At first pool sight, nine reachable hypothetical chest-trip origins all fail the dry unknown-drink and dry-approach gates; no visible dry test bank is admitted. At exhaustion, safe visible banks exist elsewhere but none admits the protected chest return. No identify, intuition or known invisibility supply is carried at either point. Health and hunger are not the blocker. Next, use the validated first-sight state to establish an identification-only preparation route with inventory protection and an executable subsequent retrieval budget, or validate a separate ranged-control plan including known charge budget and defeat-backed habitat retirement. Neither route is established here. Weakening water checks, guessing magenta, waiving pickup or restoring death-waits is unsafe; no patch or regression is supplied.",
     "origin_run": "000043"
   },
   {
