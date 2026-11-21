@@ -515,5 +515,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000040"
+  },
+  {
+    "id": "000041-pool-equipment-preparation",
+    "priority": "high",
+    "summary": "Establish feasible equipment and potion preparation before a mandatory pool chest exhausts the planner.",
+    "evidence": [
+      "Decision 2770, line 7770: pool supplies report no verified protected reward trip; equipped armor is unidentified and health is 55/60.",
+      "Decisions 2789–2818, lines 7819–7906: full health does not resolve the unidentified-armor prerequisite.",
+      "Decision 2864, line 8024: armor is identified after combat, but health is 44/60.",
+      "Decision 2961, line 8302: pending pool chest blocks descent while the living hero has 26/60 HP.",
+      "tools/combat_items.py:39–45; tools/room_tactics.py:177–180; tools/puzzle_supplies.py:453–505; tools/mage_policy.py:429–430."
+    ],
+    "status": "deferred",
+    "reason": "Complete source establishes an unresolved timed-equipment prerequisite, not a certified replacement. The concrete safety blocker is the absence of a validated combination of known usable armor, dry unknown-potion bank, protected inventory, actionable entrance and budgeted chest return. Reconstruction validated earlier selections but stopped at serialization before the pool episode; later attempts were terminated by the isolated shell. Continue in-process through decision 2770, then probe existing gates on copies. Do not lower health or hazard checks, guess invisibility, add general early eating, or waive the chest obligation.",
+    "origin_run": "000041"
   }
 ]
