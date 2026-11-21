@@ -109,6 +109,32 @@ class Journey:
             p.room_journey = None
             return None
         target = self.route[index-1 if self.stage == "return" else index+1]
+        # A wandering fish can occupy a planned waypoint after activation.
+        # Replace only the remaining suffix, never attack it or lengthen the
+        # protected round trip. Keep the same reward and return-bank prefix.
+        if self.kind == "pool" and self.stage == "outbound" and index+2 < len(self.route) \
+                and any(o["cell"] == target and "piranha" in o["name"].lower()
+                        for o in state.get("objects", [])):
+            water = p.piranha_rooms.get(self.route[-1], {}).get("water", set())
+            width, height = state["map"]["width"], state["map"]["height"]
+            reward = self.route[-1]
+            queue, seen = deque([[pos]]), set(self.route[:index+1])
+            while queue:
+                suffix = queue.popleft()
+                if suffix[-1] == reward:
+                    self.route = self.route[:index] + suffix
+                    target = self.route[index+1]
+                    break
+                if len(suffix) >= len(self.route)-index:
+                    continue
+                for c in neighbors(suffix[-1], width, height):
+                    if c not in seen and (c in water or c == reward) \
+                            and p.tiles.get(c, {}).get("visible") \
+                            and p.tiles[c].get("observed") is not False \
+                            and c not in state.get("danger_cells", []) \
+                            and safe_tile(p, c, self.kind, occupied):
+                        seen.add(c)
+                        queue.append(suffix+[c])
         tile=p.tiles.get(target,{})
         reopen=tile.get('terrain')==5 and target not in occupied and target not in p.blocked \
             and not tile.get('plant') and not tile.get('trap') and not p.effects_block_movement(tile)
