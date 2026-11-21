@@ -803,5 +803,21 @@
     "status": "deferred",
     "reason": "The exact blocker is an unvalidated staging-and-arrival contract, not missing source or controller memory. Existing drink admission requires current visibility, a route no longer than 13 cells, restricted transit terrain and verified protection. The remembered 288 route exceeds that bound and crosses closed doors and grass. A distance increase or visibility/terrain relaxation would not certify safe discovery. Next, implement and validate a separate bounded ordinary return phase on the reconstructed terminal state, including door-opening receipts, hazard and hunger budgets, and independent arrival rechecks before any drink. No such safe multi-stage replacement is established here, so no policy patch or new regression is proposed.",
     "origin_run": "000061"
+  },
+  {
+    "id": "000062-aquarium-retrieval-plan",
+    "priority": "high",
+    "summary": "Establish mandatory chest retrieval without assuming an invisibility supply for aquarium-style piranha geometry.",
+    "evidence": [
+      "Decision 1126, log line 3369: piranha 306 and locked chest 333 are first publicly observed.",
+      "Decision 1148, log line 3421: peaceful perimeter exploration continues with only known healing potions and one staff charge.",
+      "Decision 1438, accepted transition line 4251: time advances and health remains full before exhaustion.",
+      "Decision 1439, log line 4253: the chest blocks departure despite a held golden key; no potion candidate or known invisibility is carried.",
+      "tools/piranha_tactics.py:14–59; tools/puzzle_supplies.py:40–65,486–521; tools/mage_policy.py:429–430.",
+      "Pinned AquariumRoom painter supplies no invisibility; the special PoolRoom painter supplies it for a pedestal chest."
+    ],
+    "status": "deferred",
+    "reason": "Complete source exposes the unsupported special-room supply prior, but a safe complete replacement is not established. The exact blocker is a missing bounded ranged-control and defeat-backed habitat-retirement contract: the first peaceful sight has one known staff charge and the terminal state has three, while remembered water remains excluded even after an actor disappears. The sleeping fish also lacks the health bar required by existing attack-evidence capture. Next, derive a deterministic narrow-pool fixture and validate dry firing positions beyond the whole habitat's melee reach, resource and hunger costs, fresh accepted defeat evidence, independent clearance and keyed collection receipts. Simply narrowing recognition or deleting the obligation could waive mandatory retrieval; guessing a potion or relaxing the buffer is unsafe. No patch is proposed.",
+    "origin_run": "000062"
   }
 ]

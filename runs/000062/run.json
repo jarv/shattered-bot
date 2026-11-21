@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "id": "000062",
+  "started_at": "2026-11-21T16:00:19Z",
+  "completed_at": "2026-11-21T16:09:16.584972+00:00",
+  "source_commit": "353aaae8ff90a5980f26f0969df6ed458aa5693c",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 3,
+  "actions": 1439,
+  "duration_seconds": 531.799,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000061",
+  "previous_source_commit": "5d95b02f72920e69a9efb38b07123ce9bcd60271",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Keep mandatory strength discovery and progression pickup, but investigate a separate bounded return to a previously observed water-bank approach after departure is admitted. Validate ordinary transit, door-opening receipts, hunger cost and arrival reobservation before allowing the existing unknown-drink checks to run. Do not infer potion identity, waive unfinished loot, weaken hazard checks or restore idle-until-death behavior. Finding a remembered bank does not establish safe travel or successful discovery.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The living hero exhausted the planner over a locked chest beside piranha water, not an observed death. Decision 1126 (log line 3369) first shows fish 306 and chest 333. By decision 1148 (line 3421), peaceful exploration continues with only known healing potions and one staff charge. Decision 1438's accepted transition (line 4251) advances the clock while health remains full; decision 1439 (line 4253) reports the mandatory chest blocker with a golden key held, three staff charges and no unknown potion or known invisibility. The initiating contradiction is that the chest becomes a persistent mandatory objective, but its controller only offers potion-based preparation and assumes a special pool-room supply prior. The observed narrow water strip, dry perimeter and locked chest match aquarium-style geometry; the pinned aquarium painter does not guarantee invisibility, unlike the special pool-room painter. This is source-based interpretation, not knowledge of a generated room ID. Hunger blocks terminal probing but cannot explain the earlier absence of any potion candidate. Full source resolves the selecting chain: piranha observation and hazard buffering, potion preparation, descent veto, then exhausted rescue. No safe complete replacement is established, so no policy patch or regression is supplied. Removing the chest obligation or merely weakening recognition could bypass required collection. A ranged alternative needs a bounded resource plan and fresh defeat-backed habitat retirement before any pickup route is admitted. Original-source unittest output reports 1,745 tests OK with four skips, although the shell reports exit 137; no clean candidate validation or red/green result is claimed.",
+    "learnings": "Source-pinned offline reconstruction matched all 1,439 selected inputs and terminal exhaustion. Copied-state probes admit a staff shot at the visible fish but no potion preparation; no alternative was dispatched. Do not assume every piranha-adjacent chest guarantees invisibility. Next, validate bounded dry-bank ranged control, resource costs, fresh defeat-backed habitat retirement and keyed collection receipts. Preserve mandatory pickup and water-reach checks: a clear shot alone does not establish retrieval."
+  },
+  "recommendations": [
+    {
+      "id": "000062-aquarium-retrieval-plan",
+      "priority": "high",
+      "summary": "Establish mandatory chest retrieval without assuming an invisibility supply for aquarium-style piranha geometry.",
+      "evidence": [
+        "Decision 1126, log line 3369: piranha 306 and locked chest 333 are first publicly observed.",
+        "Decision 1148, log line 3421: peaceful perimeter exploration continues with only known healing potions and one staff charge.",
+        "Decision 1438, accepted transition line 4251: time advances and health remains full before exhaustion.",
+        "Decision 1439, log line 4253: the chest blocks departure despite a held golden key; no potion candidate or known invisibility is carried.",
+        "tools/piranha_tactics.py:14–59; tools/puzzle_supplies.py:40–65,486–521; tools/mage_policy.py:429–430.",
+        "Pinned AquariumRoom painter supplies no invisibility; the special PoolRoom painter supplies it for a pedestal chest."
+      ],
+      "status": "deferred",
+      "reason": "Complete source exposes the unsupported special-room supply prior, but a safe complete replacement is not established. The exact blocker is a missing bounded ranged-control and defeat-backed habitat-retirement contract: the first peaceful sight has one known staff charge and the terminal state has three, while remembered water remains excluded even after an actor disappears. The sleeping fish also lacks the health bar required by existing attack-evidence capture. Next, derive a deterministic narrow-pool fixture and validate dry firing positions beyond the whole habitat's melee reach, resource and hunger costs, fresh accepted defeat evidence, independent clearance and keyed collection receipts. Simply narrowing recognition or deleting the obligation could waive mandatory retrieval; guessing a potion or relaxing the buffer is unsafe. No patch is proposed.",
+      "origin_run": "000062"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000062/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000062/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 78,
+        "turns": 289,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 290,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 201
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 36,
+        "gold_gained": 690,
+        "turns": 699,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 720,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 33,
+        "gold_gained": 226,
+        "turns": 373.1739501953125,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 423,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 9,
+    "ending_level": 5,
+    "starving_turns": 17,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 14,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 5,
+    "gold_collected": 994,
+    "gold_complete": true,
+    "turns": 1361.1739501953125,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
