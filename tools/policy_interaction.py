@@ -20,6 +20,7 @@ class MenuPhase(str, Enum):
     ENCHANT_SELECT = "enchant-select"
     ENCHANT_CHOICE = "enchant-choice"
     UPGRADE_SELECT = "upgrade-select"
+    UPGRADE_HOLSTER_SELECT = "upgrade-holster-select"
     UPGRADE_CONFIRM = "upgrade-confirm"
     IDENTIFY_SELECT = "identify-select"
 
@@ -36,6 +37,18 @@ def select_upgrade(p, state):
     if button:
         p.menu_plan = MenuPhase.UPGRADE_CONFIRM
         return p.decision({"type": "button", "id": button["id"]}, "upgrade: select staff")
+    # Upgrade opens the backpack, but carried spare wands can be in a holster.
+    # Navigate only the observed tab for the already allocated carried wand.
+    # A separate phase bounds this to one attempt; absence afterward fails closed.
+    target = next((i for i in state.get("inventory", [])
+                   if i["name"].lower() == (p.upgrade_target or "").lower()
+                   and i["name"].lower().startswith("wand of ")
+                   and i.get("upgradable") and "ZAP" in i.get("actions", [])), None)
+    holster = next((b for b in buttons if b["label"].lower() == "magical holster"), None)
+    if p.menu_plan == MenuPhase.UPGRADE_SELECT and target and holster:
+        p.menu_plan = MenuPhase.UPGRADE_HOLSTER_SELECT
+        return p.decision({"type": "button", "id": holster["id"]},
+                          "upgrade: open holster for allocated wand")
 
 
 def confirm_upgrade(p, state):
@@ -59,6 +72,7 @@ MENU_HANDLERS = {
     MenuPhase.ENCHANT_SELECT: enchantment_menu,
     MenuPhase.ENCHANT_CHOICE: enchantment_menu,
     MenuPhase.UPGRADE_SELECT: select_upgrade,
+    MenuPhase.UPGRADE_HOLSTER_SELECT: select_upgrade,
     MenuPhase.UPGRADE_CONFIRM: confirm_upgrade,
     MenuPhase.IDENTIFY_SELECT: select_identify,
 }
