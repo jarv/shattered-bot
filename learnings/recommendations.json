@@ -468,5 +468,20 @@
     "status": "deferred",
     "reason": "Source browsing resolves why teleportation was selected, but simply vetoing it does not establish a safe follow-up: terror duration is not publicly recorded here, attacks can shorten terror, and current policy memory was not reconstructed. Next, validate earlier selections against the saved inputs through decision 3550, then probe admitted contact-breaking or recovery alternatives on copies at decision 3551, accounting for remembered threats, guard pull and control expiry. Stop at any reconstruction divergence. This candidate changes only the separately proven doorway health inconsistency.",
     "origin_run": "000037"
+  },
+  {
+    "id": "000038-skeleton-pursuit-intervention",
+    "priority": "high",
+    "summary": "Establish an admitted intervention before two-skeleton retreat degenerates into spacing exhaustion.",
+    "evidence": [
+      "Decisions 2093–2099, lines 5925–5946: waking a sleeping DM-100 leads to damaging flight and dew consumption.",
+      "Decisions 2181–2186, lines 6182–6194: two skeletons approach while waits and wand shots precede retreat.",
+      "Decision 2187, line 6195: retreat begins at 12 HP with one separate-wand charge remaining.",
+      "Decisions 2197–2199, lines 6239–6252: spacing exhaustion leads to unverified retreats.",
+      "Decisions 2201–2202, accepted transitions at lines 6260 and 6265: health falls from 12 to seven, then zero."
+    ],
+    "status": "deferred",
+    "reason": "The blocker is an unvalidated replacement, not omitted selecting source. Existing shock admission excludes two enemies while magic remains, and adjacent damage retains explosion risk. Reconstruction matched through decision 2093 but stopped at scratch serialization. Next, retain reconstruction in-process through decisions 2181–2187 and probe the existing control selector on copies, verifying a throw footprint outside the hero, allies and loot before proposing earlier arbitration. Stop at any selecting divergence. No safe control target or contact-breaking route is certified, so neither a policy patch nor a fabricated regression is supplied.",
+    "origin_run": "000038"
   }
 ]
