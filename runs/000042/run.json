@@ -1,0 +1,609 @@
+{
+  "schema_version": 1,
+  "id": "000042",
+  "started_at": "2026-11-21T10:16:01Z",
+  "completed_at": "2026-11-21T10:39:42.217128+00:00",
+  "source_commit": "6aaa4dd1223de609f252ef2c2fba2fdd9f4c198c",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "outcome": "dead",
+  "outcome_summary": "Died under guard pressure during retreat",
+  "outcome_reason": "Hero died",
+  "max_depth": 8,
+  "actions": 3345,
+  "duration_seconds": 1407.56,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000041",
+  "previous_source_commit": "c51189ac23c2b11a434188d95ed4a7a39ebcf35a",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Mandatory pool retrieval needs feasible preparation, not just a reserved unknown potion. Unidentified equipped armor can prevent timed journey planning even at full health; resolving that prerequisite alone does not prove a safe potion test or successful chest retrieval. Preserve actual protection and collection receipts.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero died during continued retreat under guard pressure; the killing actor is not established. An earlier concrete policy defect is confirmed: decision 3287 killed the adjacent DM-100 (accepted transition, line 9326; confirmed-kill feedback, line 9327), but its separate lightning-lane memory survived. After loot re-entry triggered a guard pull at decision 3290 (line 9333), that dead caster caused early no-safe-action vetoes at decisions 3291–3292 and 3296–3297. Fallback spent waterskin healing and retreated instead of reaching ordinary guard arbitration. The accepted-attack observer already recognized the kill but did not retire that tactical memory. The candidate reconciles only a matching caster memory and plan on a fresh, exact accepted defeat receipt, preserving other threats and all safety gates. A reduced public-shaped regression failed two assertions on the original policy and passed all four tests after correction; the full suite passed 1,655 tests with four skips. An isolated recorded-snapshot receipt probe agreed with the recorded kill feedback; full prior policy memory was not reconstructed. This does not establish safe loot re-entry, a safe mixed-enemy escape, or prevention of the later death. The final accepted transition at decision 3344, line 9539, records six HP falling to zero. No post-death identities were used. Files are empty because the trusted adapter derives the changed policy and new regression from the workspace.",
+    "learnings": "Retire a matching remembered caster when an accepted attack newly confirms its defeat; disappearance alone is insufficient. A later observed DM-100 remains a separate live threat. Correcting stale threat bookkeeping does not certify safe guard-pull re-entry or sustained mixed-enemy retreat."
+  },
+  "recommendations": [
+    {
+      "id": "000041-pool-equipment-preparation",
+      "priority": "high",
+      "summary": "Establish feasible equipment and potion preparation before a mandatory pool chest exhausts the planner.",
+      "evidence": [
+        "Decision 2770, line 7770: pool supplies report no verified protected reward trip; equipped armor is unidentified and health is 55/60.",
+        "Decisions 2789–2818, lines 7819–7906: full health does not resolve the unidentified-armor prerequisite.",
+        "Decision 2864, line 8024: armor is identified after combat, but health is 44/60.",
+        "Decision 2961, line 8302: pending pool chest blocks descent while the living hero has 26/60 HP.",
+        "tools/combat_items.py:39–45; tools/room_tactics.py:177–180; tools/puzzle_supplies.py:453–505; tools/mage_policy.py:429–430."
+      ],
+      "status": "deferred",
+      "reason": "Complete source establishes an unresolved timed-equipment prerequisite, not a certified replacement. The concrete safety blocker is the absence of a validated combination of known usable armor, dry unknown-potion bank, protected inventory, actionable entrance and budgeted chest return. Reconstruction validated earlier selections but stopped at serialization before the pool episode; later attempts were terminated by the isolated shell. Continue in-process through decision 2770, then probe existing gates on copies. Do not lower health or hazard checks, guess invisibility, add general early eating, or waive the chest obligation.",
+      "origin_run": "000041"
+    },
+    {
+      "id": "000038-skeleton-pursuit-intervention",
+      "priority": "high",
+      "summary": "Establish an admitted intervention before two-skeleton retreat degenerates into spacing exhaustion.",
+      "evidence": [
+        "Decisions 2093–2099, lines 5925–5946: waking a sleeping DM-100 leads to damaging flight and dew consumption.",
+        "Decisions 2181–2186, lines 6182–6194: two skeletons approach while waits and wand shots precede retreat.",
+        "Decision 2187, line 6195: retreat begins at 12 HP with one separate-wand charge remaining.",
+        "Decisions 2197–2199, lines 6239–6252: spacing exhaustion leads to unverified retreats.",
+        "Decisions 2201–2202, accepted transitions at lines 6260 and 6265: health falls from 12 to seven, then zero."
+      ],
+      "status": "deferred",
+      "reason": "Carried unresolved from the supplied backlog; not re-investigated in this recording. The blocker is an unvalidated replacement, not omitted selecting source. Existing shock admission excludes two enemies while magic remains, and adjacent damage retains explosion risk. Reconstruction matched through decision 2093 but stopped at scratch serialization. Next, retain reconstruction in-process through decisions 2181–2187 and probe the existing control selector on copies, verifying a throw footprint outside the hero, allies and loot before proposing earlier arbitration. Stop at any selecting divergence. No safe control target or contact-breaking route is certified, so neither a policy patch nor a fabricated regression is supplied.",
+      "origin_run": "000038"
+    },
+    {
+      "id": "000037-fear-escape-reassessment",
+      "priority": "high",
+      "summary": "Establish an admitted alternative before chaining teleportation after successful fear.",
+      "evidence": [
+        "Decision 3549–3550, lines 10106–10109: fear sends the adjacent guard away without further health loss.",
+        "Decision 3551, lines 10110–10111: the only observed enemy is separated and terrified, yet teleportation is consumed and health falls from 20 to 13.",
+        "tools/consumable_tactics.py:62,77,127–143: frightened enemies remain active and critical health bypasses cooldown."
+      ],
+      "status": "deferred",
+      "reason": "Carried unresolved from the supplied backlog; not re-investigated in this recording. Source browsing resolves why teleportation was selected, but simply vetoing it does not establish a safe follow-up: terror duration is not publicly recorded here, attacks can shorten terror, and current policy memory was not reconstructed. Next, validate earlier selections against the saved inputs through decision 3550, then probe admitted contact-breaking or recovery alternatives on copies at decision 3551, accounting for remembered threats, guard pull and control expiry. Stop at any reconstruction divergence. This candidate changes only the separately proven doorway health inconsistency.",
+      "origin_run": "000037"
+    },
+    {
+      "id": "000034-supported-doorway-admission",
+      "priority": "high",
+      "summary": "Establish an admitted alternative to sustained doorway fighting against a supported skeleton.",
+      "evidence": [
+        "Decisions 3005–3007, lines 8570–8575: guard attacks while a necromancer is visible; melee loses 15 HP.",
+        "Decisions 3010–3019, lines 8584–8609: preparation retains the doorway and repeatedly attacks the summon.",
+        "Decision 3020, lines 8610–8611: guard-pull announcement accompanies displacement and loss of the choke.",
+        "Decisions 3024–3025, lines 8620–8626: no admitted ranged action, last dew consumed, then exposed retreat.",
+        "Decision 3050, lines 8707–8708: terminal attack and publicly confirmed bone-explosion death."
+      ],
+      "status": "deferred",
+      "reason": "Carried unresolved from the supplied backlog; not re-investigated in this recording. The full selecting source explains early doorway retention and ranged preemption, but no validated safe replacement is established. A focused repair needs a contemporaneous admitted caster shot, bounded approach, or contact-breaking route accounting for guard pull, current and remembered threats, impairment, hazards, health and hunger costs. Existing summoner approach scoring counts melee adjacency and does not itself certify safety against guard control. Validate earlier selections in a source-pinned reconstruction before probing alternatives on copies; stop at the first divergence. Neither extra charges, unknown potion identities, nor simply moving summoner priority earlier supplies that evidence.",
+      "origin_run": "000034"
+    },
+    {
+      "id": "000030-missing-exit-search-admission",
+      "priority": "high",
+      "summary": "Establish an admitted missing-exit search alternative at the eight-search hunger transition.",
+      "evidence": [
+        "Decision 4547, line 12920: ordinary region tasks are exhausted and wall searching begins.",
+        "Decision 4645, lines 13203-13204: the eighth search leaves health full but changes hunger phase.",
+        "Decision 4646, lines 13205-13206: no reachable exit is reported and fallback waits begin.",
+        "Decision 5799, lines 16655-16656: a starving hero falls from 1 HP to zero while waiting."
+      ],
+      "status": "deferred",
+      "reason": "Carried unresolved from the supplied backlog; not re-investigated in this recording. Source establishes the cumulative search-ceiling gate, not a safe replacement. The concrete blocker is validating a remaining target with its safe approach/return, current threat bookkeeping, hunger cost, and bounded search receipts. The incomplete observed map does not prove where progression lies; the known trap-blocked connection also lacks a validated protected traversal. A larger search or waiting bound, speculative movement, or guessed potion effect would not supply that evidence. No policy or test changes are proposed.",
+      "origin_run": "000030"
+    },
+    {
+      "id": "000027-goo-water-engagement",
+      "priority": "medium",
+      "summary": "Establish an admitted dry-engagement or charge-preservation alternative before changing Goo combat priorities.",
+      "evidence": [
+        "Decision 1453, selection line 4015: wakes Goo on water with full health and six staff charges.",
+        "Decisions 1460–1464, lines 4029–4046: melee trades on water consume health while four charges remain.",
+        "Decisions 1469–1470, lines 4055–4062: health falls from 27 to 12 during further melee trades.",
+        "Decision 1481, line 4087: exhausted-magic withdrawal starts; decision 1493, line 4136: fallback retreat follows."
+      ],
+      "status": "deferred",
+      "reason": "Carried unresolved from the supplied backlog; not re-investigated in this recording. Complete source explains the selection but establishes no discrete implementation defect or validated safe replacement. At decision 1460 the observed adjacent dry steps do not provide the separating landing required by the existing lure rule. A repair needs an admitted multi-turn dry-engagement route or a public-input-validated attack/resource alternative preserving warning escape and health/hunger budgets. Arbitrarily preferring magic, extending preparation, or guessing potion identities is not sufficient evidence.",
+      "origin_run": "000027"
+    },
+    {
+      "id": "000026-pool-preparation-feasibility",
+      "priority": "medium",
+      "summary": "Resolve pool preparation feasibility before adding food spending or additional staging movement.",
+      "evidence": [
+        "Decision 806, log line 2413: observed chest and piranhas.",
+        "Decision 1000, log line 2957: pool supplies declined while hungry.",
+        "Decision 1044, log lines 3087–3089: mandatory chest blocks descent; fallback waits begin.",
+        "Decisions 1076–1078, log lines 3183–3189: eating and healing do not restore progress."
+      ],
+      "status": "deferred",
+      "reason": "Carried unresolved from the supplied backlog; not re-investigated in this recording. No safe focused replacement is established. The public geometry admits protected chest trips from some approaches, but not an unknown-drink bank satisfying the existing dry-surroundings gates; no carried known invisibility or safe identification supply is recorded at the block. A repair needs evidence of an admissible identification/test-and-inventory-protection route, or additional public observations establishing one. Merely adding a pool meal would not resolve the recorded post-meal failure, and speculative movement or weakened hazard checks is not justified.",
+      "origin_run": "000026"
+    },
+    {
+      "id": "000025-scroll-discovery-readiness",
+      "priority": "high",
+      "summary": "Establish evidence-backed preparation criteria for unknown-scroll discovery that can cause displacement.",
+      "evidence": [
+        "Decision 833, selection line 2357 and accepted transition line 2358.",
+        "Decisions 834–836, lines 2359–2364.",
+        "Decisions 839–841, lines 2375–2386.",
+        "Decision 879, accepted transition line 2547."
+      ],
+      "status": "deferred",
+      "reason": "Carried unresolved from the supplied backlog; not re-investigated in this recording. The complete selecting source explains the risky read, but no validated preparation or replacement action is established. A minimum charge threshold would be arbitrary, and neither full charges nor a quiet origin guarantees a safe teleport destination. A focused repair needs bounded readiness criteria plus public-input-validated preparation or recovery alternatives that preserve discovery and mandatory progression; hidden potion identities cannot supply that evidence.",
+      "origin_run": "000025"
+    },
+    {
+      "id": "000024-pool-approach-receipt",
+      "priority": "medium",
+      "summary": "Remember observed pool-approach arrivals instead of restarting completed scouting detours.",
+      "evidence": [
+        "Run 000024: decisions 845–848, selection lines 2413, 2416, 2419 and 2422.",
+        "Run 000024: decisions 851 and 855, selection lines 2431 and 2445.",
+        "Incoming backlog records that candidate validation failed and code was not promoted."
+      ],
+      "status": "deferred",
+      "reason": "Carried unresolved from the supplied backlog; not re-investigated in this recording. This proposal verifies a specific door-opening receipt, not the earlier approach-scouting lifecycle. The earlier rejected case still needs its own public-input validation across interrupted approach scouting, without collection credit or weakened potion-test admission.",
+      "origin_run": "000024"
+    },
+    {
+      "id": "000019-crab-surprise-recovery",
+      "priority": "high",
+      "summary": "Establish a bounded admitted surprise alternative before crab recovery degenerates into adjacent waits.",
+      "evidence": [
+        "Run 000019: decisions 1708, 1718 and 1737, accepted lines 4852, 4885 and 4938.",
+        "Run 000019: decisions 1774, 1805, 1863 and 1966, retained backlog evidence."
+      ],
+      "status": "deferred",
+      "reason": "Carried unresolved from the supplied backlog; not re-investigated in this recording. This recording establishes no safe crab surprise alternative. The earlier case still needs public-input-validated doorway-attempt, pursuit and escape bookkeeping and a bounded surprise approach with a second exit under existing health and hazard checks. Current source browsing does not certify that replacement.",
+      "origin_run": "000019"
+    },
+    {
+      "id": "000018-strength-preparation-admission",
+      "priority": "high",
+      "summary": "Establish admitted preparation for mandatory progression loot instead of exhausting resources in fallback.",
+      "evidence": [
+        "Run 000018: decisions 2826–2827 and 3903, retained backlog evidence.",
+        "Run 000020: decisions 3990, 3992, 4438 and 4553, retained backlog evidence.",
+        "Run 000022: decisions 2683, 2756, 2909–2910 and 3632, retained backlog evidence."
+      ],
+      "status": "deferred",
+      "reason": "Carried unresolved from the supplied backlog; not re-investigated in this recording. The current fatal encounter supplies no validated mandatory-loot preparation alternative. The earlier case still requires a contemporaneously known identification or extinguishing resource, or validated preparation satisfying hunger, health, hazard, protection and retrieval budgets. Unknown potion identities and waived mandatory pickup cannot justify a repair.",
+      "origin_run": "000018"
+    },
+    {
+      "id": "000042-confirmed-dm100-retirement",
+      "priority": "high",
+      "summary": "Retire confirmed defeated DM-100 memory before it blocks responses to living guards.",
+      "evidence": [
+        "Decision 3287, lines 9325–9327: adjacent DM-100 killed; accepted receipt and confirmed-kill feedback agree.",
+        "Decision 3290, lines 9332–9333: loot re-entry triggers guard pull and cripple.",
+        "Decisions 3291–3292, lines 9335–9340, and 3296–3297, lines 9351–9356: defeated-caster lane veto precedes waterskin healing and fallback retreat.",
+        "tools/combat_observation.py:39–90; tools/dm100_escape.py:15–46; tools/policy_nodes.py:85–108."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000042"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000042/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000042/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 76,
+        "turns": 319,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 320,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 267
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 21,
+        "gold_gained": 441,
+        "turns": 578,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 592,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 824
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 48,
+        "gold_gained": 460,
+        "turns": 722,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 734,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1171
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1215
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1368
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 75,
+        "gold_gained": 600,
+        "turns": 506,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 518,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1357
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1089
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 223,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 227,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 714
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 357
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 36,
+        "gold_gained": 154,
+        "turns": 365,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 385,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 542
+          }
+        ]
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "experience_gained": 56,
+        "gold_gained": 172,
+        "turns": 337,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 353,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1013
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "experience_gained": 24,
+        "gold_gained": 0,
+        "turns": 201,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 203,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1204
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Possible drop-room exit",
+            "status": "reported-hypothesis"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 13,
+    "ending_experience": 10,
+    "ending_level": 10,
+    "starving_turns": 19,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 1,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 2,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "starving_turns": 1,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 10,
+    "gold_collected": 1903,
+    "gold_complete": true,
+    "turns": 3251,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 8,
+        "max_level_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 9,
+        "max_level_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 10,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

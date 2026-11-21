@@ -65,6 +65,19 @@ def observe_accepted_attack(p,before,decision,after):
                  for t in after.get("ui",{}).get("texts",[]) if t not in before_texts)
     key=(pending["context"],pending["source"])
     if defeated:
+        # The separate lightning-lane memory outlives ordinary visible-cell
+        # threat tracking. Retire it on this accepted, newly confirmed kill,
+        # not on disappearance or a defeat message retained from an old fight.
+        memory=getattr(p,"dm100_threat",None)
+        if pending["name"].lower()=="dm-100" and memory and memory["cell"]==pending["cell"] \
+                and before["depth"]==after["depth"] and before.get("branch",0)==after.get("branch",0) \
+                and any(t.strip().lower()=="you defeated dm-100."
+                        for t in after.get("ui",{}).get("texts",[]) if t not in before_texts) \
+                and not any(o.get("cell")==pending["cell"] and o.get("name","").lower()=="dm-100"
+                            for o in after.get("objects",[])):
+            p.dm100_threat=None
+            if p.ranged_plan and p.ranged_plan.get("name")=="dm-100":
+                p.ranged_plan=None
         sample=p.damage_samples.setdefault(key,{"count":0,"bar_loss":0.0})
         sample["censored_count"]=sample.get("censored_count",0)+1
         sample["censored_bar_loss_lower_bound"]=sample.get("censored_bar_loss_lower_bound",0)+pending["before"]

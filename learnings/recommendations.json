@@ -530,5 +530,19 @@
     "status": "deferred",
     "reason": "Complete source establishes an unresolved timed-equipment prerequisite, not a certified replacement. The concrete safety blocker is the absence of a validated combination of known usable armor, dry unknown-potion bank, protected inventory, actionable entrance and budgeted chest return. Reconstruction validated earlier selections but stopped at serialization before the pool episode; later attempts were terminated by the isolated shell. Continue in-process through decision 2770, then probe existing gates on copies. Do not lower health or hazard checks, guess invisibility, add general early eating, or waive the chest obligation.",
     "origin_run": "000041"
+  },
+  {
+    "id": "000042-confirmed-dm100-retirement",
+    "priority": "high",
+    "summary": "Retire confirmed defeated DM-100 memory before it blocks responses to living guards.",
+    "evidence": [
+      "Decision 3287, lines 9325–9327: adjacent DM-100 killed; accepted receipt and confirmed-kill feedback agree.",
+      "Decision 3290, lines 9332–9333: loot re-entry triggers guard pull and cripple.",
+      "Decisions 3291–3292, lines 9335–9340, and 3296–3297, lines 9351–9356: defeated-caster lane veto precedes waterskin healing and fallback retreat.",
+      "tools/combat_observation.py:39–90; tools/dm100_escape.py:15–46; tools/policy_nodes.py:85–108."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000042"
   }
 ]
