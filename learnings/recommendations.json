@@ -787,5 +787,21 @@
     "status": "deferred",
     "reason": "Source browsing and complete original-policy bookkeeping resolve the missing controller-state evidence, but not safe replacement feasibility. Approach 674 has only one escape neighbor admitted by the existing test terrain rule; an open door still does not count. Banks farther away fail the existing protected-trip budget, and no carried known levitation or identification supply is established at this point. Next, inspect the public observation after the admitted scout for a newly executable identification/protection-and-return plan. Do not relax escape checks, guess azure potion identity, waive mandatory pickup, or infer that opening the entrance completed the puzzle.",
     "origin_run": "000060"
+  },
+  {
+    "id": "000061-descent-bank-return",
+    "priority": "high",
+    "summary": "Establish safe, bounded return-to-bank preparation for mandatory pre-descent potion discovery.",
+    "evidence": [
+      "Decisions 214–219, selection lines 597–612: exploration leaves visible water approaches.",
+      "Decisions 233–237, lines 654–667: keyed-room approach and ring collection precede discovery admission.",
+      "Decision 238, accepted transition line 670: hero remains at full health while the clock advances.",
+      "Decision 239, line 671: departure is blocked by the absence of an admitted water or water-escape test bank.",
+      "Offline source-pinned reconstruction matches all 239 selected inputs and the terminal blocker; nearest water route is 18 cells and remembered bank 288 requires 19, with closed doors and grass.",
+      "tools/descent_potions.py:81–82,159–187; tools/puzzle_supplies.py:97–121; tools/mage_policy.py:414–468."
+    ],
+    "status": "deferred",
+    "reason": "The exact blocker is an unvalidated staging-and-arrival contract, not missing source or controller memory. Existing drink admission requires current visibility, a route no longer than 13 cells, restricted transit terrain and verified protection. The remembered 288 route exceeds that bound and crosses closed doors and grass. A distance increase or visibility/terrain relaxation would not certify safe discovery. Next, implement and validate a separate bounded ordinary return phase on the reconstructed terminal state, including door-opening receipts, hazard and hunger budgets, and independent arrival rechecks before any drink. No such safe multi-stage replacement is established here, so no policy patch or new regression is proposed.",
+    "origin_run": "000061"
   }
 ]
