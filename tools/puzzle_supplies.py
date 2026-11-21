@@ -377,6 +377,24 @@ def stage_sentry(p,state,neighbors,item=None):
 
 def observe_pool_entrance(p,before,state):
     """Observe pool and flight scouts; only actual open-door arrivals count."""
+    # Ordinary exploration can perform the very same entrance scout. Its
+    # visible open-door arrival remains evidence after the door recloses;
+    # requiring a controller-specific pending token loses that observation.
+    # This is geometry only, shared by both room kinds, not a supply/loot receipt.
+    decision=p.last_decision
+    door=state.get('hero',{}).get('cell')
+    if before and decision and decision.action=={'type':'cell','cell':door} \
+            and (before.get('depth'),before.get('branch',0)) == (state.get('depth'),state.get('branch',0)) \
+            and isinstance(before.get('hero',{}).get('cell'),int) and isinstance(door,int) \
+            and distance(before['hero']['cell'],door,state.get('map',{}).get('width',1))==1:
+        old=next((t for t in before.get('map',{}).get('cells',[]) if t['cell']==door),{})
+        tile=next((t for t in state.get('map',{}).get('cells',[]) if t['cell']==door),{})
+        if old.get('visible') and old.get('terrain') in {5,6} \
+                and tile.get('visible') and tile.get('terrain')==6 \
+                and not any(t.get('trap') or t.get('plant') or t.get('effects') for t in (old,tile)):
+            receipt=(state['depth'],state.get('branch',0),door)
+            for kind in ('pool','flight'):
+                getattr(p,kind+'_entrance_receipts').add(receipt)
     # A dry approach scout is an observation task, not a protection or loot
     # receipt. Once actually reached, leaving it for other floor work must not
     # restart that same detour. Supply/test admission still runs on every input.

@@ -819,5 +819,20 @@
     "status": "deferred",
     "reason": "Complete source exposes the unsupported special-room supply prior, but a safe complete replacement is not established. The exact blocker is a missing bounded ranged-control and defeat-backed habitat-retirement contract: the first peaceful sight has one known staff charge and the terminal state has three, while remembered water remains excluded even after an actor disappears. The sleeping fish also lacks the health bar required by existing attack-evidence capture. Next, derive a deterministic narrow-pool fixture and validate dry firing positions beyond the whole habitat's melee reach, resource and hunger costs, fresh accepted defeat evidence, independent clearance and keyed collection receipts. Simply narrowing recognition or deleting the obligation could waive mandatory retrieval; guessing a potion or relaxing the buffer is unsafe. No patch is proposed.",
     "origin_run": "000062"
+  },
+  {
+    "id": "000063-ordinary-entrance-receipt",
+    "priority": "high",
+    "summary": "Retain verified entrance scouting performed during ordinary exploration.",
+    "evidence": [
+      "Decision 182, selection line 531: ordinary exploration enters visible door 593 from 633.",
+      "Decision 183, line 534: the hero is on visible open door 593.",
+      "Decision 265, line 768: missing recognized-room supplies block departure discovery.",
+      "tools/puzzle_supplies.py:378-409: original receipts require a room-controller pending token.",
+      "Offline original-source reconstruction matches all selections and terminal blocker; candidate first changes decision 209, line 605, to bounded room preparation."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000063"
   }
 ]
