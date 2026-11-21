@@ -1116,5 +1116,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000084"
+  },
+  {
+    "id": "000085-blind-identification-readiness",
+    "priority": "high",
+    "summary": "Defer identify-scroll preparation while observed blindness makes reading impossible.",
+    "evidence": [
+      "Decision 485, selection 1392 and accepted transition 1393: unknown scroll use publicly produces blindness.",
+      "Decision 488, accepted transition 1401: identify scroll collected while still blinded; READ remains listed.",
+      "Decision 489, selection 1403 and accepted transition 1404: preparation issues READ, refusal leaves the clock unchanged.",
+      "Decisions 498–501, selection lines 1421–1427 and accepted transitions 1422–1428: consumable discovery repeats the impossible read.",
+      "Terminal record 1429: blocked no-progress menu loop, hero alive at full health.",
+      "tools/consumable_tactics.py:31–32,86–92; tools/policy_nodes.py:560–565."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000085"
   }
 ]

@@ -29,6 +29,10 @@ def identify_context(state):
 
 
 def identify_retry_allowed(p, state):
+    # READ remains in public item actions while blinded, but cannot execute.
+    # Defer without poisoning inventory retry memory or opening menu intent.
+    if any("blind" in b["name"].lower() for b in state["hero"].get("buffs", [])):
+        return False
     return p.failed_identify_context != identify_context(state)
 
 
