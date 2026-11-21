@@ -300,7 +300,16 @@ def revisit_flight_room(p,state,demand,distance):
     if not choices:return None
     _,_,view=min(choices)
     p.puzzle_flight_bank=view
-    if view==pos:return None
+    if view==pos:
+        # Scout an actionable entrance before the visible-only drink-bank check,
+        # not after it. A hypothetical reward route alone is not a test bank.
+        # This is only the existing adjacent observed-door input; the next
+        # observation must still pass every test/protection/round-trip gate.
+        journey=plan_journey(p,state,[],neighbors,probe_kind='flight',plan_only=True)
+        if journey:
+            _,opening=open_journey_entrance(p,state,journey)
+            return opening
+        return None
     p.puzzle_revisit_steps['flight']+=1
     p.planner.report['puzzle_revisit']={'kind':'flight','hazard':demand.cell,'approach':view,
         'status':'Return to observed approach, then reobserve and replan candidate test/round trip',

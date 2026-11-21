@@ -760,5 +760,32 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000059"
+  },
+  {
+    "id": "000060-flight-approach-scout",
+    "priority": "high",
+    "summary": "Allow the existing safe entrance scout when the hero reaches a verified flight-room approach.",
+    "evidence": [
+      "Decisions 309–322, log lines 976–1015: approach staging repeatedly yields back to exploration.",
+      "Decision 328, log line 1034: hero at 674, observed closed door 675, reward 757 remains uncollected.",
+      "tools/puzzle_supplies.py:273–317,421–438: approach arrival and adjacent entrance scouting.",
+      "Offline candidate comparison first changes decision 328 to the existing entrance-opening action."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000060"
+  },
+  {
+    "id": "000060-flight-test-feasibility",
+    "priority": "high",
+    "summary": "Establish safe identification and protected retrieval after the entrance scout.",
+    "evidence": [
+      "Decision 328, log line 1034: safe banks and protected reward-trip origins do not overlap.",
+      "Decision 361, log line 1147: missing recognized-room supplies block departure discovery.",
+      "tools/puzzle_supplies.py:97–121; tools/room_tactics.py:171–240; tools/descent_potions.py:121–131."
+    ],
+    "status": "deferred",
+    "reason": "Source browsing and complete original-policy bookkeeping resolve the missing controller-state evidence, but not safe replacement feasibility. Approach 674 has only one escape neighbor admitted by the existing test terrain rule; an open door still does not count. Banks farther away fail the existing protected-trip budget, and no carried known levitation or identification supply is established at this point. Next, inspect the public observation after the admitted scout for a newly executable identification/protection-and-return plan. Do not relax escape checks, guess azure potion identity, waive mandatory pickup, or infer that opening the entrance completed the puzzle.",
+    "origin_run": "000060"
   }
 ]
