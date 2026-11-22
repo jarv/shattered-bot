@@ -1003,16 +1003,16 @@
   {
     "id": "000076-terminal-supply-arbitration",
     "priority": "high",
-    "summary": "Resolve shelf-driven missing-flame arbitration without bypassing safe discovery or retrieval.",
+    "summary": "Resolve the bookshelf-driven missing-flame dead end using positive public geometry or executable nonconsumptive preparation.",
     "evidence": [
-      "Decision 347, line 1074: bookshelf 635 first appears; decision 348, line 1077: shelves 636–638 appear.",
-      "Decisions 350–354, lines 1083–1092: the unknown scroll becomes Remove Curse; accepted cancellation advances turns 346 to 347.",
-      "Decision 355, line 1093: missing liquid flame at 635 is the only reserved-supply blocker and all preparation prerequisites decline.",
-      "Offline reconstruction matches all 355 selections and terminal exhaustion; copied probes exclude active retrievals and find unobserved shelf backs 599–602.",
-      "tools/puzzle_supplies.py:87–88,585–639; tools/wooden_barrier.py:24–25; tools/descent_potions.py:283–317."
+      "Decision 185, line 524: bookshelves 894–897 first appear.",
+      "Decisions 188–190, lines 533–537: identification yields haste while amber remains unknown.",
+      "Decision 315, accepted line 897: movement advances time at full health.",
+      "Decision 316, line 899: missing liquid flame for shelf 894 is the sole reserved-supply blocker; preparation prerequisites decline.",
+      "tools/puzzle_supplies.py:71–111; tools/descent_potions.py:307–348; tools/wooden_barrier.py:24–25; tools/preparation_prerequisites.py:16–58."
     ],
     "status": "deferred",
-    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Revalidated here. Full source and matching reconstruction resolve the selecting-state gap, but do not establish whether the unseen shelf backs conceal a required retrieval. No known identify, intuition, mapping or clairvoyance resource remains. Removing reservation could consume needed flame; broadening unknown-fire preparation would bypass the tested shelf exclusion without an admitted fire-recovery contract. No patch or new regression is supplied. Next derive the decision-347 shelf-strip fixture with explicitly unknown backs, plus paired observed-wall-back and shelf-separated-reward fixtures. Establish a positive public-evidence distinction while retaining reservation for unknown backs and real retrievals; otherwise establish an executable nonconsumptive reconnaissance plan before changing arbitration. Preserve hazard checks, inventory protection, mandatory pickup and terminal exhaustion.",
+    "reason": "The precise unresolved safety blocker is the unobserved shelf backs at 857–860, not missing selector source. Terminal inventory has no nonconsumptive identification or reveal resource. Ignoring the reservation could spend the sole needed flame dose without establishing retrieval feasibility; a synthetic safe-bank test does not resolve this. No patch is retained. Next derive the first-shelf exterior route graph and paired unknown-back, observed-wall-back and shelf-separated-reward fixtures. Validate whether an existing observed, hazard-admitted exterior vantage can reveal the backs without crossing shelves or speculative movement; require accepted observation evidence before removing the obligation. Preserve mandatory pickup and planner exhaustion.",
     "origin_run": "000076"
   },
   {
