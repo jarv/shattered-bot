@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "id": "000151",
+  "started_at": "2026-11-22T22:40:28Z",
+  "completed_at": "2026-11-22T22:45:31.345311+00:00",
+  "source_commit": "66f762c63be08211e6025f9b230143b79a4fd163",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "quota-skip-20261122",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 748,
+  "duration_seconds": 299.031,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000150",
+  "previous_source_commit": "5c05997de93319b2436b01cb786f4e27846613e4",
+  "improvements": [
+    "The bot now recognizes visible adrenaline as a speed boost when judging enemy pursuit and retreat routes, even when the enemy's description has not changed."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "A visible adrenaline icon is speed evidence even when an enemy description is unchanged. Count its faster approach conservatively, but do not treat a nominal single-attacker endpoint as a persistent refuge or claim that improved risk estimates prove survival. Preserve health, hazard and mandatory-pickup gates.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health when the planner exhausted after the fetid-rat fight. Decision 747's accepted transition (line 2199) shows the public quest-completion message, increased experience and no remaining visible rat. Decision 748 (line 2200) then blocks descent because the ghost reward is pending. Source-pinned offline reconstruction matches decisions 0–747 and reproduces the blocker: a retained retreat commitment makes the ghost-return controller decline every route, although the observed return through cell 779 does not reverse its protected edge. This is reconstructed bookkeeping, not recorded runtime memory. The proposed focused correction permits guarded reward return while preserving escape memory and refusing reversed edges anywhere along the return route. Threat, health, hazard, pickup and terminal-exhaustion gates remain. The new regression fails on original policy with the expected assertion and passes on the candidate; the full suite passes 1,979 tests with four skipped. Candidate reconstruction first differs at decision 748 and stops there. Selecting a return action does not establish reward collection or later survival.",
+    "learnings": "A retained retreat commitment should protect its directed escape edges, not exclude unrelated guarded routes to a mandatory reward. Keep the reward pending until public collection evidence arrives, and revalidate every subsequent observation."
+  },
+  "recommendations": [
+    {
+      "id": "000151-ghost-escape-return",
+      "priority": "high",
+      "summary": "Allow guarded ghost-reward return along routes that do not reverse protected retreat edges.",
+      "evidence": [
+        "Decision 740, accepted line 2182: retreat from 781 to 780 establishes the protected edge.",
+        "Decision 747, accepted line 2199: public quest-completion evidence appears with the hero still at full health.",
+        "Decision 748, line 2200: pending ghost reward causes terminal planner exhaustion.",
+        "tools/ghost_quest.py:79-86 blanket commitment veto; tools/mage_policy.py:477-478 mandatory reward gate.",
+        "Offline reconstruction matches decisions 0–747; candidate first changes decision 748 to the nonreversing return through 779."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000151"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000151/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000151/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 75,
+        "turns": 330,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 331,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 283
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 22,
+        "gold_gained": 275,
+        "turns": 398,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 411,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 344
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "objective-completed-dialogue"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 7,
+    "ending_level": 3,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 350,
+    "gold_complete": true,
+    "turns": 728,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

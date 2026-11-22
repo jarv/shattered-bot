@@ -75,7 +75,8 @@ def visit_ghost(p, state, enemies, distance, neighbors):
     configured=getattr(p,'unit_strategies_enabled',False)
     if configured:
         buffs=' '.join(b['name'].lower() for b in state['hero'].get('buffs',[]))
-        if p.recent_threats or p.ranged_plan or p.escape_commitment \
+        if p.recent_threats or p.ranged_plan \
+                or p.escape_commitment and p.ghost_quest.get('stage')!='reward' \
                 or state['hero']['hp']<.5*state['hero']['max_hp'] \
                 or any(b in buffs for b in ('poison','burning','bleed')):
             return None  # A momentarily unseen quest foe is not a completed/peaceful encounter.
@@ -175,7 +176,12 @@ def return_for_reward(p,state,ghosts,distance,neighbors):
             target=min(targets,key=lambda c:(distance(c,origin,width),len(p.route(paths,c)),c))
             q['return_goal']=target;targets=[target]
     paths=p.paths(state)
+    # An escape commitment protects directed retreat edges, not every onward
+    # route. Keep that memory intact and reject reversal anywhere in the return.
+    protected=set((p.escape_commitment or {}).get('edges',[]))
     banks=[c for c in targets if c in paths and c!=pos and len(p.route(paths,c))<=80
+           and all((b,a) not in protected for a,b in
+                   zip(p.route(paths,c),p.route(paths,c)[1:]))
            # Triggered traps retain their public type label. As in walkable(),
            # only terrain 19 proves that label is inactive; effects still veto.
            and all((not p.tiles[n].get('trap') or p.tiles[n].get('terrain')==19)

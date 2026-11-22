@@ -1819,5 +1819,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000150"
+  },
+  {
+    "id": "000151-ghost-escape-return",
+    "priority": "high",
+    "summary": "Allow guarded ghost-reward return along routes that do not reverse protected retreat edges.",
+    "evidence": [
+      "Decision 740, accepted line 2182: retreat from 781 to 780 establishes the protected edge.",
+      "Decision 747, accepted line 2199: public quest-completion evidence appears with the hero still at full health.",
+      "Decision 748, line 2200: pending ghost reward causes terminal planner exhaustion.",
+      "tools/ghost_quest.py:79-86 blanket commitment veto; tools/mage_policy.py:477-478 mandatory reward gate.",
+      "Offline reconstruction matches decisions 0–747; candidate first changes decision 748 to the nonreversing return through 779."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000151"
   }
 ]
