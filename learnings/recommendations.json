@@ -1000,17 +1000,16 @@
   {
     "id": "000076-terminal-supply-arbitration",
     "priority": "high",
-    "summary": "Resolve the shelf-driven missing-flame obligation without bypassing safe discovery or retrieval.",
+    "summary": "Resolve shelf-driven missing-flame arbitration without bypassing safe discovery or retrieval.",
     "evidence": [
-      "Decision 188, log line 517: bookshelves first appear in a selecting public observation; remembered cells 577–582 are terrain 27.",
-      "Decisions 190–194, lines 523–532: the read scroll exposes a cleanse-item selector and is publicly identified as remove curse, not identify.",
-      "Decision 276, accepted transition line 773: exploration advances the clock at full health.",
-      "Decision 277, line 775: missing liquid flame at 581 blocks mandatory discovery; all three preparation prerequisites decline.",
-      "Source-pinned offline reconstruction matches all 277 selected actions, reasons, controllers and intents, then reproduces the terminal blocker; this is reconstructed bookkeeping, not recorded runtime memory.",
-      "tools/puzzle_supplies.py:39–56,671–679; tools/wooden_barrier.py:24–25; tools/descent_potions.py:283–317; tools/mage_policy.py:440–496."
+      "Decision 347, line 1074: bookshelf 635 first appears; decision 348, line 1077: shelves 636–638 appear.",
+      "Decisions 350–354, lines 1083–1092: the unknown scroll becomes Remove Curse; accepted cancellation advances turns 346 to 347.",
+      "Decision 355, line 1093: missing liquid flame at 635 is the only reserved-supply blocker and all preparation prerequisites decline.",
+      "Offline reconstruction matches all 355 selections and terminal exhaustion; copied probes exclude active retrievals and find unobserved shelf backs 599–602.",
+      "tools/puzzle_supplies.py:87–88,585–639; tools/wooden_barrier.py:24–25; tools/descent_potions.py:283–317."
     ],
     "status": "deferred",
-    "reason": "Historical supplied backlog, not revalidated or addressed in this review. Prior review context: Revalidated in this recording. Full selecting source and matching reconstruction resolve the combined-blocker ambiguity: only a shelf-derived missing-flame demand remains, with no active stash, journey, drop or trap retrieval. No known identification or reconnaissance resource remains, and no currently visible bank passes admission. A safe replacement is not established: unknown-fire preparation admits barricades, not shelves; removing shelf reservation could consume flame needed for an unresolved far-side reward. The pinned game source contains both ordinary libraries without a supplied flame potion and flame-supplied secret shelf rooms, while the recorded shelf far side is unobserved. Next derive a decision-188 fixture and a positive public-evidence distinction between optional fuel and genuine shelf-separated retrieval, testing both geometries. Otherwise establish nonconsumptive identification with an actual known resource before changing arbitration. Preserve mandatory pickup, known-supply reservation, inventory protection and hazard checks. No policy or regression patch is submitted.",
+    "reason": "Revalidated here. Full source and matching reconstruction resolve the selecting-state gap, but do not establish whether the unseen shelf backs conceal a required retrieval. No known identify, intuition, mapping or clairvoyance resource remains. Removing reservation could consume needed flame; broadening unknown-fire preparation would bypass the tested shelf exclusion without an admitted fire-recovery contract. No patch or new regression is supplied. Next derive the decision-347 shelf-strip fixture with explicitly unknown backs, plus paired observed-wall-back and shelf-separated-reward fixtures. Establish a positive public-evidence distinction while retaining reservation for unknown backs and real retrievals; otherwise establish an executable nonconsumptive reconnaissance plan before changing arbitration. Preserve hazard checks, inventory protection, mandatory pickup and terminal exhaustion.",
     "origin_run": "000076"
   },
   {
