@@ -75,6 +75,38 @@ def recheck_hazards(p, state, previous, distance):
         p.hazard_recheck_steps += 1
         p.hazard_recheck_waits += 1
         return p.decision({"type": "wait"}, "obstacle: observe gas dissipating from safe ground")
+    # Frost potions leave a fixed, finite cold footprint. A freshly visible
+    # blocked doorway must not become terminal merely because only gas had an
+    # expiry observer. Hold outside it; never enter cold or infer clearance.
+    # Share the existing observation budgets rather than extending them.
+    try:
+        from .policy_geometry import neighbors
+        from .survival_policy import is_hostile
+    except ImportError:
+        from policy_geometry import neighbors
+        from survival_policy import is_hostile
+    hero = state["hero"]
+    buffs = " ".join(b["name"].lower() for b in hero.get("buffs", []))
+    cold = [c for c, t in p.tiles.items() if t.get("visible") and t.get("effects")
+            and all(e.strip().lower() == "the air is unnaturally frigid here."
+                    for e in t["effects"])
+            and distance(pos, c, width) <= 6
+            and any(n in previous for n in neighbors(c, width, state["map"]["height"]))]
+    bank = [pos, *neighbors(pos, width, state["map"]["height"])]
+    if cold and state.get("status") == "ready" and not state.get("modal") \
+            and not state.get("danger_cells") and not p.recent_threats \
+            and not any(is_hostile(o) for o in state.get("objects", [])) \
+            and hero["hp"] >= .7 * hero["max_hp"] \
+            and not any(b in buffs for b in ("hungry", "starving", "burn", "poison",
+                                             "bleed", "ooze", "chill", "frost",
+                                             "blind", "vertigo", "paral", "root")) \
+            and pos not in p.room_blocked and p.walkable(pos) \
+            and all(p.tiles.get(c, {}).get("visible") and not p.tiles[c].get("effects")
+                    and not p.tiles[c].get("trap") and not p.tiles[c].get("plant")
+                    for c in bank) and p.hazard_recheck_waits < 16:
+        p.hazard_recheck_steps += 1
+        p.hazard_recheck_waits += 1
+        return p.decision({"type": "wait"}, "obstacle: observe isolated freezing air expiring from safe ground")
     return None
 
 

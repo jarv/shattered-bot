@@ -1290,8 +1290,8 @@
       "Run 000113 decision 218, accepted line 613: movement advances turn 209 to 210 at 19/25 HP; decision 219, line 615 exhausts mandatory discovery on health.",
       "Played tools/mage_policy.py:742–750 uses a 75% ordinary recovery target; tools/descent_potions.py:293–301 requires 85%. Offline reconstruction matches all 219 preceding selections and the terminal blocker."
     ],
-    "status": "rejected",
-    "reason": "Candidate validation failed; code was not promoted.",
+    "status": "deferred",
+    "reason": "Historical candidate was rejected and was not revalidated in this review. Candidate validation failed; code was not promoted.",
     "origin_run": "000098"
   },
   {
@@ -1548,5 +1548,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000119"
+  },
+  {
+    "id": "000120-visible-frost-expiry",
+    "priority": "high",
+    "summary": "Observe finite, freshly visible freezing air from a verified safe bank before declaring exploration exhausted.",
+    "evidence": [
+      "Decision 2696, selection line 7706: known frost is chosen against a skeleton at the return doorway.",
+      "Decision 2697, accepted line 7709: the throw advances time; decision 2698 observes cold at 1308, 1347, 1348 and 1388.",
+      "Decision 2703, accepted line 7722: the final attack advances the clock and gains experience without HP loss.",
+      "Decision 2704, line 7723: no enemies remain visible; cold still blocks the doorway and the living planner exhausts at 55/55 HP.",
+      "tools/survival_policy.py:1108-1111; tools/resource_tactics.py:15-109; PotionOfFrost.shatter and Freezing.evolve in the played game source."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000120"
   }
 ]
