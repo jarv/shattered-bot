@@ -1,0 +1,254 @@
+{
+  "schema_version": 1,
+  "id": "000096",
+  "started_at": "2026-11-22T01:00:13Z",
+  "completed_at": "2026-11-22T01:11:05.245944+00:00",
+  "source_commit": "a289397d56392a51d5c23da5bd664d50d7ebd2b4",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 4,
+  "actions": 1692,
+  "duration_seconds": 644.42,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000095",
+  "previous_source_commit": "36213c529a48ca7f75cb7b75048402d92eb8b374",
+  "improvements": [
+    "The bot no longer treats nearby treasure across an observed wall as a reason to save levitation for that room. It still keeps the potion reserved when the connecting terrain is uncertain."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Nearby loot across a positively observed wall is not evidence that levitation retrieves it. Keep uncertain geometry conservative, preserve real uncollected rewards, and require fresh protection and pickup receipts. Selecting crystal-key preparation does not establish successful retrieval or eventual descent.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended in planner exhaustion with the hero alive at full health, not an observed death. Decision 1691's resource diagnostic identifies three inaccessible golden keys; the generic upgrade/strength message is misleading. The strength potion and upgrade scroll had inventory-backed pickups at decisions 1386 and 1529. Decision 1533 equipped unidentified leather armor. The protected-trip planner correctly rejects uncertain movement equipment, but lacked preparation to equip the carried, identified, curse-known safe cloth armor. Known levitation remained available. A reduced public-observation fixture reproduces the missing preparation, and an isolated terminal-observation probe selects cloth armor with the correction. No original runtime-memory reconstruction or future gameplay success is claimed. The proposed correction only admits a quiet, near-full-health equipment change after unchanged route and timing checks succeed on an isolated inventory alternative; mandatory pickups, actual protection checks and planner-exhaustion reporting remain enforced.",
+    "learnings": "When a mandatory protected pickup is blocked by uncertain movement equipment, consider carried, identified, curse-known safe armor as preparation only after verifying the full trip under that alternative. Reobserve equipment and protection before entering danger. Choosing preparation does not establish collection or puzzle success."
+  },
+  "recommendations": [
+    {
+      "id": "000096-flight-armor-preparation",
+      "priority": "high",
+      "summary": "Allow verified safe armor preparation when uncertain equipped armor blocks a required levitation trip.",
+      "evidence": [
+        "Decision 1533, log line 4555: unidentified leather armor equipped.",
+        "Decision 1691, log line 4976: mandatory golden keys lack an ordinary route.",
+        "Decision 1692, log line 4980: full-health living hero retains known levitation and identified safe cloth armor.",
+        "tools/room_tactics.py:198-206 and tools/combat_items.py:39-45 reject timed trips with unidentified armor."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000096"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000096/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000096/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 289,
+        "turns": 281,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 270,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 707
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 18,
+        "gold_gained": 227,
+        "turns": 300,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 338,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 42,
+        "gold_gained": 571,
+        "turns": 645,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 655,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 50,
+        "gold_gained": 108,
+        "turns": 384,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 418,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 377
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 609
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 20,
+    "ending_level": 6,
+    "starving_turns": 40,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 35,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 5,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 6,
+    "gold_collected": 1195,
+    "gold_complete": true,
+    "turns": 1610,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

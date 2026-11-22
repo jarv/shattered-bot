@@ -8,7 +8,7 @@ from collections import deque
 
 try:
     from .consumable_tactics import base_name, unknown_potion
-    from .room_tactics import PROTECTION, remaining, plan_journey,sentry_geometry
+    from .room_tactics import GROUND, PROTECTION, remaining, plan_journey,sentry_geometry
     from .runestone_tactics import prepare_intuition
     from .special_rooms import fire_barrier
     from .potion_stash import protect_potions, can_protect_potions, bandolier_protected
@@ -17,7 +17,7 @@ try:
     from .room_supplies import use as use_room_supply
 except ImportError:
     from consumable_tactics import base_name, unknown_potion
-    from room_tactics import PROTECTION, remaining, plan_journey,sentry_geometry
+    from room_tactics import GROUND, PROTECTION, remaining, plan_journey,sentry_geometry
     from runestone_tactics import prepare_intuition
     from special_rooms import fire_barrier
     from potion_stash import protect_potions, can_protect_potions, bandolier_protected
@@ -382,8 +382,8 @@ def revisit_flight_room(p,state,demand,distance):
     return p.toward(state,view,'room: revisit levitation-room approach before deferring protected reward',paths,intent=Intent.REPOSITION)
 
 
-def stage_known_flight(p,state,item,neighbors):
-    if 'DRINK' not in item.get('actions',[]) or p.room_journey:return None
+def known_flight_choices(p,state,neighbors):
+    """Dry-run only, including the existing equipment and round-trip gates."""
     paths=p.paths(state);choices=[]
     for bank in paths:
         if len(p.route(paths,bank))>41 or p.tiles[bank]['terrain'] not in {1,3,9,11,14,19,20,29}:continue
@@ -393,7 +393,55 @@ def stage_known_flight(p,state,item,neighbors):
         staged=dict(state,hero=dict(state['hero'],cell=bank))
         journey=plan_journey(p,staged,[],neighbors,probe_kind='flight',plan_only=True)
         if journey:choices.append((len(route),bank,journey))
-    if not choices:return None
+    return choices
+
+
+def prepare_flight_armor(p,state,neighbors):
+    """Replace uncertain movement gear only for an otherwise verified trip."""
+    try:
+        from .combat_items import stats, unencumbered
+    except ImportError:
+        from combat_items import stats, unencumbered
+    hero=state['hero']
+    tile=p.tiles.get(hero['cell'],{})
+    buffs=' '.join(b['name'].lower() for b in hero.get('buffs',[]))
+    if unencumbered(state) or p.recent_threats or p.unseen_damage_turns \
+            or state.get('danger_cells') or hero['hp']<.95*hero['max_hp'] \
+            or not tile.get('visible') or hero['cell'] in p.room_blocked \
+            or tile.get('terrain') not in GROUND \
+            or any(tile.get(k) for k in ('trap','plant','effects')) \
+            or any(b in buffs for b in ('hungr','starv','burn','poison','bleed','blind',
+                                        'vertigo','paral','root','slow','crippl','chill','levitat')):
+        return None
+    worn=[i for i in state['inventory'] if i.get('equipped') and
+          (stats(i) and stats(i)[0]=='armor' or
+           any(n in i['name'].lower() for n in ('armor','robe')))]
+    if not worn or any(not i.get('curse_known') or i.get('known_cursed')
+                       or 'UNEQUIP' not in i.get('actions',[]) for i in worn):
+        return None
+    for spare in state['inventory']:
+        value=stats(spare)
+        if spare.get('equipped') or not spare.get('identified') \
+                or spare.get('known_cursed') or not spare.get('curse_known') \
+                or 'EQUIP' not in spare.get('actions',[]) \
+                or not value or value[0]!='armor' or value[2]>hero['strength']:
+            continue
+        # A local inventory alternative is not an observation or an equip
+        # receipt. Re-run all real gates on the next public observation.
+        inventory=[dict(i,equipped=(i is spare)) if i in worn or i is spare
+                   else dict(i) for i in state['inventory']]
+        staged=dict(state,inventory=inventory)
+        if unencumbered(staged) and known_flight_choices(p,staged,neighbors):
+            return p.use(spare,'EQUIP','room: equip known strength-safe armor before planning levitation round trip')
+    return None
+
+
+def stage_known_flight(p,state,item,neighbors):
+    if 'DRINK' not in item.get('actions',[]) or p.room_journey:return None
+    choices=known_flight_choices(p,state,neighbors)
+    if not choices:
+        return prepare_flight_armor(p,state,neighbors)
+    paths=p.paths(state)
     _,bank,journey=min(choices,key=lambda c:(c[0],c[1]))
     if bank!=state['hero']['cell']:
         if p.puzzle_revisit_steps['known-flight']>=48:return None

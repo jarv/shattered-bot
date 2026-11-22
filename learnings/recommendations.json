@@ -1246,5 +1246,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000095"
+  },
+  {
+    "id": "000096-flight-armor-preparation",
+    "priority": "high",
+    "summary": "Allow verified safe armor preparation when uncertain equipped armor blocks a required levitation trip.",
+    "evidence": [
+      "Decision 1533, log line 4555: unidentified leather armor equipped.",
+      "Decision 1691, log line 4976: mandatory golden keys lack an ordinary route.",
+      "Decision 1692, log line 4980: full-health living hero retains known levitation and identified safe cloth armor.",
+      "tools/room_tactics.py:198-206 and tools/combat_items.py:39-45 reject timed trips with unidentified armor."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000096"
   }
 ]
