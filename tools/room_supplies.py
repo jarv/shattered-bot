@@ -57,6 +57,46 @@ def exhausted(p, state, kind):
                    for o in {**p.unconfirmed_loot, **p.loot}.values())
 
 
+def discovery_requirements(p, state, needs=None):
+    """Unknown colors are not all hostage to a speculative bookshelf alcove.
+
+    Keep ordinary known-supply reservations unchanged. Actual barricades and
+    known shelf-separated loot still require flame preparation before testing.
+    Unknown shelf backs remain unfinished exploration, never certified empty.
+    """
+    needs = requirements(p, state) if needs is None else needs
+    if not any(d.kind == "flame" for d in needs):
+        return needs
+    # demands() keeps only the nearest representative. Inspect the whole map:
+    # a nearby bookshelf must not hide a farther real barricade.
+    if any(t.get("terrain") == 13 for t in p.tiles.values()):
+        return needs
+    shelves = {c for c, t in p.tiles.items() if t.get("terrain") == 27}
+    if not shelves:
+        return needs
+    paths = p.paths(state)
+    rewards = set(p.loot) | set(p.unconfirmed_loot)
+    width, height = state["map"]["width"], state["map"]["height"]
+    seen = set(shelves)
+    queue = deque(shelves)
+    while queue:
+        cell = queue.popleft()
+        if cell in rewards and cell not in paths:
+            return needs
+        for n in neighbors(cell, width, height):
+            # Deliberately conservative connectivity for *reservation*, not
+            # permission to traverse hazards, locks, or unidentified terrain.
+            if n not in seen and n not in paths and n in p.tiles \
+                    and p.tiles[n].get("terrain") not in {4, 12}:
+                seen.add(n)
+                queue.append(n)
+    p.defer_obligations(state, [{"kind": "uninvestigated bookshelf", "cell": c}
+                               for c in sorted(shelves)],
+                        "Shelf backs may hide optional loot; no observed barricade or shelf-separated reward. "
+                        "Do not block mandatory strength discovery on a hypothetical flame supply.")
+    return [d for d in needs if d.kind != "flame"]
+
+
 def depleted(p, state):
     if not getattr(p, "room_supply_spent_elsewhere", set()):return set()
     return {d.kind for d in requirements(p,state) if d.kind in POTIONS and exhausted(p,state,d.kind)}

@@ -5,7 +5,7 @@ try:
     from .policy_decision import Intent, PlannerStuck
     from .puzzle_supplies import safe_test_bank
     from .potion_stash import can_protect_potions, protect_potions, advance_stash, potions
-    from .room_supplies import requirements
+    from .room_supplies import requirements, discovery_requirements
     from .survival_policy import is_hostile
     from .objective_planning import Status, Result, publish, resolve, available, mark, exhausted
 except ImportError:
@@ -14,7 +14,7 @@ except ImportError:
     from policy_decision import Intent, PlannerStuck
     from puzzle_supplies import safe_test_bank
     from potion_stash import can_protect_potions, protect_potions, advance_stash, potions
-    from room_supplies import requirements
+    from room_supplies import requirements, discovery_requirements
     from survival_policy import is_hostile
     from objective_planning import Status, Result, publish, resolve, available, mark, exhausted
 
@@ -306,7 +306,7 @@ def advance(p, state):
         return None
     # Known reserved supplies can remain safely in the stash. Do not let a
     # deferred room blanket-veto unrelated colors when its supplies are held.
-    room_needs = requirements(p, state)
+    room_needs = discovery_requirements(p, state, requirements(p, state))
     needed = {}
     for demand in room_needs:
         needed[demand.potion] = needed.get(demand.potion, 0) + 1
