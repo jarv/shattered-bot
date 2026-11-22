@@ -1422,5 +1422,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000108"
+  },
+  {
+    "id": "000109-funded-missing-exit-search",
+    "priority": "high",
+    "summary": "Allow conservatively food-funded missing-exit wall searches after the hungry phase count is exhausted.",
+    "evidence": [
+      "Decision 1587, log line 4580: first of nine committed wall searches.",
+      "Decisions 1647, 1652, 1665 and 1668, log lines 4743, 4757, 4795 and 4803: four additional required corridor-tip searches.",
+      "Decision 1668, accepted transition line 4804: the last search advances time at full health.",
+      "Decision 1669, log line 4805: no reachable exit, unresolved iron lock, one carried ration and thirteen spent searches.",
+      "tools/mage_policy.py:805–826 and tools/survival_policy.py:1111–1159 in the played source: hungry missing-key allowance excludes further ordinary searches.",
+      "Offline reconstruction matches selections 0–1668; new regression is baseline red and candidate green."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000109"
   }
 ]

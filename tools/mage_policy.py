@@ -815,6 +815,25 @@ class MagePolicy(SurvivalPolicy):
         if not secret_search_allowed(state,self):
             self.planner.report['secret_search']={'status':'disabled on non-Goo boss floor; no secret-room hypothesis'}
             return 0
+        # A hunger label is not exhaustion of carried food. For missing-exit
+        # work only, retain the existing well-fed ceiling when a fresh public
+        # forecast funds a search. Committed approaches still independently
+        # require their round-trip travel plus search reserve on every step.
+        buffs=' '.join(b['name'].lower() for b in state['hero'].get('buffs',[]))
+        if not optional and not self.rules.scarce_recovery and 'hungry' in buffs \
+                and self.food_items(state) and not self.recent_threats \
+                and not state.get('danger_cells') \
+                and not any(is_hostile(o) for o in state.get('objects',[])) \
+                and state['hero']['hp']>=.7*state['hero']['max_hp'] \
+                and not any(b in buffs for b in ('starving','burn','poison','bleed','blind','vertigo','paral','root')) \
+                and not any(self.tiles[c]['terrain'] in {8,22} for c in self.paths(state)):
+            try:
+                from .hunger_budget import forecast
+            except ImportError:
+                from hunger_budget import forecast
+            estimate=forecast(self,state)
+            if estimate and estimate['optional_turns']>=12:
+                return 40
         if self.requires_key_search(state):return max(12,default)
         if not self.rules.scarce_recovery:return super().search_limit(state,default,optional)
         if optional and exploration_pressure(self,state):return 0
