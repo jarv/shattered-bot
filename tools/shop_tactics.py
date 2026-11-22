@@ -34,6 +34,8 @@ def priority(name, inventory, pharmacophobia=False,into_darkness=False):
 
 def choose_shop(p, state, previous):
     gold = state["hero"].get("gold", 0)
+    starving_without_food = any("starving" in b["name"].lower()
+                                for b in state["hero"].get("buffs", [])) and not p.food_items(state)
     candidates = []
     for cell, stock in p.loot.items():
         if not stock.get("for_sale") or cell not in previous or cell in p.blocked:
@@ -41,6 +43,11 @@ def choose_shop(p, state, previous):
         price = stock.get("price")
         name = stock.get("top_item", {}).get("name", stock["name"])
         rank = priority(name, state["inventory"], getattr(p, "pharmacophobia", False),getattr(p,'into_darkness',False))
+        # An observed ration is immediate relief, not optional stock, when
+        # starving without safe carried food. Keep curse removal first and
+        # retain the same route, affordability and purchase-confirmation gates.
+        if starving_without_food and name.lower() in {"small food ration", "ration of food"}:
+            rank = (-0.5, 0)
         if rank is not None and isinstance(price, int) and 0 <= price <= gold:
             candidates.append((rank, price, len(p.route(previous, cell)), cell, name))
     if not candidates:

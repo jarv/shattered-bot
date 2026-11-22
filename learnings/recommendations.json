@@ -1519,5 +1519,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000115"
+  },
+  {
+    "id": "000116-starving-shop-food",
+    "priority": "high",
+    "summary": "Prioritize known shop rations over optional supplies when starving without safe carried food.",
+    "evidence": [
+      "Decision 2183, line 6544: known 100-gold rations are observed while starving at 6 HP.",
+      "Decision 2192, line 6562: at 5 HP with 798 gold and no safe carried food, the bot pursues a scroll instead of the nearby ration.",
+      "Decisions 2195 and 2197, lines 6568 and 6572: scroll purchases precede food.",
+      "Decisions 2203–2204, lines 6584–6587: food is finally purchased and eaten, ending starvation.",
+      "tools/policy_nodes.py:238–259; tools/shop_tactics.py:34–79."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000116"
   }
 ]
