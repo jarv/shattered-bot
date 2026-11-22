@@ -1,4 +1,5 @@
 """Strength discovery only after an admitted descent, never a potion identity guess."""
+import copy
 try:
     from .consumable_tactics import base_name, unknown_potion, discovery_score
     from .policy_geometry import distance, neighbors
@@ -102,8 +103,11 @@ def revisit_bank(p, state, paths):
 def revisit_receipt(p, state, paths, receipt):
     """Admit transit only; arrival still needs fresh bank/stash validation."""
     depth, branch, bank, inventory = receipt
-    if (depth, branch, inventory) != (state["depth"], state.get("branch", 0), potion_inventory(state)) \
-            or bank == state["hero"]["cell"] or bank not in paths:
+    if (depth, branch) != (state["depth"], state.get("branch", 0)) \
+             or bank == state["hero"]["cell"] or bank not in paths:
+        return None
+    changed_inventory = inventory != potion_inventory(state)
+    if changed_inventory and not remembered_preparation(p, state, bank):
         return None
     forbidden = p.navigation_barriers(state, Intent.REPOSITION)
     # Transit is a separate prerequisite: search the allowed graph rather than
@@ -130,7 +134,8 @@ def revisit_receipt(p, state, paths, receipt):
         from .hunger_budget import admits, travel_cost
     except ImportError:
         from hunger_budget import admits, travel_cost
-    if not admits(p, state, 2 * travel_cost(state, p, route) + 14):
+    preparation_cost = 30 + 4 * len(potions(state)) if changed_inventory else 14
+    if not admits(p, state, 2 * travel_cost(state, p, route) + preparation_cost):
         return None
     decision = p.toward(state, bank, "identify: reobserve previously verified pre-descent bank",
                         paths, intent=Intent.REPOSITION)
@@ -139,8 +144,38 @@ def revisit_receipt(p, state, paths, receipt):
         mark(p, state, decision, "discovery-transit", bank, route)
         publish(p, "potion-discovery", Result(Status.READY, "reobserve preparation area after admitted transit",
                 prerequisites=[dict(objective="fresh-bank-and-stash-admission", target=bank,
-                                    route=route, identity_inferred=False)]))
+                                    route=route, inventory_replanned=changed_inventory,
+                                    identity_inferred=False)]))
     return decision
+
+
+def remembered_preparation(p, state, bank):
+    """Planning-only feasibility for changed inventory; never a fresh receipt.
+
+    Evaluate already observed terrain on a detached map as a hypothetical
+    reobservation. The real map's visibility, inventory and bank history remain
+    unchanged. Arrival still passes the ordinary visible bank/stash admission.
+    """
+    if p.potion_stash or p.room_journey or p.drop_plan or p.trap_payload_return:
+        return False
+    # Policy fields delegate into memory stores; a shallow policy copy would
+    # share those stores and accidentally change real observation visibility.
+    preview = copy.deepcopy(p)
+    preview.tiles = {c: dict(t, visible=bool(t.get("observed")))
+                     for c, t in p.tiles.items()}
+    staged = dict(state, hero=dict(state["hero"], cell=bank))
+    if not safe_test_bank(preview, staged, bank, distance, neighbors, allow_dry=True):
+        return False
+    width, height = state["map"]["width"], state["map"]["height"]
+    if preview.tiles[bank]["terrain"] != 29 and not any(
+            preview.tiles.get(n, {}).get("terrain") == 29 and preview.walkable(n)
+            and not any(preview.tiles[n].get(k) for k in ("effects", "trap", "plant"))
+            for n in neighbors(bank, width, height)):
+        return False
+    return any(unknown_potion(i) and "DRINK" in i.get("actions", [])
+               and can_protect_potions(preview, staged, i, distance, neighbors,
+                                      safe_test_bank, isolated_stack=True)
+               for i in state["inventory"])
 
 
 def cancel(p, reason):

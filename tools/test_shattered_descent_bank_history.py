@@ -82,7 +82,11 @@ class DescentBankHistoryTests(unittest.TestCase):
                 p.tiles[1005][kind] = ["fire"] if kind == "effects" else "poison"
             elif kind == "blocked": p.blocked.add(1005)
             elif kind == "room": p.room_blocked.add(1005)
-            elif kind == "inventory": s["inventory"][0]["quantity"] = 2
+            elif kind == "inventory":
+                # Changed quantities may now be replanned; unsupported storage
+                # still cannot borrow the old inventory's admission.
+                for item in s["inventory"]:
+                    item["actions"].remove("DROP")
             elif kind == "depth": s["depth"] = 2
             elif kind == "branch": s["branch"] = 1
             elif kind == "budget":
