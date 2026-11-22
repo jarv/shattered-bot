@@ -1441,5 +1441,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000109"
+  },
+  {
+    "id": "000111-witnessed-descent-bank",
+    "priority": "high",
+    "summary": "Retain nearby visibly verified potion-preparation banks for safe reobservation before mandatory discovery exhausts.",
+    "evidence": [
+      "Decision 264, selection line 764 and accepted transition line 765: doorway 648 overlooks admitted preparation bank 583.",
+      "Decision 270, accepted transition line 781: the wand is acquired and the clock advances with full health.",
+      "Decision 271, line 783: both return-to-preparation and reconnaissance prerequisites fail, terminating the living planner.",
+      "Source-pinned offline reconstruction matches decisions 0–270; the candidate first changes decision 271 to return-for-reobservation movement."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000111"
   }
 ]

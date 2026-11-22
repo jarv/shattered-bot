@@ -28,12 +28,38 @@ def potion_inventory(state):
 
 
 def remember_bank(p, state):
-    """Remember actual drink/stash feasibility, not hypothetical visibility."""
+    """Remember witnessed feasibility, including nearby banks not stood on.
+
+    This is only a return-for-reobservation receipt. The exact inventory,
+    visible bank/stash admission and ordinary local transit must all hold now;
+    revisit_receipt still admits the return and arrival validates afresh.
+    """
     if not hasattr(p, "puzzle_probe"):
         return  # The shared runner also observes policies without Mage discovery.
     if p.potion_stash or p.puzzle_probe or p.recent_threats or p.unseen_damage_turns \
             or state.get("danger_cells") or any(is_hostile(o) for o in state.get("objects", [])):
         return
+    cell = state["hero"]["cell"]
+    paths = p.paths(state)
+    forbidden = p.navigation_barriers(state, Intent.REPOSITION)
+    for bank in paths:
+        if bank == cell:
+            continue
+        route = p.route(paths, bank)
+        if len(route) > 3 or any(
+                c in forbidden or c in p.loot or not p.tiles[c].get("observed")
+                or not p.tiles[c].get("visible")
+                or p.tiles[c]["terrain"] not in {1, 3, 5, 6, 9, 11, 14, 19, 20, 29}
+                or any(p.tiles[c].get(k) for k in ("effects", "trap", "plant"))
+                for c in route):
+            continue
+        remember_visible_bank(p, dict(state, hero=dict(state["hero"], cell=bank)))
+    # Prefer the actual standing bank when it also passes the same admission.
+    remember_visible_bank(p, state)
+
+
+def remember_visible_bank(p, state):
+    """Read-only feasibility check except for recording the witnessed receipt."""
     cell = state["hero"]["cell"]
     if not safe_test_bank(p, state, cell, distance, neighbors, allow_dry=True):
         return

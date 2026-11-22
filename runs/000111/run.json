@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "id": "000111",
+  "started_at": "2026-11-22T04:35:42Z",
+  "completed_at": "2026-11-22T04:37:33.737560+00:00",
+  "source_commit": "2870c37f20873cac65ecabaf9094e0a791bf1e1c",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 271,
+  "duration_seconds": 108.802,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000110",
+  "previous_source_commit": "9a135fb496ac193b9022a19afabfeb7f0dd69f2b",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Treat safe identification and protected retrieval as separate prerequisites that must both be executable. A valid hypothetical flight trip does not make its grassy origin safe for an unknown potion. Preserve mandatory pickup and supply reservations while establishing bounded terrain preparation or a genuine nonconsumptive identification alternative.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health when mandatory potion discovery exhausted the planner. Decision 264, log lines 764–765, passed a visibly safe bank with water escape and verified protection for both carried unidentified potions, but the recorder considered only the doorway under the hero. By decision 271, line 783, visible local banks were unsuitable and remembered alternatives lacked admitted return routes. Offline reconstruction of the played source matched all 271 preceding selections and the terminal blocker. The proposed correction remembers fully witnessed nearby preparation banks without granting permission to drink from memory. Candidate reconstruction preserves preceding selections and first changes decision 271 to an admitted return-for-reobservation step. The new regression fails by assertion on original policy and passes on the candidate; all 1870 suite tests pass, with four skipped. This establishes preparation selection, not identification, retrieval or eventual survival.",
+    "learnings": "Remember publicly verified preparation opportunities even when the hero passes beside them rather than standing on them. A return receipt must retain exact inventory compatibility, admitted transit and fresh arrival checks; it must never substitute for actual potion protection, identification or mandatory pickup receipts."
+  },
+  "recommendations": [
+    {
+      "id": "000111-witnessed-descent-bank",
+      "priority": "high",
+      "summary": "Retain nearby visibly verified potion-preparation banks for safe reobservation before mandatory discovery exhausts.",
+      "evidence": [
+        "Decision 264, selection line 764 and accepted transition line 765: doorway 648 overlooks admitted preparation bank 583.",
+        "Decision 270, accepted transition line 781: the wand is acquired and the clock advances with full health.",
+        "Decision 271, line 783: both return-to-preparation and reconnaissance prerequisites fail, terminating the living planner.",
+        "Source-pinned offline reconstruction matches decisions 0–270; the candidate first changes decision 271 to return-for-reobservation movement."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000111"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000111/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000111/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 267,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 265,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 505
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 267,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
