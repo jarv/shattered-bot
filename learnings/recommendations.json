@@ -1391,5 +1391,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000106"
+  },
+  {
+    "id": "000107-shelf-back-reconnaissance",
+    "priority": "high",
+    "summary": "Admit stationary known reconnaissance for unseen backs of observed shelves adjoining reachable ground.",
+    "evidence": [
+      "Decision 229, line 665: bookshelves become visible.",
+      "Decision 285, accepted transition line 824: wand collection advances the clock with full health.",
+      "Decision 286, line 826: missing flame at bookshelf 1494 exhausts all discovery prerequisites despite carried clairvoyance.",
+      "Offline reconstruction matches decisions 0–285; the original state has no ordinary frontier gaps but fifteen shelf-back gaps.",
+      "tools/preparation_prerequisites.py:30–57; tools/descent_potions.py:282–321."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000107"
   }
 ]

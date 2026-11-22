@@ -30,6 +30,17 @@ def reconnaissance(p, state):
     paths = p.paths(state)
     gaps = {n for c in paths for n in neighbors(c, width, height)
             if not p.tiles.get(n, {}).get("observed") and not p.tiles.get(n, {}).get("mapped")}
+    # Shelves stop ordinary sight and movement. Their unseen backs do not
+    # border paths, but can still explain a reserved flame obligation.
+    # Scout only an observed shelf edge adjoining reachable ground; this
+    # authorizes information gathering, not burning, crossing or collection.
+    shelf_gaps = {n for c, t in p.tiles.items()
+                  if t.get("observed") and t.get("terrain") == 27
+                  and any(a in paths for a in neighbors(c, width, height))
+                  for n in neighbors(c, width, height)
+                  if not p.tiles.get(n, {}).get("observed")
+                  and not p.tiles.get(n, {}).get("mapped")}
+    gaps.update(shelf_gaps)
     if not gaps or not admits(p, state, 1):
         return None
     nearby = any((c % width-pos % width)**2+(c // width-pos // width)**2 <= 18**2 for c in gaps)
