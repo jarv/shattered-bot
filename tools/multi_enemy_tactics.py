@@ -4,10 +4,12 @@ try:
     from .policy_geometry import distance,neighbors
     from .challenge_combat import reach,visibly_accelerated
     from .policy_decision import Intent
+    from .retreat_geometry import onward_exit
 except ImportError:
     from policy_geometry import distance,neighbors
     from challenge_combat import reach,visibly_accelerated
     from policy_decision import Intent
+    from retreat_geometry import onward_exit
 
 
 def can_attack(p,state,enemy,cell):
@@ -151,6 +153,11 @@ def choose(p,state,enemies):
                 or next_pressure>max(1,current,approach_pressure(p,state,active,pos)):continue
         if next_pressure>1 and p.multi_retreat_edges[(pos,route[1])]>=3:continue
         choke=single_file(p,state,active,cell)
+        # Low current approach pressure does not make a cul-de-sac a refuge.
+        # Keep verified chokes, but require ordinary endpoints to have an
+        # admitted onward square beyond the route's arrival edge.
+        if not choke and not onward_exit(p,state,cell,route[-2],
+                                         {e['cell'] for e in active},active):continue
         choices.append(((next_pressure>1,not choke,count(cell),max(count(c) for c in route[1:]),len(route),p.visits[cell],cell),route,choke))
     if not choices:
         p.log_continuation_error(state,'no-single-attacker-retreat',
