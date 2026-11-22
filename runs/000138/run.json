@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "id": "000138",
+  "started_at": "2026-11-22T15:17:58Z",
+  "completed_at": "2026-11-22T15:23:18.099437+00:00",
+  "source_commit": "86ef3207339dbb65cf055d46552b1d1b501a6c80",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "927d6e6-canonical-review",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 712,
+  "duration_seconds": 315.047,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000137",
+  "previous_source_commit": "69b44fba1d0eeb637a3b312c3480eff51561bb9a",
+  "improvements": [
+    "The bot no longer revisits gardens just to wait for their permanent ambience to disappear. Smoke, unfamiliar effects and mixed hazards still receive the usual checks."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Do not schedule expiry observation for permanent garden ambience. Preserve uncertainty for every other effect. Investigate the summoning quarantine as the initiating progression blocker rather than treating the final search ceiling or healing fallback as its cause.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The living hero exhausted mandatory potion discovery, not combat or the game clock. Decision 709 (selected line 2065, accepted line 2066) follows the final gold route from grass 623 to grass 622, disconnecting remembered preparation banks under the stricter return rules. Decision 711 actually collects the gold; decision 712 then has no admitted protected test bank or preparation return. Source-pinned offline reconstruction matched all 712 earlier selections, reasons, intents and controllers. Detached earlier-state probes could select preparation before disconnection, but did not establish safe early activation, complete stash/effect recovery, and resumption of unfinished pickup. No patch or new regression is supplied: those transaction guarantees remain unvalidated, and admitting grass would weaken the existing safety restriction. Source browsing resolved the missing selecting-state uncertainty. The existing suite passed 1,955 tests with four skips; this is not repair validation.",
+    "learnings": "Reserve an executable preparation return before the last collection route disconnects it. A feasible bank or proposed preparation move is not proof of completed identification or retrieval. Preserve unfinished loot, reserved puzzle supplies, fresh arrival checks and accepted collection receipts. The previous summoning-quarantine diagnosis does not establish this recording's cause."
+  },
+  "recommendations": [
+    {
+      "id": "000061-descent-bank-return",
+      "priority": "high",
+      "summary": "Reserve mandatory discovery preparation before ordinary collection disconnects every admitted bank return.",
+      "evidence": [
+        "Decision 708, lines 2062–2063: collection leaves door 624 for grass 623.",
+        "Decision 709, lines 2065–2066: collection moves to grass 622; copied validated-state probes change from an admitted return to no return after this move.",
+        "Decision 711, lines 2071–2072: the gold is actually collected.",
+        "Decision 712, lines 2074–2075: the living hero exhausts mandatory discovery.",
+        "tools/descent_potions.py:103–149,403–452; tools/mage_policy.py:445–495; tools/region_navigation.py:168–225."
+      ],
+      "status": "deferred",
+      "reason": "Complete selecting source and matching reconstruction establish preparation disconnection, but not a safe early-discovery transaction. Earlier helper proposals do not validate the global progression gate, accepted stash/effect recovery, or restoration of still-uncollected gold. Allowing grass would weaken the return safety filter. Next derive paired decision-708/709/710 fixtures and validate bounded preparation reservation at 709, preserving room supplies and the collection objective, with accepted transit/drop/drink/retrieval receipts, interruption handling and fresh pickup-route resumption. Require a new baseline-red/candidate-green regression before changing arbitration; do not waive pickup or restore death waits.",
+      "origin_run": "000061"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000138/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000138/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 246,
+        "turns": 271,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 276,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1050
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 20,
+        "gold_gained": 276,
+        "turns": 437,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 430,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 5,
+    "ending_level": 3,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 522,
+    "gold_complete": true,
+    "turns": 708,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
