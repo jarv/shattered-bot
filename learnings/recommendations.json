@@ -1637,5 +1637,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000128"
+  },
+  {
+    "id": "000129-doorway-summoner-interception",
+    "priority": "high",
+    "summary": "Intercept a lone visible necromancer from an established doorway hold instead of waiting for another summon.",
+    "evidence": [
+      "Decision 3613, selection 10495 and accepted transition 10496: doorway summon disappears and HP falls from 41 to 32.",
+      "Decision 3614, selection 10498: visible necromancer at 529, open door 534 and one usable staff charge; doorway preparation selects wait.",
+      "Decisions 3614–3618, selections 10498–10506: five waits advance time; decision 3619 at 10508 sees a replacement summon.",
+      "Decisions 3622–3623, accepted transitions 10525/10530: retreat reduces HP from 27 to 11; decision 3628, accepted transition 10547, ends in death.",
+      "tools/doorway_tactics.py:132–145; tools/test_shattered_doorway_summoner_interception.py: original assertions fail, candidate passes."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000129"
   }
 ]

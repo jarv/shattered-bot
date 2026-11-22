@@ -129,6 +129,20 @@ def hold_doorway(p,state,enemies,distance,neighbors,line_clear):
     if current["exposure"]:
         p.doorway_hold=None
         return None
+    # A lone summoner is not an ordinary pursuer: waiting for it to enter
+    # lets it replace the minion just defeated at this choke. Intercept from
+    # the established bank only with an already admitted stationary attack.
+    # Never use this branch to approach, attack a memory, or break protection.
+    buffs=' '.join(b['name'].lower() for b in hero.get('buffs',[]))
+    if getattr(p,'unit_strategies_enabled',False) and len(active)==1 \
+            and active[0]['name'].lower() in {'necromancer','spectral necromancer'} \
+            and p.tiles.get(active[0]['cell'],{}).get('visible') \
+            and not any(b in buffs for b in ('invisib','cloaked')):
+        attack=p.best_attack(state,active[0],allowed_kinds={'magic','thrown'})
+        if attack:
+            hold.update(quiet=0,waits=0,inputs=hold['inputs']+1)
+            attack.reason='doorway: intercept visible summoner from established choke'
+            return attack
     if getattr(p,'unit_strategies_enabled',False) and (active or p.seed_plan):
         try:
             from .seed_strategies import choose as choose_seed_setup

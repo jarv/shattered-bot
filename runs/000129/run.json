@@ -1,0 +1,465 @@
+{
+  "schema_version": 1,
+  "id": "000129",
+  "started_at": "2026-11-22T12:19:12Z",
+  "completed_at": "2026-11-22T12:43:50.359215+00:00",
+  "source_commit": "7614640589cb4b130701cc0deb8c21fbefd0e97e",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "1e55d72-review-recovery",
+  "outcome": "dead",
+  "outcome_summary": "Died from a bone explosion after fighting a necromancer’s summon",
+  "outcome_reason": "Hero died",
+  "death_reason": "You were killed by the explosion of bones...",
+  "max_depth": 8,
+  "actions": 3628,
+  "duration_seconds": 1465.442,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000128",
+  "previous_source_commit": "3c74ad985840c6cde4fd23da5e8ca177d47bdf31",
+  "improvements": [
+    "When badly wounded and invisible, the bot no longer abandons that protection for a last-resort attack just because withdrawal fails. It still tries healing, emergency transport and ordinary retreat."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "An empty escape route must not silently turn defensive invisibility into an attack. Preserve observed protection and report genuine planner exhaustion when no rescue is admitted. The next progress repair needs an earlier verified retreat or a bounded blocker-clearance plan funded by public protection, charge and damage evidence; target distance does not contain every cursed-wand effect.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The recorded death was caused by a bone explosion: decision 3628 attacked the adjacent wounded summon at 7 HP, and accepted transition 10547 reduced HP to zero. An earlier, actionable defect appears at decision 3614 (selection 10498): after defeating the doorway summon, the bot saw its surviving necromancer and held one usable staff charge, but doorway preparation preempted an admitted stationary shot with a wait. Decisions 3614–3618 advanced time while the caster approached and replaced its minion; subsequent retreat lost more health. The selecting chain is tools/policy_tree.py:26, tools/mage_policy.py:1180 and tools/doorway_tactics.py:129–164 in the played source. A reduced public-input fixture with explicitly supplied hold bookkeeping reproduces the preceding doorway attack and the erroneous wait; this is not a complete runtime reconstruction. The proposed correction intercepts a lone visible summoner from an otherwise valid hold using existing magic/thrown admission, without moving or breaking invisibility. Original-source regression: seven tests, two expected assertion failures. Candidate: seven passing tests; full suite: 1,926 tests passed with four skipped. This establishes selection behavior, not a guaranteed kill or survival. Unknown potions and post-death equipment revelations were not used.",
+    "learnings": "A doorway controls approaching melee enemies, not a summoner’s ability to replace them. When the minion is gone, use an already admitted stationary ranged attack on the visible caster rather than granting free lure turns. Keep the established bank, protection, resource and targeting checks; do not assume the shot kills or the room is cleared."
+  },
+  "recommendations": [
+    {
+      "id": "000129-doorway-summoner-interception",
+      "priority": "high",
+      "summary": "Intercept a lone visible necromancer from an established doorway hold instead of waiting for another summon.",
+      "evidence": [
+        "Decision 3613, selection 10495 and accepted transition 10496: doorway summon disappears and HP falls from 41 to 32.",
+        "Decision 3614, selection 10498: visible necromancer at 529, open door 534 and one usable staff charge; doorway preparation selects wait.",
+        "Decisions 3614–3618, selections 10498–10506: five waits advance time; decision 3619 at 10508 sees a replacement summon.",
+        "Decisions 3622–3623, accepted transitions 10525/10530: retreat reduces HP from 27 to 11; decision 3628, accepted transition 10547, ends in death.",
+        "tools/doorway_tactics.py:132–145; tools/test_shattered_doorway_summoner_interception.py: original assertions fail, candidate passes."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000129"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000129/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000129/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 67,
+        "turns": 319,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 317,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 743
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 35,
+        "gold_gained": 407,
+        "turns": 716,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 725,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 555
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 45,
+        "gold_gained": 457,
+        "turns": 482,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 499,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 56,
+        "gold_gained": 231,
+        "turns": 537,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 566,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1254
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 513
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 286,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 288,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 947
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 305
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 49,
+        "gold_gained": 317,
+        "turns": 458,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 484,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 510
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "experience_gained": 76,
+        "gold_gained": 166,
+        "turns": 519,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 539,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 291
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1006
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1074
+          }
+        ]
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "experience_gained": 37,
+        "gold_gained": 0,
+        "turns": 182.7724609375,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 202,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 684
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 49,
+    "ending_level": 10,
+    "starving_turns": 305,
+    "starving_turns_complete": false,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 17,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 276,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 1,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 2,
+        "starving_turns_complete": false
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "starving_turns": 2,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "starving_turns": 1,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 10,
+    "gold_collected": 1645,
+    "gold_complete": false,
+    "turns": 3499.7724609375,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": false,
+        "max_level": 8,
+        "max_level_complete": false
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 10,
+        "max_level_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 10,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
