@@ -1488,5 +1488,22 @@
     "status": "deferred",
     "reason": "The selector checks distance from the requested shelf, but a nonpassable bookshelf makes the projectile collide one cell earlier. For the recorded 612-to-689 shot, impact is reconstructed at 650, adjacent to the hero; flame covers neighboring cells. The observed burning confirms the unsafe result, not a successful clearance. A larger requested-target distance alone leaves impact-area collateral and post-escape clearance unverified; the existing close-shelf regression also expects this class of throw. Next derive an actual-impact fixture and validate a floor-targeted ignition or separately admitted impact-safe bank, protecting the complete impact/fuel footprint and confirming fresh shelf clearance before local retrieval. Do not certify the unseen shelves burned away or replace the throw with speculative movement. No safe complete replacement is certified here.",
     "origin_run": "000112"
+  },
+  {
+    "id": "000114-shop-entrance-radius",
+    "priority": "high",
+    "summary": "Prevent outward entrance-frontier chains from starving already admitted entrance-side doors.",
+    "evidence": [
+      "Decision 2094, line 6183: entrance 855 and doors 762 and 953 are publicly observed.",
+      "Decision 2100, lines 6201-6203: another outward frontier input is selected and accepted.",
+      "Decision 2111, line 6228: a copied validated selector state admits an alternative route toward door 953.",
+      "Decision 2174, line 6402: door search begins only after extensive frontier scouting.",
+      "Decision 2246, lines 6638-6640: the 80th accepted shop-search input opens door 750.",
+      "Decision 2249, line 6646: mandatory shop search exhausts with the hero alive.",
+      "tools/shop_tactics.py:186-230; tools/objective_planning.py:79-108; tools/policy_nodes.py:238-257."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000114"
   }
 ]

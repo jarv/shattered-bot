@@ -200,14 +200,21 @@ def _visit_entrance_shop(p, state, previous, neighbors):
         layer = min(work_layers)
         frontiers = [c for c in frontiers if layers[c] == layer]
         doors = {c for c in door_layers if door_layers[c] == layer}
-    # At the same door layer, check a strictly nearer admitted door rather
-    # than repeatedly crossing a large open component to scout its perimeter.
-    # Local/equidistant frontiers still win; paths and visit receipts are
-    # unchanged, and deeper branches still wait for shallower work.
+    # At the same door layer, also bound outward scouting by the nearest
+    # observed entrance-side door. Greedily following the nearest frontier
+    # can walk an entire large connected component while doors beside the
+    # entrance starve. This is target ordering only, not movement admission.
+    # Frontiers inside/equal to that entrance radius retain their priority.
     if frontiers and doors:
         if min(len(p.route(previous, c)) for c in doors) < min(
                 len(p.route(previous, c)) for c in frontiers):
             frontiers = []
+        else:
+            radius = min(dist(p.entrance_cell, c) for c in frontiers)
+            entrance_doors = {c for c in doors if dist(p.entrance_cell, c) < radius}
+            if entrance_doors:
+                doors = entrance_doors
+                frontiers = []
     if frontiers:
         return p.toward(state, min(frontiers, key=lambda c: len(p.route(previous, c))),
                          "shop: reveal entrance chamber doors", previous, intent=Intent.SHOP)
