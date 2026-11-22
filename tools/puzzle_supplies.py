@@ -154,6 +154,28 @@ def safe_test_bank(p, state, cell, distance, neighbors, allow_dry=False, pool_ba
                  for n in neighbors(cell,width,height)) >= 2
 
 
+def known_pool_bank(p,state,bank,neighbors, *, arrival=False):
+    """Known invisibility needs safe activation/retreat, not unknown-frost geometry."""
+    width,height=state['map']['width'],state['map']['height']
+    tile=p.tiles.get(bank,{})
+    if not p.walkable(bank) or bank in p.loot or tile.get('terrain') not in {1,3,5,6,9,11,14,19,20,29} \
+            or arrival and not tile.get('visible'):
+        return False
+    around={bank,*neighbors(bank,width,height)}
+    if any(c not in p.tiles or not p.tiles[c].get('observed',False)
+           or p.tiles[c].get('trap') or p.tiles[c].get('plant')
+           or p.effects_block_movement(p.tiles[c]) for c in around):
+        return False
+    # One ordinary exterior retreat suffices for a known non-damaging potion.
+    # Habitat and its shore remain excluded by walkable; never count fish water.
+    return any(p.walkable(n) and n not in p.loot
+               and p.tiles[n]['terrain'] in {1,3,6,9,11,14,19,20,29}
+               and any(c!=bank and p.walkable(c) and c not in p.loot
+                       and not p.tiles[c].get('plant') and not p.effects_block_movement(p.tiles[c])
+                       for c in neighbors(n,width,height))
+               for n in neighbors(bank,width,height))
+
+
 def stage_known_pool(p,state,demand,item,distance,neighbors):
     """Reserve known invisibility until a safe observed chest round trip exists."""
     if 'DRINK' not in item.get('actions',[]) or p.room_journey or remaining(state,PROTECTION['pool'][1])>0:return None
@@ -195,17 +217,21 @@ def stage_known_pool(p,state,demand,item,distance,neighbors):
                     and not p.effects_block_movement(p.tiles[c]) for c in around) \
             and not any(o['cell']==bank and not o.get('top_item') for o in state.get('objects',[])) \
             and sum(p.walkable(n) for n in neighbors(bank,width,height))>=2
-        if not verified and not known_water and not known_door \
-                and (bank==state['hero']['cell'] or not staging_bank(p,state,bank)):continue
+        known_activation=item.get('identified') and p.tiles[bank].get('visible') and known_pool_bank(
+            p,state,bank,neighbors,arrival=bank==state['hero']['cell'])
+        if not verified and not known_water and not known_door and not known_activation:continue
         staged=dict(state,hero=dict(state['hero'],cell=bank))
         journey=plan_journey(p,staged,[],neighbors,probe_kind='pool',plan_only=True)
+        if journey and known_activation and not (verified or known_water or known_door) \
+                and not entrance_actionable(p,staged,journey):continue
         # Do not choose water from which the entrance helper cannot act.
         if journey and known_water:
             door=next((c for c in journey.route[1:] if p.tiles[c]['terrain']==5),None)
             if door is not None and distance(bank,door,width)!=1:continue
-        if journey:choices.append((len(p.route(paths,bank)),bank,journey))
+        if journey:choices.append((0 if verified or known_water or known_door else 1,
+                                   len(p.route(paths,bank)),bank,journey))
     if not choices:return None
-    _,bank,journey=min(choices,key=lambda c:(c[0],c[1]))
+    _,_,bank,journey=min(choices,key=lambda c:(c[0],c[1],c[2]))
     p.planner.report['piranha_room']={'potion':'potion of invisibility','floor_supply':'Expected by the piranha-and-chest room rule',
         'bank':bank,'reward':journey.route[-1],'status':'Protected chest round trip planned; actual invisibility still required'}
     if bank!=state['hero']['cell']:

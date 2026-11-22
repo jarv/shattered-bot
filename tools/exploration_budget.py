@@ -57,6 +57,16 @@ def useful_loot(obj):
     if obj.get("for_sale") or suspicious_container(obj) or not obj.get("top_item"):return False
     item=obj["top_item"]
     name=base_name(item)
+    if item.get("known_cursed"):
+        return False
+    # Equipment can be valuable on later floors even when not yet wearable.
+    # This only retains short admitted pickups; it never auto-equips unknown gear.
+    try:
+        from .combat_items import stats, accessory_kind
+    except ImportError:
+        from combat_items import stats, accessory_kind
+    if stats(item) or accessory_kind(item):
+        return True
     return any(word in name for word in ("ration of food","pasty","grilled meat","frozen carpaccio",
                                          "wand","scroll of upgrade","potion of strength","torch","key"))
 
@@ -82,6 +92,12 @@ def current_floor_food_work(p,state,enemies=(),paths=None):
 
 
 def selective_descent(p,state,enemies):
+    depth=state.get("depth",0)
+    level=state["hero"].get("level",1)
+    p.planner.report["progression"]={
+        "depth":depth,"level":level,"early_level_target":depth+1 if 1<=depth<=5 else None,
+        "below_early_target":1<=depth<=5 and level<depth+1,
+        "policy":"Prefer useful equipment and quest rewards; experience target is advisory, never farm or block descent"}
     food=starving_food(p,state,enemies)
     if food:return food
     try:

@@ -740,14 +740,18 @@ class MagePolicy(SurvivalPolicy):
         return budget if self.floor_recovery < budget else 0
 
     def recovery_target(self,state):
+        # Mandatory discovery requires 85% HP; ordinary 75% recovery otherwise
+        # stops just short and falsely declares its health prerequisite exhausted.
+        discovery_target=.85 if not self.pharmacophobia and not self.strength_identified and any(
+                unknown_potion(i) and "DRINK" in i.get("actions",[]) for i in state["inventory"]) else 0
         if not self.rules.scarce_recovery:
-            return .9 if state['depth']%5==0 else .75 if self.food_items(state) else .65
+            return max(discovery_target,.9 if state['depth']%5==0 else .75 if self.food_items(state) else .65)
         if (self.food_items(state) or self.food_recovery_until>self.floor_recovery) and frost_recovery_nearby(self,state,distance) \
                 and any(unknown_potion(i) and "DRINK" in i.get("actions",[]) for i in state["inventory"]):
             return 0.95
         if self.food_items(state) and suspect_container_pending(self,state):
             return 0.9
-        return super().recovery_target(state)
+        return max(discovery_target,super().recovery_target(state))
 
     def conserve_descent_allowed(self, state):
         return False  # Resource-aware selection uses verified routes and explicit deferrals instead.
@@ -987,10 +991,18 @@ class MagePolicy(SurvivalPolicy):
                 if water_guard and self.tiles[step]["terrain"]!=29 \
                         and any(self.enemy_can_see(state,e,step) and distance(step,e["cell"],width)<=reach(e)+1 for e in active):
                     continue
-                continuation=[c for c in neighbors(door,width,height) if c!=route[-2]
+                try:
+                    from .retreat_geometry import onward_runway
+                except ImportError:
+                    from retreat_geometry import onward_runway
+                # A doorway is not an escape destination on its own. Require
+                # observed onward space beyond it, excluding the approach so
+                # a return into the pursuing enemy cannot certify an exit.
+                continuation=[c for c in neighbors(door,width,height) if c not in route[:-1]
                               and abs(c%width-door%width)+abs(c//width-door//width)==1
-                              and (c not in self.tiles or self.walkable(c,{e["cell"] for e in enemies}))]
-                if not continuation:
+                              and self.walkable(c,{e["cell"] for e in enemies})]
+                if not continuation or not onward_runway(self,state,door,route[-2],
+                        {e["cell"] for e in enemies} | set(route[:-1]),active):
                     continue
                 preference[route[1]]=max(preference.get(route[1],0),1/len(route))
         return preference
