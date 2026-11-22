@@ -1720,5 +1720,33 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000135"
+  },
+  {
+    "id": "000137-garden-expiry-objective",
+    "priority": "high",
+    "summary": "Exclude garden-only ambience from stale-hazard reobservation objectives.",
+    "evidence": [
+      "Decision 799, line 2392: garden description publicly observed at 1276.",
+      "Decisions 1042–1110, lines 3055–3314: 58 selected garden-recheck moves, including repeated reversals.",
+      "Accepted transitions at lines 3247, 3283 and 3315 advance the clock.",
+      "tools/resource_tactics.py:15–77; tools/mage_policy.py:210–215; tools/survival_policy.py:1108–1111."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000137"
+  },
+  {
+    "id": "000137-summoning-exit-quarantine",
+    "priority": "high",
+    "summary": "Establish safe progression when a summoning-trap quarantine encloses the key and stair approaches.",
+    "evidence": [
+      "Decision 959, line 2836: summoning trap 76, iron key 106, upgrade scroll 75 and exit 195 are public; resource diagnostics reject pickup routes.",
+      "Decision 1042, line 3055: key and upgrade remain excluded by the room barrier.",
+      "Decision 1183, line 3510: unresolved iron door 669 and no reachable exit remain at planner exhaustion.",
+      "tools/summoning_tactics.py:70–107,129–138; tools/special_rooms.py:100–107; tools/mage_policy.py:407–415."
+    ],
+    "status": "deferred",
+    "reason": "Not repaired by the garden correction. Public-input helper probes show equipped armor score 1 and weapon score 5.5, below readiness requirements, and the chamber does not satisfy the supported single-door enclosure. Complete source resolves the selecting-chain gap, but no validated safe non-triggering passage or multi-door activation/clearance contract is established. Next derive the decision-959 trap/key/stair fixture and validate retrieval outside a conservative active-trap/chain envelope, or bounded multi-door containment with actual clearance receipts. Do not shrink quarantine or lower readiness without that safety evidence.",
+    "origin_run": "000137"
   }
 ]

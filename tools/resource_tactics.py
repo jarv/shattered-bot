@@ -38,7 +38,15 @@ def recheck_hazards(p, state, previous, distance):
             p.planner.report['potion_reservation']={'puzzle':'gas','potion':'potion of purity',
                 'reason':'Potion-gated gas reward: conserve/seek observed floor supplies, not expiry waiting',
                 'identity_inferred':False}
-    stale = [c for c, t in p.tiles.items() if t.get("effects") and not t.get("visible") and c not in reserved]
+    try:
+        from .garden_tactics import garden_effect
+    except ImportError:
+        from garden_tactics import garden_effect
+    # Permanent garden ambience is not an expiring hazard. Keep smoke and all
+    # unknown/mixed effects eligible; this changes no movement safety gate.
+    stale = [c for c, t in p.tiles.items()
+             if any(not garden_effect(e) for e in t.get("effects", []))
+             and not t.get("visible") and c not in reserved]
     choices = []
     for cell in stale:
         for vantage in previous:
