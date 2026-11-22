@@ -195,8 +195,13 @@ def stage_known_pool(p,state,demand,item,distance,neighbors):
                     and not p.effects_block_movement(p.tiles[c]) for c in around) \
             and not any(o['cell']==bank and not o.get('top_item') for o in state.get('objects',[])) \
             and sum(p.walkable(n) for n in neighbors(bank,width,height))>=2
-        if not verified and not known_water and not known_door \
-                and (bank==state['hero']['cell'] or not staging_bank(p,state,bank)):continue
+        if not verified and not known_water and not known_door:
+            # A remembered approach may need a fresh visibility scout. Once
+            # its whole neighborhood is visible, however, arrival cannot fix
+            # the failed drink-bank gate. Do not lure exploration back to an
+            # already rejected origin (e.g. only one ordinary retreat square).
+            if bank==state['hero']['cell'] or not staging_bank(p,state,bank) \
+                    or all(p.tiles[c].get('visible') for c in around):continue
         staged=dict(state,hero=dict(state['hero'],cell=bank))
         journey=plan_journey(p,staged,[],neighbors,probe_kind='pool',plan_only=True)
         # Do not choose water from which the entrance helper cannot act.
