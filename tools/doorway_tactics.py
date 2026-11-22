@@ -108,13 +108,16 @@ def hold_doorway(p,state,enemies,distance,neighbors,line_clear):
             return None
         reserve=target["name"].lower() in {"marsupial rat","albino rat"} and not champion(target) \
             and hero["hp"]>=0.65*hero["max_hp"]
-        # An established choke limits approach slots, not the enemy's armor
-        # or death blast. Retain the undead dispatcher's admitted ranged-first
-        # choice instead of preempting it with ordinary melee damage scoring.
+        # A choke limits approach slots, not armor, death blasts or evasion.
+        # Preserve the species controller's attack preference after the first
+        # surprise strike; ordinary melee scoring ignores wraith evasion.
         action=None
-        if getattr(p,'unit_strategies_enabled',False) \
-                and p.unit_strategies.profile(target).strategy=='undead':
-            action=p.best_attack(state,target,allowed_kinds={'magic','thrown'})
+        if getattr(p,'unit_strategies_enabled',False):
+            strategy=p.unit_strategies.profile(target).strategy
+            if strategy=='wraith':
+                action=p.best_attack(state,target,allowed_kinds={'magic'})
+            elif strategy=='undead':
+                action=p.best_attack(state,target,allowed_kinds={'magic','thrown'})
         if not action:
             action=p.best_attack(state,target,reserve=reserve,reserve_magic=reserve)
         if action:
