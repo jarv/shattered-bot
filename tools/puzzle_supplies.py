@@ -36,6 +36,38 @@ class Demand:
 MAX_ROOM_POTION_TESTS=12  # Distinct unknown types, at most once each per floor.
 
 
+def nearby_flight_reward(p, cell, reward, width, height, distance):
+    """Reject proximity through an observed separator, not missing geometry.
+
+    This is local room recognition only, never movement admission. Unknown
+    cells remain possible connections so incomplete sight cannot clear a
+    supply obligation. Walls and non-flight locks cannot link a nearby reward
+    to the hazard merely because they are close in coordinate space.
+    """
+    if distance(cell, reward, width) > 3:
+        return False
+    try:
+        from .policy_geometry import neighbors
+        from .room_tactics import GROUND
+    except ImportError:
+        from policy_geometry import neighbors
+        from room_tactics import GROUND
+    queue, seen = deque([cell]), {cell}
+    while queue:
+        current = queue.popleft()
+        if current == reward:
+            return True
+        for n in neighbors(current, width, height):
+            if n in seen or distance(cell, n, width) > 3:
+                continue
+            tile = p.tiles.get(n, {})
+            if tile.get("observed") and tile.get("terrain") not in GROUND | {0, 5, 18}:
+                continue
+            seen.add(n)
+            queue.append(n)
+    return False
+
+
 def demands(p, state, distance, *, include_deferred=False):
     width = state["map"]["width"]
     paths = p.paths(state)
@@ -55,7 +87,8 @@ def demands(p, state, distance, *, include_deferred=False):
         elif tile["terrain"] in {13,27}:
             found.append(Demand("flame", "potion of liquid flame", cell))
         elif cell not in paths and tile["terrain"] in {0,18} and any(
-                distance(cell, c, width) <= 3 for c in p.loot if c not in paths):
+                nearby_flight_reward(p, cell, c, width, state["map"]["height"], distance)
+                for c in p.loot if c not in paths):
             found.append(Demand("flight", "potion of levitation", cell))
         elif "cloud of toxic gas" in effects and cell not in paths and any(
                 distance(cell, c, width) <= 3 for c in p.loot if c not in paths):
