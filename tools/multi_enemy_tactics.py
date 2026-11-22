@@ -64,6 +64,11 @@ def single_file(p,state,enemies,cell):
         valid=True
         for enemy in enemies:
             if enemy.get('sleeping'):continue
+            # The gate is the one allowed attacker slot. Starting the flank
+            # search on its occupant would bypass the very gate we exclude
+            # from every other enemy's search. Contact/approach pressure is
+            # checked separately; other enemies must still have no flank.
+            if enemy['cell']==gate:continue
             slots={c for c in around if c!=gate and footable(p,enemy,c)}
             queue=deque([enemy['cell']]);seen={cell,gate,enemy['cell']}
             while queue and valid:

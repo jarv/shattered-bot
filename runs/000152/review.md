@@ -1,0 +1,36 @@
+# ShatteredAI run 000152
+
+Played commit: `bbcd9b02a431962370715164f492edd39d819877`
+
+Outcome: dead
+
+Java build: `f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b`
+
+Outcome summary: Killed by a marsupial rat after abandoning an established doorway hold
+
+## Improvements since the last run
+
+- The bot can return for the ghost's reward while retaining an earlier escape plan, provided the return route does not reverse any protected retreat edge. Threat, health and route-hazard checks still apply.
+
+## Incoming learnings
+
+A retained retreat commitment should protect its directed escape edges, not exclude unrelated guarded routes to a mandatory reward. Keep the reward pending until public collection evidence arrives, and revalidate every subsequent observation.
+
+## Analysis
+
+The hero died to a marsupial rat, confirmed by the terminal public message at log line 175. The initiating policy error occurred earlier: decision 22 established a verified holding square behind door 419, but decision 23 abandoned it when a rat occupied the doorway. The single-file check incorrectly began a flank search inside the gate it otherwise excluded, so the entry occupant invalidated the intended choke. This triggered another retreat toward door 540, whose holding geometry failed at decision 26. Later room retreats and exhausted staff charges preceded the death. Source-pinned offline reconstruction matched the original selections through decision 23; candidate reconstruction matched decisions 0–22 and stopped at the first changed choice, an entry strike at decision 23. A focused policy correction and new regression are supplied through the changed files; the regression fails on the original source and passes on the candidate. The full Python suite passes 1984 tests with four skipped. This establishes corrected choke recognition and an admitted attack choice, not survival or eventual progression.
+
+## Recommendations
+
+- **000152-occupied-choke-retention — Keep a verified single-file hold when its first pursuer occupies the doorway.** (high, implemented): Patch passed isolated validation and was accepted.
+  - Evidence: Decision 22, selection line 72 and accepted line 73: verified holding square 418 is reached behind door 419.; Decision 23, line 77: rat 419 occupies the entry slot, but the bot starts another retreat toward door 540.; Decision 26, line 92: the replacement doorway has no verified holding square.; tools/multi_enemy_tactics.py:57-94; tools/doorway_tactics.py:63-131.; New regression: original assertion failure; candidate passes. Full suite: 1984 tests, four skipped.
+  - Disposition: implemented
+- **000089-multi-rat-retreat-feasibility — Establish a bounded intervention or verified refuge before repeated non-choke retreats sustain enemy pursuit.** (high, deferred): The broader historical case is not revalidated here. This recording supplies no changed-policy post-intervention observations or validated non-choke damage-and-refuge contract. Next derive the historical paired intervention and escape fixtures with accepted charge, pursuit and damage bookkeeping before changing those admissions; do not extrapolate survival from this choke correction.
+  - Evidence: This recording's accepted pursuit bookkeeping reaches twenty retreat moves at log line 147.; The focused decision-23 correction addresses a verified-hold recognition defect, not general non-choke intervention feasibility.
+  - Disposition: deferred
+
+## Lessons for the next run
+
+A pursuer occupying the single doorway slot must not itself count as an alternate flank. Retain established holds only while separate contact, approach-pressure, visibility and hazard checks remain satisfied; do not infer encounter clearance from choke geometry.
+
+Update: **accepted**.

@@ -1184,13 +1184,11 @@
     "priority": "high",
     "summary": "Establish a bounded intervention or verified refuge before repeated non-choke retreats sustain enemy pursuit.",
     "evidence": [
-      "Decisions 3355 and 3359-3368, lines 9789 and 9801-9847: repeated retreats preempt later combat choices.",
-      "Accepted pursuit bookkeeping through line 9850 records eleven retreat moves and zero interventions.",
-      "Decision 3369, line 9851: no admitted single-attacker retreat remains.",
-      "tools/multi_enemy_tactics.py:125-157,190-196,244-265; tools/mage_policy.py:1166-1176; tools/pursuit_budget.py:77-135."
+      "This recording's accepted pursuit bookkeeping reaches twenty retreat moves at log line 147.",
+      "The focused decision-23 correction addresses a verified-hold recognition defect, not general non-choke intervention feasibility."
     ],
     "status": "deferred",
-    "reason": "The adrenaline correction does not resolve this broader backlog. Source inspection resolves the selector chain, but no bounded safe intervention and subsequent escape is validated: low health excludes unverified doorway setup, a zap spends time under two pursuers, the ordinary skeleton has a death blast, and the minion has no observed health bar. Next derive paired decision-3355/3359 fixtures with accepted pursuit, charge and damage bookkeeping, then validate ranged or shielding intervention plus freshly admitted spacing and a verified refuge, including interruption receipts. Do not lower health gates, disable retreat wholesale or guess potion effects.",
+    "reason": "The broader historical case is not revalidated here. This recording supplies no changed-policy post-intervention observations or validated non-choke damage-and-refuge contract. Next derive the historical paired intervention and escape fixtures with accepted charge, pursuit and damage bookkeeping before changing those admissions; do not extrapolate survival from this choke correction.",
     "origin_run": "000089"
   },
   {
@@ -1834,5 +1832,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000151"
+  },
+  {
+    "id": "000152-occupied-choke-retention",
+    "priority": "high",
+    "summary": "Keep a verified single-file hold when its first pursuer occupies the doorway.",
+    "evidence": [
+      "Decision 22, selection line 72 and accepted line 73: verified holding square 418 is reached behind door 419.",
+      "Decision 23, line 77: rat 419 occupies the entry slot, but the bot starts another retreat toward door 540.",
+      "Decision 26, line 92: the replacement doorway has no verified holding square.",
+      "tools/multi_enemy_tactics.py:57-94; tools/doorway_tactics.py:63-131.",
+      "New regression: original assertion failure; candidate passes. Full suite: 1984 tests, four skipped."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000152"
   }
 ]
