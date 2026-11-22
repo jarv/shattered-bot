@@ -31,6 +31,15 @@ def reach(enemy):
     return {"projecting": 4, "giant": 2}.get(champion(enemy), 1)
 
 
+def visibly_accelerated(enemy):
+    # Adrenaline is public speed evidence even when the species description
+    # remains unchanged (notably a necromancer's empowered skeleton).
+    # Do not infer buff duration, future empowerment or a guaranteed attack.
+    return 'adrenaline' in enemy.get('status_icons', []) or any(
+        t in enemy.get('description', '').lower()
+        for t in ('extremely fast', 'double speed'))
+
+
 def magic_factor(enemy):
     return {"antimagic": 0, "giant": 0.2}.get(champion(enemy), 1)
 
@@ -67,7 +76,7 @@ def exposure(p, state, enemies, cell, distance, line_clear):
               or getattr(p,'unit_strategies_enabled',False) and 'ranged-attacks' in p.unit_strategies.profile(enemy).capabilities) \
                 and enemy_line(p, enemy, cell, width, line_clear):
             ranged += 2
-        elif dist <= reach(enemy)+1 and any(t in enemy.get("description", "").lower() for t in ("extremely fast", "double speed")):
+        elif dist <= reach(enemy)+1 and visibly_accelerated(enemy):
             pursuit += weight
     return {"melee": melee, "ranged": ranged, "fast_pursuit": pursuit, "exposure": melee+ranged+pursuit}
 

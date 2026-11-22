@@ -1,0 +1,436 @@
+{
+  "schema_version": 1,
+  "id": "000150",
+  "started_at": "2026-11-22T22:07:27Z",
+  "completed_at": "2026-11-22T22:30:59.870025+00:00",
+  "source_commit": "5c05997de93319b2436b01cb786f4e27846613e4",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "quota-skip-20261122",
+  "outcome": "dead",
+  "outcome_summary": "Killed by a prison guard after prolonged skeleton pursuit",
+  "outcome_reason": "Hero died",
+  "max_depth": 8,
+  "actions": 3370,
+  "duration_seconds": 1399.066,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000149",
+  "previous_source_commit": "a03452776a0d1d81eb2cd1760357122c02220639",
+  "improvements": [
+    "At an established doorway, the bot now prefers available magic against wraiths after the first surprise strike, rather than favoring ordinary melee damage. Its existing ranged-first preference against other undead remains in place."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "An established doorway limits approach lanes but does not remove wraith evasion after the first surprise strike. Preserve admitted magic priority there instead of comparing nominal melee damage alone. Do not treat post-death potion identities as resources the living bot knew how to use.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The final encounter began with skeleton combat at decision 3353 (line 9785), followed by eleven accepted retreat moves without an intervention. Low health excluded starting an unverified doorway setup; short routes to nominal single-attacker endpoints remained eligible and repeatedly preempted later combat choices. Health fell to four before the guard appeared. Decision 3369 exhausted those retreats and selected ranged cover; its accepted transition (line 9853) explicitly reports that a prison guard killed the hero after a pull. This attribution comes from the complete public death message, not nearby enemies. A specific contributing modeling defect is reproducible: the summoned skeleton visibly had adrenaline, but both approach-pressure and exposure estimates ignored that speed buff. The proposed correction recognizes the public icon without inferring hidden timers or future empowerment. A reduced decision-3368 fixture was checked against recorded terrain, enemy fields and hero position/health; this is an isolated helper probe, not reconstructed runtime memory. Original-source probes fail two expected assertions; the candidate passes all five new tests and the full 1,975-test suite, with four skips. This establishes corrected risk accounting, not a changed recorded action or avoided death. The broader non-choke pursuit failure remains unresolved. Unknown potion identities and post-death equipment revelations were not treated as living resources. Policy changes and the new regression are supplied through the adapter; files is intentionally empty.",
+    "learnings": "A visible adrenaline icon is speed evidence even when an enemy description is unchanged. Count its faster approach conservatively, but do not treat a nominal single-attacker endpoint as a persistent refuge or claim that improved risk estimates prove survival. Preserve health, hazard and mandatory-pickup gates."
+  },
+  "recommendations": [
+    {
+      "id": "000150-visible-adrenaline-pressure",
+      "priority": "high",
+      "summary": "Include publicly visible adrenaline in approach-pressure and fast-pursuit estimates.",
+      "evidence": [
+        "Decision 3366, accepted line 9837: the summoned skeleton gains a visible adrenaline icon.",
+        "Decision 3368, line 9846: the empowered minion remains at 2492 while retreat to 2439 is selected.",
+        "Reduced public-input probes: original exposure to 2439 and approach pressure at 2440 are zero; corrected values are one.",
+        "tools/challenge_combat.py:34-40,65-81; tools/multi_enemy_tactics.py:26-45; pinned game Char.java:770-776."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000150"
+    },
+    {
+      "id": "000089-multi-rat-retreat-feasibility",
+      "priority": "high",
+      "summary": "Establish a bounded intervention or verified refuge before repeated non-choke retreats sustain enemy pursuit.",
+      "evidence": [
+        "Decisions 3355 and 3359-3368, lines 9789 and 9801-9847: repeated retreats preempt later combat choices.",
+        "Accepted pursuit bookkeeping through line 9850 records eleven retreat moves and zero interventions.",
+        "Decision 3369, line 9851: no admitted single-attacker retreat remains.",
+        "tools/multi_enemy_tactics.py:125-157,190-196,244-265; tools/mage_policy.py:1166-1176; tools/pursuit_budget.py:77-135."
+      ],
+      "status": "deferred",
+      "reason": "The adrenaline correction does not resolve this broader backlog. Source inspection resolves the selector chain, but no bounded safe intervention and subsequent escape is validated: low health excludes unverified doorway setup, a zap spends time under two pursuers, the ordinary skeleton has a death blast, and the minion has no observed health bar. Next derive paired decision-3355/3359 fixtures with accepted pursuit, charge and damage bookkeeping, then validate ranged or shielding intervention plus freshly admitted spacing and a verified refuge, including interruption receipts. Do not lower health gates, disable retreat wholesale or guess potion effects.",
+      "origin_run": "000089"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000150/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000150/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 9,
+        "gold_gained": 170,
+        "turns": 367,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 364,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 768
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 9,
+        "gold_gained": 97,
+        "turns": 243,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 248,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 34,
+        "gold_gained": 256,
+        "turns": 560,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 580,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 67,
+        "gold_gained": 183,
+        "turns": 643,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 650,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 242,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 239,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 781
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 345
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 97,
+        "gold_gained": 261,
+        "turns": 661,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 694,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 907
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 316
+          }
+        ]
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "experience_gained": 59,
+        "gold_gained": 0,
+        "turns": 353,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 362,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "experience_gained": 19,
+        "gold_gained": 114,
+        "turns": 218,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 226,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Old Wandmaker",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt/choice container",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 34,
+    "ending_level": 10,
+    "starving_turns": 174,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 12,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 2,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "starving_turns": 1,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "starving_turns": 150,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 10,
+    "gold_collected": 1081,
+    "gold_complete": true,
+    "turns": 3287,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 1,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 3,
+        "levels_complete": true,
+        "max_level": 9,
+        "max_level_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 10,
+        "max_level_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 10,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

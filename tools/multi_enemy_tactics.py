@@ -2,11 +2,11 @@
 from collections import deque
 try:
     from .policy_geometry import distance,neighbors
-    from .challenge_combat import reach
+    from .challenge_combat import reach,visibly_accelerated
     from .policy_decision import Intent
 except ImportError:
     from policy_geometry import distance,neighbors
-    from challenge_combat import reach
+    from challenge_combat import reach,visibly_accelerated
     from policy_decision import Intent
 
 
@@ -36,7 +36,7 @@ def approach_pressure(p,state,enemies,cell):
         if 'ranged-attacks' in p.unit_strategies.profile(enemy).capabilities and p.enemy_can_see(state,enemy,cell):
             slots.add(('ranged',enemy['cell']))
         profile=p.unit_strategies.profile(enemy)
-        fast='fast-movement' in profile.capabilities or any(t in enemy.get('description','').lower() for t in ('double speed','extremely fast'))
+        fast='fast-movement' in profile.capabilities or visibly_accelerated(enemy)
         positions={enemy['cell']};front={enemy['cell']}
         for _ in range(0 if profile.movement=='stationary' else 2 if fast else 1):
             front={n for start in front for n in neighbors(start,width,height) if n!=cell and footable(p,enemy,n)}-positions
