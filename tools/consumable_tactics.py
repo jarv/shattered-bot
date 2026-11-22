@@ -102,6 +102,14 @@ def choose_consumable(p, state, enemies, distance, neighbors):
         scrolls = [i for i in state["inventory"] if unknown_scroll(i) and "READ" in i.get("actions", [])
                    and base_name(i) not in p.tested_scrolls]
         if scrolls:
+            identify = next((i for i in state["inventory"] if base_name(i) == "scroll of identify"
+                             and "READ" in i.get("actions", [])), None)
+            if identify:
+                if not identify_retry_allowed(p, state):
+                    return None
+                p.menu_plan = "discover-scroll"
+                p.consumable_menu_bags = set()
+                return p.use(identify, "READ", "identify: reveal unknown scroll before risking its effect")
             item = max(scrolls, key=lambda i: discovery_score(i, p.consumable_sources, "upgrade"))
             p.tested_scrolls.add(base_name(item))
             p.menu_plan = "discover-scroll"
@@ -202,7 +210,8 @@ def discovery_menu(p, state):
         return p.menu(state)
     if "identify an item" in texts:
         items = sorted((i for i in state["inventory"] if not i.get("identified", False)),
-                       key=lambda i: (unknown_potion(i), discovery_score(i, p.consumable_sources)), reverse=True)
+                       key=lambda i: (unknown_potion(i), unknown_scroll(i),
+                                      discovery_score(i, p.consumable_sources)), reverse=True)
     elif "cleanse an item" in texts:
         try:
             from .combat_items import accessory_kind
@@ -214,10 +223,10 @@ def discovery_menu(p, state):
                                       i.get("known_cursed", False), i.get("equipped", False)), reverse=True)
     else:
         items = []  # In particular, do not blindly transmute valuable equipment.
-    # Preserve the preferred potion target across bag navigation. A lower-ranked
-    # backpack scroll must not consume an Identify intended for a bagged potion.
-    preferred_potion = bool(items and unknown_potion(items[0]))
-    for item in items[:1] if preferred_potion else items:
+    # Preserve preferred consumables across bag navigation rather than consuming
+    # Identify on lower-ranked equipment while the target is in another bag.
+    preferred_consumable = bool(items and (unknown_potion(items[0]) or unknown_scroll(items[0])))
+    for item in items[:1] if preferred_consumable else items:
         button = next((b for b in buttons if b["label"].lower() == item["name"].lower()), None)
         if button:
             p.menu_plan = None

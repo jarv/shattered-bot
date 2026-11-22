@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "id": "000132",
+  "started_at": "2026-11-22T13:34:09Z",
+  "completed_at": "2026-11-22T13:39:42.078396+00:00",
+  "source_commit": "e4628c4abf9e3924f248e370d7d95c8166b79ac0",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "1e55d72-review-recovery",
+  "outcome": "dead",
+  "outcome_summary": "Killed by a sewer crab after rage drew converging enemies",
+  "outcome_reason": "Hero died",
+  "max_depth": 3,
+  "actions": 821,
+  "duration_seconds": 329.061,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000131",
+  "previous_source_commit": "98dd013d1f9a1b8ceb7b6abe6db73b123ae715fd",
+  "improvements": [
+    "The bot no longer starts another doorway escape merely because it can see a DM-100 behind walls. It still responds when lightning can reach it or a remembered threat remains exposed."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "A visible caster is not necessarily able to shoot through observed walls. Check conservative current and remembered lightning exposure before starting another door escape; preserve actual-exposure responses, mandatory pickups and bounded recovery.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The initiating avoidable risk was decision 761 (selection line 2217, accepted line 2218): the bot read unidentified GYFU despite carrying a readable, known scroll of identify. An intuition attempt had just been cancelled without revealing the rune. The recorded effect was rage's enraging roar; the pinned game source confirms this beckons enemies throughout the floor. The existing identification selector preferred known Identify only for unknown potions, then directly tested unknown scrolls. Converging gnoll, fly and crab pressure followed, with retreat, exhausted charges and splitting-risk melee. Decision 820's accepted transition (line 2446) confirms death and explicitly names a sewer crab as the killer. This attribution does not depend on nearby enemies or post-death item revelations. The candidate prefers known Identify within the existing safe scroll-testing gate and preserves the intended consumable through menu and bag selection. A reduced public-observation fixture is not recovered runtime memory: it matches the original helper's recorded READ choice, then demonstrates the correction without dispatching gameplay. The final regression has four expected assertion failures on original policy and passes all six tests on the candidate. The full suite passes 1935 tests with four skips. This establishes selection behavior, not successful identification or survival in a replacement run.",
+    "learnings": "Before deliberately activating an unidentified scroll, use a carried known Identify when the same safety gates admit it. Keep potion identification priority, preserve the chosen consumable across bag navigation, and require actual public identification evidence. A cancelled intuition attempt reveals nothing; no visible enemies does not make rage harmless."
+  },
+  "recommendations": [
+    {
+      "id": "000132-identify-before-scroll-risk",
+      "priority": "high",
+      "summary": "Prefer known Identify over directly activating an unknown scroll during safe discovery.",
+      "evidence": [
+        "Decisions 758–760, lines 2211–2216: intuition ends in cancellation without revealing GYFU.",
+        "Decision 761, lines 2217–2218: GYFU is read while known Identify is carried; the accepted observation reports rage's roar.",
+        "Decisions 767–772, lines 2239–2260: gnoll, flies and crabs converge during doorway retreat.",
+        "Decision 820, accepted line 2446: HP falls from three to zero and the public death message names a sewer crab.",
+        "tools/consumable_tactics.py:89–119; tools/policy_nodes.py:322–323; new tools/test_shattered_scroll_identify_before_read.py."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000132"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000132/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000132/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 378,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 385,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 244
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 19,
+        "gold_gained": 364,
+        "turns": 314,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 314,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 15,
+        "gold_gained": 99,
+        "turns": 107,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 116,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1173
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 755
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 19,
+    "ending_level": 3,
+    "starving_turns": 53,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 50,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 463,
+    "gold_complete": true,
+    "turns": 799,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

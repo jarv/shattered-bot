@@ -1667,5 +1667,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000131"
+  },
+  {
+    "id": "000132-identify-before-scroll-risk",
+    "priority": "high",
+    "summary": "Prefer known Identify over directly activating an unknown scroll during safe discovery.",
+    "evidence": [
+      "Decisions 758–760, lines 2211–2216: intuition ends in cancellation without revealing GYFU.",
+      "Decision 761, lines 2217–2218: GYFU is read while known Identify is carried; the accepted observation reports rage's roar.",
+      "Decisions 767–772, lines 2239–2260: gnoll, flies and crabs converge during doorway retreat.",
+      "Decision 820, accepted line 2446: HP falls from three to zero and the public death message names a sewer crab.",
+      "tools/consumable_tactics.py:89–119; tools/policy_nodes.py:322–323; new tools/test_shattered_scroll_identify_before_read.py."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000132"
   }
 ]
