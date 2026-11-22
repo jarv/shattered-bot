@@ -1579,18 +1579,16 @@
   {
     "id": "000123-inventory-aware-discovery-return",
     "priority": "high",
-    "summary": "Establish an inventory-aware preparation return before mandatory discovery loses every compatible bank receipt.",
+    "summary": "Establish inventory-aware reobservation and potion storage after collection invalidates discovery-bank receipts.",
     "evidence": [
-      "Decisions 294–295, log lines 816–820: exploration and collection transit leave the water area carrying crimson alone.",
-      "Decision 299, selection 831 and accepted transition 832: charcoal is collected; existing singleton bank receipts become incompatible.",
-      "Decision 306, selection 852 and accepted transition 853: golden is collected.",
-      "Decisions 313–314, log lines 873–876: the identify scroll reveals crimson as levitation; strength remains unresolved.",
-      "Decision 315, log line 877: discovery exhausts with the Mage alive.",
-      "Offline reconstruction matches all 315 selections; 73 historical banks remain transit-reachable but inventory-incompatible.",
-      "tools/descent_potions.py:85–143,376–417; tools/potion_stash.py:103–134; tools/mage_policy.py:443–497."
+      "Decision 434: selection line 1200 and accepted transition line 1201 collect the additional potion.",
+      "Decision 435, line 1203: azure and known liquid flame are carried together.",
+      "Decision 442, line 1219: both preparation return and reconnaissance decline; mandatory discovery exhausts.",
+      "Source-pinned offline reconstruction matches decisions 0–441 and reproduces the terminal blocker; reconstructed 101 bank receipts cover azure alone.",
+      "tools/descent_potions.py:85–143,376–417; tools/potion_stash.py:103–134; tools/mage_policy.py:492–495."
     ],
     "status": "deferred",
-    "reason": "No safe focused replacement is established. The missing prerequisite is an executable collateral-separated stash and retrieval plan for the new three-potion inventory; singleton receipts cannot certify it. Before identification, an outstanding levitation reservation also prevents simply drinking earlier. Next derive paired decision-295/315 fixtures around bank 849 and its alternatives, including decisions 299/306 inventory changes. Validate bounded preparation-only transit, fresh bank/stash admission, accepted-input accounting and return to unfinished pickup. Require a demonstrated safe stash or an actually observed identification/protection resource before changing arbitration. Do not weaken inventory matching, hazard gates, reservations or mandatory pickup.",
+    "reason": "Revalidated here, but no safe replacement is established. The exact missing safety evidence is a collateral-separated stash and retrieval plan for azure plus liquid flame at a reachable preparation area; all reconstructed receipts certify only singleton feasibility. Next derive paired decision-430/442 fixtures around banks 1146–1148 and the intervening route, then validate bounded preparation-only reobservation, fresh bank/storage admission, accepted movement accounting and return to unfinished pickup. Refuse on hazards, threats, changed inventory or failed receipts. Do not weaken inventory matching, infer azure, waive pickup or restore idle waits.",
     "origin_run": "000123"
   },
   {
