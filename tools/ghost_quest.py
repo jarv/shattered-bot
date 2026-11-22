@@ -166,7 +166,8 @@ def return_for_reward(p,state,ghosts,distance,neighbors):
         else:
             targets=[c for c in area if c!=pos and c not in views and c in paths
                      and p.tiles[c].get('terrain') not in {5,8,22} and not p.tiles[c].get('plant')
-                     and not p.tiles[c].get('trap') and not p.effects_block_movement(p.tiles[c])]
+                     and (not p.tiles[c].get('trap') or p.tiles[c].get('terrain')==19)
+                     and not p.effects_block_movement(p.tiles[c])]
             if not targets:
                 p.stop_gameplay('Sad Ghost reward pending: first encounter area searched without a visible ghost; no collection or descent inferred')
             # Reach the remembered region, then inspect different nearby views;
@@ -175,7 +176,10 @@ def return_for_reward(p,state,ghosts,distance,neighbors):
             q['return_goal']=target;targets=[target]
     paths=p.paths(state)
     banks=[c for c in targets if c in paths and c!=pos and len(p.route(paths,c))<=80
-           and all(not p.tiles[n].get('trap') and not p.tiles[n].get('plant')
+           # Triggered traps retain their public type label. As in walkable(),
+           # only terrain 19 proves that label is inactive; effects still veto.
+           and all((not p.tiles[n].get('trap') or p.tiles[n].get('terrain')==19)
+                   and not p.tiles[n].get('plant')
                    and not p.effects_block_movement(p.tiles[n]) for n in p.route(paths,c)[1:])]
     if not banks:return None
     bank=min(banks,key=lambda c:len(p.route(paths,c)));q['travel']=q.get('travel',0)+1

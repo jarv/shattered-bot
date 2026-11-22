@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "id": "000124",
+  "started_at": "2026-11-22T11:16:37Z",
+  "completed_at": "2026-11-22T11:21:48.340339+00:00",
+  "source_commit": "e69b9367211772d0aa413566a12d469da06a49e7",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "1e55d72-review-recovery",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 821,
+  "duration_seconds": 306.533,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000123",
+  "previous_source_commit": "afea1d13519486cf072f82901ec646f30b1eae78",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Preparation memory must remain executable after legitimate potion pickups change inventory. Establish a bounded preparation-only return with fresh bank and stash validation before relying on historical feasibility. Preserve reserved room supplies, mandatory pickup, hazard checks and terminal exhaustion; selecting preparation alone would not establish identification or room success.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended in planner exhaustion, not death; the Mage remained at full health. Decision 733 (log line 2030) first exposes the initiating contradiction: the pending Sad Ghost reward return selects a route through publicly triggered trap 675, then rejects its retained trap name despite inactive terrain and expired effects. Original-source offline bookkeeping matched all 821 selections and the terminal blocker at decision 821 (line 2277). The correction aligns reward-return checks with existing inactive-trap walkability while preserving active hazards, threat guards, mandatory pickup and terminal exhaustion. A new regression fails by assertion on original policy and passes after the correction; the full suite passes 1,913 tests with four skips. Candidate reconstruction stops at the first changed selection, decision 733. Selecting the return step does not establish ghost rediscovery or reward collection.",
+    "learnings": "Distinguish a triggered trap's retained name from an active hazard when returning for the Sad Ghost reward. Keep effect checks and require fresh ghost interaction and actual reward evidence; an admitted return step is not collection."
+  },
+  "recommendations": [
+    {
+      "id": "000124-ghost-inactive-trap-return",
+      "priority": "high",
+      "summary": "Allow the existing admitted Sad Ghost return route across publicly inactive traps without treating retained trap names as active hazards.",
+      "evidence": [
+        "Decision 420, log line 1170: trap 675 is publicly triggered; later observations retain its name after gas expires.",
+        "Decision 733, log line 2030: reward completion dialogue is public, but ghost-return admission rejects inactive trap 675 on the ordinary return route.",
+        "Decision 761, log line 2109: reconstructed return travel remains zero with the same inactive-trap veto.",
+        "Decision 821, log line 2277: unfinished reward blocks descent and exhausts the planner with the hero alive.",
+        "tools/ghost_quest.py:return_for_reward; tools/survival_policy.py:436–447."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000124"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000124/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000124/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 12,
+        "gold_gained": 187,
+        "turns": 300,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 304,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 217
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 26,
+        "gold_gained": 157,
+        "turns": 522,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 511,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "objective-completed-dialogue"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1180
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 13,
+    "ending_level": 3,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 344,
+    "gold_complete": true,
+    "turns": 822,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

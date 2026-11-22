@@ -1587,5 +1587,20 @@
     "status": "deferred",
     "reason": "No safe focused replacement is established. The missing prerequisite is an executable collateral-separated stash and retrieval plan for the new three-potion inventory; singleton receipts cannot certify it. Before identification, an outstanding levitation reservation also prevents simply drinking earlier. Next derive paired decision-295/315 fixtures around bank 849 and its alternatives, including decisions 299/306 inventory changes. Validate bounded preparation-only transit, fresh bank/stash admission, accepted-input accounting and return to unfinished pickup. Require a demonstrated safe stash or an actually observed identification/protection resource before changing arbitration. Do not weaken inventory matching, hazard gates, reservations or mandatory pickup.",
     "origin_run": "000123"
+  },
+  {
+    "id": "000124-ghost-inactive-trap-return",
+    "priority": "high",
+    "summary": "Allow the existing admitted Sad Ghost return route across publicly inactive traps without treating retained trap names as active hazards.",
+    "evidence": [
+      "Decision 420, log line 1170: trap 675 is publicly triggered; later observations retain its name after gas expires.",
+      "Decision 733, log line 2030: reward completion dialogue is public, but ghost-return admission rejects inactive trap 675 on the ordinary return route.",
+      "Decision 761, log line 2109: reconstructed return travel remains zero with the same inactive-trap veto.",
+      "Decision 821, log line 2277: unfinished reward blocks descent and exhausts the planner with the hero alive.",
+      "tools/ghost_quest.py:return_for_reward; tools/survival_policy.py:436–447."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000124"
   }
 ]
