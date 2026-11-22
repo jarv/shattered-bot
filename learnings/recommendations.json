@@ -1319,16 +1319,21 @@
   {
     "id": "000102-pool-discovery-admission",
     "priority": "high",
-    "summary": "Establish a safe executable preparation alternative when mandatory pool retrieval has no admissible unknown-potion test bank.",
+    "summary": "Establish safe executable preparation when the mandatory pool chest has no compatible unknown-potion bank.",
     "evidence": [
       "Decision 313, accepted transition line 896: movement reaches the pool entrance and advances the game clock.",
       "Decision 314, line 898: first observed piranhas and chest coincide with planner exhaustion at full health.",
       "Offline source-pinned reconstruction matches decisions 0-313 and reproduces the terminal blocker.",
       "Copied terminal-state probes: only origins 1010, 983 and 984 admit hypothetical chest round trips; none passes unknown-potion pool-bank safety, even without hunger.",
-      "tools/piranha_tactics.py:37-65; tools/puzzle_supplies.py:130-156,585-640,760-810; tools/mage_policy.py:439-457."
+      "tools/piranha_tactics.py:37-65; tools/puzzle_supplies.py:130-156,585-640,760-810; tools/mage_policy.py:439-457.",
+      "Run 000126 decision 86, log line 244: three sleeping piranhas and Chest 889 are observed from entrance 670 before a potion is carried.",
+      "Run 000126 decision 281, line 808, and decisions 310–311, lines 895/898: jade remains unidentified and pool preparation reports no verified protected reward trip before hunger.",
+      "Run 000126 decision 312, accepted line 902: movement advances the clock at full health; decision 313, line 904 terminates on the unfinished chest.",
+      "Source-pinned offline reconstruction matches all 313 selected actions, reasons, intents and controllers, then reproduces the terminal blocker and recovery exhaustion.",
+      "Copied terminal-state probes admit only closed door 670 as a hypothetical protected chest-trip origin; it fails unknown-drink and dry-approach admission even with hunger removed and optimistic visibility."
     ],
     "status": "deferred",
-    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior review disposition: No safe focused patch is established. All budgeted origins fail unknown-drink safety, and the public inventory has no nonconsumptive identification resource. Remote testing could consume the sole required invisibility dose; a meal or bound increase cannot repair this. Next derive the decision-314 geometry fixture and validate a stationary ranged fish-clearance transaction outside the remembered habitat, including clear-shot admission, known charges, accepted attack receipts, interruption checks and bounded recharge accounting. Require positive observed clearance before changing access and baseline-red/candidate-green refusal regressions. If that safety contract fails, establish an executable identification/preservation mechanism before changing reservation rules. Keep the mandatory chest and terminal stuck label intact.",
+    "reason": "Revalidated in this recording; no safe focused patch is established. Complete source and matching offline reconstruction resolve the selecting-state gap. The sole budgeted origin is closed door 670, adjoining ordinary water 639; neither the unknown-drink bank nor dry-approach contract admits it. Hunger is an additional terminal restriction, not the initiating blocker. No nonconsumptive identification resource is carried. A remote singleton test could consume the only required protection dose, while a meal or bound increase cannot repair the bank geometry. Next derive paired decision-86/281 fixtures around 639, 670, the dry strip and Chest 889, then validate one bounded stationary ranged-clearance transaction outside the full habitat buffer, with fresh clear-shot admission, conservative known-charge/damage and hunger/recharge budgets, accepted attack receipts, interruption safety and positive defeat evidence before habitat retirement and actual pickup. Otherwise require observed nonconsumptive identification/preservation. Do not guess jade, relax hazards, waive the chest or restore death-waits. No policy change or new regression is supplied because neither replacement safety contract is established.",
     "origin_run": "000102"
   },
   {
