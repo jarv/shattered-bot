@@ -1316,5 +1316,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000100"
+  },
+  {
+    "id": "000102-pool-discovery-admission",
+    "priority": "high",
+    "summary": "Establish a safe executable preparation alternative when mandatory pool retrieval has no admissible unknown-potion test bank.",
+    "evidence": [
+      "Decision 313, accepted transition line 896: movement reaches the pool entrance and advances the game clock.",
+      "Decision 314, line 898: first observed piranhas and chest coincide with planner exhaustion at full health.",
+      "Offline source-pinned reconstruction matches decisions 0-313 and reproduces the terminal blocker.",
+      "Copied terminal-state probes: only origins 1010, 983 and 984 admit hypothetical chest round trips; none passes unknown-potion pool-bank safety, even without hunger.",
+      "tools/piranha_tactics.py:37-65; tools/puzzle_supplies.py:130-156,585-640,760-810; tools/mage_policy.py:439-457."
+    ],
+    "status": "deferred",
+    "reason": "No safe focused patch is established. All budgeted origins fail unknown-drink safety, and the public inventory has no nonconsumptive identification resource. Remote testing could consume the sole required invisibility dose; a meal or bound increase cannot repair this. Next derive the decision-314 geometry fixture and validate a stationary ranged fish-clearance transaction outside the remembered habitat, including clear-shot admission, known charges, accepted attack receipts, interruption checks and bounded recharge accounting. Require positive observed clearance before changing access and baseline-red/candidate-green refusal regressions. If that safety contract fails, establish an executable identification/preservation mechanism before changing reservation rules. Keep the mandatory chest and terminal stuck label intact.",
+    "origin_run": "000102"
   }
 ]
