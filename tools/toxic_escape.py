@@ -20,6 +20,18 @@ def in_toxic_gas(state):
 def escape(p, state):
     if not in_toxic_gas(state):
         return None
+    # An owned gas retrieval already checks the observed immunity duration,
+    # outbound/return budget, impairments and every next tile. Do not erase
+    # that commitment merely because it has reached the protected cloud.
+    try:
+        from .room_tactics import remaining
+    except ImportError:
+        from room_tactics import remaining
+    journey = getattr(p, "room_journey", None)
+    if journey and journey.kind == "gas" and journey.depth == state.get("depth") \
+            and state["hero"]["cell"] in journey.route \
+            and remaining(state, "purification barrier") > 0:
+        return None
     try:
         from .survival_policy import FLOOR, TRANSITIONS, HARMFUL_PLANTS, is_hostile
     except ImportError:

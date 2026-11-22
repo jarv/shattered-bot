@@ -1377,5 +1377,19 @@
     "status": "deferred",
     "reason": "No safe focused replacement is established. The exact blocker is flammable or unknown terrain around every budgeted drink origin, not missing selecting source or merely hunger. Known liquid flame is carried, but no validated containment, safe firing/retreat, potion-collateral protection or fresh clearance contract supports using it here. Next derive the observed entrance/grass-pocket/chest-route fixture and validate bounded known-flame terrain preparation with accepted throw receipts, contained spread, expiry and fresh bank/stash admission. Add refusal regressions for unknown spread, threatened escape, collateral loot, active effects and failed receipts. If containment fails, establish nonconsumptive identification instead; do not relax hazard checks or waive pickup. No policy patch or new regression is certified.",
     "origin_run": "000105"
+  },
+  {
+    "id": "000106-protected-gas-arbitration",
+    "priority": "high",
+    "summary": "Preserve an owned gas retrieval while observed purification remains, letting its existing return-budget checks arbitrate movement.",
+    "evidence": [
+      "Decision 235, selection line 677 and accepted line 678: identified purity is consumed.",
+      "Decision 241, line 689: purification has 15 turns remaining, but gas escape cancels the protected route.",
+      "Decision 654, line 1998: missing purity for unfinished gas-room loot exhausts discovery.",
+      "tools/toxic_escape.py:20; tools/room_tactics.py:66–145; tools/mage_policy.py:1370–1372."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000106"
   }
 ]
