@@ -1274,5 +1274,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000097"
+  },
+  {
+    "id": "000098-discovery-health-prerequisite",
+    "priority": "high",
+    "summary": "Resolve the ordinary-healing versus mandatory-discovery health gap with an admitted bounded recovery prerequisite.",
+    "evidence": [
+      "Decision 612, accepted transition line 1848: movement advances turn 599 to 600 at 25/30 HP.",
+      "Decision 613, line 1850: discovery exhausts on health despite zero healing waits spent and carried food.",
+      "tools/mage_policy.py:742–750 and tools/policy_nodes.py:566–574: ordinary recovery stops below discovery's required health.",
+      "tools/descent_potions.py:206–266 in the played source: paused health immediately becomes terminal planner exhaustion."
+    ],
+    "status": "rejected",
+    "reason": "Candidate validation failed; code was not promoted.",
+    "origin_run": "000098"
   }
 ]
