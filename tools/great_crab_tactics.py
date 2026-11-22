@@ -150,9 +150,13 @@ def choose(p,state,enemies):
                                         paths,intent=Intent.RETREAT)
                 cancel(p,'Crab blocks the known ambush approach');plan=None
     if not foe:return None  # Never attack a remembered or absent actor.
-    if not other and hero['hp']>=.5*hero['max_hp'] and not p.pursuit_lure_exhausted:
+    if not other and hero['hp']>=.5*hero['max_hp']:
         paths=p.paths(state,occupied);options=[]
         for door in paths:
+            # Exhaustion forbids travel to another lure setup, not an
+            # immediately verified sight break at the door already occupied.
+            # Keep the same geometry, escape, attempt and fresh-entry gates.
+            if p.pursuit_lure_exhausted and door!=pos:continue
             if p.tiles[door]['terrain'] not in {5,6} or p.great_crab_attempts[door]>=3:continue
             route=p.route(paths,door)
             if len(route)>7 or len(route)-1>distance(door,foe['cell'],width) \

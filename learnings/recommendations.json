@@ -1862,5 +1862,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000153"
+  },
+  {
+    "id": "000154-crab-current-door-exhaustion",
+    "priority": "high",
+    "summary": "Retain an admitted current-door sight-break transaction after the new-lure travel budget is exhausted.",
+    "evidence": [
+      "Decision 1688, line 4781: an unsuccessful doorway approach falls back to ordinary enemy-memory pursuit.",
+      "Decision 1721, line 4912: the hero occupies door 485 with the crab at 394 and retreats to 486 without retaining a doorway plan.",
+      "Decisions 1722 and 1724, lines 4916 and 4923: enemy-memory pursuit is rejected as escape reversal.",
+      "Decision 1726, line 4931: hungry no-progress recovery exhausts with the hero alive at 45/45 HP.",
+      "tools/great_crab_tactics.py:153-180; tools/pursuit_budget.py:review_outcome; new current-door exhaustion regression."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000154"
   }
 ]
