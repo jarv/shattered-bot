@@ -350,15 +350,17 @@
   {
     "id": "000030-missing-exit-search-admission",
     "priority": "high",
-    "summary": "Establish an admitted missing-exit search alternative at the eight-search hunger transition.",
+    "summary": "Establish a funded missing-exit search transaction before hunger changes invalidate search admission.",
     "evidence": [
-      "Decision 4547, line 12920: ordinary region tasks are exhausted and wall searching begins.",
-      "Decision 4645, lines 13203-13204: the eighth search leaves health full but changes hunger phase.",
-      "Decision 4646, lines 13205-13206: no reachable exit is reported and fallback waits begin.",
-      "Decision 5799, lines 16655-16656: a starving hero falls from 1 HP to zero while waiting."
+      "Decision 720, line 2128: no ordinary region tasks or reachable exit; 18 optional hunger turns remain.",
+      "Decision 723, line 2136: another search-vantage route starts with only four optional hunger turns.",
+      "Decision 743, selection 2191 and accepted transition 2192: search-vantage movement starts with zero optional hunger turns and ends starving.",
+      "Decision 744, accepted transition 2196: the waterskin restores full health without resolving progression.",
+      "Decision 745, line 2197: seven searches, no reachable exit or ordinary frontier, no food, and terminal planner exhaustion.",
+      "tools/survival_policy.py:1109-1159; tools/hidden_doors.py:continue_search_vantage; tools/mage_policy.py:805-827; tools/until_death.py:recover."
     ],
     "status": "deferred",
-    "reason": "Historical backlog, not revalidated or addressed in run 000089. Historical backlog, not revalidated or addressed in this recording. Historical context from the supplied backlog, not revalidated in this review: Historical backlog; not revalidated or addressed in this recording. Carried historical backlog; not revalidated or addressed in this review. Historical backlog, not revalidated or addressed in this recording. Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: Carried unresolved from the supplied backlog; not re-investigated in this recording. Source establishes the cumulative search-ceiling gate, not a safe replacement. The concrete blocker is validating a remaining target with its safe approach/return, current threat bookkeeping, hunger cost, and bounded search receipts. The incomplete observed map does not prove where progression lies; the known trap-blocked connection also lacks a validated protected traversal. A larger search or waiting bound, speculative movement, or guessed potion effect would not supply that evidence. No policy or test changes are proposed.",
+    "reason": "Revalidated for this recording through public reports and complete selecting source, not a full runtime reconstruction. No safe focused patch is established. The exact blocker is an unfunded remaining search: terminal supported food turns are zero, ordinary progression routes are absent, and required/committed search controllers retain hunger gates. Increasing the search ceiling would not satisfy those gates; adding them to generic searching would only terminate earlier. Next reconstruct and validate selections through decision 720, stopping at the first divergence, then probe copies for a fresh visible-wall search with an executable safe approach and travel-plus-search hunger budget before decision 723. Require accepted-search receipts and a new baseline-red/candidate-green regression for any supported correction. If no funded candidate exists, establish a bounded, evidence-backed health-loss search contract before changing admission. Preserve hazard checks, mandatory pickup and the terminal stuck label.",
     "origin_run": "000030"
   },
   {
