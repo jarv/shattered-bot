@@ -1705,5 +1705,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000134"
+  },
+  {
+    "id": "000135-last-flame-reservation",
+    "priority": "high",
+    "summary": "Reserve the last known flame from optional bookshelf ignition before exploration finishes or while a barricade remains.",
+    "evidence": [
+      "Decision 138, log line 380: sole identified flame selected for bookshelf ignition.",
+      "Decision 139, log lines 382-383: target 409 selected and flame consumption accepted.",
+      "Decision 157, log line 430: barricade 645 first publicly observed after flame expenditure.",
+      "Decision 194, log line 538: missing flame supply exhausts mandatory potion discovery."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000135"
   }
 ]

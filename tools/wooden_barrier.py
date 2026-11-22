@@ -128,9 +128,22 @@ def known_burn(p,state,enemies):
                 and 'THROW' in i.get('actions',[]) and eligible(p,i,'THROW','flame')),None)
     if not flame:return None
     paths=p.paths(state);nonflammable={0,1,3,4,9,11,12,14,19,20,24,25,26,28,29};choices=[]
+    # Shelves are optional fuel, not proof that this floor's barricade supply
+    # is surplus. Keep the last known dose until ordinary branch discovery is
+    # finished, and always reserve it for an actually remembered barricade.
+    # This neither clears shelf backs nor admits any hazard/unknown potion use.
+    reserve_shelves=False
+    if getattr(p,'reserve_floor_puzzle_supplies',False) and sum(
+            i.get('quantity',1) for i in state['inventory']
+            if base_name(i)=='potion of liquid flame')<=1:
+        report=p.exploration_report(state,paths)
+        reserve_shelves=any(t.get('terrain')==13 for t in p.tiles.values()) or any(
+            report[key] for key in ('unexplored_frontiers','unopened_doors',
+                                   'unresolved_doors','unreachable_known_floor'))
     for wood,tile in p.tiles.items():
         key=(state['depth'],'burn',wood)
         if tile.get('terrain') not in {13,27} or key in p.room_attempts or p.known_burn_staging[wood]>=32:continue
+        if tile['terrain']==27 and reserve_shelves:continue
         # Bookshelves can hide secret reward alcoves, without being a barricade
         # potion-supply room. Follow only the observed bounded fuel component.
         fuel={wood};queue=[wood]

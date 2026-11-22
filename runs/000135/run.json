@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "id": "000135",
+  "started_at": "2026-11-22T14:25:36Z",
+  "completed_at": "2026-11-22T14:26:50.763558+00:00",
+  "source_commit": "77638d068c294cace849fdde39b80dbe54bf80b4",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "1e55d72-review-recovery",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 194,
+  "duration_seconds": 72.266,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000134",
+  "previous_source_commit": "edfcf1a768191a9a65ffa6de8281b7fd5b5f04b2",
+  "improvements": [
+    "When choosing among doorway retreats, the bot now prefers a first step exposed to at most one observed attacker over one exposed to several. It still prefers shorter routes within each group."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Among already admitted doorway approaches, avoid a first step beside multiple observed attackers when another route limits current contact to one. Keep shortest-route preference within each contact class, and recheck hazards and the actual holding square. A less-exposed first step does not prove safe arrival or survival.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at planner exhaustion. The initiating resource error occurred at decision 138: the bot spent its only identified liquid-flame potion on optional bookshelves before finishing ordinary exploration. Decision 139's accepted transition confirms consumption; decision 157 first reveals a real barricade. At decision 194, mandatory potion discovery blocked descent because that barricade's flame supply was missing, and all listed preparation alternatives declined. The remaining unidentified potion was not a known replacement. A focused candidate now reserves the last known flame from optional shelves while exploration is unfinished or a barricade is remembered. An isolated original-source probe matched the recorded throw and target; it was not a full runtime-memory reconstruction. The new regression failed with two expected assertions on original policy and passed on the candidate. The full suite passed 1,946 tests with four skips. This establishes reservation behavior, not successful barricade clearance or continuation.",
+    "learnings": "Keep the last identified liquid-flame potion for a possible barricade until ordinary branch discovery is finished. Optional bookshelves do not prove that the dose is surplus. Preserve existing collateral, protection, pickup and discovery requirements; never assume an unidentified potion replaces the spent supply."
+  },
+  "recommendations": [
+    {
+      "id": "000135-last-flame-reservation",
+      "priority": "high",
+      "summary": "Reserve the last known flame from optional bookshelf ignition before exploration finishes or while a barricade remains.",
+      "evidence": [
+        "Decision 138, log line 380: sole identified flame selected for bookshelf ignition.",
+        "Decision 139, log lines 382-383: target 409 selected and flame consumption accepted.",
+        "Decision 157, log line 430: barricade 645 first publicly observed after flame expenditure.",
+        "Decision 194, log line 538: missing flame supply exhausts mandatory potion discovery."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000135"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000135/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000135/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 8,
+        "gold_gained": 108,
+        "turns": 186,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 188,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 532
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded storage",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 8,
+    "ending_level": 1,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 1,
+    "gold_collected": 108,
+    "gold_complete": true,
+    "turns": 186,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 1,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
