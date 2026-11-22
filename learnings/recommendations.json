@@ -1230,7 +1230,7 @@
       "tools/puzzle_supplies.py:124–186; tools/room_tactics.py:197–288; tools/mage_policy.py:456–457."
     ],
     "status": "deferred",
-    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Historical supplied backlog, not revalidated or addressed in this review. Prior review context: No safe focused replacement is established. The only admitted origin is an out-of-view closed door 48 ordinary moves away; both the 41-cell approach cap and the 48-step ceiling exclude completion, so increasing one bound is insufficient. Source browsing and matching reconstruction resolve the original-state uncertainty. Next derive the recorded 967-to-1097 geometry into a deterministic regression and implement a bounded transaction funding transit, door opening/arrival and protected return, with accepted movement receipts, fresh per-step hazard checks and arrival eligibility distinct from transit spending. Validate baseline-red/candidate-green and the full suite before claiming repair. Do not guess potion identities, waive the chest, weaken habitat protection or restore death waits.",
+    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Historical supplied backlog, not revalidated or addressed in this review. Prior review context: No safe focused replacement is established. The only admitted origin is an out-of-view closed door 48 ordinary moves away; both the 41-cell approach cap and the 48-step ceiling exclude completion, so increasing one bound is insufficient. Source browsing and matching reconstruction resolve the original-state uncertainty. Next derive the recorded 967-to-1097 geometry into a deterministic regression and implement a bounded transaction funding transit, door opening/arrival and protected return, with accepted movement receipts, fresh per-step hazard checks and arrival eligibility distinct from transit spending. Validate baseline-red/candidate-green and the full suite before claiming repair. Do not guess potion identities, waive the chest, weaken habitat protection or restore death waits. Current recording: a separate arrival contradiction is reproduced at decisions 602 and 611–612. The proposed conservative filter removes repeated travel, but does not establish retrieval. In the reduced public geometry bank 1267 has only one ordinary retreat, entrance 1266 has only one walkable outside retreat, and origin 1268 exceeds the protected route envelope. Next validate a dedicated known-invisibility door/arrival transaction with conservative opening and return costs, interruption safety and actual-buff receipts before changing drink admission; do not simply count the hazardous-side bank as an escape.",
     "origin_run": "000094"
   },
   {
@@ -1505,5 +1505,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000114"
+  },
+  {
+    "id": "000115-rejected-pool-bank",
+    "priority": "high",
+    "summary": "Do not repeatedly return to a fully observed pool staging bank that already fails arrival admission.",
+    "evidence": [
+      "Decision 602, selection line 1734 and accepted line 1735: travel from 1268 to bank 1267.",
+      "Decision 611, lines 1753–1754, leaves 1267; decision 612, lines 1756–1757, sends the hero back.",
+      "Decision 624, line 1794, records the same staging navigation loop.",
+      "tools/puzzle_supplies.py:157–224; tools/piranha_tactics.py:62–72; new rejected-bank regression."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000115"
   }
 ]
