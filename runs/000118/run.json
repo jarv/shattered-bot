@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "id": "000118",
+  "started_at": "2026-11-22T09:06:33Z",
+  "completed_at": "2026-11-22T09:11:36.926133+00:00",
+  "source_commit": "966546b198e47fd289be61e7b5251c0ae5a4eb67",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "1e55d72-review-recovery",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 379,
+  "duration_seconds": 300.133,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000117",
+  "previous_source_commit": "238db851503eda40f6c689be80dded634efe8097",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Shelf scenery does not establish a guaranteed flame supply, but unseen shelf backs also do not establish that flame is expendable. Distinguish optional shelves from required retrieval using positive public evidence before changing reservation. Selecting preparation is not successful discovery, clearance or collection.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended in planner exhaustion, not death: decision 379 (log line 1160) shows 25/25 HP and an exhausted mandatory-discovery objective. The initiating obstacle was already visible at decision 150 (line 443): Chest 1276 lay beyond the trapped flight-room entrance, while the nearby potion-test approaches bordered grass. The supply planner retained the unidentified potion rather than inventing levitation. At decision 348 (line 1067), a puzzle-backed meal removed hunger, but preparation still found no admitted protected reward trip. The last accepted pickup at decision 378 (line 1158) advanced the clock; the next selection could neither prepare the reserved supply nor descend. The selecting chain is tools/mage_policy.py:492-497, tools/descent_potions.py:309-348, tools/puzzle_supplies.py:130-154,764-810 and tools/room_tactics.py:197-311. Source-pinned offline reconstruction matched all 379 selected actions, reasons, intents and controllers, then reproduced the exact terminal blocker. This is reconstructed bookkeeping, not recorded runtime memory. Read-only probes at decisions 150, 348 and 379 found eleven hypothetical flight-trip origins, all rejected as unknown-potion test banks; each origin or its surroundings includes grass or high grass. A separate reduced terminal-public-geometry probe agreed. This rules out a visibility-only repair. No focused safe policy replacement is established, so no policy patch or new regression is supplied. The concrete blocker is terrain and inventory protection around the budgeted trip origins, with no known levitation or nonconsumptive identification resource in the terminal inventory. Increasing bounds, opening the entrance again, ignoring the chest, or guessing a potion would not resolve that safety contradiction. The existing targeted discovery, entrance and stuck-planner tests passed: 23 tests. No baseline-red/candidate-green or candidate full-suite result is claimed because there is no candidate.",
+    "learnings": "A puzzle-backed meal and a hypothetical flight route do not establish an executable potion test. Check structural bank feasibility before attributing failure to hunger, stale visibility or door reclosure. Keep unidentified colors unidentified and preserve the chest obligation. Next derive the eleven-origin grass/water/entrance fixture and validate a contained preparation or nonconsumptive identification transaction before changing admission."
+  },
+  "recommendations": [
+    {
+      "id": "000060-flight-test-feasibility",
+      "priority": "high",
+      "summary": "Establish safe identification and protected retrieval when every budgeted flight-test origin borders grass.",
+      "evidence": [
+        "Decision 150, log line 443: Chest 1276 is observed beyond the flight entrance at 1066.",
+        "Source-pinned offline reconstruction matches all 379 selected inputs and reproduces the exact terminal blocker; probes at decisions 150, 348 and 379 find eleven hypothetical trip origins but no safe unknown-potion bank.",
+        "Decision 348, log line 1067: a puzzle-backed meal is selected; decision 349, line 1069 still reports no verified protected reward trip.",
+        "Decision 378, accepted transition line 1158: the last pickup advances the clock with full health.",
+        "Decision 379, line 1160: missing levitation blocks mandatory discovery and exhausts the planner.",
+        "Reduced terminal-public-geometry probe: all eleven hypothetical flight-trip origins fail bank admission independently of visibility because their own terrain or surroundings include grass or high grass."
+      ],
+      "status": "deferred",
+      "reason": "Revalidated here, but not safely repaired. Complete selecting source and matching offline reconstruction resolve the helper-chain and selecting-state gaps, isolating a structural terrain blocker rather than a hunger-only or door-only failure. The terminal inventory has three unidentified colors, no known levitation, no identified flame and no identification resource. Relaxing the flammable-neighborhood gate could expose the hero or other potions to an unknown effect. Next build a deterministic fixture around water 982, entrance 1066 and Chest 1276, including all eleven origins. Validate actual fire/frost footprints, inventory-protected stash access, escape containment and the protected return budget before admitting any preparation transaction. Require accepted effect and pickup receipts, plus baseline-red/candidate-green refusal tests. If containment fails, require a publicly available nonconsumptive identification or terrain-clearing resource; none is established in this terminal inventory. Do not certify discovery, clearance or collection from a hypothetical route. No patch is proposed.",
+      "origin_run": "000060"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000118/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000118/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 102,
+        "turns": 375,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 373,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 746
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 102,
+    "gold_complete": true,
+    "turns": 375,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

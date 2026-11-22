@@ -787,15 +787,15 @@
     "priority": "high",
     "summary": "Establish safe identification and protected retrieval when every budgeted flight-test origin borders grass.",
     "evidence": [
-      "Decision 187, line 526: open entrance 935, flock traps and Chest 1136 are observed.",
-      "Decision 188, line 529: flight preparation retains the unknown candidate without an admitted test bank.",
-      "Decision 216, accepted transition line 611: the clock advances and HP remains 25/25.",
-      "Decision 217, line 613: missing levitation exhausts mandatory discovery; all preparation prerequisites decline.",
-      "Source-pinned offline reconstruction matches decisions 0–216; copied probes find five protected-trip origins, all structurally excluded by grass or high grass.",
-      "tools/puzzle_supplies.py:130–160,338–380,764–810; tools/room_tactics.py:197–311; tools/descent_potions.py:282–321."
+      "Decision 150, log line 443: Chest 1276 is observed beyond the flight entrance at 1066.",
+      "Source-pinned offline reconstruction matches all 379 selected inputs and reproduces the exact terminal blocker; probes at decisions 150, 348 and 379 find eleven hypothetical trip origins but no safe unknown-potion bank.",
+      "Decision 348, log line 1067: a puzzle-backed meal is selected; decision 349, line 1069 still reports no verified protected reward trip.",
+      "Decision 378, accepted transition line 1158: the last pickup advances the clock with full health.",
+      "Decision 379, line 1160: missing levitation blocks mandatory discovery and exhausts the planner.",
+      "Reduced terminal-public-geometry probe: all eleven hypothetical flight-trip origins fail bank admission independently of visibility because their own terrain or surroundings include grass or high grass."
     ],
     "status": "deferred",
-    "reason": "Revalidated in this recording, but no safe focused patch is established. Origins 893, 894, 895, 856 and 896 all border flammable grass; visibility refresh alone cannot admit unknown drinking. Known liquid flame does not establish contained spread, safe firing/retreat, collateral protection or verified expiry. Next derive the observed entrance/grass/chest fixture and validate one bounded known-flame preparation transaction with accepted throw receipts, contained spread, protected supplies, expiry and fresh bank/stash/round-trip admission. Add refusal regressions for unknown spread, threatened retreat, collateral loot, active effects and failed receipts. If containment cannot be established, require executable nonconsumptive identification instead. Keep mandatory pickup, hazard checks and terminal planner exhaustion intact.",
+    "reason": "Revalidated here, but not safely repaired. Complete selecting source and matching offline reconstruction resolve the helper-chain and selecting-state gaps, isolating a structural terrain blocker rather than a hunger-only or door-only failure. The terminal inventory has three unidentified colors, no known levitation, no identified flame and no identification resource. Relaxing the flammable-neighborhood gate could expose the hero or other potions to an unknown effect. Next build a deterministic fixture around water 982, entrance 1066 and Chest 1276, including all eleven origins. Validate actual fire/frost footprints, inventory-protected stash access, escape containment and the protected return budget before admitting any preparation transaction. Require accepted effect and pickup receipts, plus baseline-red/candidate-green refusal tests. If containment fails, require a publicly available nonconsumptive identification or terrain-clearing resource; none is established in this terminal inventory. Do not certify discovery, clearance or collection from a hypothetical route. No patch is proposed.",
     "origin_run": "000060"
   },
   {
