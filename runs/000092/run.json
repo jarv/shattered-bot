@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "id": "000092",
+  "started_at": "2026-11-22T00:11:41Z",
+  "completed_at": "2026-11-22T00:19:10.242214+00:00",
+  "source_commit": "bfc548d1a8d46a5d0a52a223fa9a697c2bbfb770",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 3,
+  "actions": 1221,
+  "duration_seconds": 443.155,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000091",
+  "previous_source_commit": "5c3f88cc294d90d08c044fb4d06afaf1083d1a69",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Distinguish a reachable-map search limit from a known trap blocking ordinary progression. A safely positioned remote throw is preparation, not proof of electrical clearance or item recovery. For a shocking trap, contain the full electrical footprint, require fresh expiry evidence and verify reusable-item retrieval before resuming the corridor.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at 35/35 HP. The initiating blocker was Chest 262 beside the remembered piranha habitat, first observed at decision 726 (line 2172). The bot treated this aquarium-like geometry as requiring a floor-supplied invisibility potion, although the pinned game source only guarantees that supply for the separate pedestal-chest pool room. Jade and bistre invisibility guesses were publicly incorrect (decisions 869 and 1110); neither supplied protection. Preparation reported no verified protected chest round trip, while the unfinished chest prevented descent. The final blink moved the hero without resolving that obligation (decision 1220, accepted transition line 3735); decision 1221 then exhausted the planner. Offline bookkeeping reconstruction matched all 1,221 selected inputs and reproduced the terminal blocker; it is reconstructed state, not recorded runtime memory. Full source and logs resolve the selecting-state gap, but do not certify a safe replacement. No policy or regression change is submitted: removing the obligation would waive collection, and an executable protected trip or defeat-backed ranged clearance plan is not established. Existing targeted tests passed 33 checks; the unchanged full suite passed 1,833 tests with four skips. These results do not establish retrieval success or survival under another tactic.",
+    "learnings": "A fish-adjacent chest does not establish the special pool room or its guaranteed invisibility supply. Preserve the chest obligation and habitat buffer, but develop preparation from actual public resources and executable routes. Incorrect intuition guesses are not positive item identifications. A safe potion-test bank alone does not establish a protected retrieval trip."
+  },
+  "recommendations": [
+    {
+      "id": "000062-aquarium-retrieval-plan",
+      "priority": "high",
+      "summary": "Establish executable mandatory chest retrieval for aquarium-like piranha geometry without assuming an invisibility supply.",
+      "evidence": [
+        "Decision 726, line 2172: piranha 219 and Chest 262 on special flooring are observed.",
+        "Decisions 865–869, lines 2558–2566: jade invisibility hypothesis fails publicly.",
+        "Decisions 1106–1110, lines 3417–3425: bistre invisibility hypothesis also fails publicly.",
+        "Decision 1218, line 3729: preparation reports no verified protected reward round trip.",
+        "Decisions 1219–1221, lines 3731–3737: chest blocks descent; blink does not resolve it; planner stops with the hero alive.",
+        "tools/piranha_tactics.py:14–59; tools/puzzle_supplies.py:686–740; tools/room_tactics.py:197–288; tools/mage_policy.py:443–457."
+      ],
+      "status": "deferred",
+      "reason": "Revalidated in this recording. Complete source and matching offline reconstruction resolve the controller-state gap, but a safe replacement is not established. No known invisibility or identification resource remains at exhaustion; available visible test banks do not establish a protected chest return. A ranged alternative lacks a bounded public-resource/loss budget and defeat-backed habitat-retirement contract; the sleeping fish also has no visible health bar for existing damage-evidence capture. Next derive this small habitat/perimeter fixture and validate dry firing positions outside all habitat reach, charge and hunger costs, fresh defeat/clearance evidence and actual chest collection receipts. Alternatively establish nonconsumptive identification plus an executable protected trip using an observed resource. Do not guess potion effects, weaken the buffer, waive pickup or restore death waits.",
+      "origin_run": "000062"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000092/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000092/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 128,
+        "turns": 252,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 254,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 295
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 25,
+        "gold_gained": 370,
+        "turns": 446,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 461,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 457
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "objective-completed-dialogue"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 32,
+        "gold_gained": 392,
+        "turns": 493,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 500,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 23,
+    "ending_level": 4,
+    "starving_turns": 9,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 4,
+    "gold_collected": 890,
+    "gold_complete": true,
+    "turns": 1191,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

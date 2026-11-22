@@ -818,17 +818,17 @@
   {
     "id": "000062-aquarium-retrieval-plan",
     "priority": "high",
-    "summary": "Establish mandatory chest retrieval without assuming an invisibility supply for aquarium-style piranha geometry.",
+    "summary": "Establish executable mandatory chest retrieval for aquarium-like piranha geometry without assuming an invisibility supply.",
     "evidence": [
-      "Decision 1126, log line 3369: piranha 306 and locked chest 333 are first publicly observed.",
-      "Decision 1148, log line 3421: peaceful perimeter exploration continues with only known healing potions and one staff charge.",
-      "Decision 1438, accepted transition line 4251: time advances and health remains full before exhaustion.",
-      "Decision 1439, log line 4253: the chest blocks departure despite a held golden key; no potion candidate or known invisibility is carried.",
-      "tools/piranha_tactics.py:14–59; tools/puzzle_supplies.py:40–65,486–521; tools/mage_policy.py:429–430.",
-      "Pinned AquariumRoom painter supplies no invisibility; the special PoolRoom painter supplies it for a pedestal chest."
+      "Decision 726, line 2172: piranha 219 and Chest 262 on special flooring are observed.",
+      "Decisions 865–869, lines 2558–2566: jade invisibility hypothesis fails publicly.",
+      "Decisions 1106–1110, lines 3417–3425: bistre invisibility hypothesis also fails publicly.",
+      "Decision 1218, line 3729: preparation reports no verified protected reward round trip.",
+      "Decisions 1219–1221, lines 3731–3737: chest blocks descent; blink does not resolve it; planner stops with the hero alive.",
+      "tools/piranha_tactics.py:14–59; tools/puzzle_supplies.py:686–740; tools/room_tactics.py:197–288; tools/mage_policy.py:443–457."
     ],
     "status": "deferred",
-    "reason": "Historical backlog, not revalidated or addressed in run 000089. Historical backlog, not revalidated or addressed in this recording. Historical context from the supplied backlog, not revalidated in this review: Historical backlog; not revalidated or addressed in this recording. Carried historical backlog; not revalidated or addressed in this review. Historical backlog, not revalidated or addressed in this recording. Complete source exposes the unsupported special-room supply prior, but a safe complete replacement is not established. The exact blocker is a missing bounded ranged-control and defeat-backed habitat-retirement contract: the first peaceful sight has one known staff charge and the terminal state has three, while remembered water remains excluded even after an actor disappears. The sleeping fish also lacks the health bar required by existing attack-evidence capture. Next, derive a deterministic narrow-pool fixture and validate dry firing positions beyond the whole habitat's melee reach, resource and hunger costs, fresh accepted defeat evidence, independent clearance and keyed collection receipts. Simply narrowing recognition or deleting the obligation could waive mandatory retrieval; guessing a potion or relaxing the buffer is unsafe. No patch is proposed.",
+    "reason": "Revalidated in this recording. Complete source and matching offline reconstruction resolve the controller-state gap, but a safe replacement is not established. No known invisibility or identification resource remains at exhaustion; available visible test banks do not establish a protected chest return. A ranged alternative lacks a bounded public-resource/loss budget and defeat-backed habitat-retirement contract; the sleeping fish also has no visible health bar for existing damage-evidence capture. Next derive this small habitat/perimeter fixture and validate dry firing positions outside all habitat reach, charge and hunger costs, fresh defeat/clearance evidence and actual chest collection receipts. Alternatively establish nonconsumptive identification plus an executable protected trip using an observed resource. Do not guess potion effects, weaken the buffer, waive pickup or restore death waits.",
     "origin_run": "000062"
   },
   {
