@@ -801,23 +801,16 @@
   {
     "id": "000061-descent-bank-return",
     "priority": "high",
-    "summary": "Establish bounded multi-stage return and fresh inventory protection for mandatory pre-descent discovery.",
+    "summary": "Establish an executable preparation reservation before exploration disconnects every remembered discovery bank.",
     "evidence": [
-      "Decision 215, line 621: last reconstructed bank receipt at 94 covers only turquoise potion.",
-      "Decision 216, accepted transition line 625: bistre potion is collected.",
-      "Decision 220, accepted transition line 634: the bistre strength hypothesis fails without revealing its full identity.",
-      "Decision 273, accepted transition line 792: the clock advances at full health.",
-      "Decision 274, line 794: mandatory discovery blocks departure.",
-      "Offline reconstruction matches all 274 selected inputs; nearest water route has 20 cells and the old receipt route has 33.",
-      "tools/descent_potions.py:51-88,110-253; tools/puzzle_supplies.py:97-121; tools/potion_stash.py:51-76.",
-      "Run 000071 decision 197, line 550, followed by decision 198, line 552: identification reveals frost, leaving azure and charcoal unknown.",
-      "Run 000071 decision 224, line 630: last reconstructed compatible bank receipt is at 361.",
-      "Run 000071 decision 238, accepted transition line 673: movement advances the clock at 25/25 HP.",
-      "Run 000071 decision 239, line 675: mandatory potion discovery exhausts the living planner.",
-      "Source-pinned offline reconstruction matches all 239 selected actions, reasons and intents, then the terminal blocker. Bank 361 needs 16 route cells; the short-return contract admits at most 13."
+      "Decision 227, selection line 626 and accepted line 627: movement leaves water 820 for grass 851; reconstruction retains bank 755.",
+      "Decisions 228–229, lines 629–633: exploration crosses door 884 and reaches grass 916.",
+      "Decision 230, line 635: mandatory discovery exhausts with the hero at full health.",
+      "Offline reconstruction matches all 230 selections; the existing constrained return graph contains only cells 916 and 884, excluding all 66 compatible bank receipts.",
+      "tools/descent_potions.py:85–143,376–417; tools/preparation_prerequisites.py:16–58."
     ],
     "status": "deferred",
-    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Historical supplied backlog, not revalidated or addressed in this review. Prior review context: Historical backlog, not revalidated or addressed in run 000089. Historical backlog, not revalidated or addressed in this recording. Historical context from the supplied backlog, not revalidated in this review: Historical backlog; not revalidated or addressed in this recording. Carried historical backlog; not revalidated or addressed in this review. Revalidated in this recording. Complete source and offline reconstruction resolve the selecting-state gap: a compatible bank receipt exists at 361, but its 16-cell return exceeds the short-return contract. The ordinary shortest route also crosses excluded grass; a terrain-constrained alternative is still 16 cells. Visible safe test banks lack adjacent water, while nearby visible water fails the observed statue/collateral gate. No identification resource remains. No patch is submitted because a bounded multi-stage transit-and-arrival/protection contract is not established. Next, build a deterministic fixture from the recorded 612-to-361 geometry and validate accepted door/movement receipts, fresh next-step hazard admission, total hunger/travel budget, and fresh three-color stash admission on arrival. Increasing bounds alone, guessing potion effects or waiving discovery is unsafe.",
+    "reason": "Revalidated here, but no safe focused replacement is established. Grass 851–853 disconnects the return graph independently of hunger or travel limits; allowing that transit would relax an existing safety restriction. Terminal inventory has no known nonconsumptive identification resource. Next derive paired decision-227/230 fixtures and validate a bounded preparation-reservation transaction before leaving the admitted component, including legitimate preparation timing, fresh bank and inventory admission, accepted-input receipts, interruption handling and unchanged mandatory exploration/pickup obligations. Do not drink from remembered visibility, guess crimson's effect or increase bounds.",
     "origin_run": "000061"
   },
   {

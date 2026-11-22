@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "id": "000122",
+  "started_at": "2026-11-22T11:03:01Z",
+  "completed_at": "2026-11-22T11:04:32.617642+00:00",
+  "source_commit": "9d8064c858b38bd62eca16813714eeeacc01c552",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "1e55d72-review-recovery",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 230,
+  "duration_seconds": 88.799,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000121",
+  "previous_source_commit": "3d775d930f2272f599500318ecc65b025a07e2a3",
+  "improvements": [
+    "The bot now clears a remembered DM-100 threat when a carefully verified disintegration attack proves it was defeated. Uncertain attacks still leave the threat remembered."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Keep remembered lightning threats separate from ordinary sightings, but retire matching memory when a rigorously confirmed tracked attack proves that caster cannot remain alive. Experience and disappearance alone are insufficient for a penetrating beam; preserve threat memory when tracking, range or successful execution is uncertain.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero was alive at full health when mandatory potion discovery exhausted the planner. Decisions 227–229 moved from water through grass and a door into the final explored pocket; the last accepted move advanced the clock normally. Source-pinned offline reconstruction matches all 230 recorded selections and reproduces decision 230's blocker. Reconstructed bookkeeping retains 66 inventory-compatible preparation banks, but the existing return-terrain restriction disconnects every bank: only the current grass cell and adjacent door remain reachable. The nearest remembered bank needs just six ordinary route cells, so increasing travel or waiting bounds would not solve this. All water is currently unseen, and no known identification or reconnaissance resource remains. Complete source and reconstruction resolve the packet's selecting-state uncertainty. No patch is supplied because crossing the grass requires an unvalidated change to the transit safety contract; stale bank observations cannot authorize drinking. The unchanged source passes 1910 tests, with four skipped. No new regression or candidate success is claimed.",
+    "learnings": "Preserve a freshly verifiable preparation opportunity before exploration leaves the admitted return graph. Bank receipts alone do not guarantee an executable return. Keep mandatory discovery, progression pickup, fresh inventory protection and terminal exhaustion intact."
+  },
+  "recommendations": [
+    {
+      "id": "000061-descent-bank-return",
+      "priority": "high",
+      "summary": "Establish an executable preparation reservation before exploration disconnects every remembered discovery bank.",
+      "evidence": [
+        "Decision 227, selection line 626 and accepted line 627: movement leaves water 820 for grass 851; reconstruction retains bank 755.",
+        "Decisions 228–229, lines 629–633: exploration crosses door 884 and reaches grass 916.",
+        "Decision 230, line 635: mandatory discovery exhausts with the hero at full health.",
+        "Offline reconstruction matches all 230 selections; the existing constrained return graph contains only cells 916 and 884, excluding all 66 compatible bank receipts.",
+        "tools/descent_potions.py:85–143,376–417; tools/preparation_prerequisites.py:16–58."
+      ],
+      "status": "deferred",
+      "reason": "Revalidated here, but no safe focused replacement is established. Grass 851–853 disconnects the return graph independently of hunger or travel limits; allowing that transit would relax an existing safety restriction. Terminal inventory has no known nonconsumptive identification resource. Next derive paired decision-227/230 fixtures and validate a bounded preparation-reservation transaction before leaving the admitted component, including legitimate preparation timing, fresh bank and inventory admission, accepted-input receipts, interruption handling and unchanged mandatory exploration/pickup obligations. Do not drink from remembered visibility, guess crimson's effect or increase bounds.",
+      "origin_run": "000061"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000122/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000122/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 62,
+        "turns": 222,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 224,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 695
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 1,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 62,
+    "gold_complete": true,
+    "turns": 222,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
