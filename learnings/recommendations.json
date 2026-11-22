@@ -1765,5 +1765,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000139"
+  },
+  {
+    "id": "000141-arcane-missile-levelup-receipt",
+    "priority": "high",
+    "summary": "Recognize the evidenced Arcane Vision magic-missile level-up kill before stale lightning memory blocks progress.",
+    "evidence": [
+      "Decision 3681, log lines 10572-10573: known staff selected with Arcane Vision already learned.",
+      "Decision 3682, log lines 10574-10575: targeted zap consumes a charge and earns exactly six XP across a level-up.",
+      "Decision 3683, log line 10576: no DM-100 observed, but remembered lightning exposure causes planner exhaustion.",
+      "tools/combat_observation.py:39-81; tools/policy_nodes.py:93-115"
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000141"
   }
 ]

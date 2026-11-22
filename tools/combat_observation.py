@@ -81,6 +81,64 @@ def dm100_missile_receipt(before,after,pending):
                                             for o in after.get("objects",[]))
 
 
+def dm100_arcane_missile_levelup_receipt(before,after,pending):
+    """One consumed, clear-ray missile with Arcane Vision and six rollover XP.
+
+    Tracking rules out a struck survivor hiding beyond the old neighborhood.
+    Keep the older adjacent/no-level-up receipt unchanged.
+    """
+    import re
+    if pending["name"].lower()!="dm-100" or pending["source"][0]!="magic" \
+            or pending["context"][2]:
+        return False
+    hero=before["hero"];level=hero.get("level",0)
+    if hero.get("hero_class")!="mage" or not 1<=level<=13 \
+            or after["hero"].get("level")!=level+1 \
+            or not any(t.get("name")=="arcane vision" and t.get("points",0)>0
+                       for t in hero.get("talents",[])):
+        return False
+    if before["depth"]!=after["depth"] or before.get("branch",0)!=after.get("branch",0) \
+            or hero["cell"]!=after["hero"]["cell"]:
+        return False
+    b=before.get("evaluation_stats",{});a=after.get("evaluation_stats",{})
+    if not all(isinstance(s.get(k),(int,float)) for s in (b,a)
+               for k in ("experience","experience_to_level","elapsed_turns")) \
+            or b["experience_to_level"]!=5+5*level \
+            or a["experience_to_level"]!=5+5*(level+1) \
+            or not 0<=b["experience"]<b["experience_to_level"] \
+            or not 0<=a["experience"]<a["experience_to_level"] \
+            or a["experience"]+b["experience_to_level"]-b["experience"]!=6 \
+            or a["elapsed_turns"]-b["elapsed_turns"]!=1:
+        return False
+    item=next((i for i in before.get("inventory",[])
+               if i["name"]==pending["source"][1]),None)
+    if not item or not item.get("identified") or not item.get("curse_known") \
+            or item.get("known_cursed") or "of magic missile" not in item["name"].lower():
+        return False
+    used=next((i for i in after.get("inventory",[])
+               if i.get("id")==item.get("id") and i["name"]==item["name"]),None)
+    bc=re.fullmatch(r"(\d+)/(\d+)",item.get("status",""))
+    ac=re.fullmatch(r"(\d+)/(\d+)",used.get("status","")) if used else None
+    if not bc or not ac or int(bc[1])-int(ac[1])!=1 or bc[2]!=ac[2]:
+        return False
+    actors=[o for o in before.get("objects",[]) if not o.get("top_item")]
+    if len(actors)!=1 or actors[0].get("cell")!=pending["cell"] \
+            or actors[0].get("name","").lower()!="dm-100" or actors[0].get("sleeping") \
+            or actors[0].get("status_icons") \
+            or any(o.get("name","").lower()=="dm-100" for o in after.get("objects",[])):
+        return False
+    try:
+        from .policy_geometry import projectile_line_clear
+    except ImportError:
+        from policy_geometry import projectile_line_clear
+    if any(before["map"][k]!=after["map"][k] for k in ("width","height")):
+        return False
+    tiles={t["cell"]:t for t in before["map"]["cells"]
+           if t.get("visible") is True and t.get("observed") is not False and not t.get("effects")}
+    return pending["cell"] in tiles and projectile_line_clear(
+        hero["cell"],pending["cell"],before["map"]["width"],tiles)
+
+
 def dm100_arcane_disintegration_receipt(before,after,pending):
     """A struck survivor remains publicly tracked by Arcane Vision.
 
@@ -165,6 +223,7 @@ def observe_accepted_attack(p,before,decision,after):
     memory=getattr(p,"dm100_threat",None)
     if memory and memory["cell"]==pending["cell"] and (
             dm100_missile_receipt(before,after,pending)
+            or dm100_arcane_missile_levelup_receipt(before,after,pending)
             or dm100_arcane_disintegration_receipt(before,after,pending)):
         p.dm100_threat=None
         if p.ranged_plan and p.ranged_plan.get("name")=="dm-100":
