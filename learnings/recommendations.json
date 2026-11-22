@@ -1288,5 +1288,19 @@
     "status": "rejected",
     "reason": "Candidate validation failed; code was not promoted.",
     "origin_run": "000098"
+  },
+  {
+    "id": "000099-sungrass-activation-handoff",
+    "priority": "high",
+    "summary": "Retain bounded Sungrass recovery after the garden selector activates a pending seed.",
+    "evidence": [
+      "Decision 937, selection 2797: Sungrass planted at 16/30 health.",
+      "Decision 938, selection 2800 and transition 2801: garden activation produces observed herbal healing.",
+      "Decision 939, selection 2803 and transition 2804: movement immediately removes the healing effect.",
+      "tools/mage_policy.py:1226; tools/garden_tactics.py:26–46; tools/seed_strategies.py:88–114."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000099"
   }
 ]

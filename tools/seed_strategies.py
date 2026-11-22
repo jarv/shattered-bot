@@ -90,10 +90,15 @@ def choose(p,state,enemies):
         kind=plan['kind']
         if plan['cell']!=pos:p.seed_plan=None
         elif plan['stage']=='activate':
-            if kind in p.tiles[pos].get('plant','').lower() and time_for(1):
+            # The garden selector can activate our plant before this selector.
+            # Accept the actual same-cell buff, not the plant's disappearance,
+            # then apply the normal bounded recovery and interruption gates.
+            if kind=='sungrass' and 'herbal healing' in buffs and 'herbal healing' not in plan.get('before_buffs',''):
+                plan.update(stage='recover',heal_hp=hero['hp'],heal_progress_at=turn(state))
+            elif kind in p.tiles[pos].get('plant','').lower() and time_for(1):
                 plan['stage']='confirm'
                 return p.cell(pos,'seed: activate observed '+kind+'; verify actual effect')
-            p.seed_plan=None
+            else:p.seed_plan=None
         elif plan['stage']=='confirm':
             if kind=='sungrass' and 'herbal healing' in buffs:
                 plan.update(stage='recover',heal_hp=hero['hp'],heal_progress_at=turn(state))

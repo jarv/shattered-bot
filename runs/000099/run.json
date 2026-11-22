@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "id": "000099",
+  "started_at": "2026-11-22T01:52:37Z",
+  "completed_at": "2026-11-22T01:59:23.032408+00:00",
+  "source_commit": "d5789dfb1287a762386be78856c817700f4f5a8c",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "outcome": "dead",
+  "outcome_summary": "Killed by a gnoll scout while retreating",
+  "outcome_reason": "Hero died",
+  "max_depth": 3,
+  "actions": 1048,
+  "duration_seconds": 401.199,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000098",
+  "previous_source_commit": "8b6c344b485a87a4e32b8cfe64e4a26d1beeaca4",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Treat missing health as a preparation prerequisite when existing safe recovery is funded, rather than immediately exhausting mandatory discovery. Charge accepted recovery inputs to the existing budget. Recheck actual health, threats, inventory protection and drink admission afterward; preparation is not identification or collection success.",
+  "incoming_update_status": "rejected",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero died during retreat. Decision 1046 (transition 3155) reduced health from six to two; decision 1047 (transition 3160) ended at zero. The full terminal observation explicitly names a gnoll scout. An earlier supported defect wasted recovery: decisions 937–938 planted and activated Sungrass at 16/30 health, but decision 939 moved away despite publicly observed herbal healing; transition 2804 confirms the effect vanished. Garden activation preempted the seed selector without advancing its pending activation stage. When the consumed plant disappeared, the seed selector discarded recovery. The proposed correction recognizes the actual same-cell healing buff and retains existing bounded recovery safety checks. A minimal public-input-derived regression matches the preceding plant/activation selections; it is not full-run memory reconstruction. Original policy fails two assertions; the candidate passes all four new tests and the full 1845-test suite, with four skips. This establishes the recovery handoff correction, not survival or a safe replacement for later multi-enemy retreats. No post-death wand revelations informed the correction.",
+    "learnings": "Preserve paid-for Sungrass recovery when another selector activates the plant: use the observed same-cell healing buff, then recheck threats, hunger, health progress and the existing recovery budget before each wait."
+  },
+  "recommendations": [
+    {
+      "id": "000099-sungrass-activation-handoff",
+      "priority": "high",
+      "summary": "Retain bounded Sungrass recovery after the garden selector activates a pending seed.",
+      "evidence": [
+        "Decision 937, selection 2797: Sungrass planted at 16/30 health.",
+        "Decision 938, selection 2800 and transition 2801: garden activation produces observed herbal healing.",
+        "Decision 939, selection 2803 and transition 2804: movement immediately removes the healing effect.",
+        "tools/mage_policy.py:1226; tools/garden_tactics.py:26–46; tools/seed_strategies.py:88–114."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000099"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000099/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000099/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 61,
+        "turns": 335,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 340,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 710
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 20,
+        "gold_gained": 82,
+        "turns": 408,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 410,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 953
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 22,
+        "gold_gained": 177,
+        "turns": 277,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 292,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt/choice container",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 7,
+    "ending_level": 4,
+    "starving_turns": 6,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 4,
+    "gold_collected": 320,
+    "gold_complete": true,
+    "turns": 1020,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
