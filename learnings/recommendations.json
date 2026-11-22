@@ -1285,10 +1285,13 @@
       "Decision 612, accepted transition line 1848: movement advances turn 599 to 600 at 25/30 HP.",
       "Decision 613, line 1850: discovery exhausts on health despite zero healing waits spent and carried food.",
       "tools/mage_policy.py:742–750 and tools/policy_nodes.py:566–574: ordinary recovery stops below discovery's required health.",
-      "tools/descent_potions.py:206–266 in the played source: paused health immediately becomes terminal planner exhaustion."
+      "tools/descent_potions.py:206–266 in the played source: paused health immediately becomes terminal planner exhaustion.",
+      "Run 000113 decisions 210–213, selected lines 592–598 and accepted lines 593–599: four natural-healing waits reach 19/25 HP.",
+      "Run 000113 decision 218, accepted line 613: movement advances turn 209 to 210 at 19/25 HP; decision 219, line 615 exhausts mandatory discovery on health.",
+      "Played tools/mage_policy.py:742–750 uses a 75% ordinary recovery target; tools/descent_potions.py:293–301 requires 85%. Offline reconstruction matches all 219 preceding selections and the terminal blocker."
     ],
-    "status": "deferred",
-    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Candidate validation failed; code was not promoted.",
+    "status": "rejected",
+    "reason": "Candidate validation failed; code was not promoted.",
     "origin_run": "000098"
   },
   {
