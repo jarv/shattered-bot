@@ -552,7 +552,9 @@ def preparation_and_recovery(c):
     if strength:
         return p.use(strength, "DRINK", "prepare: strength potion")
     upgrade = next((i for i in c.inventory if "scroll of upgrade" in i["name"].lower() and "READ" in i["actions"]), None)
-    allocation = choose_upgrade(state) if upgrade else None
+    # READ is still advertised while blinded, but fails without spending time.
+    # Defer allocation intent as well as the input until reading is possible.
+    allocation = choose_upgrade(state) if upgrade and "blind" not in c.buffs else None
     if allocation:
         p.menu_plan = "upgrade-select"
         p.upgrade_target = allocation[0]["name"]
