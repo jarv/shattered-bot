@@ -224,6 +224,11 @@ def plan_journey(p, state, enemies, neighbors, *, probe_kind=None, plan_only=Fal
             pool_region.update(pool)
             pool_region.update(n for c in pool for n in neighbors(c, width, height))
     sentry_region, sentry_delay = sentry_geometry(p, state)
+    # A held key admits a chest, but does not cover every observed lock.
+    # Prefer another matching key to spending flight on that chest while a
+    # deficit remains. Only fully admitted trips below enter this preference.
+    flight_key_deficit = sum(o.get("name", "").lower() == "locked chest"
+                             and not o.get("for_sale") for o in p.loot.values()) > p.keys.get("golden", 0)
     for kind, (potion, buff) in PROTECTION.items():
         if probe_kind is not None and kind!=probe_kind:continue
         item = inventory.get(potion)
@@ -238,6 +243,14 @@ def plan_journey(p, state, enemies, neighbors, *, probe_kind=None, plan_only=Fal
             if any(any(t in b["name"].lower() for t in ("slow", "crippl", "root", "paral", "chill", "vertigo"))
                    for b in state["hero"].get("buffs", [])):
                 continue
+        fallback = None
+        def select(journey):
+            if plan_only:return journey
+            p.room_attempts.add((state["depth"], kind, journey.route[-1]))
+            p.room_journey = journey
+            if duration:
+                return journey.advance(p,state,enemies,neighbors)
+            return use_room_supply(p,item,"DRINK",f"room: prepare {kind} protection for verified round trip",kind=kind)
         paths, queue = {pos: None}, deque([pos])
         while queue:
             cell = queue.popleft()
@@ -263,12 +276,10 @@ def plan_journey(p, state, enemies, neighbors, *, probe_kind=None, plan_only=Fal
                 if budget > (duration or 20):
                     continue
                 journey=Journey(kind,route,state['depth'],interaction_budget=interactions)
-                if plan_only:return journey
-                p.room_attempts.add(key)
-                p.room_journey = journey
-                if duration:
-                    return p.room_journey.advance(p,state,enemies,neighbors)
-                return use_room_supply(p,item,"DRINK",f"room: prepare {kind} protection for verified round trip",kind=kind)
+                if kind == "flight" and flight_key_deficit and base_name(loot.get("top_item", loot)) != "golden key":
+                    if fallback is None:fallback = journey
+                else:
+                    return select(journey)
             for adjacent in neighbors(cell, width, height):
                 closed_probe = plan_only and kind in PROTECTION and p.tiles.get(adjacent,{}).get('terrain')==5 \
                     and adjacent not in occupied and adjacent not in p.blocked and not p.tiles[adjacent].get('effects') \
@@ -285,6 +296,7 @@ def plan_journey(p, state, enemies, neighbors, *, probe_kind=None, plan_only=Fal
                         continue
                     paths[adjacent] = cell
                     queue.append(adjacent)
+        if fallback is not None:return select(fallback)
     return None
 
 

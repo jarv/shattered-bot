@@ -1260,5 +1260,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000096"
+  },
+  {
+    "id": "000097-flight-key-deficit",
+    "priority": "high",
+    "summary": "Prefer verified matching-key flight trips over chest trips while observed locks outnumber held keys.",
+    "evidence": [
+      "Decision 1262: known-flight staging begins.",
+      "Decision 1328: one held golden key, four locked chests, three isolated golden keys, and the sole identified levitation dose.",
+      "Decisions 1329–1334: chest retrieval and return leave 14 turns of levitation.",
+      "Decision 1457: mandatory matching-key pickups block descent."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000097"
   }
 ]
