@@ -159,6 +159,11 @@ def choose(p,state,enemies):
         else:
             abandon('committed door no longer reachable');plan=None
     if not target and not exposed_memory(p,state):return None
+    # Visibility is not a lightning line (e.g. sensed casters behind walls).
+    # Once a commitment ends, do not abandon existing cover just to find a
+    # different door. This delegates without authorizing a wait or blind shot.
+    if not any(sees(p,state,e['cell'],pos) for e in targets) and not exposed_memory(p,state):
+        return None
     options=[]
     for door,tile in p.tiles.items():
         if tile['terrain'] not in {5,6} or tile.get('observed') is False \

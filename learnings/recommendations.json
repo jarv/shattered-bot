@@ -1653,5 +1653,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000129"
+  },
+  {
+    "id": "000131-occluded-dm100-flight",
+    "priority": "high",
+    "summary": "Do not initiate another door escape solely because a wall-separated DM-100 is visible.",
+    "evidence": [
+      "Decision 3609, selection line 10391: a new northward door flight preempts descent from cell 1012 despite blocked bolt lines from the observed caster at 1062.",
+      "Decision 3618, selection line 10424: the escape episode reaches two observed DM-100s with eight health.",
+      "Decision 3621, selection line 10436 and accepted transition line 10437: another door search reverses through 679 and ends in confirmed fatal lightning.",
+      "tools/policy_nodes.py:93-116; tools/dm100_escape.py:choose: visible targets previously reached new-door selection without an exposure prerequisite."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000131"
   }
 ]
