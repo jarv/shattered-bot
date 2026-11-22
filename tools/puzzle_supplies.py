@@ -11,7 +11,7 @@ try:
     from .room_tactics import GROUND, PROTECTION, remaining, plan_journey,sentry_geometry
     from .runestone_tactics import prepare_intuition
     from .special_rooms import fire_barrier
-    from .potion_stash import protect_potions, can_protect_potions, bandolier_protected
+    from .potion_stash import protect_potions, can_protect_potions, bandolier_protected, stash_paths
     from .policy_decision import Intent
     from .policy_geometry import distance
     from .room_supplies import use as use_room_supply
@@ -20,7 +20,7 @@ except ImportError:
     from room_tactics import GROUND, PROTECTION, remaining, plan_journey,sentry_geometry
     from runestone_tactics import prepare_intuition
     from special_rooms import fire_barrier
-    from potion_stash import protect_potions, can_protect_potions, bandolier_protected
+    from potion_stash import protect_potions, can_protect_potions, bandolier_protected, stash_paths
     from policy_decision import Intent
     from policy_geometry import distance
     from room_supplies import use as use_room_supply
@@ -797,7 +797,12 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
                     anchor=Demand('frost','potion of frost',plan['barrier'])
                     refresh=refresh_barrier(p,state,anchor,paths,distance)
                     if refresh:return refresh
-            banks=[c for c in paths if len(p.route(paths,c))<=12
+            # Use the same ordinary corridor as stash travel. A shortest-path
+            # shortcut through a door can occlude the admitted bank's
+            # surroundings on the next observation and strand preparation.
+            # This admits travel only; arrival still needs fresh bank checks.
+            approach_paths=stash_paths(p,state)
+            banks=[c for c in approach_paths if len(p.route(approach_paths,c))<=12
                    and safe_test_bank(p,state,c,distance,neighbors,allow_dry=True)
                    and any((c%width==b%width or c//width==b//width)
                            and distance(c,b,width)==2 for b in barriers)]
@@ -819,7 +824,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
                 continue
             bank=min(banks,key=lambda c:(p.tiles[c]["terrain"]!=29,len(p.route(paths,c))))
             if bank!=hero["cell"]:
-                return p.toward(state,bank,"room: stage frost hypothesis with one square before visible fire barrier",paths,intent=Intent.EXPLORE)
+                return p.toward(state,bank,"room: stage frost hypothesis with one square before visible fire barrier",approach_paths,intent=Intent.EXPLORE)
             stash=protect_potions(p,state,candidate,distance,neighbors,safe_test_bank)
             if stash:
                 return stash

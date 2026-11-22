@@ -1747,5 +1747,22 @@
     "status": "deferred",
     "reason": "Not repaired by the garden correction. Public-input helper probes show equipped armor score 1 and weapon score 5.5, below readiness requirements, and the chamber does not satisfy the supported single-door enclosure. Complete source resolves the selecting-chain gap, but no validated safe non-triggering passage or multi-door activation/clearance contract is established. Next derive the decision-959 trap/key/stair fixture and validate retrieval outside a conservative active-trap/chain envelope, or bounded multi-door containment with actual clearance receipts. Do not shrink quarantine or lower readiness without that safety evidence.",
     "origin_run": "000137"
+  },
+  {
+    "id": "000139-frost-bank-corridor",
+    "priority": "high",
+    "summary": "Keep frost-test bank approaches on the admitted ordinary stash corridor rather than door shortcuts.",
+    "evidence": [
+      "Decisions 260–262, lines 730–737: the ordinary stash-return corridor reaches bank 1067.",
+      "Decision 263, lines 739–740: the first unknown drink resolves without clearing the fire; bistre remains stashed.",
+      "Decision 266, lines 747–748: bistre is retrieved at 1070.",
+      "Decision 267, lines 750–751: frost staging selects closed door 1034 instead of the ordinary corridor.",
+      "Decision 268, line 753: bank surroundings lose visibility; mandatory potion discovery exhausts with 25/25 HP.",
+      "Source-pinned offline reconstruction matches all 268 recorded selections and reproduces the terminal blocker; an isolated candidate probe selects 1069 with route 1070–1069–1068–1067.",
+      "tools/puzzle_supplies.py:797–827; tools/potion_stash.py:102–108; tools/descent_potions.py:294,356."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000139"
   }
 ]
