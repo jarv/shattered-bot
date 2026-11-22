@@ -118,6 +118,24 @@ def choose(p,state,enemies):
         selection['status']='unit strategy selected an action'
         return action
     if profile.strategy=='thief':
+        # A floor-local chase budget can be spent long before this sighting.
+        # Do not reset it or invent another move. The shared stone controller
+        # is below this veto and normally requires low HP; an exhausted lone
+        # thief can instead be disabled with an observed, known sleep stone.
+        # This selects a throw only, never sleep/defeat or collection credit.
+        if target['name'].lower() in {'crazy thief','crazy bandit'} and len(enemies)==1 \
+                and p.unit_pursuit_moves[target['name'].lower()]>=4 \
+                and distance(pos,target['cell'],width)>1 and not p.stone_cooldown \
+                and state.get('status')=='ready' and not state.get('modal') \
+                and not state.get('danger_cells') and p.tiles.get(target['cell'],{}).get('visible'):
+            sleep=next((i for i in state['inventory'] if i['name'].lower()=='stone of deep sleep'
+                        and i.get('identified') and 'THROW' in i.get('actions',[])),None)
+            if sleep and p.shot_clear(state,target['cell']) and p.target_allowed(sleep,target) \
+                    and p.item_action_allowed(sleep,'THROW'):
+                p.stone_cooldown=8
+                selection['status']='unit strategy selected an action'
+                return p.use(sleep,'THROW','thief: known deep sleep after attacks and bounded pursuit are exhausted',
+                             target=target['cell'])
         p.stop_no_safe_action('Visible thief: no usable ranged interception or bounded accepted-pursuit route')
     if state['hero'].get('subclass',state['hero']['name']).lower()=='warlock' and len(enemies)==1 \
             and state['hero']['hp']<.7*state['hero']['max_hp'] and not p.inspection_cache \

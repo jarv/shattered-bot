@@ -1534,5 +1534,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000116"
+  },
+  {
+    "id": "000119-exhausted-thief-sleep",
+    "priority": "high",
+    "summary": "Retain a known deep-sleep throw before exhausting against a lone thief after the bounded chase is spent.",
+    "evidence": [
+      "Decisions 2290, 2293–2295; accepted movement receipts at lines 6720, 6728, 6731, 6734 reach four species-budget moves.",
+      "Decision 2755, selection line 8061 and accepted line 8062: melee leaves the hero at full health and the visible thief two cells away.",
+      "Decision 2756, line 8063: empty staff and carried identified deep-sleep stone coincide with thief planner exhaustion.",
+      "tools/unit_strategies.py:42–60 and original 120–121; tools/runestone_tactics.py:85–89."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000119"
   }
 ]
