@@ -1197,5 +1197,21 @@
     "status": "deferred",
     "reason": "Complete source and matching offline reconstruction resolve the selecting-state gap, but no safe replacement is established. At decision 69 the door route immediately crosses two observed attackers; allowing it would weaken a safety gate. The eastward endpoints are not verified chokes, yet the existing onward-exit check still admits decision 72 because nominal exits remain. Earlier shooting has three known charges but no validated damage, incoming-loss and subsequent spacing budget against all three rats. No known displacement or protection potion is carried; magenta remains unidentified until death. Next derive decision-68/69 fixtures and validate a bounded ranged intervention plus freshly admitted spacing, or a route to a verified single-file hold, before changing arbitration. Require a new baseline-red/candidate-green regression while retaining hazard, contact, health-loss, accepted-input and mandatory-pickup checks. No policy or regression patch is submitted.",
     "origin_run": "000089"
+  },
+  {
+    "id": "000091-shocking-corridor-clearance",
+    "priority": "high",
+    "summary": "Establish bounded remote shocking-trap preparation and verified recovery for the blocked corridor.",
+    "evidence": [
+      "Decision 848, selection line 2546 and accepted transition 2547: a publicly ordinary floor step activates a hidden shocking trap; HP falls from 30 to 26.",
+      "Decisions 849–851, lines 2549–2554: recovery retreats past the revealed shocking trap at 791, which blocks floor 754 and closed door 717.",
+      "Decision 851, line 2553: source-pinned reconstruction finds a clear shot from distance two, a throwable waterskin and a fully visible dry trap neighborhood; the chilling-only clearance helper declines.",
+      "Decision 877, accepted transition line 2624: the eighth search advances time at full health; decision 878, line 2625 ends in planner exhaustion with 717 and 754 still unreachable.",
+      "Offline reconstruction matches all 878 selected actions, reasons, intents and controllers and the exact terminal blocker; this is reconstructed bookkeeping, not recorded memory.",
+      "tools/environment_tactics.py:92–142; tools/mage_policy.py:1216–1227; tools/survival_policy.py:436–447,1109–1159; tools/resource_tactics.py:70–79."
+    ],
+    "status": "deferred",
+    "reason": "Complete source and matching reconstruction resolve the initiating blocker: active shocking trap 791, not merely the hungry search ceiling. No policy or test patch is submitted. A distance-two remote throw at decision 851 has promising local geometry, but broadening chilling-trap admission alone leaves no validated electrical-expiry and payload-return contract. Electricity can propagate through water and paralyse; the existing expiry waiter admits gas text only, while payload recovery correctly refuses active effects. Next derive the decision-851 dry-corridor fixture and implement one bounded remote-discharge transaction with visible containment, accepted throw evidence, fresh inactive-trap/effect-clearance observations, safe-bank interruption handling and verified waterskin retrieval before door work. Require baseline-red/candidate-green regressions, including water, unseen footprint, adjacency, active effects and failed receipts. Preserve hazard and mandatory-pickup checks and the terminal stuck label; do not increase bounds or assume discharge means clearance.",
+    "origin_run": "000091"
   }
 ]
