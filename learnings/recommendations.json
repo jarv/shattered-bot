@@ -1320,21 +1320,14 @@
   {
     "id": "000102-pool-discovery-admission",
     "priority": "high",
-    "summary": "Establish safe executable preparation when the mandatory pool chest has no compatible unknown-potion bank.",
+    "summary": "Establish executable inventory-protected preparation and chest retrieval after the approach observation.",
     "evidence": [
-      "Decision 313, accepted transition line 896: movement reaches the pool entrance and advances the game clock.",
-      "Decision 314, line 898: first observed piranhas and chest coincide with planner exhaustion at full health.",
-      "Offline source-pinned reconstruction matches decisions 0-313 and reproduces the terminal blocker.",
-      "Copied terminal-state probes: only origins 1010, 983 and 984 admit hypothetical chest round trips; none passes unknown-potion pool-bank safety, even without hunger.",
-      "tools/piranha_tactics.py:37-65; tools/puzzle_supplies.py:130-156,585-640,760-810; tools/mage_policy.py:439-457.",
-      "Run 000126 decision 86, log line 244: three sleeping piranhas and Chest 889 are observed from entrance 670 before a potion is carried.",
-      "Run 000126 decision 281, line 808, and decisions 310–311, lines 895/898: jade remains unidentified and pool preparation reports no verified protected reward trip before hunger.",
-      "Run 000126 decision 312, accepted line 902: movement advances the clock at full health; decision 313, line 904 terminates on the unfinished chest.",
-      "Source-pinned offline reconstruction matches all 313 selected actions, reasons, intents and controllers, then reproduces the terminal blocker and recovery exhaustion.",
-      "Copied terminal-state probes admit only closed door 670 as a hypothetical protected chest-trip origin; it fails unknown-drink and dry-approach admission even with hunger removed and optimistic visibility."
+      "Decision 1626, line 4828: the observed iron key remains excluded by the room hazard barrier and preparation reports no verified protected reward round trip.",
+      "Decision 1627, line 4831: multiple unidentified potion colors remain carried.",
+      "Decision 1892, lines 5637–5638: the piranha chest remains mandatory and uncollected."
     ],
     "status": "deferred",
-    "reason": "Revalidated in this recording; no safe focused patch is established. Complete source and matching offline reconstruction resolve the selecting-state gap. The sole budgeted origin is closed door 670, adjoining ordinary water 639; neither the unknown-drink bank nor dry-approach contract admits it. Hunger is an additional terminal restriction, not the initiating blocker. No nonconsumptive identification resource is carried. A remote singleton test could consume the only required protection dose, while a meal or bound increase cannot repair the bank geometry. Next derive paired decision-86/281 fixtures around 639, 670, the dry strip and Chest 889, then validate one bounded stationary ranged-clearance transaction outside the full habitat buffer, with fresh clear-shot admission, conservative known-charge/damage and hunger/recharge budgets, accepted attack receipts, interruption safety and positive defeat evidence before habitat retirement and actual pickup. Otherwise require observed nonconsumptive identification/preservation. Do not guess jade, relax hazards, waive the chest or restore death-waits. No policy change or new regression is supplied because neither replacement safety contract is established.",
+    "reason": "The scout correction does not establish safe unknown-potion bank admission with the recorded multi-potion inventory. A collateral-safe stash/retrieval route, actionable entrance and protected chest return have not been validated together. Next derive fresh bank-734 fixtures with cached chests 780 and 911 and the contemporaneous inventory, then test those contracts before authorizing any drink. Do not weaken habitat checks, guess potion effects or waive pickup.",
     "origin_run": "000102"
   },
   {
@@ -1682,5 +1675,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000132"
+  },
+  {
+    "id": "000133-pool-scout-commitment",
+    "priority": "high",
+    "summary": "Preserve and safely finish multi-step piranha approach observations instead of restarting the detour.",
+    "evidence": [
+      "Decision 1626, selection line 4828: the scout dispatches 711 to 735 toward destination 734.",
+      "Decision 1627, line 4831, and decision 1628, line 4834: exploration reverses the intermediate move and the scout repeats.",
+      "Original-policy reconstruction matches decisions 0–1626; the reconstructed pending destination is 734 with no approach receipt.",
+      "tools/puzzle_supplies.py:248–286 and observe_pool_entrance: intermediate movement previously discarded pending intent.",
+      "Decision 1892, lines 5637–5638: the living hero still has an unfinished piranha chest."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000133"
   }
 ]

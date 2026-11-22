@@ -254,6 +254,20 @@ def revisit_pool(p,state,demand,neighbors):
     except ImportError:
         from piranha_tactics import staging_bank
     paths=p.paths(state);choices=[]
+    pending=p.pool_approach_pending
+    if pending and pending[:3]==key:
+        bank=pending[3]
+        route=p.route(paths,bank) if bank in paths else []
+        if route and len(route)<=41 and staging_bank(p,state,bank) \
+                and all(c not in p.room_blocked and not p.tiles[c].get('trap')
+                        and not p.tiles[c].get('plant')
+                        and not p.effects_block_movement(p.tiles[c]) for c in route[1:]):
+            if bank==state['hero']['cell']:return None
+            p.puzzle_revisit_steps['pool']+=1
+            return p.toward(state,bank,
+                'room: finish committed piranha-room approach observation',
+                paths,intent=Intent.REPOSITION)
+        p.pool_approach_pending=None
     for bank in paths:
         route=p.route(paths,bank)
         if len(route)>41 or not staging_bank(p,state,bank):continue
@@ -562,6 +576,21 @@ def observe_pool_entrance(p,before,state):
                 and before.get('hero',{}).get('cell')!=bank \
                 and state.get('hero',{}).get('cell')==bank and tile.get('visible'):
             p.pool_approach_receipts.add(pending)
+        elif before and decision and decision.intent==Intent.REPOSITION \
+                and (before.get('depth'),before.get('branch',0))==(depth,branch) \
+                and (state.get('depth'),state.get('branch',0))==(depth,branch):
+            # toward() dispatches one step, not necessarily the chosen bank.
+            # Preserve an accepted intermediate step's observation destination;
+            # the next selector must recheck the ordinary safe approach route.
+            reached=state.get('hero',{}).get('cell')
+            route=decision.navigation_route
+            fresh=next((t for t in state.get('map',{}).get('cells',[])
+                        if t['cell']==reached),{})
+            if reached!=before.get('hero',{}).get('cell') \
+                    and decision.action=={'type':'cell','cell':reached} \
+                    and route and route[-1]==bank and reached in route[1:-1] \
+                    and fresh.get('visible'):
+                p.pool_approach_pending=pending
     for kind in ('pool','flight'):
         pending=getattr(p,kind+'_entrance_pending')
         if pending is None:continue
@@ -741,6 +770,12 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
             continue  # Safe identification above is still allowed; an unprotected stack is not a drink test.
         if hero["hp"]<0.95*hero["max_hp"]:
             continue  # Safe identification is not permission for a risky drink.
+        if demand.kind=='pool' and p.pool_approach_pending \
+                and p.pool_approach_pending[:3]==(state['depth'],state.get('branch',0),demand.cell):
+            # New sight from an intermediate square may change test-bank
+            # ranking. Finish the admitted observation, not a potion test.
+            staged=revisit_pool(p,state,demand,neighbors)
+            if staged:return staged
         if demand.kind=="frost":
             if sum(d==state["depth"] for d,_ in p.puzzle_drinks)>=MAX_ROOM_POTION_TESTS:
                 continue

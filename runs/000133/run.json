@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "id": "000133",
+  "started_at": "2026-11-22T13:45:49Z",
+  "completed_at": "2026-11-22T13:58:29.182107+00:00",
+  "source_commit": "4eee2fba527bcaf7ba748eaa7a8dbe94aaff68c9",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "1e55d72-review-recovery",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 4,
+  "actions": 1892,
+  "duration_seconds": 752.021,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000132",
+  "previous_source_commit": "e4628c4abf9e3924f248e370d7d95c8166b79ac0",
+  "improvements": [
+    "Before deliberately reading an unknown scroll, the bot now uses a carried scroll of Identify when its safety checks allow it. It still prioritizes unknown potions and keeps its chosen consumable selected while switching bags."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Before deliberately activating an unidentified scroll, use a carried known Identify when the same safety gates admit it. Keep potion identification priority, preserve the chosen consumable across bag navigation, and require actual public identification evidence. A cancelled intuition attempt reveals nothing; no visible enemies does not make rage harmless.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health when the planner exhausted its options; this was not a death. Decision 1892, lines 5637–5638, retains the unfinished piranha chest. Earlier, decision 1626 (line 4828) started a two-step approach to bank 734 but dispatched only the first step to 735. Decision 1627 (line 4831) returned toward exploration, and decision 1628 (line 4834) repeated the detour. Source inspection and original-policy reconstruction matching decisions 0–1626 identify a lost multi-step observation commitment: its pending destination was discarded before arrival. The proposed correction preserves accepted intermediate progress and rechecks the safe route before finishing that observation. The new regression fails by assertion on original policy and passes on the candidate; the full suite passes 1,938 tests with four skips. This repairs a contributing preparation loop, not proven chest retrieval or prevention of terminal exhaustion. No unknown potion identity, protective buff or collection is assumed.",
+    "learnings": "Keep an admitted multi-step preparation observation committed across accepted intermediate moves, while checking its route again on every input. Reaching that observation point is not permission to drink an unknown potion or credit unfinished loot. Next validate inventory protection and the actual protected chest return from fresh observations."
+  },
+  "recommendations": [
+    {
+      "id": "000133-pool-scout-commitment",
+      "priority": "high",
+      "summary": "Preserve and safely finish multi-step piranha approach observations instead of restarting the detour.",
+      "evidence": [
+        "Decision 1626, selection line 4828: the scout dispatches 711 to 735 toward destination 734.",
+        "Decision 1627, line 4831, and decision 1628, line 4834: exploration reverses the intermediate move and the scout repeats.",
+        "Original-policy reconstruction matches decisions 0–1626; the reconstructed pending destination is 734 with no approach receipt.",
+        "tools/puzzle_supplies.py:248–286 and observe_pool_entrance: intermediate movement previously discarded pending intent.",
+        "Decision 1892, lines 5637–5638: the living hero still has an unfinished piranha chest."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000133"
+    },
+    {
+      "id": "000102-pool-discovery-admission",
+      "priority": "high",
+      "summary": "Establish executable inventory-protected preparation and chest retrieval after the approach observation.",
+      "evidence": [
+        "Decision 1626, line 4828: the observed iron key remains excluded by the room hazard barrier and preparation reports no verified protected reward round trip.",
+        "Decision 1627, line 4831: multiple unidentified potion colors remain carried.",
+        "Decision 1892, lines 5637–5638: the piranha chest remains mandatory and uncollected."
+      ],
+      "status": "deferred",
+      "reason": "The scout correction does not establish safe unknown-potion bank admission with the recorded multi-potion inventory. A collateral-safe stash/retrieval route, actionable entrance and protected chest return have not been validated together. Next derive fresh bank-734 fixtures with cached chests 780 and 911 and the contemporaneous inventory, then test those contracts before authorizing any drink. Do not weaken habitat checks, guess potion effects or waive pickup.",
+      "origin_run": "000102"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000133/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000133/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 117,
+        "turns": 262,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 265,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 840
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 29,
+        "gold_gained": 340,
+        "turns": 666,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 660,
+        "terminal_floor": false,
+        "highlights": []
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 29,
+        "gold_gained": 174,
+        "turns": 436,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 439,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 55,
+        "gold_gained": 185,
+        "turns": 514,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 520,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 416
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 24,
+    "ending_level": 6,
+    "starving_turns": 29,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 20,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 6,
+    "gold_collected": 816,
+    "gold_complete": true,
+    "turns": 1878,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
