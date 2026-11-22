@@ -1302,5 +1302,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000099"
+  },
+  {
+    "id": "000100-escape-combat-clock",
+    "priority": "high",
+    "summary": "Count publicly timed accepted combat inputs toward escape-commitment expiry so stale protection cannot block onward planning.",
+    "evidence": [
+      "Decisions 2722–2729: committed multi-enemy doorway retreat creates the protected return edges.",
+      "Decisions 2735–2737, accepted transitions at log lines 7950, 7953 and 7956: time advances without changing hero HP or charges.",
+      "Decision 2739, log line 7960: escape reversal excludes the frontier route toward 1105.",
+      "Decision 2741, log line 7966: hungry recovery exhausts with the hero alive.",
+      "tools/escape_commitment.py:14–26; tools/pursuit_budget.py:14–35; tools/mage_policy.py:417–422; tools/tactical_recovery.py:102–115,158–165."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000100"
   }
 ]

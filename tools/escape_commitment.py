@@ -13,7 +13,11 @@ def charges(state):
 
 def observe(p,before,decision,after,active):
     plan=p.escape_commitment
-    progressed=before['hero']['cell']!=after['hero']['cell'] or decision.action.get('type')=='wait' \
+    # Accepted attacks can spend time without changing hero HP or charges.
+    # Count public clock progress, but not free targeting/menu observations.
+    elapsed=[(s.get('evaluation_stats') or {}).get('elapsed_turns') for s in (before,after)]
+    timed=all(isinstance(t,(int,float)) for t in elapsed) and elapsed[1]>elapsed[0]
+    progressed=timed or before['hero']['cell']!=after['hero']['cell'] or decision.action.get('type')=='wait' \
         or before['hero']['hp']!=after['hero']['hp'] or charges(before)!=charges(after)
     if plan and progressed:
         plan['age']+=1
