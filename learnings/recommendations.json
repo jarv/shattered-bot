@@ -1620,5 +1620,22 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000125"
+  },
+  {
+    "id": "000128-boxed-invisibility-fallback",
+    "priority": "high",
+    "summary": "Keep low-health last-resort recovery from attacking away observed invisibility when no escape is admitted.",
+    "evidence": [
+      "Decisions 601–603, lines 1722–1726: optional wand testing curses worn equipment.",
+      "Decisions 842–843, lines 2412–2418: retreat reaches an unverified endpoint, then opposing pressure blocks progress.",
+      "Decision 856, lines 2470–2471: known invisibility is activated with all ordinary exits occupied.",
+      "Decision 857, lines 2473–2474: last-resort melee cancels invisibility and HP falls from 14 to 10.",
+      "Decision 860, line 2484: the complete public message confirms a gnoll scout kill.",
+      "Source-pinned offline reconstruction matches all original selections; the candidate stops at the first changed decision, 857.",
+      "New boxed-invisibility regression: original assertion failures; candidate passes. Complete isolated unittest sweep: 1,919 tests pass."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000128"
   }
 ]

@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "id": "000128",
+  "started_at": "2026-11-22T12:00:45Z",
+  "completed_at": "2026-11-22T12:06:41.771059+00:00",
+  "source_commit": "3c74ad985840c6cde4fd23da5e8ca177d47bdf31",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "supervisor_version": "1e55d72-review-recovery",
+  "outcome": "dead",
+  "outcome_summary": "Died to a gnoll scout after fly pressure and a failed invisibility escape",
+  "outcome_reason": "Hero died",
+  "max_depth": 3,
+  "actions": 861,
+  "duration_seconds": 352.133,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000127",
+  "previous_source_commit": "bf88a38a26d0343bf38238332ad48dad58f33a4c",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Collection can invalidate every remembered discovery bank even when the added potion is identified. Preserve pickup, but plan bounded reobservation and freshly verified remote storage for the changed inventory before allowing the preparation obligation to exhaust. Reachability alone is not preparation safety.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The complete public death message confirms a gnoll scout killed the Mage. An earlier optional wand test cursed the worn armor with multiplicity (decisions 601–603, lines 1722–1726). Later, exhausted staff charges, physical fly splitting and converging enemies led to a boxed corridor; not every extra swarm can be attributed to the armor. Decision 842 retreats to an endpoint that is not a verified choke, and decision 843 observes a rat blocking the opposite side. At decision 856, all three ordinary exits are occupied, yet the bot drinks known invisibility. At decision 857 it cannot withdraw, then its last-resort attack immediately cancels that protection and loses four HP. Death follows after further combat and retreat.\n\nOffline bookkeeping reconstruction of the played source matches all 861 recorded selections. The focused proposal prevents low-health last-resort attacks from overriding observed invisibility when existing rescue options decline. A new three-test regression fails with two expected assertions on original policy and passes on the candidate. All 1,919 tests across 198 independently run unittest modules pass; monolithic discovery was killed before completion. Candidate reconstruction matches decisions 0–856 and stops at its first divergence: planner exhaustion instead of decision 857’s attack. This prevents the protection bypass but does not establish an escape or fix the earlier encounter. No movement, recharge timing, loot collection or survival is invented. Files are left empty for trusted change extraction.",
+    "learnings": "An empty escape route must not silently turn defensive invisibility into an attack. Preserve observed protection and report genuine planner exhaustion when no rescue is admitted. The next progress repair needs an earlier verified retreat or a bounded blocker-clearance plan funded by public protection, charge and damage evidence; target distance does not contain every cursed-wand effect."
+  },
+  "recommendations": [
+    {
+      "id": "000128-boxed-invisibility-fallback",
+      "priority": "high",
+      "summary": "Keep low-health last-resort recovery from attacking away observed invisibility when no escape is admitted.",
+      "evidence": [
+        "Decisions 601–603, lines 1722–1726: optional wand testing curses worn equipment.",
+        "Decisions 842–843, lines 2412–2418: retreat reaches an unverified endpoint, then opposing pressure blocks progress.",
+        "Decision 856, lines 2470–2471: known invisibility is activated with all ordinary exits occupied.",
+        "Decision 857, lines 2473–2474: last-resort melee cancels invisibility and HP falls from 14 to 10.",
+        "Decision 860, line 2484: the complete public message confirms a gnoll scout kill.",
+        "Source-pinned offline reconstruction matches all original selections; the candidate stops at the first changed decision, 857.",
+        "New boxed-invisibility regression: original assertion failures; candidate passes. Complete isolated unittest sweep: 1,919 tests pass."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000128"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000128/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000128/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 186,
+        "turns": 322,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 327,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 747
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 18,
+        "gold_gained": 146,
+        "turns": 341,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 341,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 798
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 14,
+        "gold_gained": 119,
+        "turns": 178,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 187,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1124
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 17,
+    "ending_level": 3,
+    "starving_turns": 6,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 451,
+    "gold_complete": true,
+    "turns": 841,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

@@ -13,6 +13,9 @@ except ImportError:
 
 def best_effort(p,state,enemies):
     if state.get('status')!='ready' or state.get('modal') or state['hero']['hp']<=0:return None
+    buffs=' '.join(b['name'].lower() for b in state['hero'].get('buffs',[]))
+    preserve_invisibility=state['hero']['hp']<.5*state['hero']['max_hp'] and any(
+        b in buffs for b in ('invisib','cloaked'))
     try:
         from .toxic_escape import escape
     except ImportError:
@@ -41,7 +44,7 @@ def best_effort(p,state,enemies):
             return p.use(item,'DRINK','last resort: use known healing after no verified safe action')
     escape=p.emergency_transport(state,enemies)
     if escape:return escape
-    if getattr(p,'unit_strategies_enabled',False):
+    if getattr(p,'unit_strategies_enabled',False) and not preserve_invisibility:
         try:
             from .fly_tactics import desperate_attack
         except ImportError:
@@ -54,6 +57,10 @@ def best_effort(p,state,enemies):
     if escape:
         escape.reason='last resort: ordinary retreat without a verified survival guarantee'
         return escape
+    # A failed withdrawal is not permission to cancel observed protection.
+    # Retain ordinary healing/transport/retreat above; with no rescue, exhaust
+    # honestly rather than attack out of invisibility or invent recharge waits.
+    if preserve_invisibility:return None
     active=[e for e in enemies if not e.get('sleeping')]
     pos=state['hero']['cell'];width=state['map']['width']
     for enemy in sorted(active,key=lambda e:(-priority(p,state,active,e),distance(pos,e['cell'],width))):
