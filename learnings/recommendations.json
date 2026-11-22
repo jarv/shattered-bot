@@ -1455,5 +1455,35 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000111"
+  },
+  {
+    "id": "000112-gas-preparation-return",
+    "priority": "high",
+    "summary": "Establish a funded return to freshly verified gas-room preparation before mandatory discovery exhausts.",
+    "evidence": [
+      "Decision 925, selection line 2652 and accepted line 2653: exploration reaches the gas entrance at 592.",
+      "Decision 926, line 2655: chest 669 and gas are observed; the hero retreats to 553.",
+      "Decision 939, accepted line 2695: opening door 249 advances time at full health; decision 940, line 2697 exhausts mandatory discovery.",
+      "Source-pinned offline reconstruction matches all 940 selections and reproduces the terminal blocker. Copied terminal probes find nine hypothetical gas-trip origins but no currently visible admitted drink bank; removing hunger still yields no preparation.",
+      "tools/descent_potions.py:309-347; tools/puzzle_supplies.py:585-640,764-810; tools/preparation_prerequisites.py:17-65."
+    ],
+    "status": "deferred",
+    "reason": "Complete source and matching reconstruction resolve the selecting-state gap. Several trip origins have observed nonflammable surroundings, but those surroundings are now unseen; the remaining origins also fail terrain or effect checks. Gas lacks the unknown-supply revisit used for flight and pool, and hunger independently excludes testing. No executable fresh bank/stash admission and gas-funded preparation transaction is established. Next derive the recorded return corridor to 436/475/514 and validate bounded reobservation with accepted movement receipts, fresh hazard checks, inventory-compatible remote stash admission and a puzzle-specific meal only after feasibility is demonstrated. Keep chest pickup mandatory and retain terminal exhaustion. A meal alone, stale visibility or generic remote drinking is not a repair.",
+    "origin_run": "000112"
+  },
+  {
+    "id": "000112-flame-impact-clearance",
+    "priority": "high",
+    "summary": "Account for the actual flame-potion impact before authorizing bookshelf ignition, then verify clearance after escape.",
+    "evidence": [
+      "Decision 835, line 2378: known liquid flame is selected from 612 for shelf 689.",
+      "Decision 836, selection line 2380 and accepted line 2381: the target input consumes the potion, starts burning and lowers HP from 30 to 27.",
+      "Decisions 837-840, accepted lines 2384-2393: extinguishing travel reaches water at 733 with 23 HP.",
+      "Decision 940, line 2697: remembered shelves still reserve missing flame alongside the gas obligation.",
+      "tools/wooden_barrier.py:146-206; tools/survival_policy.py:541-554; game Item.throwPos, Ballistica.build and PotionOfLiquidFlame.shatter."
+    ],
+    "status": "deferred",
+    "reason": "The selector checks distance from the requested shelf, but a nonpassable bookshelf makes the projectile collide one cell earlier. For the recorded 612-to-689 shot, impact is reconstructed at 650, adjacent to the hero; flame covers neighboring cells. The observed burning confirms the unsafe result, not a successful clearance. A larger requested-target distance alone leaves impact-area collateral and post-escape clearance unverified; the existing close-shelf regression also expects this class of throw. Next derive an actual-impact fixture and validate a floor-targeted ignition or separately admitted impact-safe bank, protecting the complete impact/fuel footprint and confirming fresh shelf clearance before local retrieval. Do not certify the unseen shelves burned away or replace the throw with speculative movement. No safe complete replacement is certified here.",
+    "origin_run": "000112"
   }
 ]
