@@ -199,9 +199,14 @@ def doorway_route(p,state,enemies,current,occluded=False):
             if p.tiles[door]['terrain'] not in {5,6} or p.multi_door_attempts[door]>=2:continue
             route=p.route(paths,door)
             if not admitted(route) or pressure(route[1])>max(1,current):continue
-            options.append((len(route),door))
+            # Do not prefer simultaneous contact just to reach a nearer door
+            # when another admitted route limits current contact to one foe.
+            # Keep distance ranking within each class, including the existing
+            # single-attacker doorway setup. Future positions/holds are unknown.
+            contact=sum(can_attack(p,state,e,route[1]) for e in enemies)
+            options.append((contact>1,len(route),door))
         if not options:return None
-        _,door=min(options)
+        _,_,door=min(options)
         plan={'depth':state['depth'],'branch':state.get('branch',0),'door':door,'steps':0,
               'start_hp':state['hero']['hp']}
         p.multi_door_plan=plan;p.multi_door_attempts[door]+=1
