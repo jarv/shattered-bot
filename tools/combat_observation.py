@@ -81,6 +81,62 @@ def dm100_missile_receipt(before,after,pending):
                                             for o in after.get("objects",[]))
 
 
+def dm100_arcane_disintegration_receipt(before,after,pending):
+    """A struck survivor remains publicly tracked by Arcane Vision.
+
+    Disintegration pierces walls and cannot miss a target within its beam.
+    A public Magic Charge level supplies a minimum range even when the wand's
+    own level is unknown. Do not generalize this to curses, other wands, or
+    mere disappearance: the existing missile neighborhood proof stays intact.
+    """
+    import re
+    if pending["name"].lower()!="dm-100" or pending["source"][0]!="magic":
+        return False
+    item=next((i for i in before.get("inventory",[])
+               if i["name"]==pending["source"][1]),None)
+    if not item or item["name"].lower()!="wand of disintegration" \
+            or not item.get("curse_known") or item.get("known_cursed"):
+        return False
+    hero=before["hero"]
+    if hero.get("hero_class")!="mage" or not any(
+            t.get("name")=="arcane vision" and t.get("points",0)>0
+            for t in hero.get("talents",[])):
+        return False
+    charge=next((b.get("description","") for b in hero.get("buffs",[])
+                 if b.get("name")=="magic charge"),"")
+    boost=re.search(r"Your wands are boosted to: \+(\d+)\.",charge)
+    turns=re.search(r"Turns of magic charge remaining: (\d+)\.",charge)
+    # Consumption of a non-expiring boost distinguishes an executed zap from
+    # an empty-wand selection while some unrelated actor grants experience.
+    if not boost or not turns or int(turns[1])<=1 or any(
+            b.get("name")=="magic charge" for b in after["hero"].get("buffs",[])):
+        return False
+    try:
+        from .policy_geometry import distance
+    except ImportError:
+        from policy_geometry import distance
+    if distance(hero["cell"],pending["cell"],before["map"]["width"])>6+2*int(boost[1]):
+        return False
+    actors=[o for o in before.get("objects",[]) if not o.get("top_item")]
+    if len(actors)!=1 or actors[0].get("cell")!=pending["cell"] \
+            or actors[0].get("name","").lower()!="dm-100" or actors[0].get("sleeping") \
+            or actors[0].get("status_icons") or pending["context"][2]:
+        return False
+    if before["depth"]!=after["depth"] or before.get("branch",0)!=after.get("branch",0) \
+            or hero["cell"]!=after["hero"]["cell"] \
+            or hero.get("level")!=after["hero"].get("level") \
+            or not 1<=hero.get("level",0)<=13:
+        return False
+    b=before.get("evaluation_stats",{});a=after.get("evaluation_stats",{})
+    if not all(isinstance(s.get(k),(int,float)) for s in (b,a)
+               for k in ("experience","elapsed_turns")) \
+            or a["experience"]-b["experience"]!=6 or a["elapsed_turns"]-b["elapsed_turns"]!=1:
+        return False
+    # Tracking follows the struck actor, not its old square. A living DM-100
+    # anywhere in the public observation makes this receipt ambiguous.
+    return not any(o.get("name","").lower()=="dm-100" for o in after.get("objects",[]))
+
+
 def observe_accepted_attack(p,before,decision,after):
     """Called only after a confirmed API execution; targeting menus cost no sample."""
     action=decision.action
@@ -107,7 +163,9 @@ def observe_accepted_attack(p,before,decision,after):
     if not pending or after.get("status")!="ready":return
     before_texts=set(before.get("ui",{}).get("texts",[]))
     memory=getattr(p,"dm100_threat",None)
-    if memory and memory["cell"]==pending["cell"] and dm100_missile_receipt(before,after,pending):
+    if memory and memory["cell"]==pending["cell"] and (
+            dm100_missile_receipt(before,after,pending)
+            or dm100_arcane_disintegration_receipt(before,after,pending)):
         p.dm100_threat=None
         if p.ranged_plan and p.ranged_plan.get("name")=="dm-100":
             p.ranged_plan=None

@@ -1563,5 +1563,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000120"
+  },
+  {
+    "id": "000121-arcane-disintegration-receipt",
+    "priority": "high",
+    "summary": "Recognize the confirmed Arcane Vision disintegration receipt before stale DM-100 memory blocks progression.",
+    "evidence": [
+      "Decision 3907, lines 11180-11181: uncursed disintegration selected with public +3 Magic Charge and Arcane Vision.",
+      "Decision 3908, lines 11182-11183: target 874 disappears after one turn and six experience; the boost is consumed.",
+      "Decision 3909, line 11184: remembered lightning lane causes planner exhaustion despite full health and no observed enemies.",
+      "tools/combat_observation.py; tools/dm100_escape.py:15-46; tools/policy_nodes.py:93-116."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000121"
   }
 ]
