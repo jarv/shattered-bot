@@ -1346,5 +1346,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000103"
+  },
+  {
+    "id": "000104-protected-container-transit",
+    "priority": "high",
+    "summary": "Exclude unopened containers from protected-route transit while preserving admitted container endpoints.",
+    "evidence": [
+      "Decision 425, line 1222: known levitation, one held golden key and four observed locked chests precede the protected key trip.",
+      "Decision 427, accepted transition line 1227: opening intermediate chest 804 consumes the held key without movement.",
+      "Decisions 429–464, transitions lines 1231–1301: chest 762 refuses entry with no matching key and no clock progress.",
+      "Decision 1002, resource veto line 2924, and decision 1003, line 2928: remaining golden-key obligations culminate in living-hero planner exhaustion.",
+      "tools/room_tactics.py:197–310: protected-trip search expands container cells despite destination-only interaction accounting."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000104"
   }
 ]

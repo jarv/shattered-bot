@@ -280,6 +280,14 @@ def plan_journey(p, state, enemies, neighbors, *, probe_kind=None, plan_only=Fal
                     if fallback is None:fallback = journey
                 else:
                     return select(journey)
+            # Container clicks interact before moving. In particular a flight
+            # route through two locked chests can spend the only held key, then
+            # retry the second lock without advancing the protection clock.
+            # Keep admitted containers as endpoints above, never as transit.
+            if loot and loot.get("name", "").lower() in {
+                    "chest", "locked chest", "crystal chest", "tomb",
+                    "skeleton", "skeletal remains"} and cell != pos:
+                continue
             for adjacent in neighbors(cell, width, height):
                 closed_probe = plan_only and kind in PROTECTION and p.tiles.get(adjacent,{}).get('terrain')==5 \
                     and adjacent not in occupied and adjacent not in p.blocked and not p.tiles[adjacent].get('effects') \
