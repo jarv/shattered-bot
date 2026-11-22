@@ -1779,5 +1779,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000141"
+  },
+  {
+    "id": "000142-enhanced-throw-confirmation",
+    "priority": "high",
+    "summary": "Handle the exact enhanced thrown-weapon warning before the selected combat throw reaches targeting.",
+    "evidence": [
+      "Decision 3161, selection line 9356: item-13 THROW selected by unit-engagement; identified shocking shuriken +1 has one remaining use.",
+      "Decision 3161, accepted transition line 9357: the warning opens without advancing time or reducing hero health.",
+      "Terminal line 9358: Yes/No warning remains open and unknown-menu handling blocks the living hero.",
+      "tools/unit_strategies.py:30-45; tools/survival_policy.py:190-199,618-670; tools/policy_interaction.py:83-118,159-166."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000142"
   }
 ]

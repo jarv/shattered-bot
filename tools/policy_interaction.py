@@ -7,11 +7,13 @@ try:
     from .shop_tactics import confirm_purchase
     from .consumable_tactics import discovery_menu
     from .resource_tactics import enchantment_menu
+    from .combat_items import stats, physical_score
 except ImportError:
     from policy_decision import Finished
     from shop_tactics import confirm_purchase
     from consumable_tactics import discovery_menu
     from resource_tactics import enchantment_menu
+    from combat_items import stats, physical_score
 
 
 class MenuPhase(str, Enum):
@@ -78,6 +80,44 @@ MENU_HANDLERS = {
 }
 
 
+def confirm_enhanced_throw(p, state):
+    """Continue only the selected combat throw, not arbitrary Yes/No dialogs.
+
+    The warning precedes targeting and spends neither a turn nor the weapon.
+    Accepting permits the already chosen last use (including its stated loss);
+    it is not a hit, breakage, or collection receipt.
+    """
+    warning = ("If the last thrown weapon in your enhanced thrown weapon set breaks, "
+               "the set will be permanently lost. Are you sure you want to throw it?")
+    texts = state["ui"].get("texts", [])
+    buttons = state["ui"]["buttons"]
+    last = getattr(p, "last_decision", None)
+    action = last.action if last else {}
+    if warning not in texts or len(buttons) != 2 \
+            or {b["label"] for b in buttons} != {"Yes", "No"} \
+            or action.get("type") != "item" or action.get("action") != "THROW" \
+            or p.target is None:
+        return None
+    item = next((i for i in state.get("inventory", [])
+                 if i.get("id") == action.get("id")), None)
+    enemy = next((o for o in state.get("objects", [])
+                  if o.get("cell") == p.target and o.get("health_bar")
+                  and not o.get("top_item")), None)
+    value = stats(item) if item else None
+    if not item or not enemy or not value or value[0] != "thrown" \
+            or not texts or texts[0].lower() != item["name"].lower() \
+            or "THROW" not in item.get("actions", []) \
+            or physical_score(item, state["hero"].get("strength", 0)) <= 0 \
+            or not p.item_action_allowed(item, "THROW") \
+            or not p.target_allowed(item, enemy) \
+            or not p.attack_kind_allowed(state, enemy, "thrown") \
+            or not p.shot_clear(state, p.target):
+        return None
+    yes = next(b for b in buttons if b["label"] == "Yes")
+    return p.decision({"type": "button", "id": yes["id"]},
+                      "combat: confirm selected enhanced throw with last-use loss warning")
+
+
 def menu(p, state):
     buttons = state["ui"]["buttons"]
     if state["scene"] != "GameScene":
@@ -116,6 +156,9 @@ def menu(p, state):
         if result is not None:
             return result
         raise Finished("blocked", f"Cannot complete {phase.value}: {state['ui']}")
+    throw = confirm_enhanced_throw(p, state)
+    if throw:
+        return throw
     if labels == {"settings", "challenges", "main menu"}:
         return p.decision({"type": "back"}, "menu: close ordinary in-game pause menu without changing settings")
     if not buttons:
