@@ -785,14 +785,17 @@
   {
     "id": "000060-flight-test-feasibility",
     "priority": "high",
-    "summary": "Establish safe identification and protected retrieval after the entrance scout.",
+    "summary": "Establish safe identification and protected retrieval when every budgeted flight-test origin borders grass.",
     "evidence": [
-      "Decision 328, log line 1034: safe banks and protected reward-trip origins do not overlap.",
-      "Decision 361, log line 1147: missing recognized-room supplies block departure discovery.",
-      "tools/puzzle_supplies.py:97–121; tools/room_tactics.py:171–240; tools/descent_potions.py:121–131."
+      "Decision 187, line 526: open entrance 935, flock traps and Chest 1136 are observed.",
+      "Decision 188, line 529: flight preparation retains the unknown candidate without an admitted test bank.",
+      "Decision 216, accepted transition line 611: the clock advances and HP remains 25/25.",
+      "Decision 217, line 613: missing levitation exhausts mandatory discovery; all preparation prerequisites decline.",
+      "Source-pinned offline reconstruction matches decisions 0–216; copied probes find five protected-trip origins, all structurally excluded by grass or high grass.",
+      "tools/puzzle_supplies.py:130–160,338–380,764–810; tools/room_tactics.py:197–311; tools/descent_potions.py:282–321."
     ],
     "status": "deferred",
-    "reason": "Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Historical supplied backlog, not revalidated or addressed in this review. Prior review context: Historical backlog, not revalidated or addressed in run 000089. Historical backlog, not revalidated or addressed in this recording. Historical context from the supplied backlog, not revalidated in this review: Historical backlog; not revalidated or addressed in this recording. Carried historical backlog; not revalidated or addressed in this review. Historical backlog, not revalidated or addressed in this recording. Source browsing and complete original-policy bookkeeping resolve the missing controller-state evidence, but not safe replacement feasibility. Approach 674 has only one escape neighbor admitted by the existing test terrain rule; an open door still does not count. Banks farther away fail the existing protected-trip budget, and no carried known levitation or identification supply is established at this point. Next, inspect the public observation after the admitted scout for a newly executable identification/protection-and-return plan. Do not relax escape checks, guess azure potion identity, waive mandatory pickup, or infer that opening the entrance completed the puzzle.",
+    "reason": "Revalidated in this recording, but no safe focused patch is established. Origins 893, 894, 895, 856 and 896 all border flammable grass; visibility refresh alone cannot admit unknown drinking. Known liquid flame does not establish contained spread, safe firing/retreat, collateral protection or verified expiry. Next derive the observed entrance/grass/chest fixture and validate one bounded known-flame preparation transaction with accepted throw receipts, contained spread, protected supplies, expiry and fresh bank/stash/round-trip admission. Add refusal regressions for unknown spread, threatened retreat, collateral loot, active effects and failed receipts. If containment cannot be established, require executable nonconsumptive identification instead. Keep mandatory pickup, hazard checks and terminal planner exhaustion intact.",
     "origin_run": "000060"
   },
   {
