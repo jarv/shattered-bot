@@ -801,16 +801,17 @@
   {
     "id": "000061-descent-bank-return",
     "priority": "high",
-    "summary": "Reserve mandatory discovery preparation before ordinary collection disconnects every admitted bank return.",
+    "summary": "Reserve mandatory discovery preparation before exploration disconnects every admitted bank return.",
     "evidence": [
-      "Decision 708, lines 2062–2063: collection leaves door 624 for grass 623.",
-      "Decision 709, lines 2065–2066: collection moves to grass 622; copied validated-state probes change from an admitted return to no return after this move.",
-      "Decision 711, lines 2071–2072: the gold is actually collected.",
-      "Decision 712, lines 2074–2075: the living hero exhausts mandatory discovery.",
-      "tools/descent_potions.py:103–149,403–452; tools/mage_policy.py:445–495; tools/region_navigation.py:168–225."
+      "Decision 349, selection line 938: exploration leaves water 802 for grass 759.",
+      "Decision 350, selection line 941 and accepted line 942: exploration moves from grass 759 to grass 716.",
+      "Decision 351, selection line 944 and accepted line 945: exploration reaches 673 alive at full health.",
+      "Decision 352, line 947: both preparation prerequisites decline and mandatory discovery exhausts.",
+      "Offline reconstruction matches decisions 0–351 and the terminal blocker; seven exact-inventory bank receipts remain, but all terminal returns are excluded.",
+      "tools/descent_potions.py:103–149,266–294,403–452; tools/mage_policy.py:445–495; tools/test_floor_potion_reservation.py:55–64."
     ],
     "status": "deferred",
-    "reason": "Complete selecting source and matching reconstruction establish preparation disconnection, but not a safe early-discovery transaction. Earlier helper proposals do not validate the global progression gate, accepted stash/effect recovery, or restoration of still-uncollected gold. Allowing grass would weaken the return safety filter. Next derive paired decision-708/709/710 fixtures and validate bounded preparation reservation at 709, preserving room supplies and the collection objective, with accepted transit/drop/drink/retrieval receipts, interruption handling and fresh pickup-route resumption. Require a new baseline-red/candidate-green regression before changing arbitration; do not waive pickup or restore death waits.",
+    "reason": "Revalidated in this recording. No safe focused patch is certified: terminal return requires crossing excluded grass 716/759, while an earlier drink must preserve the existing pre-descent supply/progression gate and resume the unfinished frontier and collection work. Complete source and reconstruction resolve missing selector state, not this transaction safety contract. Next derive paired decision-350/351 fixtures and validate a bounded preparation reservation before disconnection, with accepted movement/drop/consumption/retrieval receipts, interruption handling, fresh bank/stash admission and restoration of unfinished exploration. Do not allow grass, increase bounds, infer potion effects or waive pickup.",
     "origin_run": "000061"
   },
   {
