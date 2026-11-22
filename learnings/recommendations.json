@@ -1602,5 +1602,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000124"
+  },
+  {
+    "id": "000125-known-frost-observation-return",
+    "priority": "high",
+    "summary": "Keep the guarded fire-observation return actionable when the carried potion becomes known frost.",
+    "evidence": [
+      "Decision 320, log line 971: upgrade scroll 646 is observed but excluded by the eternal-fire buffer.",
+      "Decisions 549–552, log lines 1656–1663: intuition identifies the carried frost supply.",
+      "Decision 553, log line 1664: exploration replaces the unfinished observation return.",
+      "Decision 596, log lines 1790–1791: uncollected progression resource blocks descent with the Mage alive.",
+      "tools/puzzle_supplies.py: known-supply branch; tools/room_tactics.py: extinguish and throw_vantage; tools/mage_policy.py: mandatory progression descent gate."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000125"
   }
 ]

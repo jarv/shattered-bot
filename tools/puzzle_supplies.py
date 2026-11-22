@@ -669,6 +669,33 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
         if 'hungry' in buffs and demand.kind!='frost':continue
         known=next((i for i in inventory if base_name(i)==demand.potion),None)
         if known:
+            if demand.kind=='frost' and getattr(p,'reserve_floor_puzzle_supplies',False) \
+                    and 'THROW' in known.get('actions',[]) and not p.recent_threats \
+                    and state.get('status')=='ready' and not state.get('modal') \
+                    and not (p.potion_stash or p.room_journey) \
+                    and p.puzzle_revisit_steps['frost']<48 \
+                    and not any(t.get('visible') and fire_barrier(t) for t in p.tiles.values()):
+                # Identification changes the supply, not the unfinished return.
+                # Reuse observation-only travel; the extinguisher must still
+                # recheck visible fire, throwing distance and line of fire.
+                # Preserve its existing short throwing-vantage admission first.
+                try:
+                    from .room_tactics import extinguish
+                except ImportError:
+                    from room_tactics import extinguish
+                staged=extinguish(p,state,enemies,distance)
+                if staged:return staged
+                paths=p.paths(state)
+                safe_paths={c:previous for c,previous in paths.items() if all(
+                    p.tiles[n]['terrain'] not in {7,8,10,18,21,22,31,37,38}
+                    and not p.tiles[n].get('trap') and not p.tiles[n].get('plant')
+                    and not p.effects_block_movement(p.tiles[n])
+                    for n in p.route(paths,c)[1:])}
+                plan=p.frost_view_plan
+                anchor=Demand('frost','potion of frost',plan['barrier']) \
+                    if plan and fire_barrier(p.tiles.get(plan['barrier'],{})) else demand
+                staged=refresh_barrier(p,state,anchor,safe_paths,distance)
+                if staged:return staged
             if demand.kind=='pool' and getattr(p,'reserve_floor_puzzle_supplies',False):
                 staged=stage_known_pool(p,state,demand,known,distance,neighbors)
                 if staged:return staged
