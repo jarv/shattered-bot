@@ -1361,5 +1361,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000104"
+  },
+  {
+    "id": "000105-gas-test-bank-admission",
+    "priority": "high",
+    "summary": "Establish safe terrain preparation or nonconsumptive identification when gas-room trips have no admissible unknown-potion bank.",
+    "evidence": [
+      "Decision 13, accepted transition line 34: the entrance at 258 opens.",
+      "Decision 14, selection line 36 and accepted line 37: gas-room observations trigger escape to 219 before any potion is carried.",
+      "Decision 337, line 991: missing purity exhausts mandatory discovery with the hero at 25/25 HP.",
+      "Source-pinned offline reconstruction matches decisions 0–336 and reproduces the terminal blocker.",
+      "Copied terminal-state probes admit 20 hypothetical gas chest-trip origins but zero safe unknown-drink banks; every origin also fails structural terrain admission independently of visibility.",
+      "tools/puzzle_supplies.py:130–160,632–638,764–810; tools/descent_potions.py:282–321."
+    ],
+    "status": "deferred",
+    "reason": "No safe focused replacement is established. The exact blocker is flammable or unknown terrain around every budgeted drink origin, not missing selecting source or merely hunger. Known liquid flame is carried, but no validated containment, safe firing/retreat, potion-collateral protection or fresh clearance contract supports using it here. Next derive the observed entrance/grass-pocket/chest-route fixture and validate bounded known-flame terrain preparation with accepted throw receipts, contained spread, expiry and fresh bank/stash admission. Add refusal regressions for unknown spread, threatened escape, collateral loot, active effects and failed receipts. If containment fails, establish nonconsumptive identification instead; do not relax hazard checks or waive pickup. No policy patch or new regression is certified.",
+    "origin_run": "000105"
   }
 ]
