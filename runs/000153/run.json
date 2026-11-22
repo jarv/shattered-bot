@@ -1,0 +1,453 @@
+{
+  "schema_version": 1,
+  "id": "000153",
+  "started_at": "2026-11-22T23:01:13Z",
+  "completed_at": "2026-11-22T23:03:30.530774+00:00",
+  "source_commit": "60a1aa8eba6cdd8e902b346224888fff2bb93103",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "quota-skip-20261122",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 330,
+  "duration_seconds": 134.307,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000152",
+  "previous_source_commit": "bbcd9b02a431962370715164f492edd39d819877",
+  "improvements": [
+    "The bot keeps an established doorway hold when one pursuer occupies its single entrance, rather than mistaking that enemy for a second route around it. Other enemies must still have no flank, and separate pressure checks still apply."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "A pursuer occupying the single doorway slot must not itself count as an alternate flank. Retain established holds only while separate contact, approach-pressure, visibility and hazard checks remain satisfied; do not infer encounter clearance from choke geometry.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended with a living hero when mandatory potion discovery exhausted its preparation options, not with an observed death. The initiating contradiction was that hungry room preparation rejected even nonconsumptive identification before considering the retained intuition stone. The gas room had been observed earlier; amber was acquired later, and the recorded intuition attempt tested strength and failed, not purity. The terminal report names missing purity while amber and usable intuition remain carried. A reduced public-evidence fixture reproduces the excluded information action without claiming recovered runtime memory. The candidate permits a bounded, stationary purity hypothesis through the existing public intuition menu; it does not assume that hypothesis is correct or authorize drinking, movement, collection or descent. The original regression produced the expected assertion failures; the candidate passes all three new tests and the full 1,987-test suite, with four skips. Historical backlog cases were not revalidated. Changed policy and the new regression are supplied as workspace edits for trusted derivation; files is intentionally empty.",
+    "learnings": "Separate hunger restrictions on unknown drinking from safe information actions. A failed strength hypothesis does not identify a potion or rule out a different declared intuition hypothesis. Keep gas-room rewards mandatory and require actual identity, protection and collection observations before proceeding."
+  },
+  "recommendations": [
+    {
+      "id": "000153-hungry-gas-identification",
+      "priority": "high",
+      "summary": "Allow safe carried intuition for the missing gas-room supply before hunger vetoes potion experiments.",
+      "evidence": [
+        "D244, log lines 694-695: toxic chamber and two chests are observed; escape is accepted before any unknown potion is carried.",
+        "D320-D324, log lines 919-929: amber is acquired, and a strength intuition hypothesis publicly fails.",
+        "D329, accepted transition at log line 943: the hero reaches the open door alive at full health.",
+        "D330, log line 945: missing purity exhausts mandatory discovery despite carried amber and usable intuition.",
+        "Original tools/puzzle_supplies.py:693-698 excludes hungry preparation before the identification branch; tools/descent_potions.py:344-382 preserves the missing-supply obligation."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000153"
+    },
+    {
+      "id": "000137-summoning-exit-quarantine",
+      "priority": "high",
+      "summary": "Establish safe progression when a summoning-trap quarantine encloses the key and stair approaches.",
+      "evidence": [
+        "Decision 959, line 2836: summoning trap 76, iron key 106, upgrade scroll 75 and exit 195 are public; resource diagnostics reject pickup routes.",
+        "Decision 1042, line 3055: key and upgrade remain excluded by the room barrier.",
+        "Decision 1183, line 3510: unresolved iron door 669 and no reachable exit remain at planner exhaustion.",
+        "tools/summoning_tactics.py:70–107,129–138; tools/special_rooms.py:100–107; tools/mage_policy.py:407–415."
+      ],
+      "status": "deferred",
+      "reason": "Not repaired by the garden correction. Public-input helper probes show equipped armor score 1 and weapon score 5.5, below readiness requirements, and the chamber does not satisfy the supported single-door enclosure. Complete source resolves the selecting-chain gap, but no validated safe non-triggering passage or multi-door activation/clearance contract is established. Next derive the decision-959 trap/key/stair fixture and validate retrieval outside a conservative active-trap/chain envelope, or bounded multi-door containment with actual clearance receipts. Do not shrink quarantine or lower readiness without that safety evidence.",
+      "origin_run": "000137"
+    },
+    {
+      "id": "000123-inventory-aware-discovery-return",
+      "priority": "high",
+      "summary": "Establish inventory-aware preparation return after potion pickup invalidates discovery-bank receipts.",
+      "evidence": [
+        "Decision 222, selection line 620 and accepted line 621: amber pickup at 104.",
+        "Decision 223, line 623: amber and identified liquid flame share the inventory near witnessed preparation banks.",
+        "Decision 276, selection line 774 and accepted line 775: golden pickup changes the potion inventory.",
+        "Decision 277, line 777: both preparation prerequisites decline and mandatory discovery exhausts at full health.",
+        "Offline reconstruction matches decisions 0-276 and the terminal blocker; nine historical receipts cover only amber plus liquid flame.",
+        "tools/descent_potions.py:30-107,376-417; tools/potion_stash.py:103-133."
+      ],
+      "status": "deferred",
+      "reason": "Revalidated, but not patched. Historical projected three-color feasibility around bank 104 resolves part of the storage uncertainty; it does not provide a current inventory-aware preparation witness, fresh arrival admission or verified storage transaction. Simply substituting the new inventory into an old receipt bypasses a safety gate. Next derive paired decision-223/277 fixtures for bank 104, storage 228 and the recorded 54-step corridor, then validate bounded preparation-only return with accepted movement receipts and fresh bank/stash checks before drops or drinking. Preserve exact ordinary receipts, collateral protection, unknown identities, mandatory pickup and terminal exhaustion.",
+      "origin_run": "000123"
+    },
+    {
+      "id": "000112-flame-impact-clearance",
+      "priority": "high",
+      "summary": "Account for the actual flame-potion impact before authorizing bookshelf ignition, then verify clearance after escape.",
+      "evidence": [
+        "Decision 835, line 2378: known liquid flame is selected from 612 for shelf 689.",
+        "Decision 836, selection line 2380 and accepted line 2381: the target input consumes the potion, starts burning and lowers HP from 30 to 27.",
+        "Decisions 837-840, accepted lines 2384-2393: extinguishing travel reaches water at 733 with 23 HP.",
+        "Decision 940, line 2697: remembered shelves still reserve missing flame alongside the gas obligation.",
+        "tools/wooden_barrier.py:146-206; tools/survival_policy.py:541-554; game Item.throwPos, Ballistica.build and PotionOfLiquidFlame.shatter."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: The selector checks distance from the requested shelf, but a nonpassable bookshelf makes the projectile collide one cell earlier. For the recorded 612-to-689 shot, impact is reconstructed at 650, adjacent to the hero; flame covers neighboring cells. The observed burning confirms the unsafe result, not a successful clearance. A larger requested-target distance alone leaves impact-area collateral and post-escape clearance unverified; the existing close-shelf regression also expects this class of throw. Next derive an actual-impact fixture and validate a floor-targeted ignition or separately admitted impact-safe bank, protecting the complete impact/fuel footprint and confirming fresh shelf clearance before local retrieval. Do not certify the unseen shelves burned away or replace the throw with speculative movement. No safe complete replacement is certified here.",
+      "origin_run": "000112"
+    },
+    {
+      "id": "000112-gas-preparation-return",
+      "priority": "high",
+      "summary": "Establish a funded return to freshly verified gas-room preparation before mandatory discovery exhausts.",
+      "evidence": [
+        "Decision 925, selection line 2652 and accepted line 2653: exploration reaches the gas entrance at 592.",
+        "Decision 926, line 2655: chest 669 and gas are observed; the hero retreats to 553.",
+        "Decision 939, accepted line 2695: opening door 249 advances time at full health; decision 940, line 2697 exhausts mandatory discovery.",
+        "Source-pinned offline reconstruction matches all 940 selections and reproduces the terminal blocker. Copied terminal probes find nine hypothetical gas-trip origins but no currently visible admitted drink bank; removing hunger still yields no preparation.",
+        "tools/descent_potions.py:309-347; tools/puzzle_supplies.py:585-640,764-810; tools/preparation_prerequisites.py:17-65."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: Complete source and matching reconstruction resolve the selecting-state gap. Several trip origins have observed nonflammable surroundings, but those surroundings are now unseen; the remaining origins also fail terrain or effect checks. Gas lacks the unknown-supply revisit used for flight and pool, and hunger independently excludes testing. No executable fresh bank/stash admission and gas-funded preparation transaction is established. Next derive the recorded return corridor to 436/475/514 and validate bounded reobservation with accepted movement receipts, fresh hazard checks, inventory-compatible remote stash admission and a puzzle-specific meal only after feasibility is demonstrated. Keep chest pickup mandatory and retain terminal exhaustion. A meal alone, stale visibility or generic remote drinking is not a repair.",
+      "origin_run": "000112"
+    },
+    {
+      "id": "000105-gas-test-bank-admission",
+      "priority": "high",
+      "summary": "Establish safe terrain preparation or nonconsumptive identification when gas-room trips have no admissible unknown-potion bank.",
+      "evidence": [
+        "Decision 13, accepted transition line 34: the entrance at 258 opens.",
+        "Decision 14, selection line 36 and accepted line 37: gas-room observations trigger escape to 219 before any potion is carried.",
+        "Decision 337, line 991: missing purity exhausts mandatory discovery with the hero at 25/25 HP.",
+        "Source-pinned offline reconstruction matches decisions 0–336 and reproduces the terminal blocker.",
+        "Copied terminal-state probes admit 20 hypothetical gas chest-trip origins but zero safe unknown-drink banks; every origin also fails structural terrain admission independently of visibility.",
+        "tools/puzzle_supplies.py:130–160,632–638,764–810; tools/descent_potions.py:282–321."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: No safe focused replacement is established. The exact blocker is flammable or unknown terrain around every budgeted drink origin, not missing selecting source or merely hunger. Known liquid flame is carried, but no validated containment, safe firing/retreat, potion-collateral protection or fresh clearance contract supports using it here. Next derive the observed entrance/grass-pocket/chest-route fixture and validate bounded known-flame terrain preparation with accepted throw receipts, contained spread, expiry and fresh bank/stash admission. Add refusal regressions for unknown spread, threatened escape, collateral loot, active effects and failed receipts. If containment fails, establish nonconsumptive identification instead; do not relax hazard checks or waive pickup. No policy patch or new regression is certified.",
+      "origin_run": "000105"
+    },
+    {
+      "id": "000102-pool-discovery-admission",
+      "priority": "high",
+      "summary": "Establish executable inventory-protected preparation and chest retrieval after the approach observation.",
+      "evidence": [
+        "Decision 1626, line 4828: the observed iron key remains excluded by the room hazard barrier and preparation reports no verified protected reward round trip.",
+        "Decision 1627, line 4831: multiple unidentified potion colors remain carried.",
+        "Decision 1892, lines 5637–5638: the piranha chest remains mandatory and uncollected."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: The scout correction does not establish safe unknown-potion bank admission with the recorded multi-potion inventory. A collateral-safe stash/retrieval route, actionable entrance and protected chest return have not been validated together. Next derive fresh bank-734 fixtures with cached chests 780 and 911 and the contemporaneous inventory, then test those contracts before authorizing any drink. Do not weaken habitat checks, guess potion effects or waive pickup.",
+      "origin_run": "000102"
+    },
+    {
+      "id": "000098-discovery-health-prerequisite",
+      "priority": "high",
+      "summary": "Resolve the ordinary-healing versus mandatory-discovery health gap with an admitted bounded recovery prerequisite.",
+      "evidence": [
+        "Decision 612, accepted transition line 1848: movement advances turn 599 to 600 at 25/30 HP.",
+        "Decision 613, line 1850: discovery exhausts on health despite zero healing waits spent and carried food.",
+        "tools/mage_policy.py:742–750 and tools/policy_nodes.py:566–574: ordinary recovery stops below discovery's required health.",
+        "tools/descent_potions.py:206–266 in the played source: paused health immediately becomes terminal planner exhaustion.",
+        "Run 000113 decisions 210–213, selected lines 592–598 and accepted lines 593–599: four natural-healing waits reach 19/25 HP.",
+        "Run 000113 decision 218, accepted line 613: movement advances turn 209 to 210 at 19/25 HP; decision 219, line 615 exhausts mandatory discovery on health.",
+        "Played tools/mage_policy.py:742–750 uses a 75% ordinary recovery target; tools/descent_potions.py:293–301 requires 85%. Offline reconstruction matches all 219 preceding selections and the terminal blocker."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: Historical candidate was rejected and was not revalidated in this review. Candidate validation failed; code was not promoted.",
+      "origin_run": "000098"
+    },
+    {
+      "id": "000094-known-pool-transit-arrival",
+      "priority": "high",
+      "summary": "Establish a funded known-invisibility transit and arrival contract for the mandatory pool chest.",
+      "evidence": [
+        "Decision 177, log line 511: piranhas and Chest 1343 are publicly observed.",
+        "Decision 280, accepted transition line 808: intuition identifies carried invisibility.",
+        "Decision 281, log lines 809–810: chest obligation exhausts the living planner at full health.",
+        "Source-pinned reconstruction matches decisions 0–280; copied-state probe finds only origin 1097, requiring 49 route cells before its 19-turn protected trip.",
+        "tools/puzzle_supplies.py:124–186; tools/room_tactics.py:197–288; tools/mage_policy.py:456–457."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Historical supplied backlog, not revalidated or addressed in this review. Prior review context: No safe focused replacement is established. The only admitted origin is an out-of-view closed door 48 ordinary moves away; both the 41-cell approach cap and the 48-step ceiling exclude completion, so increasing one bound is insufficient. Source browsing and matching reconstruction resolve the original-state uncertainty. Next derive the recorded 967-to-1097 geometry into a deterministic regression and implement a bounded transaction funding transit, door opening/arrival and protected return, with accepted movement receipts, fresh per-step hazard checks and arrival eligibility distinct from transit spending. Validate baseline-red/candidate-green and the full suite before claiming repair. Do not guess potion identities, waive the chest, weaken habitat protection or restore death waits. Current recording: a separate arrival contradiction is reproduced at decisions 602 and 611–612. The proposed conservative filter removes repeated travel, but does not establish retrieval. In the reduced public geometry bank 1267 has only one ordinary retreat, entrance 1266 has only one walkable outside retreat, and origin 1268 exceeds the protected route envelope. Next validate a dedicated known-invisibility door/arrival transaction with conservative opening and return costs, interruption safety and actual-buff receipts before changing drink admission; do not simply count the hazardous-side bank as an escape.",
+      "origin_run": "000094"
+    },
+    {
+      "id": "000091-shocking-corridor-clearance",
+      "priority": "high",
+      "summary": "Establish bounded remote shocking-trap preparation and verified recovery for the blocked corridor.",
+      "evidence": [
+        "Decision 848, selection line 2546 and accepted transition 2547: a publicly ordinary floor step activates a hidden shocking trap; HP falls from 30 to 26.",
+        "Decisions 849–851, lines 2549–2554: recovery retreats past the revealed shocking trap at 791, which blocks floor 754 and closed door 717.",
+        "Decision 851, line 2553: source-pinned reconstruction finds a clear shot from distance two, a throwable waterskin and a fully visible dry trap neighborhood; the chilling-only clearance helper declines.",
+        "Decision 877, accepted transition line 2624: the eighth search advances time at full health; decision 878, line 2625 ends in planner exhaustion with 717 and 754 still unreachable.",
+        "Offline reconstruction matches all 878 selected actions, reasons, intents and controllers and the exact terminal blocker; this is reconstructed bookkeeping, not recorded memory.",
+        "tools/environment_tactics.py:92–142; tools/mage_policy.py:1216–1227; tools/survival_policy.py:436–447,1109–1159; tools/resource_tactics.py:70–79."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Historical supplied backlog, not revalidated or addressed in this review. Prior review context: Complete source and matching reconstruction resolve the initiating blocker: active shocking trap 791, not merely the hungry search ceiling. No policy or test patch is submitted. A distance-two remote throw at decision 851 has promising local geometry, but broadening chilling-trap admission alone leaves no validated electrical-expiry and payload-return contract. Electricity can propagate through water and paralyse; the existing expiry waiter admits gas text only, while payload recovery correctly refuses active effects. Next derive the decision-851 dry-corridor fixture and implement one bounded remote-discharge transaction with visible containment, accepted throw evidence, fresh inactive-trap/effect-clearance observations, safe-bank interruption handling and verified waterskin retrieval before door work. Require baseline-red/candidate-green regressions, including water, unseen footprint, adjacency, active effects and failed receipts. Preserve hazard and mandatory-pickup checks and the terminal stuck label; do not increase bounds or assume discharge means clearance.",
+      "origin_run": "000091"
+    },
+    {
+      "id": "000089-multi-rat-retreat-feasibility",
+      "priority": "high",
+      "summary": "Establish a bounded intervention or verified refuge before repeated non-choke retreats sustain enemy pursuit.",
+      "evidence": [
+        "This recording's accepted pursuit bookkeeping reaches twenty retreat moves at log line 147.",
+        "The focused decision-23 correction addresses a verified-hold recognition defect, not general non-choke intervention feasibility."
+      ],
+      "status": "deferred",
+      "reason": "The broader historical case is not revalidated here. This recording supplies no changed-policy post-intervention observations or validated non-choke damage-and-refuge contract. Next derive the historical paired intervention and escape fixtures with accepted charge, pursuit and damage bookkeeping before changing those admissions; do not extrapolate survival from this choke correction.",
+      "origin_run": "000089"
+    },
+    {
+      "id": "000081-boxed-summoning-escape",
+      "priority": "high",
+      "summary": "Establish an evidence-backed escape-opening response to a boxed summoning ambush.",
+      "evidence": [
+        "Decision 466, log lines 1349–1350: approaching skeletal remains triggers an unseen summoning trap; twelve enemies appear.",
+        "Decision 467, log lines 1352–1353: no admitted retreat; the return doorway is occupied by a gnoll scout.",
+        "Source-pinned offline reconstruction matches all 477 selections; the first ambush state has no reachable movement destination outside the hero's cell.",
+        "Decisions 468, 470 and 472, accepted transitions 1356, 1361 and 1366: three snake zaps exhaust the staff while health falls to 14.",
+        "Decision 476, accepted transition 1377: health falls from four to zero; the full public message confirms a gnoll scout killed the hero.",
+        "tools/room_tactics.py:529–546; tools/trap_field_tactics.py:25–35; tools/multi_enemy_tactics.py:97–147; tools/tactical_recovery.py:recover."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Historical supplied backlog, not revalidated or addressed in this review. Prior review context: Historical backlog, not revalidated or addressed in run 000089. Historical backlog, not revalidated or addressed in this recording. Historical context from the supplied backlog, not revalidated in this review: Historical backlog; not revalidated or addressed in this recording. Complete source and validated reconstruction resolve the packet's target, trap-memory and retreat gaps, but do not establish a safe replacement. Before entry no trap was public. After activation every neighboring step is occupied, doorway scout health is unobserved, and no known displacement or protection consumable is carried. Switching targets alone does not establish timely clearance or survival. Next derive the decision-467 fixture and a bounded door-blocker attack plan with conservative resource/loss admission, fresh public clearance evidence and a freshly admitted retreat. Preserve collateral, hazard and mandatory-pickup gates. No policy or regression change is proposed.",
+      "origin_run": "000081"
+    },
+    {
+      "id": "000079-gas-inventory-protection",
+      "priority": "high",
+      "summary": "Establish executable inventory-protected identification before gas-room preparation exhausts mandatory discovery.",
+      "evidence": [
+        "Decision 275, log lines 817–818: gas entrance and unresolved rewards observed; escape accepted.",
+        "Decision 276, log line 820: exploration resumes with jade and turquoise still unidentified.",
+        "Source-pinned offline reconstruction: bank 241 admits the hypothetical chest trip but has no remote stash in corridor 240/241/269.",
+        "Decision 292, accepted transition line 869: clock advances at full health.",
+        "Decision 293, log line 871: missing purity supply blocks mandatory discovery.",
+        "tools/puzzle_supplies.py:prepare_supplies; tools/potion_stash.py:47–80; tools/descent_potions.py:240–255."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Historical supplied backlog, not revalidated or addressed in this review. Prior review context: Historical backlog, not revalidated or addressed in run 000089. Historical backlog, not revalidated or addressed in this recording. Historical context from the supplied backlog, not revalidated in this review: Historical backlog; not revalidated or addressed in this recording. Complete source and matching reconstruction isolate the blocker, but neither a safe remote stash reachable inside the admitted corridor nor a remaining identification resource is established. Allowing the singleton drink risks the other color; generic distant discovery can waste room protection before retrieval. Next derive a deterministic decision-276 fixture and establish an identification-only preparation route with protected inventory, accepted identification/retrieval receipts and a separately admitted return using actual known protection. Preserve mandatory pickup and every hazard gate; no safe focused patch is certified.",
+      "origin_run": "000079"
+    },
+    {
+      "id": "000076-terminal-supply-arbitration",
+      "priority": "high",
+      "summary": "Resolve the bookshelf-driven missing-flame dead end using positive public geometry or executable nonconsumptive preparation.",
+      "evidence": [
+        "Decision 185, line 524: bookshelves 894–897 first appear.",
+        "Decisions 188–190, lines 533–537: identification yields haste while amber remains unknown.",
+        "Decision 315, accepted line 897: movement advances time at full health.",
+        "Decision 316, line 899: missing liquid flame for shelf 894 is the sole reserved-supply blocker; preparation prerequisites decline.",
+        "tools/puzzle_supplies.py:71–111; tools/descent_potions.py:307–348; tools/wooden_barrier.py:24–25; tools/preparation_prerequisites.py:16–58."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: The precise unresolved safety blocker is the unobserved shelf backs at 857–860, not missing selector source. Terminal inventory has no nonconsumptive identification or reveal resource. Ignoring the reservation could spend the sole needed flame dose without establishing retrieval feasibility; a synthetic safe-bank test does not resolve this. No patch is retained. Next derive the first-shelf exterior route graph and paired unknown-back, observed-wall-back and shelf-separated-reward fixtures. Validate whether an existing observed, hazard-admitted exterior vantage can reveal the backs without crossing shelves or speculative movement; require accepted observation evidence before removing the obligation. Preserve mandatory pickup and planner exhaustion.",
+      "origin_run": "000076"
+    },
+    {
+      "id": "000073-discovery-preparation-envelope",
+      "priority": "high",
+      "summary": "Resolve mandatory discovery's preparation dead end without bypassing potion protection or progression pickup.",
+      "evidence": [
+        "Decision 258, log line 751: last compatible bank receipt reconstructed from accepted public inputs.",
+        "Decisions 117–125, log lines 334–359: nearby bank observations preceded the later multi-potion inventory.",
+        "Decision 273, log lines 796–797: accepted exploration move before exhaustion.",
+        "Decision 274, log line 799: mandatory discovery has no admitted bank or return action."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Historical supplied backlog, not revalidated or addressed in this review. Prior review context: Historical backlog, not revalidated or addressed in run 000089. Historical backlog, not revalidated or addressed in this recording. Historical context from the supplied backlog, not revalidated in this review: Historical backlog; not revalidated or addressed in this recording. Carried historical backlog; not revalidated or addressed in this review. No safe focused replacement was established. Current visible banks have no admitted remote stash; the compatible receipt's route exceeds the return envelope and crosses excluded grass, while nearby older receipts cover only one potion. Fresh-state probes show that opening one door alone is insufficient. Next, derive a selecting fixture at decision 258 and the terminal input for an inventory-aware, preparation-only bank/stash reservation before exploration leaves the verified return envelope. Require baseline assertion failure and candidate success while preserving fresh arrival checks, reserved supplies, actual pickup receipts, and mandatory progression pickup. Do not infer safety from stale visibility or changed-inventory receipts.",
+      "origin_run": "000073"
+    },
+    {
+      "id": "000062-aquarium-retrieval-plan",
+      "priority": "high",
+      "summary": "Establish executable mandatory chest retrieval for aquarium-like piranha geometry without assuming an invisibility supply.",
+      "evidence": [
+        "Decision 726, line 2172: piranha 219 and Chest 262 on special flooring are observed.",
+        "Decisions 865–869, lines 2558–2566: jade invisibility hypothesis fails publicly.",
+        "Decisions 1106–1110, lines 3417–3425: bistre invisibility hypothesis also fails publicly.",
+        "Decision 1218, line 3729: preparation reports no verified protected reward round trip.",
+        "Decisions 1219–1221, lines 3731–3737: chest blocks descent; blink does not resolve it; planner stops with the hero alive.",
+        "tools/piranha_tactics.py:14–59; tools/puzzle_supplies.py:686–740; tools/room_tactics.py:197–288; tools/mage_policy.py:443–457."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Historical supplied backlog, not revalidated or addressed in this review. Prior review context: Revalidated in this recording. Complete source and matching offline reconstruction resolve the controller-state gap, but a safe replacement is not established. No known invisibility or identification resource remains at exhaustion; available visible test banks do not establish a protected chest return. A ranged alternative lacks a bounded public-resource/loss budget and defeat-backed habitat-retirement contract; the sleeping fish also has no visible health bar for existing damage-evidence capture. Next derive this small habitat/perimeter fixture and validate dry firing positions outside all habitat reach, charge and hunger costs, fresh defeat/clearance evidence and actual chest collection receipts. Alternatively establish nonconsumptive identification plus an executable protected trip using an observed resource. Do not guess potion effects, weaken the buffer, waive pickup or restore death waits.",
+      "origin_run": "000062"
+    },
+    {
+      "id": "000061-descent-bank-return",
+      "priority": "high",
+      "summary": "Reserve mandatory discovery preparation before exploration disconnects every admitted bank return.",
+      "evidence": [
+        "Decision 349, selection line 938: exploration leaves water 802 for grass 759.",
+        "Decision 350, selection line 941 and accepted line 942: exploration moves from grass 759 to grass 716.",
+        "Decision 351, selection line 944 and accepted line 945: exploration reaches 673 alive at full health.",
+        "Decision 352, line 947: both preparation prerequisites decline and mandatory discovery exhausts.",
+        "Offline reconstruction matches decisions 0–351 and the terminal blocker; seven exact-inventory bank receipts remain, but all terminal returns are excluded.",
+        "tools/descent_potions.py:103–149,266–294,403–452; tools/mage_policy.py:445–495; tools/test_floor_potion_reservation.py:55–64."
+      ],
+      "status": "deferred",
+      "reason": "Revalidated in this recording. No safe focused patch is certified: terminal return requires crossing excluded grass 716/759, while an earlier drink must preserve the existing pre-descent supply/progression gate and resume the unfinished frontier and collection work. Complete source and reconstruction resolve missing selector state, not this transaction safety contract. Next derive paired decision-350/351 fixtures and validate a bounded preparation reservation before disconnection, with accepted movement/drop/consumption/retrieval receipts, interruption handling, fresh bank/stash admission and restoration of unfinished exploration. Do not allow grass, increase bounds, infer potion effects or waive pickup.",
+      "origin_run": "000061"
+    },
+    {
+      "id": "000060-flight-test-feasibility",
+      "priority": "high",
+      "summary": "Establish safe identification and protected retrieval when every budgeted flight-test origin borders grass.",
+      "evidence": [
+        "Decision 150, log line 443: Chest 1276 is observed beyond the flight entrance at 1066.",
+        "Source-pinned offline reconstruction matches all 379 selected inputs and reproduces the exact terminal blocker; probes at decisions 150, 348 and 379 find eleven hypothetical trip origins but no safe unknown-potion bank.",
+        "Decision 348, log line 1067: a puzzle-backed meal is selected; decision 349, line 1069 still reports no verified protected reward trip.",
+        "Decision 378, accepted transition line 1158: the last pickup advances the clock with full health.",
+        "Decision 379, line 1160: missing levitation blocks mandatory discovery and exhausts the planner.",
+        "Reduced terminal-public-geometry probe: all eleven hypothetical flight-trip origins fail bank admission independently of visibility because their own terrain or surroundings include grass or high grass."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: Revalidated here, but not safely repaired. Complete selecting source and matching offline reconstruction resolve the helper-chain and selecting-state gaps, isolating a structural terrain blocker rather than a hunger-only or door-only failure. The terminal inventory has three unidentified colors, no known levitation, no identified flame and no identification resource. Relaxing the flammable-neighborhood gate could expose the hero or other potions to an unknown effect. Next build a deterministic fixture around water 982, entrance 1066 and Chest 1276, including all eleven origins. Validate actual fire/frost footprints, inventory-protected stash access, escape containment and the protected return budget before admitting any preparation transaction. Require accepted effect and pickup receipts, plus baseline-red/candidate-green refusal tests. If containment fails, require a publicly available nonconsumptive identification or terrain-clearing resource; none is established in this terminal inventory. Do not certify discovery, clearance or collection from a hypothetical route. No patch is proposed.",
+      "origin_run": "000060"
+    },
+    {
+      "id": "000046-pool-key-preparation",
+      "priority": "high",
+      "summary": "Establish an admitted retrieval plan for a matching key inside remembered piranha reach.",
+      "evidence": [
+        "Decision 2117, log line 5887: a giant piranha is observed at 683.",
+        "Decision 2395, log line 6657: iron key 716 is visible but excluded by the room hazard barrier; pool preparation reports no protected reward trip.",
+        "Decision 2530, accepted transition at line 7052: healing restores 41 HP to 50 without collecting the key.",
+        "Decision 2531, accepted transition at line 7054: a puzzle meal removes hunger, but decision 2532 still has the same key obligation.",
+        "Decision 2532, lines 7055–7057: the matching key remains inaccessible and the living hero exhausts the planner.",
+        "tools/special_rooms.py:72–92; tools/priority_resources.py:107–156; tools/puzzle_supplies.py:588–629; tools/mage_policy.py:431–449.",
+        "Run 000068 decision 2877, line 8275: piranha 956, golden key 1269 and frost potion 1267 are publicly visible.",
+        "Run 000068 decision 2894, lines 8325-8327: the silver-potion pool hypothesis produces observed levitation, not invisibility.",
+        "Run 000068 decision 3105, line 8929: locked chest 1337 establishes a matching golden-key obligation.",
+        "Run 000068 decision 3185, accepted transition line 9160: the upgrade scroll is actually acquired.",
+        "Run 000068 decision 3186, lines 9162-9164: diagnostics identify golden key 1269, excluded by remembered pool reach; the living hero exhausts the planner."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Historical supplied backlog, not revalidated or addressed in this review. Prior review context: Historical backlog, not revalidated or addressed in run 000089. Historical backlog, not revalidated or addressed in this recording. Historical context from the supplied backlog, not revalidated in this review: Historical backlog; not revalidated or addressed in this recording. Carried historical backlog; not revalidated or addressed in this review. Historical backlog, not revalidated or addressed in this recording. Revalidated in this recording: the terminal obligation is golden key 1269, not the upgrade scroll named by the generic blocker. The scroll was acquired. The key is inside the remembered piranha bank exclusion, while no known invisibility, unknown potion candidate or carried identification resource remains. The earlier silver test publicly produced levitation. Full selecting source resolves the packet ambiguity but does not certify a safe replacement: removing the buffer, waiving the key or guessing a potion is unsafe. A bounded ranged-control plan also needs an observed dry firing origin outside the entire habitat reach, sufficient admitted damage and hunger budget, fresh defeat evidence, habitat retirement and keyed collection receipts. Next, derive and test that contract on the recorded perimeter before changing pickup arbitration. No policy or regression patch is proposed.",
+      "origin_run": "000046"
+    },
+    {
+      "id": "000043-pool-supply-preparation",
+      "priority": "high",
+      "summary": "Establish executable, safe preparation for the mandatory piranha chest.",
+      "evidence": [
+        "Decision 1694, log line 4839: first observed piranha chest on this floor; hero is hungry at full health with unknown potions.",
+        "Decision 1725, accepted transition at log line 4933: ordinary exploration advances the clock without health loss.",
+        "Decision 1726, log line 4935: unfinished chest blocks descent and rescue yields no action.",
+        "tools/puzzle_supplies.py:434-455,568-611; tools/piranha_tactics.py:36-59; tools/mage_policy.py:429-430.",
+        "Run 000053 decision 475, line 1344: first pool sight includes Chest 1048 and three piranhas; the hero has full health, no hunger, one unknown magenta potion and no carried identification supply.",
+        "Run 000053 decision 475, accepted transition line 1345: exploration leaves the pool approach without preparation.",
+        "Run 000053 decision 529, accepted transition line 1497: search advances turns 536 to 538 at 30/30 HP.",
+        "Run 000053 decision 530, lines 1498–1499: pending chest blocks descent and the living hero exhausts the planner.",
+        "Source-pinned offline bookkeeping matched all 530 selected actions, reasons and intents, then the terminal blocker; copied-state probes found no origin satisfying both unknown-potion bank and protected chest-trip admission.",
+        "tools/puzzle_supplies.py:97–124,189–213,592–635; tools/room_tactics.py:171–264; tools/mage_policy.py:418–430."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Historical supplied backlog, not revalidated or addressed in this review. Prior review context: Historical backlog, not revalidated or addressed in run 000089. Historical backlog, not revalidated or addressed in this recording. Historical context from the supplied backlog, not revalidated in this review: Historical backlog; not revalidated or addressed in this recording. Carried historical backlog; not revalidated or addressed in this review. Historical backlog, not revalidated or addressed in this recording. Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: No safe focused replacement is established. In this recording, complete source and offline reconstruction resolve the missing runtime-state question: all selections and the terminal blocker match. At first pool sight, nine reachable hypothetical chest-trip origins all fail the dry unknown-drink and dry-approach gates; no visible dry test bank is admitted. At exhaustion, safe visible banks exist elsewhere but none admits the protected chest return. No identify, intuition or known invisibility supply is carried at either point. Health and hunger are not the blocker. Next, use the validated first-sight state to establish an identification-only preparation route with inventory protection and an executable subsequent retrieval budget, or validate a separate ranged-control plan including known charge budget and defeat-backed habitat retirement. Neither route is established here. Weakening water checks, guessing magenta, waiving pickup or restoring death-waits is unsafe; no patch or regression is supplied.",
+      "origin_run": "000043"
+    },
+    {
+      "id": "000041-pool-equipment-preparation",
+      "priority": "high",
+      "summary": "Establish feasible equipment and potion preparation before a mandatory pool chest exhausts the planner.",
+      "evidence": [
+        "Decision 2770, line 7770: pool supplies report no verified protected reward trip; equipped armor is unidentified and health is 55/60.",
+        "Decisions 2789–2818, lines 7819–7906: full health does not resolve the unidentified-armor prerequisite.",
+        "Decision 2864, line 8024: armor is identified after combat, but health is 44/60.",
+        "Decision 2961, line 8302: pending pool chest blocks descent while the living hero has 26/60 HP.",
+        "tools/combat_items.py:39–45; tools/room_tactics.py:177–180; tools/puzzle_supplies.py:453–505; tools/mage_policy.py:429–430."
+      ],
+      "status": "deferred",
+      "reason": "Historical backlog, not revalidated or addressed in this recording. Prior disposition: Historical backlog, not revalidated or addressed in this recording. Prior review disposition: Historical supplied backlog, not revalidated or addressed in this review. Prior review context: Historical backlog, not revalidated or addressed in run 000089. Historical backlog, not revalidated or addressed in this recording. Historical context from the supplied backlog, not revalidated in this review: Historical backlog; not revalidated or addressed in this recording. Carried historical backlog; not revalidated or addressed in this review. Historical backlog, not revalidated or addressed in this recording. Historical backlog, not revalidated or addressed in this recording. Prior-review context, not revalidated in this recording: Complete source establishes an unresolved timed-equipment prerequisite, not a certified replacement. The concrete safety blocker is the absence of a validated combination of known usable armor, dry unknown-potion bank, protected inventory, actionable entrance and budgeted chest return. Reconstruction validated earlier selections but stopped at serialization before the pool episode; later attempts were terminated by the isolated shell. Continue in-process through decision 2770, then probe existing gates on copies. Do not lower health or hazard checks, guess invisibility, add general early eating, or waive the chest obligation.",
+      "origin_run": "000041"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000153/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000153/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 118,
+        "turns": 324,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 324,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 419
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 118,
+    "gold_complete": true,
+    "turns": 324,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

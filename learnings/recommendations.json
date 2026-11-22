@@ -1847,5 +1847,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000152"
+  },
+  {
+    "id": "000153-hungry-gas-identification",
+    "priority": "high",
+    "summary": "Allow safe carried intuition for the missing gas-room supply before hunger vetoes potion experiments.",
+    "evidence": [
+      "D244, log lines 694-695: toxic chamber and two chests are observed; escape is accepted before any unknown potion is carried.",
+      "D320-D324, log lines 919-929: amber is acquired, and a strength intuition hypothesis publicly fails.",
+      "D329, accepted transition at log line 943: the hero reaches the open door alive at full health.",
+      "D330, log line 945: missing purity exhausts mandatory discovery despite carried amber and usable intuition.",
+      "Original tools/puzzle_supplies.py:693-698 excludes hungry preparation before the identification branch; tools/descent_potions.py:344-382 preserves the missing-supply obligation."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000153"
   }
 ]

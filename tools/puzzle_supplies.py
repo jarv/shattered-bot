@@ -690,6 +690,37 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
                 continue
             staged=revisit_flight_room(p,state,demand,distance)
             if staged:return staged
+    # Hunger forbids unknown-drink experiments below, not a stationary
+    # nonconsumptive hypothesis using a carried intuition stone. In particular,
+    # a missing purity reservation must not deadlock mandatory discovery while
+    # this existing information action is still available. A failed strength
+    # guess is not a failed purity guess, nor evidence of either identity.
+    tile = p.tiles.get(hero["cell"], {})
+    if getattr(p, 'reserve_floor_puzzle_supplies', False) and 'hungry' in buffs \
+            and hero["hp"] >= .95 * hero["max_hp"] \
+            and state.get("status") == "ready" and not state.get("modal") \
+            and not p.recent_threats and not p.unseen_damage_turns \
+            and not (p.potion_stash or p.room_journey or p.drop_plan or p.trap_payload_return) \
+            and tile.get("visible") and tile.get("observed") \
+            and tile.get("terrain") in {1, 3, 6, 9, 11, 19, 20, 29} \
+            and not any(tile.get(k) for k in ("effects", "trap", "plant")) \
+            and hero["cell"] not in p.room_blocked \
+            and not any(t in buffs for t in ("starving", "burn", "poison", "bleed", "blind",
+                                            "vertigo", "paral", "root", "magic immun", "invisib")):
+        stone = next((i for i in state["inventory"]
+                      if base_name(i) == "stone of intuition" and "USE" in i.get("actions", [])
+                      and p.item_action_allowed(i, "USE")), None)
+        for demand in pending:
+            if not stone or demand.kind != "gas" or any(
+                    base_name(i) == demand.potion for i in state["inventory"]):
+                continue
+            candidate = next((i for i in state["inventory"] if unknown_potion(i)
+                              and (state["depth"], demand.kind, base_name(i)) not in p.puzzle_guesses), None)
+            if candidate:
+                action = prepare_intuition(p, state, guess=demand.potion, candidate=candidate)
+                if action:
+                    p.puzzle_guesses.add((state["depth"], demand.kind, base_name(candidate)))
+                    return action
     if hero["hp"] < 0.5*hero["max_hp"] or ('hungry' in buffs and not p.puzzle_hungry_frost) or any(t in buffs for t in (
             "starving", "burning", "poison", "blind", "vertigo", "paral", "root", "levitat", "magic immun")):
         return None
