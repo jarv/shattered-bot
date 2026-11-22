@@ -1877,5 +1877,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000154"
+  },
+  {
+    "id": "000155-contact-rat-choke",
+    "priority": "high",
+    "summary": "Preserve an established choke when false contact-rat sidestep pressure would trigger another doorway retreat.",
+    "evidence": [
+      "Decision 27, selection line 89 and accepted line 90: the hero reaches holding square 285 behind door 310.",
+      "Decision 28, lines 94–95: an observed entry strike leaves the hero at the hold with 19 HP.",
+      "Decision 29, lines 96–97: two queued rats trigger retreat to door 286, losing three HP despite verified single-file geometry.",
+      "tools/mage_policy.py:1089–1101,1180; tools/multi_enemy_tactics.py:26–54,84–99; game Mob.Hunting.act:1358–1395.",
+      "Source-pinned offline reconstruction matches decisions 0–29; the copied candidate state selects the existing hold attack without dispatch."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000155"
   }
 ]

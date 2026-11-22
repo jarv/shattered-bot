@@ -38,7 +38,16 @@ def approach_pressure(p,state,enemies,cell):
         profile=p.unit_strategies.profile(enemy)
         fast='fast-movement' in profile.capabilities or visibly_accelerated(enemy)
         positions={enemy['cell']};front={enemy['cell']}
-        for _ in range(0 if profile.movement=='stationary' else 2 if fast else 1):
+        # Ordinary contact rats attack rather than sidestep (Mob.Hunting).
+        # At an established hold, inventing that sidestep lets the queued
+        # rat occupy the vacated gate and falsely counts two attack slots.
+        # Keep prospective movement, fast foes and other species conservative.
+        hold=getattr(p,'doorway_hold',None)
+        contact_rat=hold and hold['depth']==state['depth'] \
+            and cell==state['hero']['cell']==hold['hide'] and enemy['cell']==hold['door'] and not fast \
+            and enemy['name'].lower() in {'marsupial rat','albino rat'} \
+            and distance(cell,enemy['cell'],width)<=1
+        for _ in range(0 if profile.movement=='stationary' or contact_rat else 2 if fast else 1):
             front={n for start in front for n in neighbors(start,width,height) if n!=cell and footable(p,enemy,n)}-positions
             positions.update(front)
         for candidate in positions:
