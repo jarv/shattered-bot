@@ -102,7 +102,17 @@ def choose(p,state,enemies):
     count=lambda cell:sum(can_attack(p,state,e,cell) for e in active)
     current=count(pos)
     if p.multi_door_plan:
-        committed=doorway_route(p,state,active,current)
+        # A closing door can hide the pursuing group after the first accepted
+        # retreat. Do not discard that route and immediately explore back into
+        # the protected escape edge. Memories constrain this continuation only;
+        # they never start a route or authorize attacks/clearance.
+        route_enemies=active
+        occluded=len(active)<2
+        if occluded and p.multi_door_plan['steps']>0 and pos!=p.multi_door_plan['door']:
+            visible={e['cell'] for e in enemies}
+            route_enemies=active+[e for c,e in p.recent_threats.items()
+                                  if c not in visible and not e.get('sleeping')]
+        committed=doorway_route(p,state,route_enemies,current,occluded=occluded)
         if committed:return committed
     if not needs_retreat(p,state,active):
         p.multi_retreat_streak=0
@@ -147,12 +157,14 @@ def choose(p,state,enemies):
     return p.cell(step,'combat: retreat toward single-attacker '+('doorway choke' if choke else 'observed square'),intent=Intent.RETREAT)
 
 
-def doorway_route(p,state,enemies,current):
+def doorway_route(p,state,enemies,current,occluded=False):
     """Commit to an observed door; only certify the far-side hold after observing it."""
     pos=state['hero']['cell'];width,height=state['map']['width'],state['map']['height']
     plan=p.multi_door_plan
     buffs=' '.join(b['name'].lower() for b in state['hero'].get('buffs',[]))
     if len(enemies)<2 or state.get('danger_cells') or any(b in buffs for b in ('root','paral','vertigo')):
+        p.multi_door_plan=None;return None
+    if occluded and (not plan or plan['steps']<=0 or pos==plan['door']):
         p.multi_door_plan=None;return None
     paths=p.paths(state,{e['cell'] for e in enemies})
     def admitted(route):
@@ -160,7 +172,10 @@ def doorway_route(p,state,enemies,current):
             or p.tiles[c]['terrain'] in {7,8,10,18,21,22,31,37,38} or p.tiles[c].get('trap')
             or p.tiles[c].get('plant') or p.effects_block_movement(p.tiles[c]) for c in route[1:]) \
             and sum(can_attack(p,state,e,route[1]) for e in enemies) <= max(
-                1,sum(can_attack(p,state,e,pos) for e in enemies))
+                1,sum(can_attack(p,state,e,pos) for e in enemies)) \
+            and (not occluded or (p.tiles[route[1]].get('observed')
+                and p.tiles[route[1]].get('visible')
+                and not any(can_attack(p,state,e,route[1]) for e in enemies)))
     def pressure(cell):return approach_pressure(p,state,enemies,cell)
     if plan:
         if plan['depth']!=state['depth'] or plan['branch']!=state.get('branch',0) or plan['steps']>=12 \
