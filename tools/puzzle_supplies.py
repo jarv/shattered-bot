@@ -77,6 +77,10 @@ def demands(p, state, distance, *, include_deferred=False):
         if name == "red sentry":
             found.append(Demand("sentry", "potion of haste", cell))
         elif "piranha" in name:
+            habitats=[h for h in getattr(p,'piranha_habitats',{}).values() if cell in h['water']]
+            known_reward=any(cell in room['water'] and not room['collected'] for room in p.piranha_rooms.values())
+            if habitats and not known_reward and all(h['profile']!='pool' or h['surveyed'] for h in habitats):
+                continue  # Aquarium/candidate sightings do not authorize invisibility tests.
             # Fish remain hazardous after their chest reward is collected.
             # Do not turn those same actors into a second supply obligation.
             # Only an associated habitat with every known reward receipted
@@ -147,8 +151,16 @@ def safe_test_bank(p, state, cell, distance, neighbors, allow_dry=False, pool_ba
     # flammable surroundings too, and retain two dry/gas-free escape directions.
     around = {cell, *neighbors(cell,width,height)}
     if pool_bank and (tile.get('terrain')==29 or p.recent_threats
-                     or any(p.tiles.get(c,{}).get('terrain')==29 for c in around)):
-        return False  # Unknown potion tests belong on dry ground, beyond every known water bank.
+                      or any(p.tiles.get(c,{}).get('terrain')==29 for c in around)):
+        # A recognized treasure pool must not make unrelated exterior puddles
+        # unusable. Keep the entire fish habitat/shore excluded; the remaining
+        # ordinary bank still needs observed nonflammable surroundings, exits,
+        # stash isolation and actual-effect recovery below.
+        profiles=[h for h in getattr(p,'piranha_habitats',{}).values() if h['profile']=='pool']
+        if p.recent_threats or not profiles or any(
+                any(distance(cell,w,width)<=1 for w in h['water'])
+                for h in profiles):
+            return False
     allowed={1,3,4,6,9,11,12,14,19,20,29}|({0,5,18} if flight_bank else {5} if pool_bank else set())
     if any(c not in p.tiles or not p.tiles[c].get("visible") or p.tiles[c]["terrain"] not in allowed
            or p.tiles[c].get("plant") or p.tiles[c].get("effects") or c in p.loot for c in around):
@@ -158,8 +170,25 @@ def safe_test_bank(p, state, cell, distance, neighbors, allow_dry=False, pool_ba
             and not (pool_bank and 'piranha' in o['name'].lower())
             and not (sentry_bank and o['name'].lower()=='red sentry')):
         return False
-    return sum(p.walkable(n) and p.tiles[n]["terrain"] in {1,3,9,11,14,19,20,29}
-                 for n in neighbors(cell,width,height)) >= 2
+    exits=[n for n in neighbors(cell,width,height) if p.walkable(n)
+           and p.tiles[n]["terrain"] in {1,3,9,11,14,19,20,29}
+           and not any(p.tiles[n].get(k) for k in ('trap','plant','effects'))]
+    # A fully observed water alcove immediately before a flight-room doorway
+    # can have just one ordinary retreat. It still extinguishes an unknown
+    # flame, and the retreat must continue away on a second safe observed tile.
+    # This is test admission only; stash isolation and actual flight/return
+    # budgets remain independent requirements.
+    if flight_bank and tile.get('terrain')==29 and len(exits)==1 and any(
+            p.tiles.get(c,{}).get('terrain') in {5,6}
+            and (state['depth'],state.get('branch',0),c) in p.flight_entrance_receipts
+            for c in around):
+        back=exits[0]
+        return any(n!=cell and p.tiles.get(n,{}).get('observed')
+                   and p.tiles[n].get('visible') and p.walkable(n)
+                   and p.tiles[n]['terrain'] in {1,3,9,11,14,19,20,29}
+                   and not any(p.tiles[n].get(k) for k in ('trap','plant','effects'))
+                   for n in neighbors(back,width,height))
+    return len(exits)>=2
 
 
 def known_pool_bank(p,state,bank,neighbors, *, arrival=False):
@@ -310,7 +339,8 @@ def stage_known_gas(p,state,item,neighbors):
         if journey and entrance_actionable(p,staged,journey):
             choices.append((len(route),bank,journey))
     if not choices:return None
-    _,bank,journey=min(choices,key=lambda c:(c[0],c[1]))
+    _,bank,journey=min(choices,key=lambda c:(
+        -getattr(c[2],'planned_count',0),getattr(c[2],'cost',float('inf')),c[0],c[1]))
     if bank!=state['hero']['cell']:
         if p.puzzle_revisit_steps['gas']>=48:return None
         p.puzzle_revisit_steps['gas']+=1
@@ -681,6 +711,12 @@ def open_journey_entrance(p,state,journey):
 def prepare_supplies(p, state, enemies, distance, neighbors):
     if enemies or p.puzzle_probe or state.get("danger_cells") or "potion-supplies" in p.deferred_room_controllers:
         return None
+    try:
+        from .piranha_profile import scout
+    except ImportError:
+        from piranha_profile import scout
+    observation=scout(p,state)
+    if observation:return observation
     hero = state["hero"]
     buffs = " ".join(b["name"].lower() for b in hero.get("buffs", []))
     pending=demands(p,state,distance)

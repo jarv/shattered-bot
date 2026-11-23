@@ -435,6 +435,12 @@ class SurvivalPolicy:
 
     def walkable(self, cell, occupied=(), ignored_neutrals=(), ignored_plants=()):
         tile = self.tiles.get(cell)
+        if tile and tile['terrain']==31 and getattr(self,'reserve_floor_puzzle_supplies',False):
+            try:
+                from .keyed_rooms import crystal_keys_ready
+            except ImportError:
+                from keyed_rooms import crystal_keys_ready
+            if not crystal_keys_ready(self):return False
         container = self.loot.get(cell, {}).get("name", "").lower()
         passable = tile is not None and (tile["terrain"] in FLOOR
                     or self.keys.get(DOOR_KEYS.get(tile["terrain"]), 0) > 0)
@@ -1118,15 +1124,20 @@ class SurvivalPolicy:
                 and state["hero"]["hp"] >= 0.7 * state["hero"]["max_hp"] else 0
         search_budget = self.search_limit(state, search_budget, optional)
         if self.searches < search_budget and (not optional or self.secret_search_steps < 24):
-            scores = wall_scores(self.tiles, width, height, self.searched_walls)
+            try:
+                from .hidden_doors import special_room_walls
+            except ImportError:
+                from hidden_doors import special_room_walls
+            excluded=self.searched_walls|special_room_walls(self,state)
+            scores = wall_scores(self.tiles, width, height, excluded)
             # A discovered secret only ends optional room hunting. Without a
             # reachable exit, retain the ordinary bounded missing-exit search.
             if self.secret_area_found and exits:
-                ends=corridor_ends(self.tiles,width,height,self.searched_walls)
+                ends=corridor_ends(self.tiles,width,height,excluded)
                 scores={c:s for c,s in scores.items() if c in ends}
             if not optional and (not self.secret_area_found or not exits):
                 for wall, tile in self.tiles.items():
-                    if tile["terrain"] in (4, 12) and wall not in self.searched_walls:
+                    if tile["terrain"] in (4, 12) and wall not in excluded:
                         scores.setdefault(wall, 1)  # Broad fallback if no exit is known.
             coverage = {c: {wall for wall in scores if distance(c, wall, width) == 1
                             and (c != pos or self.tiles[wall].get("visible"))}

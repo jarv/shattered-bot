@@ -650,6 +650,16 @@ class MagePolicy(SurvivalPolicy):
             from piranha_tactics import observe as observe_piranha_rooms
         observe_piranha_rooms(self,state)
         try:
+            from .piranha_profile import observe as observe_piranha_profiles
+        except ImportError:
+            from piranha_profile import observe as observe_piranha_profiles
+        observe_piranha_profiles(self,state,previous)
+        try:
+            from .protected_rewards import observe as observe_protected_rewards
+        except ImportError:
+            from protected_rewards import observe as observe_protected_rewards
+        observe_protected_rewards(self)
+        try:
             from .puzzle_supplies import observe_pool_entrance
         except ImportError:
             from puzzle_supplies import observe_pool_entrance
@@ -1417,6 +1427,12 @@ class MagePolicy(SurvivalPolicy):
         return super().escape_special_room(state)
 
     def explore(self, state, enemies):
+        try:
+            from .ghost_quest import seek_quest_foe
+        except ImportError:
+            from ghost_quest import seek_quest_foe
+        quest=seek_quest_foe(self,state,enemies)
+        if quest:return quest
         choice = crystal_choice(self, state, enemies, neighbors) if state["depth"] not in {6,11,16} or state["depth"] in self.shop_visited_floors else None
         if choice:return choice
         keyed = locked_room_route(self,state,enemies) if not enemies and not self.recent_threats and not state.get('danger_cells') else None

@@ -13,7 +13,7 @@ except ImportError:
     from policy_geometry import distance,neighbors
 
 
-def title(item):return item['name'].replace('_','').strip().lower()
+def title(item):return re.sub(r' x\d+$','',item['name'].replace('_','').strip().lower())
 def signature(state):return tuple(sorted((title(i),i.get('quantity',1),bool(i.get('equipped'))) for i in state['inventory']))
 def count(state,name):return sum(i.get('quantity',1) for i in state['inventory'] if title(i)==name)
 
@@ -66,7 +66,15 @@ def candidates(p,state,action):
     return [i for i in state['inventory'] if action in i.get('actions',[])
             and title(i) not in protected|ghost_reserve
             and (redundant(state,i) or inferior(state,i)
-                 and sum(title(j)==title(i) for j in state['inventory'])==1)]
+                  and sum(title(j)==title(i) for j in state['inventory'])==1)]
+
+
+def sale_candidates(p,state):
+    # Goo is optional alchemical energy (3) or shop gold (30), not quest gear.
+    # Sell only through a live quote/receipt; never add it to ground-discard candidates.
+    return candidates(p,state,'DROP')+[i for i in state['inventory']
+            if title(i) in {'blob of goo','blobs of goo'} and i.get('identified')
+            and not i.get('equipped') and 'DROP' in i.get('actions',[])]
 
 
 def discarded(p,cell,obj):
@@ -96,11 +104,14 @@ def choose(p,state,enemies,*,incoming_item=None):
         excess=replacements(p,state,incoming)
     else:
         excess=candidates(p,state,'DROP')
+    keepers=[o for o in state.get('objects',[]) if o['name'].lower()=='shopkeeper']
+    if keepers and not incoming:
+        excess=sale_candidates(p,state)
     excess=[i for i in excess if (signature(state),i.get('id')) not in p.inventory_disposal_failures]
     if not excess:return None
-    item=excess[0] if incoming else min(excess,key=lambda i:physical_score(i,max(state['hero'].get('strength',0),stats(i)[2])))
+    item=excess[0] if incoming else min(excess,key=lambda i:physical_score(
+        i,max(state['hero'].get('strength',0),stats(i)[2])) if stats(i) else 0)
     pos=state['hero']['cell'];width=state['map']['width']
-    keepers=[o for o in state.get('objects',[]) if o['name'].lower()=='shopkeeper']
     paths=p.paths(state,{o['cell'] for o in keepers})
     if keepers and not incoming:
         keeper=min(keepers,key=lambda o:distance(pos,o['cell'],width))
@@ -137,7 +148,7 @@ def sale_menu(p,state):
         p.sell_plan=None;return None
     buttons=state['ui'].get('buttons',[])
     texts=' '.join(state['ui'].get('texts',[])).replace('_','').lower()
-    item=next((i for i in candidates(p,state,'DROP') if title(i)==plan['name']),None)
+    item=next((i for i in sale_candidates(p,state) if title(i)==plan['name']),None)
     if plan['steps']>8:p.stop_unsafe('Unsupported or stalled selling UI; refusing guessed item selection')
     if plan['stage']=='close' or not item:
         plan['stage']='close'
@@ -148,7 +159,7 @@ def sale_menu(p,state):
             plan['stage']='select'
             return p.decision({'type':'button','id':sell[0]['id']},'shop: open ordinary sell selector')
     elif plan['stage']=='select':
-        selected=[b for b in buttons if b['label'].replace('_','').strip().lower()==plan['name']]
+        selected=[b for b in buttons if title({'name':b['label']})==plan['name']]
         interchangeable=plan.get('interchangeable') and redundant(state,item) \
             and len(selected)==sum(title(i)==plan['name'] for i in state['inventory'])
         if len(selected)==1 or interchangeable:
@@ -159,7 +170,7 @@ def sale_menu(p,state):
             plan['bags'].append('backpack')
             return p.decision({'type':'button','id':bag['id']},'shop: find spare gear in observed backpack')
     elif plan['stage']=='quote' and plan['name'] in texts:
-        quotes=[(b,re.fullmatch(r'sell for (\d+)g',b['label'].strip().lower())) for b in buttons]
+        quotes=[(b,re.fullmatch(r'sell (?:1 for |for )(\d+)g',b['label'].strip().lower())) for b in buttons]
         quotes=[(b,int(m[1])) for b,m in quotes if m and int(m[1])>0]
         if len(quotes)==1:
             button,price=quotes[0];plan.update(stage='verify',price=price,gold_before=state['hero'].get('gold',0),button=button['id'])

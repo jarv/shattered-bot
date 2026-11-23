@@ -10,6 +10,12 @@ except ImportError:
 GROUND = {1,2,3,9,11,14,15,19,20,29,30}
 
 
+def crystal_keys_ready(p):
+    """Six witnessed path doors require its three keys before the first spend."""
+    required=getattr(p,'crystal_key_requirement',1)
+    return max(p.keys.get('crystal',0),getattr(p,'crystal_keys_collected',0))>=required
+
+
 def region(p, state, start):
     """Room-local floor; ordinary door thresholds delimit separate choices."""
     width,height=state['map']['width'],state['map']['height']
@@ -47,8 +53,31 @@ def record_spend(p,state,target,kind,alternatives):
 
 
 def observe(p,state):
+    try:
+        from .hidden_doors import special_room_walls
+    except ImportError:
+        from hidden_doors import special_room_walls
+    p.crystal_room_search_walls.update(special_room_walls(p,state))
+    width,height=state['map']['width'],state['map']['height']
+    doors={c for c,t in p.tiles.items() if t.get('terrain')==31}
+    checked=set()
+    for door in doors:
+        if door in checked:continue
+        # Recognition only: crystal thresholds link the nested path branches;
+        # ordinary doors still delimit the enclosure. Never use this flood as
+        # a movement route or permission to unlock any threshold.
+        interior=set();queue=deque([door])
+        while queue and len(interior)<=256:
+            c=queue.popleft()
+            if c in interior or p.tiles.get(c,{}).get('terrain') not in GROUND|{31}:continue
+            interior.add(c)
+            queue.extend(n for n in neighbors(c,width,height) if n not in interior)
+        checked.update(interior)
+        if len(interior)<=256 and len(doors&interior)>=6:
+            p.crystal_key_requirement=3
     held=p.keys.get('crystal',0)
     if held>p.crystal_key_count:
+        p.crystal_keys_collected=getattr(p,'crystal_keys_collected',0)+held-p.crystal_key_count
         # Extra publicly found keys can make an earlier alternative obtainable.
         p.resolved_crystal_alternatives.clear()
     p.crystal_key_count=held

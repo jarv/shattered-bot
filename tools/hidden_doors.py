@@ -9,6 +9,29 @@ WALLS = {4, 12}
 INTERIOR = {1, 2, 3, 6, 11, 14, 15, 19, 20, 29}
 
 
+def special_room_walls(p,state):
+    """Crystal-room interiors have no extra connections; ordinary doors delimit them."""
+    width,height=state['map']['width'],state['map']['height']
+    try:
+        from .keyed_rooms import region
+        from .policy_geometry import neighbors
+    except ImportError:
+        from keyed_rooms import region
+        from policy_geometry import neighbors
+    doors={c for c,t in p.tiles.items() if t.get('terrain')==31}
+    doors.update(getattr(p,'crystal_doors_seen',set()))
+    seeds={n for c in doors
+           for n in neighbors(c,width,height)}
+    seeds.update(c for c,o in p.loot.items() if o.get('name','').lower()=='crystal chest')
+    inside=set()
+    for seed in seeds-inside:
+        inside.update(region(p,state,seed))
+    walls={n for c in inside for n in neighbors(c,width,height)
+           if p.tiles.get(n,{}).get('terrain') in WALLS}
+    walls.update(getattr(p,'crystal_room_search_walls',set()))
+    return walls
+
+
 def secret_search_allowed(state,p=None):
     """Public floor progression rule; Goo's Rat King entrance is the exception."""
     depth=state.get('depth')
@@ -71,7 +94,7 @@ def seek_corridor_end(p,state,enemies,distance):
             or p.corridor_tip_searches>=4 or p.secret_search_steps>=12:
         return None
     width,height=state["map"]["width"],state["map"]["height"]
-    ends=corridor_ends(p.tiles,width,height,p.searched_walls)
+    ends=corridor_ends(p.tiles,width,height,p.searched_walls|special_room_walls(p,state))
     paths=p.paths(state)
     pos=hero["cell"]
     choices=[c for c in paths if p.tiles[c]["terrain"] in INTERIOR and not p.wall_searches[c]
@@ -120,6 +143,7 @@ def continue_search_vantage(p,state,enemies,paths):
     """Finish one pending search before a door toggle revives competing frontier work."""
     goal=p.secret_search_goal
     if not goal:return None
+    goal['walls']-=special_room_walls(p,state)
     hero=state['hero'];pos=hero['cell'];target=goal['cell']
     buffs=' '.join(b['name'].lower() for b in hero.get('buffs',[]))
     if not secret_search_allowed(state,p) or target in p.completed_maze_cells or enemies or p.recent_threats or state.get('danger_cells') \
@@ -202,7 +226,8 @@ def seek_required_corridor_tip(p,state,enemies,distance):
     if enemies or p.recent_threats or state.get('danger_cells') or hero['hp']<.5*hero['max_hp'] \
             or any(b in buffs for b in ('burn','poison','bleed','blind','vertigo','paral','root')):return None
     paths=p.paths(state);choices=[]
-    for wall,tip in narrow_dead_ends(p.tiles,state['map']['width'],state['map']['height'],p.searched_walls).items():
+    for wall,tip in narrow_dead_ends(p.tiles,state['map']['width'],state['map']['height'],
+                                    p.searched_walls|special_room_walls(p,state)).items():
         if tip in p.completed_maze_cells:continue
         if tip not in paths or p.corridor_tip_routes[wall]>=64:continue
         route=p.route(paths,tip)

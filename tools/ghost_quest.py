@@ -221,6 +221,48 @@ def prepare_ghost(p,state,enemies):
     return p.decision({'type':'wait'},'quest: bounded safe health/magic preparation before Sad Ghost',intent=Intent.RECOVER)
 
 
+def seek_quest_foe(p,state,enemies):
+    """Bounded ordinary-floor reconnaissance after accepting the Ghost's request."""
+    quest=p.ghost_quest
+    if quest.get('stage')!='active' or quest.get('depth')!=state['depth'] \
+            or quest.get('target_seen') or enemies or p.recent_threats \
+            or state.get('danger_cells') or p.room_journey or p.potion_stash:
+        return None
+    hero=state['hero']
+    buffs=' '.join(b['name'].lower() for b in hero.get('buffs',[]))
+    if hero['hp']<.8*hero['max_hp'] or any(
+            b in buffs for b in ('starv','burn','poison','bleed','blind','vertigo','paral','root')):
+        return None
+    paths=p.paths(state);pos=hero['cell']
+    visited=quest.setdefault('hunt_visited',[])
+    goal=quest.get('hunt_goal')
+    if goal==pos:
+        if goal not in visited:visited.append(goal)
+        quest['hunt_goal']=goal=None
+    if quest.get('hunt_steps',0)>=64:
+        p.planner.report['ghost_hunt']={'status':'exhausted','reason':'64 reconnaissance inputs; quest unfinished'}
+        return None
+    try:
+        from .hunger_budget import admits,travel_cost
+    except ImportError:
+        from hunger_budget import admits,travel_cost
+    def safe(c):
+        route=p.route(paths,c)
+        return 2<=len(route)<=21 and admits(p,state,2*travel_cost(state,p,route)+12) \
+            and all(p.tiles[n].get('observed') and p.tiles[n]['terrain'] in {1,3,5,6,9,11,14,20,29}
+                    and n not in p.loot and not any(p.tiles[n].get(k) for k in ('trap','plant','effects'))
+                    for n in route[1:])
+    candidates=[c for c in paths if c not in visited and safe(c)]
+    if not candidates:
+        p.planner.report['ghost_hunt']={'status':'deferred','reason':'No safely funded ordinary-floor vantage; quest unfinished'}
+        return None
+    if goal not in candidates:
+        goal=max(candidates,key=lambda c:(len(p.route(paths,c)), -c))
+        quest['hunt_goal']=goal
+    quest['hunt_steps']=quest.get('hunt_steps',0)+1
+    return p.toward(state,goal,'quest: seek accepted Sad Ghost foe on observed ordinary floor',paths,intent=Intent.EXPLORE)
+
+
 def quest_menu(p,state):
     plan=p.ghost_menu
     plan["steps"]+=1

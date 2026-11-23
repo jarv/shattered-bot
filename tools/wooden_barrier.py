@@ -153,6 +153,7 @@ def known_burn(p,state,enemies):
                     fuel.add(n);queue.append(n)
         if len(fuel)>16:continue
         area=fuel|{n for c in fuel for n in neighbors(c,width,height)}
+        exposure=area|{n for c in area for n in neighbors(c,width,height)}
         # Unseen far-side cells are unknown collateral risk, not certified safe floor.
         if any(c in p.loot and not base_name(p.loot[c].get('top_item',p.loot[c])).startswith('stone of ')
                or p.tiles.get(c,{}).get('plant') or p.tiles.get(c,{}).get('trap')
@@ -160,9 +161,13 @@ def known_burn(p,state,enemies):
         if any(o['cell'] in area for o in state.get('objects',[]) if not o.get('top_item')):continue
         for bank in paths:
             route=p.route(paths,bank)
-            if not (2 if tile['terrain']==27 else 3)<=distance(bank,wood,width)<=4 or len(route)>25:continue
+            if not 2<=distance(bank,wood,width)<=4 or bank in area or len(route)>25:continue
             safe={bank,*neighbors(bank,width,height)}
-            if any(c not in p.tiles or p.tiles[c]['terrain'] not in nonflammable or p.tiles[c].get('trap')
+            # Flame splashes radius one and spreads only into flammable cells.
+            # A distant ordinary door behind a nonflammable throwing bank is
+            # not exposed fuel and must not make a narrow corridor unusable.
+            if any(c not in p.tiles or not (p.tiles[c]['terrain'] in nonflammable
+                        or c not in exposure and p.tiles[c]['terrain'] in {5,6}) or p.tiles[c].get('trap')
                     or p.tiles[c].get('plant') or p.tiles[c].get('effects')
                     or c in p.loot and not base_name(p.loot[c].get('top_item',p.loot[c])).startswith('stone of ')
                     for c in safe):continue

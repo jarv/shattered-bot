@@ -276,6 +276,12 @@ def plan_journey(p, state, enemies, neighbors, *, probe_kind=None, plan_only=Fal
                 continue
         fallback = None
         def select(journey):
+            if kind=='gas' and getattr(p,'reserve_floor_puzzle_supplies',False):
+                try:
+                    from .protected_rewards import gas_plan
+                except ImportError:
+                    from protected_rewards import gas_plan
+                journey=gas_plan(p,state,journey)
             if plan_only:return journey
             p.room_attempts.add((state["depth"], kind, journey.route[-1]))
             p.room_journey = journey
@@ -336,6 +342,13 @@ def plan_journey(p, state, enemies, neighbors, *, probe_kind=None, plan_only=Fal
                     paths[adjacent] = cell
                     queue.append(adjacent)
         if fallback is not None:return select(fallback)
+        if kind=='pool' and getattr(p,'reserve_floor_puzzle_supplies',False):
+            try:
+                from .piranha_profile import survey_plan
+            except ImportError:
+                from piranha_profile import survey_plan
+            survey=survey_plan(p,state)
+            if survey:return select(survey)
     return None
 
 
@@ -623,6 +636,12 @@ def prepare_containers(p, state):
 
 def crystal_choice(p, state, enemies, neighbors):
     """Spend a crystal key on observed rewards, never expected generated prizes."""
+    try:
+        from .keyed_rooms import crystal_keys_ready
+    except ImportError:
+        from keyed_rooms import crystal_keys_ready
+    if getattr(p,'reserve_floor_puzzle_supplies',False) and not crystal_keys_ready(p):
+        return None
     if enemies or p.recent_threats or state.get('danger_cells') or not p.keys.get("crystal", 0):
         return None
     doors = [c for c, t in p.tiles.items() if t["terrain"] == 31
