@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "id": "000218",
+  "started_at": "2026-11-23T21:55:49Z",
+  "completed_at": "2026-11-23T21:58:27.974522+00:00",
+  "source_commit": "c405efbdc3e116ac4c980785e3eb54bbedcf80d0",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "immediate-safety-emergency",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 414,
+  "duration_seconds": 154.333,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000217",
+  "previous_source_commit": "b51c2f2e5e740b47811a9ef42cc7bbcc795f800f",
+  "improvements": [
+    "After a food pickup is refused because the pack is full, the bot now tries its guarded inventory cleanup before retrying, even while starving. It still requires observed collection before counting the food as acquired."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "A publicly refused food pickup needs inventory relief before another attempt, even while starving. Keep refusal evidence tied to the current inventory and correct bag; preserve guarded disposal and require actual receipts before crediting either a drop or collection. A stopped game clock is not continuing starvation damage.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended in planner exhaustion, not an observed death: decision 414 shows a ready, living Mage at 17/25 HP with vertigo. Decision 413 (log lines 1215–1217) pursued the observed upgrade scroll; its accepted move from 785 to 819 triggered a previously hidden confusion-gas trap. The pre-move observation did not expose that trap. At decision 414 (lines 1218–1220), the vertigo controller rejected escape because its terrain model treated the passable depth exit at 784 as an unsafe landing and the solid storage barrel at 855 as a possible landing. Both independently invalidate the original all-direction check. Pinned game source confirms that random movement can land on exits but bumps against these barrels. Waiting in renewing gas is intentionally excluded; known purity, blink and teleport supplies were absent, and healing at this health does not satisfy the rescue rule. Mandatory upgrade pickup is correctly preempted by vertigo safety, not completed or waived. Earlier unfinished dewdrop obligations remain distinct from this immediate-safety failure. The proposed focused terrain-classification correction retains all landing hazard checks and excludes stairs from requested escape destinations. A reduced public-observation fixture and an independent fresh-memory terminal-observation probe reproduce the original failure and select one bounded escape input after correction; neither is a reconstruction of original runtime memory. The new regression fails on original source and passes on the candidate; the full suite passes 2,208 tests with four skipped. This establishes selector behavior, not actual gas escape, scroll collection or survival.",
+    "learnings": "For vertigo, distinguish impassable bump directions from possible random landings using observed terrain semantics. Landing on stairs is not the same as requesting a stair interaction. Reobserve after each escape input; retain mandatory loot and require real movement and collection receipts."
+  },
+  "recommendations": [
+    {
+      "id": "000218-vertigo-terrain-outcomes",
+      "priority": "high",
+      "summary": "Correct vertigo random-outcome classification for depth exits and solid storage barrels.",
+      "evidence": [
+        "Decision 413, log lines 1215–1217: upgrade approach triggers hidden confusion gas at 819.",
+        "Decision 414, log lines 1218–1220: living hero exhausts immediate-safety planning with exit 784 and barrel 855 adjacent.",
+        "tools/vertigo_tactics.py:41–112; tools/priority_resources.py:229–255; tools/policy_tree.py:16,39.",
+        "Pinned game Char.move, Terrain flags and Hero action selection distinguish random landings, solid bumps and requested transitions."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000218"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000218/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000218/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 102,
+        "turns": 322,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 322,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 579
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 4,
+        "gold_gained": 95,
+        "turns": 85,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 86,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 4,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 197,
+    "gold_complete": true,
+    "turns": 407,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
