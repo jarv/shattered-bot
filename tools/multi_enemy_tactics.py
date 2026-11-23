@@ -236,6 +236,17 @@ def doorway_route(p,state,enemies,current,occluded=False):
         options=[]
         for door in paths:
             if p.tiles[door]['terrain'] not in {5,6} or p.multi_door_attempts[door]>=2:continue
+            # Reobserve an unknown far side, but against flyers do not commit
+            # to a door whose known surroundings rule out every flight-aware
+            # hold. Ground-only observation-first doorway setups are unchanged.
+            # This is only a negative preflight, never arrival certification.
+            around=list(neighbors(door,width,height))
+            holds=[c for c in around if p.walkable(c)]
+            known=all(p.tiles.get(c,{}).get('observed') for c in around) and all(
+                p.tiles.get(n,{}).get('observed')
+                for c in holds for n in neighbors(c,width,height))
+            if known and any(p.unit_strategies.profile(e).movement=='flying' for e in enemies) \
+                    and not any(single_file(p,state,enemies,c) for c in holds):continue
             route=p.route(paths,door)
             if not admitted(route) or pressure(route[1])>max(1,current):continue
             # Do not prefer simultaneous contact just to reach a nearer door
