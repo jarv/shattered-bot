@@ -105,4 +105,10 @@ def observe(p, before, decision, after):
                     revealed=revealed, opened=opened, advanced=toward)
     if receipt["key"].startswith("shop-target:"):
         p.entrance_visit_steps += 1
+        # Arrival completes this travel commitment, even if corridor search,
+        # loot or safety preempts the shop leaf on the next observation.
+        # This is not a shop visit, door check or exploration-clear receipt.
+        plan = p.shop_search_target
+        if actual == receipt["target"] and plan and plan["target"] == actual:
+            p.shop_search_target = None
     return dict(objective=receipt["key"], **progress)

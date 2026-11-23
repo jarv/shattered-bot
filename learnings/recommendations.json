@@ -1312,16 +1312,15 @@
   {
     "id": "000102-pool-discovery-admission",
     "priority": "high",
-    "summary": "Establish executable preparation and retrieval when the pool entrance cannot fund the protected chest round trip.",
+    "summary": "Establish an executable preparation and retrieval transaction for the earlier unresolved piranha chest.",
     "evidence": [
-      "Decision 1059, log line 3041: a singleton ivory potion is carried without identification.",
-      "Decision 1121, selection line 3218 and accepted transition line 3219: arrival at doorway 175 advances the clock with full health.",
-      "Decision 1122, log line 3221: piranhas and Chest 152 become visible; the mandatory chest blocks descent and the planner exhausts.",
-      "Source-pinned offline reconstruction matches decisions 0-1121 and reproduces the terminal blocker.",
-      "tools/puzzle_supplies.py:147-179,899-943; tools/room_tactics.py:200-307; tools/mage_policy.py:443-457."
+      "Decision 1531, line 4513: the original incident reports an uncollected piranha-room chest at 1086.",
+      "Decision 1531 public inventory: magenta, ivory and silver potions remain unidentified; no known invisibility or nonconsumptive identification item is carried.",
+      "Decision 1578, accepted line 4722: fallback changes floors without collection credit.",
+      "tools/puzzle_supplies.py:prepare_supplies; tools/room_tactics.py:plan_journey; tools/mage_policy.py:descent handling."
     ],
     "status": "deferred",
-    "reason": "Revalidated here, but no safe focused patch is established. Terminal probes find no eligible fresh pool-test bank or admitted protected journey. No carried nonconsumptive identification resource remains, and the nearest safe entrance requires at least eight moves each way: 21 turns under existing accounting versus a nominal 20-turn invisibility effect. A larger route bound alone is insufficient. Next derive this doorway and habitat fixture and validate a bounded ranged-clearance alternative with public charge/damage funding, safe firing and retreat positions, fresh defeat receipts, and verified chest pickup, or establish an identification-plus-retrieval transaction. Do not guess ivory, relax habitat checks, waive mandatory pickup, or restore death-waits.",
+    "reason": "Unaddressed by the single arrival-bookkeeping correction. The concrete safety gap is a protected identification-and-chest-return transaction: unidentified colors do not establish invisibility, and the incident supplies no admitted trial bank with carried-potion collateral protection and a duration-funded return. Next derive paired first-pool and incident fixtures from the public terrain and selecting bookkeeping, then validate fresh bank/stash admission, actual protection duration, interruption recovery and accepted chest pickup. Do not guess potion effects, waive the chest or treat fallback descent as collection.",
     "origin_run": "000102"
   },
   {
@@ -2330,5 +2329,34 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000187"
+  },
+  {
+    "id": "000188-shop-arrival-commitment",
+    "priority": "high",
+    "summary": "Release completed shop-search travel commitments before corridor-search or safety preemption can send the hero back.",
+    "evidence": [
+      "Decision 2540, lines 7382–7384: branch target 944 is reached and explicitly credited as an accepted arrival.",
+      "Decisions 2541–2544, lines 7385–7395: required corridor search moves onward and completes.",
+      "Decisions 2545–2547, lines 7396–7404: three further inputs remain attributed to the previously reached target 944.",
+      "Decision 2686, lines 7805–7806: entrance-shop search exhaustion stops the living planner.",
+      "tools/shop_tactics.py:84–119,134–140; tools/objective_planning.py:78–114."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000188"
+  },
+  {
+    "id": "000188-shop-search-envelope",
+    "priority": "high",
+    "summary": "Establish an entrance-search itinerary that makes progress within its existing allowance without skipping the store.",
+    "evidence": [
+      "Decisions 2530–2684: entrance-search work expands across multiple branches and is interrupted by combat and mandatory key collection.",
+      "Decision 2684, lines 7799–7801: target 776 remains unreached at cell 738.",
+      "Decision 2686, lines 7805–7806: the search allowance is exhausted while observed doors remain unchecked.",
+      "tools/shop_tactics.py:143–240; tools/mage_policy.py:1386–1387."
+    ],
+    "status": "deferred",
+    "reason": "The arrival receipt patch does not establish a repair for the search envelope. Public observations do not identify which remaining unopened branch contains the store, and no alternative branch order or complete admitted itinerary has been validated within the existing allowance. Changing the limit, skipping the store, or reclassifying this as abandonable navigation would mask the failure. Next reconstruct through the first entrance-component expansion, derive its observed door/frontier graph and interrupted key-detour costs, and test a rooted, remaining-budget-aware itinerary on copies with existing route and fresh-arrival checks. Do not feed later recorded observations after any changed selection.",
+    "origin_run": "000188"
   }
 ]
