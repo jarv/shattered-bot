@@ -252,8 +252,8 @@ class SurvivalPolicy:
     def stop_unsafe(self, reason):
         raise Finished("blocked", reason)
 
-    def stop_gameplay(self,reason):
-        raise GameplayBlocked(reason)
+    def stop_gameplay(self,reason, *, kind="unclassified"):
+        raise GameplayBlocked(reason,kind)
 
     def stop_no_safe_action(self,reason):
         raise NoSafeAction(reason)

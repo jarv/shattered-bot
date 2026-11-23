@@ -81,4 +81,5 @@ def escape(p, state):
         return transport
     # This is a technical stop, not an admission failure that until-death
     # continuation can turn back into a stationary wait.
-    raise Finished("blocked", "Toxic gas: no observed traversable exit or usable escape; refusing recovery waits")
+    raise Finished("blocked", "Toxic gas: no observed traversable exit or usable escape; refusing recovery waits",
+                   kind="immediate-safety-emergency")

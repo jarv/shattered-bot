@@ -454,7 +454,8 @@ class MagePolicy(SurvivalPolicy):
                 self.defer_obligations(state,[{'kind':'potion-room supply exhausted','room':kind,'potion':POTIONS[kind]}],
                     "Collected floor supply was used elsewhere; descend without room completion credit")
             if pending_piranha_rooms(self) and 'pool' not in spent_rooms:
-                self.stop_gameplay('Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending')
+                self.stop_gameplay('Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending',
+                                   kind="optional-work-exhausted")
             if self.unit_strategies_enabled:
                 try:
                     from .priority_resources import targets as progression_targets
@@ -473,9 +474,11 @@ class MagePolicy(SurvivalPolicy):
                         from priority_resources import diagnostics
                     self.planner.report['priority_resource']=diagnostics(
                         self,state,[o for o in state.get('objects',[]) if is_hostile(o)])
-                    self.stop_gameplay('Observed upgrade/strength resource remains uncollected; resolve its pickup before descending')
+                    self.stop_gameplay('Observed upgrade/strength resource remains uncollected; resolve its pickup before descending',
+                                       kind="mandatory-preparation-unresolved")
             if self.unit_strategies_enabled and self.ghost_quest.get('stage') in {'reward','claiming','collect_dropped'}:
-                self.stop_gameplay('Sad Ghost reward remains uncollected; return to its observed encounter area before descending')
+                self.stop_gameplay('Sad Ghost reward remains uncollected; return to its observed encounter area before descending',
+                                   kind="mandatory-preparation-unresolved")
             try:
                 from .exploration_budget import current_floor_food_work
             except ImportError:
@@ -487,7 +490,7 @@ class MagePolicy(SurvivalPolicy):
                 from hunger_budget import exhausted
             if food_work and not exhausted(self,state):
                 self.stop_gameplay('Starving: current-floor food search is unfinished; cannot descend while '
-                                 f'known safe unexplored branches remain: {food_work}')
+                                  f'known safe unexplored branches remain: {food_work}',kind="mandatory-preparation-unresolved")
             try:
                 from .descent_potions import begin as test_before_descent
             except ImportError:
@@ -508,7 +511,7 @@ class MagePolicy(SurvivalPolicy):
                                   f"missing keys={sorted(missing_keys(self))}; "
                                   f"unresolved mimic/reward={sorted(self.mimic_obligations)}; "
                                   f"pending reusable/stashed items={bool(self.potion_stash or self.trap_payload_return)}")
-                if self.stop_on_incomplete_loot:self.stop_gameplay(reason)
+                if self.stop_on_incomplete_loot:self.stop_gameplay(reason,kind="optional-work-exhausted")
                 reason=reason.replace('cannot clear or descend with uncollected items/chests',
                                       'continuing descent with uncollected items/chests; no clear credit')
                 detail={'items':[{'cell':c,'name':o['name']} for c,o in sorted(required.items())],

@@ -210,7 +210,8 @@ def choose(p, state):
                      and "READ" in i.get("actions", []) and p.item_action_allowed(i, "READ")), None)
     if teleport:
         return p.use(teleport, "READ", "vertigo: known emergency teleport after no admissible bounded local escape")
-    raise PlannerStuck("Vertigo/confusion exposure: no admissible recovery or all-direction-safe escape within budget")
+    raise PlannerStuck("Vertigo/confusion exposure: no admissible recovery or all-direction-safe escape within budget",
+                       kind="immediate-safety-emergency")
 
 
 def observe(p, before, decision, after):

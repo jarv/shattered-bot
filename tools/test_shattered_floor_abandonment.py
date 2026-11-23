@@ -25,7 +25,7 @@ def fixture():
 
 class FloorAbandonmentTests(unittest.TestCase):
     def start(self, s, recovery):
-        return recovery.start(s, PlannerStuck(FAILURE), {"objectives": {"pool": "exhausted"}}, 42)
+        return recovery.start(s, PlannerStuck(FAILURE,kind="optional-work-exhausted"), {"objectives": {"pool": "exhausted"}}, 42)
 
     def test_sequence_requires_actual_transition_and_leaves_loot_unfinished(self):
         s, p, recovery = fixture()
@@ -145,7 +145,7 @@ class FloorAbandonmentTests(unittest.TestCase):
                 self.update(state)
                 if state["depth"] > 1:
                     raise Finished("won", "Synthetic test endpoint")
-                raise PlannerStuck(FAILURE)
+                raise PlannerStuck(FAILURE,kind="optional-work-exhausted")
         policy = StuckPolicy()
         policy.update(s)
         policy.strength_identified = True

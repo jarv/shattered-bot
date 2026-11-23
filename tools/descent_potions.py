@@ -203,7 +203,7 @@ def wait_effect(p, state):
     plan = p.descent_potion_plan
     tile = p.tiles.get(state["hero"]["cell"], {})
     if plan.get("waits", 0) >= 64:
-        raise PlannerStuck("Pre-descent potion discovery: temporary effect did not clear within recovery budget")
+        raise PlannerStuck("Pre-descent potion discovery: temporary effect did not clear within recovery budget",kind="mandatory-preparation-unresolved")
     if tile.get("terrain") not in {1, 3, 9, 11, 14, 19, 20, 29} or tile.get("effects") \
             or tile.get("plant") or tile.get("trap") or state["hero"]["cell"] in p.room_blocked:
         return None
@@ -297,7 +297,7 @@ def begin(p, state):
         previous = p.objective_results.get("potion-discovery", {})
         publish(p, "potion-discovery", Result(Status.EXHAUSTED, reason,
                 prerequisites=previous.get("prerequisites", [])))
-        raise PlannerStuck("Cannot descend before potion discovery: " + reason)
+        raise PlannerStuck("Cannot descend before potion discovery: " + reason,kind="mandatory-preparation-unresolved")
     return None
 
 
@@ -308,7 +308,7 @@ def advance(p, state):
     # This controller is admitted only by a descent decision. It does not need
     # the obsolete "every reachable tile visited" condition that vetoed run 37.
     if plan["depth"] != state["depth"]:
-        raise PlannerStuck("Mandatory potion discovery crossed floors before completion")
+        raise PlannerStuck("Mandatory potion discovery crossed floors before completion",kind="mandatory-preparation-unresolved")
     if p.strength_identified and not p.potion_stash \
             and not any(base_name(i) == "potion of strength" for i in state["inventory"]):
         cancel(p, "Strength identified and all known strength doses consumed")
@@ -363,17 +363,20 @@ def advance(p, state):
         if not p.potion_stash and not p.room_journey and not p.drop_plan and not p.trap_payload_return:
             try:
                 from .puzzle_supplies import prepare_supplies
-                from .preparation_prerequisites import reconnaissance
+                from .preparation_prerequisites import reconnaissance, sentry_reobservation
             except ImportError:
                 from puzzle_supplies import prepare_supplies
-                from preparation_prerequisites import reconnaissance
+                from preparation_prerequisites import reconnaissance, sentry_reobservation
             action = resolve(p, "potion-discovery", [
                 ("room-supply-preparation", lambda: available(
                     prepare_supplies(p, state, [], distance, neighbors),
                     "existing room planner must admit protection, inventory and reward return")),
-                ("missing-room-geometry", lambda: available(
-                    reveal_incomplete_sentry(p, state, room_needs),
-                    "known reconnaissance for incomplete sentry geometry")),
+                 ("missing-room-geometry", lambda: available(
+                     reveal_incomplete_sentry(p, state, room_needs),
+                     "known reconnaissance for incomplete sentry geometry")),
+                ("ordinary-floor-reobservation", lambda: available(
+                    sentry_reobservation(p,state) if any(d.kind=="sentry" for d in room_needs) else None,
+                    "bounded ordinary-floor route; fresh observations still required before testing")),
                 ("preparation-geometry", lambda: available(
                     reconnaissance(p, state) if any(d.kind != "sentry" for d in room_needs) else None,
                     "known information resource and observed reachable frontier required")),
@@ -392,7 +395,7 @@ def advance(p, state):
         return None
     plan["steps"] += 1
     if plan["steps"] > 128:
-        p.stop_gameplay("Pre-descent strength discovery exceeded its bounded preparation budget")
+        p.stop_gameplay("Pre-descent strength discovery exceeded its bounded preparation budget",kind="mandatory-preparation-unresolved")
     if p.potion_stash:
         action = advance_stash(p, state, [], distance)
         if action:

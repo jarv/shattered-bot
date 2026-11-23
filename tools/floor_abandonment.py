@@ -2,7 +2,7 @@
 import copy
 
 try:
-    from .policy_decision import Intent, PlannerStuck
+    from .policy_decision import Intent, PlannerStuck, BlockerKind
     from .survival_policy import is_hostile
     from .consumable_tactics import base_name, unknown_potion
     from .priority_resources import targets
@@ -10,7 +10,7 @@ try:
     from .escape_commitment import reverses
     from .hunger_budget import admits, travel_cost
 except ImportError:
-    from policy_decision import Intent, PlannerStuck
+    from policy_decision import Intent, PlannerStuck, BlockerKind
     from survival_policy import is_hostile
     from consumable_tactics import base_name, unknown_potion
     from priority_resources import targets
@@ -97,23 +97,22 @@ class FloorAbandonment:
         return min(choices, key=lambda r: (len(r), r[-1])) if choices else None
 
     def start(self, state, failure, report, index):
-        reason = failure.blocker
+        reason = getattr(failure, "blocker", failure.reason)
+        kind = getattr(failure, "blocker_kind", BlockerKind.UNKNOWN)
         incident = {"id": len(self.incidents)+1, "index": index, "kind": "planner-failure", "severity": "error",
-                    "reason": reason, "depth": state["depth"], "branch": state.get("branch", 0),
-                    "cell": state["hero"]["cell"], "hp": state["hero"]["hp"],
+                    "reason": reason, "depth": state.get("depth"), "branch": state.get("branch", 0),
+                    "blocker_kind": kind,
+                    "cell": state.get("hero",{}).get("cell"), "hp": state.get("hero",{}).get("hp"),
                     "review_priority": "high", "policy_report": copy.deepcopy(report),
                     "status": "declined", "accepted_actions": 0, "stalled_actions": 0,
                     "collection_credited": False}
         self.incidents.append(incident)
-        floor = (state["depth"], state.get("branch", 0))
+        floor = (state.get("depth"), state.get("branch", 0))
         if floor in self.attempted:
             incident["recovery_reason"] = "one recovery episode per floor already used"
             return None
-        # Only navigation/no-progress and optional-room exhaustion are eligible.
-        if not any(text in reason.lower() for text in (
-                "hungry no-progress recovery exhausted", "navigation-loop",
-                "navigation loop", "piranha-room chest remains uncollected",
-                "observed loot incomplete")):
+        # Categories are explicit producer contracts, never text heuristics.
+        if kind not in {BlockerKind.OPTIONAL, BlockerKind.NAVIGATION}:
             incident["recovery_reason"] = "failure is not an optional-room or navigation exhaustion"
             return None
         if self.interrupted(state):
@@ -154,7 +153,7 @@ class FloorAbandonment:
     def stop(self, reason):
         self.active.update(status="exhausted", recovery_reason=reason)
         self.active = None
-        raise PlannerStuck("Floor-abandonment recovery exhausted: " + reason)
+        raise PlannerStuck("Floor-abandonment recovery exhausted: " + reason, kind=BlockerKind.NAVIGATION)
 
     def propose(self, state, route):
         incident = self.active

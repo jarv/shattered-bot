@@ -162,7 +162,8 @@ def recover(p,state,enemies,blocked,distance,neighbors,line_clear):
         if p.soft_failures[blocked.code]>=3:
             p.defer_obligations(state,[{'kind':'unresolved '+blocked.code,'cell':pos}],
                                 'No admitted progress action while hungry; bounded idle recovery exhausted')
-            p.stop_gameplay('Hungry no-progress recovery exhausted; stop alive rather than silently wait to starvation')
+            p.stop_gameplay('Hungry no-progress recovery exhausted; stop alive rather than silently wait to starvation',
+                            kind="navigation-stalled")
     return mark(p,p.decision({"type":"wait"},"recovery: observe approach or recharge after tactical decline"),blocked)
 
 

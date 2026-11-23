@@ -103,17 +103,17 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                         decision=continue_alive(policy,state,done) if until_death and isinstance(policy,SurvivalPolicy) else None
                     except Finished as hard:
                         done=hard
-                if decision is None and isinstance(done, PlannerStuck) and abandonment:
+                if decision is None and done.outcome in {"blocked", "stuck-planner", "deadlocked", "bot-failure"} and abandonment:
                     transaction.rollback()
                     if abandonment.active:
-                        abandonment.active.update(status="exhausted", recovery_reason=done.blocker)
+                        abandonment.active.update(status="exhausted", recovery_reason=getattr(done,"blocker",done.reason))
                         abandonment.active = None
                     decision = abandonment.start(state, done, report, index)
                     log.write(json.dumps({"index": index, "state": state,
                                           "planner_incident": abandonment.incidents[-1]},
                                          ensure_ascii=False) + "\n")
                     log.flush()
-                    print(f"ERROR D{state.get('depth')} [planner-incident]: {done.blocker}; "
+                    print(f"ERROR D{state.get('depth')} [planner-incident]: {getattr(done,'blocker',done.reason)}; "
                           f"recovery={abandonment.incidents[-1]['status']}", flush=True)
                     if decision:
                         try:
@@ -124,6 +124,7 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                             decision = None
                 if decision is None:
                     result.update(outcome=done.outcome, reason=done.reason)
+                    result["blocker_kind"] = done.blocker_kind
                     if isinstance(done, PlannerStuck):
                         # Rollback must discard proposed mutations, not the
                         # explanation of why the original plan was blocked.
@@ -134,6 +135,7 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                         result["death_reason"] = done.reason
                         result["planner_failure"] = {
                             "kind": "stuck-planner", "reason": done.blocker,
+                            "blocker_kind": done.blocker_kind,
                             "depth": state.get("depth"), "cell": state.get("hero", {}).get("cell"),
                             "review_priority": "high",
                         }
@@ -214,6 +216,15 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                         key: incident.get(key) for key in
                         ("id", "status", "accepted_actions", "stalled_actions", "target", "collection_credited")
                     }}) + "\n")
+                    log.flush()
+            if isinstance(policy, SurvivalPolicy):
+                try:
+                    from .preparation_prerequisites import observe_reconnaissance
+                except ImportError:
+                    from preparation_prerequisites import observe_reconnaissance
+                receipt=observe_reconnaissance(policy,state,decision,next_state)
+                if receipt:
+                    log.write(json.dumps({"index":index,"preparation_reconnaissance":receipt})+"\n")
                     log.flush()
             if isinstance(policy,SurvivalPolicy):
                 try:

@@ -6,9 +6,12 @@ reviews to edit protected execution or validation files.
 ## Scope
 
 After ordinary tactical and until-death recovery have declined, the production
-survival runner may replace a `PlannerStuck` stop for optional-room or navigation
-exhaustion with an observed route to known downstairs. Other failures, including
-ranged exposure and mandatory potion discovery, retain their explicit stop.
+survival runner may replace a terminal stop explicitly classified
+`optional-work-exhausted` or `navigation-stalled` with an observed route to known
+downstairs. Eligibility is a `BlockerKind` contract, never a reason-string match.
+Other failures, including ranged exposure, mandatory potion discovery, gas
+emergencies and unknown execution/UI states retain their explicit stop. Every
+terminal blocked/stuck outcome receives an incident even when not recoverable.
 
 The runner logs the original observation, reason, decision index and failed
 policy report **before** selecting recovery. Run-owned diagnostics survive policy

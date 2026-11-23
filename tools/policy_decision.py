@@ -16,6 +16,15 @@ class Intent(str, Enum):
     BOSS = "boss"
 
 
+class BlockerKind(str, Enum):
+    OPTIONAL = "optional-work-exhausted"
+    NAVIGATION = "navigation-stalled"
+    PREPARATION = "mandatory-preparation-unresolved"
+    SAFETY = "immediate-safety-emergency"
+    EXECUTION = "execution-failure"
+    UNKNOWN = "unclassified"
+
+
 @dataclass
 class Decision:
     action: dict
@@ -39,32 +48,36 @@ class Decision:
 
 
 class Finished(Exception):
-    def __init__(self, outcome, reason):
+    def __init__(self, outcome, reason, kind=BlockerKind.EXECUTION):
         self.outcome, self.reason = outcome, reason
+        self.blocker_kind = BlockerKind(kind)
         super().__init__(reason)
 
 
 class TacticalBlocked(Finished):
     """A recoverable tactic decline, distinguished semantically from hard gates."""
     def __init__(self,code,reason):
-        super().__init__("blocked",reason)
+        kind = BlockerKind.NAVIGATION if code in {
+            "navigation-loop", "escape-reversal", "navigation-stall", "unplanned-stairs"
+        } else BlockerKind.UNKNOWN
+        super().__init__("blocked",reason,kind)
         self.code=code
 
 
 class NoSafeAction(Finished):
     """No admitted survival action, not a verification/UI/execution failure."""
     def __init__(self,reason):
-        super().__init__('blocked',reason)
+        super().__init__('blocked',reason,BlockerKind.SAFETY)
 
 
 class GameplayBlocked(Finished):
     """Known ready-game planning failure, never an API/UI/startup validation gate."""
-    def __init__(self,reason):
-        super().__init__('blocked',reason)
+    def __init__(self,reason,kind=BlockerKind.UNKNOWN):
+        super().__init__('blocked',reason,kind)
 
 
 class PlannerStuck(Finished):
     """Terminal planner exhaustion, not an observed in-game hero death."""
-    def __init__(self, blocker):
-        super().__init__('stuck-planner', 'stuck planner (bot unable to proceed)')
+    def __init__(self, blocker, kind=BlockerKind.UNKNOWN):
+        super().__init__('stuck-planner', 'stuck planner (bot unable to proceed)',kind)
         self.blocker = blocker

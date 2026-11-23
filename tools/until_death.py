@@ -19,9 +19,10 @@ def recover(p,state,error):
     try:
         decision=best_effort(p,state,[o for o in state.get('objects',[]) if is_hostile(o)])
     except (GameplayBlocked,TacticalBlocked,NoSafeAction) as rescue_error:
-        raise PlannerStuck(error.reason + "; rescue declined: " + rescue_error.reason) from None
+        raise PlannerStuck(error.reason + "; rescue declined: " + rescue_error.reason,
+                           kind=rescue_error.blocker_kind) from None
     if decision is None:
-        raise PlannerStuck(error.reason)
+        raise PlannerStuck(error.reason,kind=error.blocker_kind)
     if decision:decision.controller='until-death-continuation'
     return decision
 
