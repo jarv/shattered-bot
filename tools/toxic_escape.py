@@ -61,6 +61,14 @@ def escape(p, state):
                         or tile.get("plant", "").lower() in HARMFUL_PLANTS \
                         or not p.escape_step_allowed(state, step):
                     continue
+                # Clear of gas is not clear of other recognized room hazards:
+                # a piranha bank otherwise wins over a longer ordinary exit,
+                # then room escape sends us straight back into the cloud.
+                # Keep gas traversal, but never route through or stop on a
+                # gas-free tile already excluded by special-room assessment.
+                if step in p.room_blocked and not any(
+                        "toxic gas" in e.lower() for e in tile.get("effects", [])):
+                    continue
                 if any("toxic gas" not in e.lower() and not p.harmless_effect(e) for e in tile.get("effects", [])):
                     continue
                 previous[step] = cell

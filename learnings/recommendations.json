@@ -2386,5 +2386,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000190"
+  },
+  {
+    "id": "000191-gas-pool-escape",
+    "priority": "high",
+    "summary": "Prevent toxic-gas escape from selecting recognized hazardous clear ground and reversing special-room retreat.",
+    "evidence": [
+      "Decision 1033, log lines 3164–3166: gas escape enters piranha bank 396 despite an observed alternate route through 504 toward clear floor 557.",
+      "Decision 1034, log lines 3167–3169: room escape reverses to threshold 451.",
+      "Decisions 1045–1046, log lines 3200–3208: navigation and recovery guards exhaust with the hero alive.",
+      "tools/toxic_escape.py:49–78; tools/special_rooms.py:64–80; tools/survival_policy.py:935–985."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000191"
   }
 ]
