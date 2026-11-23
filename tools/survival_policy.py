@@ -816,6 +816,13 @@ class SurvivalPolicy:
                 and manageable and self.snake_melee_attempts[key] < 4:
             self.snake_melee_attempts[key] += 1
             return self.cell(target["cell"], "snake: bounded finishing melee")
+        # A new optional lure must not pull us away from owned potion
+        # retrieval when the ordinary ranged fallback is already admitted.
+        # Keep existing lures, multi-enemy arbitration and shot/charge gates.
+        stash = getattr(self, "potion_stash", None)
+        if stash and stash.get("phase") == "retrieve" and not self.ambush_plan \
+                and len(enemies) == 1 and magic and self.shot_clear(state, target["cell"]):
+            return self.use(magic[0], "ZAP", "snake: defend potion retrieval with magic", target=target["cell"])
         ambush = self.door_ambush(state, enemies, snakes, kind="snake")
         if ambush:
             return ambush
