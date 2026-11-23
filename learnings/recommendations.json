@@ -2317,5 +2317,18 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000186"
+  },
+  {
+    "id": "000187-reverse-door-withdrawal",
+    "priority": "high",
+    "summary": "Remove the doorway preference bonus for reversing a recently accepted withdrawal edge.",
+    "evidence": [
+      "D1543–1544, log lines 4473–4478: accepted withdrawal reverses through the same door.",
+      "D1546–1549, log lines 4485–4498: key-route reversal veto and repeated recovery detours.",
+      "D1550, log lines 4500–4501: mandatory key prevents fallback descent; planner stops alive."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000187"
   }
 ]
