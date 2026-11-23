@@ -135,6 +135,15 @@ def choose(p,state,enemies):
         return None
     buffs=' '.join(b['name'].lower() for b in state['hero'].get('buffs',[]))
     if any(b in buffs for b in ('root','paral','vertigo')):return None
+    # Preparation yields to closing multiple fronts before its pursuit review.
+    # Reach the same bounded, safety-gated intervention here, including regular
+    # mode, rather than indefinitely preempting it with non-choke movement.
+    try:
+        from .pursuit_budget import reassess
+    except ImportError:
+        from pursuit_budget import reassess
+    intervention=reassess(p,state,active)
+    if intervention:return intervention
     # A usable door is the first retreat objective, not a last resort after
     # spending several turns in an open-room exchange. Preserve all doorway
     # route, health-loss, flight-aware hold and accepted-input checks below.
