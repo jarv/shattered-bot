@@ -2163,5 +2163,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000175"
+  },
+  {
+    "id": "000176-paralysis-test-admission",
+    "priority": "high",
+    "summary": "Require executable identification or verified paralysis-safe preparation before admitting unknown room-potion tests.",
+    "evidence": [
+      "Decision 2779, selection line 8158: preparation moves toward dry bank 762.",
+      "Decisions 2780–2781, accepted lines 8162 and 8165: haste and healing tests leave levitation unresolved.",
+      "Decision 2782, selection 8167 and accepted transition 8168: unknown bistre drink advances 27 turns, with paralysis, paralytic gas and lightning death.",
+      "tools/puzzle_supplies.py:138–162,899–967,988–1060: geometric bank admission precedes recovery that needs a later observation."
+    ],
+    "status": "deferred",
+    "reason": "Source and full-log inspection establish the admission gap, but not a safe replacement. The fatal public snapshot has no active gas immunity or available nonconsumptive identification item; no verified preparation transaction covers continuous paralysis. Water, alternate exits or mind vision alone do not prove recovery. Next derive paired approach/activation fixtures and validate an identification or duration-checked gas-immunity prerequisite with fresh arrival, enemy-interruption and recovery checks before implementing it. Preserve mandatory pickup, potion protection and explicit planner exhaustion; a blanket veto or speculative movement is not certified here.",
+    "origin_run": "000176"
   }
 ]
