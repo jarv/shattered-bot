@@ -70,7 +70,11 @@ def remember_visible_bank(p, state):
             and not any(p.tiles[n].get(k) for k in ("effects", "trap", "plant"))
             for n in neighbors(cell, width, height)):
         return
-    if any(unknown_potion(i) and "DRINK" in i.get("actions", [])
+    # Empty inventory can precede the floor's first potion pickup. Retain the
+    # actually witnessed ground then, not a fictitious potion/storage receipt.
+    # A later nonempty inventory necessarily differs from this empty signature
+    # and revisit_receipt requires remembered_preparation to replan protection.
+    if not potions(state) or any(unknown_potion(i) and "DRINK" in i.get("actions", [])
            and can_protect_potions(p, state, i, distance, neighbors, safe_test_bank,
                                   isolated_stack=True) for i in state["inventory"]):
         receipt = (state["depth"], state.get("branch", 0), cell, potion_inventory(state))

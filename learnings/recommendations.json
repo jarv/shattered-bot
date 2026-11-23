@@ -1972,5 +1972,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000160"
+  },
+  {
+    "id": "000161-pre-potion-bank-witness",
+    "priority": "high",
+    "summary": "Retain witnessed preparation banks before the first potion pickup, requiring inventory-aware validation before returning.",
+    "evidence": [
+      "Decision 223, logs 613–614: visible preparation ground near water 240 before any potion is carried.",
+      "Decision 337, log 940: first carried potion appears; decision 348, log 967 adds magenta.",
+      "Decision 358, log 991: mandatory discovery exhausts with the hero alive and no retained bank witness.",
+      "Offline original-source reconstruction matches decisions 0–357 and the blocker; candidate first changes decision 358 to preparation-only return."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000161"
   }
 ]
