@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "id": "000201",
+  "started_at": "2026-11-23T15:15:13Z",
+  "completed_at": "2026-11-23T15:17:27.014686+00:00",
+  "source_commit": "1a84687da9bd4614f8a4f8c18dfe79d9deeadaf4",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 334,
+  "duration_seconds": 130.866,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000200",
+  "previous_source_commit": "2d09c19616f17a3075957c0c4fc1b5373b8cf01e",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Reserve mandatory preparation before hunger makes it impossible, but only through an executable, receipt-funded handoff. An exit discovered after starvation does not make unknown drinking safe. Keep mandatory progression pickup and honest unfinished-loot reporting; healing, an incorrect intuition guess and fallback descent are not discovery or collection receipts.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended in planner exhaustion with the hero alive at 24/25 HP, not an observed death. The initiating problem predates hunger: decision 248 opened the gas-room approach (accepted log line 690); decision 249 observed toxic gas and Chest 375, then retreated (lines 692-693). Decision 250 resumed exploration without executable preparation. At decision 334, line 943 explicitly reports missing purity and exhausted preparation prerequisites; lines 944-945 retain the living hero without recovery or collection credit. Source-pinned offline bookkeeping reconstruction matched all 334 preceding actions, reasons, intents and controllers, plus every accepted before/after snapshot, and reproduced the terminal blocker. Copied-state probes found eight hypothetical gas-trip origins but no admitted test bank: the approach contains grass, chasm edges and the gas-side door. Even hypothetical fresh visibility and removal of hunger did not admit preparation. Thus food or a return route alone would not repair the initiating failure. No patch is submitted: the complete source resolves the selecting-state gap, but there is no validated inventory-protected identification and recovery transaction for this geometry, nor a carried nonconsumptive identification resource. The unchanged Python suite passed 2154 tests, with four skipped; no baseline-red/candidate-green repair is claimed.",
+    "learnings": "Investigate preparation feasibility when the gas room is first observed, before blaming later hunger. A hypothetical protected chest route does not establish a safe unknown-potion bank. Keep unknown colors unknown, preserve mandatory pickup and inventory protection, and retain explicit planner exhaustion rather than waiting or bypassing the obligation."
+  },
+  "recommendations": [
+    {
+      "id": "000105-gas-test-bank-admission",
+      "priority": "high",
+      "summary": "Establish executable protected identification for gas rooms whose approach has no admissible unknown-potion bank.",
+      "evidence": [
+        "Decision 248, accepted log line 690: arrival at door 496 before hunger.",
+        "Decision 249, log lines 692-693: toxic gas and Chest 375 observed; retreat to 537 at full health.",
+        "Decision 250, log line 695: exploration resumes with three unidentified colors and no executable gas preparation.",
+        "Decision 334, log lines 943-945: missing purity exhausts mandatory discovery; hero remains alive at 24/25 HP.",
+        "Validated offline reconstruction matches all 334 preceding selections and reproduces the blocker; copied probes find eight hypothetical gas-trip origins but zero admitted test banks.",
+        "tools/puzzle_supplies.py:142-191,711-1037; tools/room_tactics.py:234-351; tools/descent_potions.py:272-300,350-392."
+      ],
+      "status": "deferred",
+      "reason": "Revalidated in this recording, but not safely repaired. The exact blocker is the grass-and-chasm approach failing unknown-drink bank admission independently of hunger and visibility, with no carried nonconsumptive identification resource. Next derive paired decision-249/250 fixtures around door 496, banks 537/541/622 and Chest 375; validate executable terrain preparation or identification acquisition using only publicly available resources. Require collateral storage, impairment-safe recovery beside chasm, fresh arrival and a protection-funded chest return before changing selection. Simply admitting chasm or grass, eating earlier, guessing purity or consuming its effect remotely would bypass unproven safety constraints. Complete source browsing and matching reconstruction resolve the packet's missing-state gap, not replacement feasibility.",
+      "origin_run": "000105"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000201/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000201/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 112,
+        "turns": 324,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 328,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 263
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 112,
+    "gold_complete": true,
+    "turns": 324,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
