@@ -2772,5 +2772,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000219"
+  },
+  {
+    "id": "000220-gas-bank-stash-handoff",
+    "priority": "high",
+    "summary": "Establish jointly executable gas-test staging and remote potion storage before mandatory discovery exhausts.",
+    "evidence": [
+      "Decision 671, log lines 1919–1920: exploration enters doorway 1150.",
+      "Decision 672, log lines 1922–1923: gas is observed and the full-health hero retreats to 1187.",
+      "Decision 673, log lines 1925–1926: missing purity reservation exhausts mandatory discovery without an accepted preparation action.",
+      "tools/descent_potions.py:350–392; tools/puzzle_supplies.py:743–806,968–1012; tools/potion_stash.py:95–133.",
+      "Validated offline reconstruction matches decisions 0–672; isolated terminal probes find bank 1186 safe but without admitted storage, even without hunger."
+    ],
+    "status": "deferred",
+    "reason": "Complete source and offline reconstruction resolved the selecting-state uncertainty, but no helper jointly certifies test-bank safety and remote protection of the actual three-color inventory. The only admitted bank has no storage candidate in the required distance interval of its door-excluding transit corridor. A gas meal alone still leaves preparation blocked; relaxing geometry, collateral checks or unknown-drink safety is unsupported. Next build a paired public-observation fixture from decisions 672/673 and prove departure-aware storage across a known ordinary door, including fresh arrival, bounded return and collection receipts. Only then add the executable gas-preparation handoff with an original-red/candidate-green regression. Preserve terminal exhaustion and mandatory pickup.",
+    "origin_run": "000220"
   }
 ]
