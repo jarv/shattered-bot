@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "id": "000157",
+  "started_at": "2026-11-22T23:56:05Z",
+  "completed_at": "2026-11-22T23:59:23.082607+00:00",
+  "source_commit": "85a644da0bd1ea0a1da6f1741bf091fb033668d6",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "quota-skip-20261122",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 502,
+  "duration_seconds": 193.333,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000156",
+  "previous_source_commit": "bff6c71236acb576ea37378a0763a5f3f873daaa",
+  "improvements": [
+    "When retreating from multiple enemies, the bot now avoids ordinary dead-end destinations without a safe onward exit. Verified chokepoints remain eligible."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Low approach pressure alone does not make an ordinary retreat endpoint usable. Require observed, admitted onward space unless the endpoint is a verified choke. Keep escape protection, hazard checks, mandatory collection and explicit planner exhaustion; do not substitute eating or longer waits for a blocked route.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health when mandatory potion discovery exhausted the planner (decision 502, log line 1431). The initiating problem was departure-view preparation that failed after arrival. Decision 460 selected water 1003 while standing in open door 969; at decision 461 the door had closed, invalidating the bank. Decisions 469–470 exposed a second contradiction: bank 1004 remained safe, but its admitted remote storage sites became invisible after moving there. Repeated returns consumed preparation work without resolving protected identification. The final blocker was not an observed death or stopped clock.\n\nSource-pinned offline reconstruction matched actions, reasons, intents and controllers through decision 479, then stopped at the first divergence at decision 480, where recorded loop-guard recovery differed. Later findings use original public observations, not reconstructed continuation. The selecting chain runs through mandatory descent discovery, current bank admission and potion-storage protection. Complete source resolved the packet’s controller and arrival-geometry gaps.\n\nNo patch or new regression is supplied. A door-aware rejection alone does not establish useful progress, and allowing invisible storage would bypass inventory protection. The missing safety contract is an executable storage-first transaction from the actual departure position, with fresh arrival checks, accepted drops, interruption handling and complete retrieval. Existing stashing executes from its supplied hero position; invoking it with a hypothetical bank would use the wrong movement origin. The unchanged policy suite passed 2,000 tests with four skipped. No baseline-red/candidate-green result or safe replacement is claimed.",
+    "learnings": "A preparation bank admitted from a departure observation may become unusable after door closure or loss of storage visibility. Validate departure effects and an executable protected-storage transaction before committing transit. Keep unknown identities, hazard checks, mandatory pickup and explicit planner exhaustion intact."
+  },
+  "recommendations": [
+    {
+      "id": "000157-discovery-arrival-transaction",
+      "priority": "high",
+      "summary": "Establish departure-aware, storage-first potion preparation instead of repeatedly selecting banks that fail on arrival.",
+      "evidence": [
+        "Decision 460, selection line 1288 and accepted line 1289: leave open door 969 for water 1003.",
+        "Decision 461, line 1291: door closure invalidates the bank and preparation returns toward the door.",
+        "Decisions 469–470, lines 1319–1322: bank 1004 loses visibility of admitted storage sites after arrival.",
+        "Decision 502, line 1431: protected potion discovery exhausts with the hero alive at full health.",
+        "tools/descent_potions.py:403–473; tools/puzzle_supplies.py:130–154; tools/potion_stash.py:103–160,185–205."
+      ],
+      "status": "deferred",
+      "reason": "Source browsing and validated reconstruction establish the contradiction, but not a safe complete replacement. Storage is admitted from the departure view and invisible at bank arrival; existing execution assumes its supplied hero position is real. Next derive paired decision-460/461 and decision-469/470 fixtures, account for door closure, and validate storage-first preparation from 1003 using bank 1004 and storage 1106. Require accepted movement/drop receipts, fresh arrival checks, interruption safety and actual retrieval before authorizing drinking. Do not fabricate visibility, relax enemy separation or waive carried-potion protection. No policy patch is certified.",
+      "origin_run": "000157"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000157/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000157/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 80,
+        "turns": 501.3333435058594,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 496,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 978
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 80,
+    "gold_complete": true,
+    "turns": 501.3333435058594,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

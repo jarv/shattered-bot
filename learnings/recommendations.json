@@ -1906,5 +1906,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000156"
+  },
+  {
+    "id": "000157-discovery-arrival-transaction",
+    "priority": "high",
+    "summary": "Establish departure-aware, storage-first potion preparation instead of repeatedly selecting banks that fail on arrival.",
+    "evidence": [
+      "Decision 460, selection line 1288 and accepted line 1289: leave open door 969 for water 1003.",
+      "Decision 461, line 1291: door closure invalidates the bank and preparation returns toward the door.",
+      "Decisions 469–470, lines 1319–1322: bank 1004 loses visibility of admitted storage sites after arrival.",
+      "Decision 502, line 1431: protected potion discovery exhausts with the hero alive at full health.",
+      "tools/descent_potions.py:403–473; tools/puzzle_supplies.py:130–154; tools/potion_stash.py:103–160,185–205."
+    ],
+    "status": "deferred",
+    "reason": "Source browsing and validated reconstruction establish the contradiction, but not a safe complete replacement. Storage is admitted from the departure view and invisible at bank arrival; existing execution assumes its supplied hero position is real. Next derive paired decision-460/461 and decision-469/470 fixtures, account for door closure, and validate storage-first preparation from 1003 using bank 1004 and storage 1106. Require accepted movement/drop receipts, fresh arrival checks, interruption safety and actual retrieval before authorizing drinking. Do not fabricate visibility, relax enemy separation or waive carried-potion protection. No policy patch is certified.",
+    "origin_run": "000157"
   }
 ]
