@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "id": "000196",
+  "started_at": "2026-11-23T13:51:41Z",
+  "completed_at": "2026-11-23T14:01:06.717953+00:00",
+  "source_commit": "74c9f26007467c97e9ca28dddff409c9dd06c754",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "dead",
+  "death_category": "combat",
+  "death_category_evidence": "review summary: Killed by a slime after prolonged fly pursuit and multi-enemy pressure",
+  "blocker_kind": "execution-failure",
+  "outcome_summary": "Killed by a slime after prolonged fly pursuit and multi-enemy pressure",
+  "outcome_reason": "Hero died",
+  "max_depth": 4,
+  "actions": 1383,
+  "duration_seconds": 557.733,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000195",
+  "previous_source_commit": "cbdf19ec8d0033af6100049fa4dfc693189f2281",
+  "improvements": [
+    "The bot now cancels an unstarted protected-room trip when a failed potion test leaves it outside the planned route. It still requires protection and a verified return once the hero enters the route or room."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Separate an unstarted protection hypothesis from an actual protected trip. Failed potion-effect recovery can leave the staging bank without creating a protected return obligation. Keep unresolved rewards and mandatory discovery honest; never infer potion identities or waive return safety. Stop offline continuation at the first changed selection.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The full terminal observation explicitly says a slime killed the hero (decision 1382, accepted log line 4071); this resolves the compact packet’s unknown attribution. The earlier failure was prolonged fly pursuit, not the final melee alone. With the staff empty, decisions 1288–1289 used a physical throw and two fly swarms were then observed. Retreat began at decision 1290. Accepted pursuit reached 12 moves at decision 1303 (line 3732), yet preparation returned early whenever multiple fronts needed retreat, bypassing its pursuit-outcome review. This left new, unverified doorway setups eligible; decision 1304 selected another setup, and decision 1331 began one after 39 accepted retreat moves. Later the hero reached doorway 412 without a verified hold, fought under multiple threats, withdrew at low health and died. Source-pinned offline bookkeeping reconstruction matched all 1,383 original selections, including action, reason, intent and controller. It is reconstruction, not recorded policy memory. The proposed ordering correction runs the existing pursuit review before the emergency-retreat yield, without changing its thresholds or movement admission. Candidate reconstruction matched decisions 0–1303, then selected an already-admitted ordinary retreat at decision 1304 instead of another unverified doorway setup; investigation stopped there. The new three-test regression failed by assertion on original source and passed on the candidate. The full suite passed: 2,146 tests, four skipped. This establishes the bookkeeping repair, not escape, improved survival or prevention of the earlier fly split.",
+    "learnings": "Review accepted pursuit outcomes before yielding preparation to emergency retreat. Retiring unverified doorway setups must leave existing hazard-filtered retreats and verified holds available. Do not infer that a changed retreat resolves pursuit or prevents death; stop offline continuation at the first changed selection."
+  },
+  "recommendations": [
+    {
+      "id": "000196-pursuit-review-starvation",
+      "priority": "high",
+      "summary": "Run accepted-pursuit outcome review before emergency retreat preempts preparation.",
+      "evidence": [
+        "Decision 1289, accepted log line 3665: physical fly attack is followed by two observed swarms.",
+        "Decision 1303, log line 3732: accepted pursuit reaches 12 retreat moves.",
+        "Decision 1304, selection log line 3733: another unverified doorway setup remains eligible.",
+        "Decision 1331, selection log line 3868: a new doorway setup begins after 39 accepted retreats.",
+        "tools/mage_policy.py:1111–1131; tools/pursuit_budget.py:138–151; tools/multi_enemy_tactics.py:229–235."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000196"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000196/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000196/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 139,
+        "turns": 296,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 291,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 234
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 22,
+        "gold_gained": 407,
+        "turns": 464,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 465,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1455
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 29,
+        "gold_gained": 467,
+        "turns": 389,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 389,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 32,
+        "gold_gained": 0,
+        "turns": 211,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 230,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 23,
+    "ending_level": 5,
+    "starving_turns": 41,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 7,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 31,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 5,
+    "gold_collected": 1013,
+    "gold_complete": true,
+    "turns": 1360,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

@@ -1115,6 +1115,14 @@ class MagePolicy(SurvivalPolicy):
         self.warp_cooldown = max(0, self.warp_cooldown - 1)
         if state.get("danger_cells"):
             return None
+        # Accepted pursuit accounting must run even when closing fronts yield
+        # preparation to emergency retreat. This only retires new unverified
+        # lures; existing retreat/hold safety gates remain in charge.
+        try:
+            from .pursuit_budget import review_outcome
+        except ImportError:
+            from pursuit_budget import review_outcome
+        review_outcome(self,state)
         try:
             from .multi_enemy_tactics import needs_retreat
         except ImportError:
@@ -1186,10 +1194,9 @@ class MagePolicy(SurvivalPolicy):
         if transfusion:
             return transfusion
         try:
-            from .pursuit_budget import due, reassess, review_outcome
+            from .pursuit_budget import due, reassess
         except ImportError:
-            from pursuit_budget import due, reassess, review_outcome
-        review_outcome(self,state)
+            from pursuit_budget import due, reassess
         if self.rules.combat_pressure and enemies and due(self):
             recovery=ally_warp(self,state,enemies,distance) or warp_escape(self,state,enemies,distance) \
                 or use_artifact(self,state,enemies) or shield_battery(self,state,enemies)

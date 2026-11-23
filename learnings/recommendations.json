@@ -2444,5 +2444,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000195"
+  },
+  {
+    "id": "000196-pursuit-review-starvation",
+    "priority": "high",
+    "summary": "Run accepted-pursuit outcome review before emergency retreat preempts preparation.",
+    "evidence": [
+      "Decision 1289, accepted log line 3665: physical fly attack is followed by two observed swarms.",
+      "Decision 1303, log line 3732: accepted pursuit reaches 12 retreat moves.",
+      "Decision 1304, selection log line 3733: another unverified doorway setup remains eligible.",
+      "Decision 1331, selection log line 3868: a new doorway setup begins after 39 accepted retreats.",
+      "tools/mage_policy.py:1111–1131; tools/pursuit_budget.py:138–151; tools/multi_enemy_tactics.py:229–235."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000196"
   }
 ]
