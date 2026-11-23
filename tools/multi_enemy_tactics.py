@@ -197,10 +197,19 @@ def doorway_route(p,state,enemies,current,occluded=False):
     if occluded and (not plan or plan['steps']<=0 or pos==plan['door']):
         p.multi_door_plan=None;return None
     paths=p.paths(state,{e['cell'] for e in enemies})
+    def gas_entrance(cell):
+        # Closing a door clears its threshold cloud, not the remembered cloud
+        # behind it. Opening/occupying that door can expose the hero again.
+        # This is an ordinary combat refuge, not a protected room journey.
+        return p.tiles[cell]['terrain']==5 and any(
+            "toxic gas" in effect.lower()
+            for n in neighbors(cell,width,height)
+            for effect in p.tiles.get(n,{}).get('effects',[]))
     def admitted(route):
         return 2<=len(route)<=9 and not any(c in p.loot or c in state.get('danger_cells',[])
             or p.tiles[c]['terrain'] in {7,8,10,18,21,22,31,37,38} or p.tiles[c].get('trap')
-            or p.tiles[c].get('plant') or p.effects_block_movement(p.tiles[c]) for c in route[1:]) \
+            or p.tiles[c].get('plant') or p.effects_block_movement(p.tiles[c])
+            or gas_entrance(c) for c in route[1:]) \
             and sum(can_attack(p,state,e,route[1]) for e in enemies) <= max(
                 1,sum(can_attack(p,state,e,pos) for e in enemies)) \
             and (not occluded or (p.tiles[route[1]].get('observed')

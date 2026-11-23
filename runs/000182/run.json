@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "id": "000182",
+  "started_at": "2026-11-23T09:13:11Z",
+  "completed_at": "2026-11-23T09:19:53.090867+00:00",
+  "source_commit": "c53585d61860ccd4aad497e7f5e6b0899e2fecd8",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "2decb8d-planner-incidents",
+  "outcome": "blocked",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: blocked",
+  "outcome_summary": "Blocked after retreating back into toxic gas",
+  "outcome_reason": "Toxic gas: no observed traversable exit or usable escape; refusing recovery waits",
+  "max_depth": 3,
+  "actions": 1025,
+  "duration_seconds": 395.599,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000181",
+  "previous_source_commit": "587970de723be632adf8202b2c4402dc3b986969",
+  "improvements": [
+    "After some navigation or optional-room stalls, the bot can attempt a bounded retreat to known downstairs. It still refuses routes that bypass required pickups or unfinished preparation, and it does not count abandoned rewards as collected."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Before abandoning a required pool chest, check whether carried, identified, uncursed armor can satisfy timed-movement preparation. Seeing a bandolier alone does not establish potion protection. Recheck actual equipment and every potion, entrance, protection and pickup requirement after preparation; never infer unknown colors or waive the chest.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended blocked, not dead: the last observation shows the hero alive at 27/35 HP. Gas was first observed at doorway 903 during decision 880. Later, the multi-enemy retreat selected that doorway despite remembered gas beyond its closed, apparently clear threshold. Decision 1023 escaped the gas; decision 1024 immediately re-entered the same doorway. The final observation places scouts on both exterior escape squares, and the gas escape controller stopped without an admitted exit or usable transport. No killer is established.\n\nThe proposed correction rejects ordinary combat retreat routes through closed doors adjacent to remembered toxic gas, for both new and continuing plans. A reduced public-evidence fixture reproduces the original door selection; the original policy fails three assertions, the candidate passes, and the full suite passes 2,072 tests with four skips. Fresh observed gas clearance readmits the door. This is not a full runtime reconstruction or proof that the alternative combat choice survives. Required pickups, protected retrieval, hazard checks and explicit terminal stops remain intact.",
+    "learnings": "A clear closed doorway does not establish that the gas behind it has cleared. Check remembered neighboring gas before choosing a combat refuge, and require fresh clearance evidence before readmitting that entrance."
+  },
+  "recommendations": [
+    {
+      "id": "000182-gas-door-retreat",
+      "priority": "high",
+      "summary": "Exclude known gas-room entrances from ordinary multi-enemy doorway retreats until fresh observations clear the gas.",
+      "evidence": [
+        "Decision 880, lines 2563–2564: gas observed at doorway 903 and escape accepted.",
+        "Decision 1022, lines 2974–2975: retreat enters the previously observed gas entrance.",
+        "Decisions 1023–1024, lines 2979–2984: gas escape is followed by re-entry through the reclosed door.",
+        "Terminal line 2988: living hero blocked in gas with exterior squares occupied.",
+        "tools/multi_enemy_tactics.py:190–217; tools/survival_policy.py:339–358; tools/toxic_escape.py:44–84."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000182"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000182/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000182/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 129,
+        "turns": 370,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 326,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 720
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 23,
+        "gold_gained": 325,
+        "turns": 506,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 509,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 16,
+        "gold_gained": 93,
+        "turns": 179,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 184,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 450
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 4,
+    "ending_level": 4,
+    "starving_turns": 6,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 4,
+    "gold_collected": 547,
+    "gold_complete": true,
+    "turns": 1055,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
