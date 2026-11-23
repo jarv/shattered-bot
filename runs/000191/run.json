@@ -1,0 +1,229 @@
+{
+  "schema_version": 1,
+  "id": "000191",
+  "started_at": "2026-11-23T12:38:55Z",
+  "completed_at": "2026-11-23T12:45:46.953180+00:00",
+  "source_commit": "9573849df7d393913bf5d20abc0e20aa38561d76",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "immediate-safety-emergency",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 3,
+  "actions": 1046,
+  "duration_seconds": 406.599,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000190",
+  "previous_source_commit": "cffdbcc2fee632406b5cfe7a230cfc6ceb95f732",
+  "improvements": [
+    "The bot remembers when a sleeping enemy guards optional food, even after the enemy leaves view. It can continue shopping instead of turning back, while keeping the food unfinished and preserving required pickups."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Losing sight of a known sleeping enemy must not restart optional food collection that reverses existing shopping. Keep unfinished loot honest, preserve mandatory progression pickups, and clear remembered guards only through fresh public evidence.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at 24/30 HP when the planner stopped. The initiating defect was conflicting escape rules: toxic-gas escape chose a dry piranha bank, and special-room escape returned to the gas threshold. Decision 1033, log lines 3164–3166, enters bank 396; decision 1034, lines 3167–3169, reverses to 451. Repetition eventually exhausted the navigation guard at decision 1046, lines 3205–3208. The clock advanced during this loop. The preceding unknown-potion test was only a hypothesis before consumption; its observed gas effect, not an assumed identity, informed escape. Nearby enemies do not establish the source of the final damage. The proposed narrow correction excludes recognized gas-free special-room hazards from gas-escape routes. A reduced public-geometry regression fails on the original selector and passes after correction; the full suite passes 2101 tests with four skips. Snapshot probes and fixtures are not recovered runtime memory, and no later observations were supplied after a changed selection. The adapter supplies changed files; the empty files field is intentional.",
+    "learnings": "Gas-free ground is not necessarily a safe exit: preserve recognized piranha-bank and other special-room exclusions when choosing a gas escape. Reobserve after each step, retain unfinished loot honestly, and keep terminal exhaustion rather than restoring repeated waits. A corrected selection does not establish successful escape or puzzle completion."
+  },
+  "recommendations": [
+    {
+      "id": "000191-gas-pool-escape",
+      "priority": "high",
+      "summary": "Prevent toxic-gas escape from selecting recognized hazardous clear ground and reversing special-room retreat.",
+      "evidence": [
+        "Decision 1033, log lines 3164–3166: gas escape enters piranha bank 396 despite an observed alternate route through 504 toward clear floor 557.",
+        "Decision 1034, log lines 3167–3169: room escape reverses to threshold 451.",
+        "Decisions 1045–1046, log lines 3200–3208: navigation and recovery guards exhaust with the hero alive.",
+        "tools/toxic_escape.py:49–78; tools/special_rooms.py:64–80; tools/survival_policy.py:935–985."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000191"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000191/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000191/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 55,
+        "turns": 303,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 298,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 243
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 29,
+        "gold_gained": 429,
+        "turns": 688,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 677,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1366
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 4,
+        "gold_gained": 0,
+        "turns": 67,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 65,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 18,
+    "ending_level": 3,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 484,
+    "gold_complete": true,
+    "turns": 1058,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

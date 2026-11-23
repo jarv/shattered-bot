@@ -12,6 +12,17 @@ except ImportError:
 NAMES={'scroll of upgrade','potion of strength'}
 
 
+def guarded_food(p,cell,obj,width):
+    """Visibility loss must not restart optional food work beside a sleeper."""
+    try:
+        from .pickup_priority import food
+    except ImportError:
+        from pickup_priority import food
+    return food(obj.get('top_item',obj)) and any(
+        e.get('sleeping') and distance(cell,e['cell'],width)<=1
+        for e in getattr(p,'enemy_sightings',{}).values())
+
+
 def targets(p):
     try:
         from .room_supplies import deferred_loot
@@ -79,6 +90,8 @@ def diagnostics(p,state,enemies=(),paths=None):
     for cell,obj in sorted(pending.items())[:8]:
         route=p.route(paths,cell) if cell in paths else []
         entry={'cell':cell,'public_name':base_name(obj.get('top_item',obj)),
+               'priority_veto':(['remembered sleeping enemy guards optional food']
+                                if guarded_food(p,cell,obj,width) else []),
                'currently_visible':bool(p.tiles.get(cell,{}).get('visible')),
                'reachable_in_current_paths':cell in paths,'target_rejections':rejection(cell),
                'route':route[:32],'route_steps':len(route)-1 if route else None,
@@ -167,6 +180,11 @@ def choose(p,state,enemies):
         return recover_trap_payload(p,state,enemies)
     paths=p.paths(state);choices=[]
     for cell,obj in resources.items():
+        # Current enemies veto this leaf even while sleeping. Keep optional
+        # food beside a remembered sleeper from reversing admitted shopping
+        # whenever that same enemy drops out of view. Retain the obligation;
+        # fresh public absence clears sightings in update(), not a fake pickup.
+        if guarded_food(p,cell,obj,state['map']['width']):continue
         if cell not in paths or p.failed_moves[cell] or cell in p.blocked:continue
         route=p.route(paths,cell)
         if any(c in p.room_blocked or p.tiles[c].get('trap') or p.tiles[c].get('plant')
