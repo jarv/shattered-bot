@@ -391,6 +391,15 @@ class TenguStrategy(ObservedBossStrategy):
         # Bomb position is a visible, unpickable heap; radius is a public rule.
         # Do not read Tengu's bomb buff, timer, or future teleport destinations.
         danger = set(state.get("danger_cells", []))
+        # Shocker arms alternate every tick, and its center is always seeded.
+        # An empty current effect is not a safe full-action window. Reserve
+        # the complete public radius rather than guessing the next orientation.
+        shockers = [obj["cell"] for obj in state.get("objects", [])
+                    if obj["name"].lower() == "shocker"
+                    and "tengu" in obj.get("description", "").lower()]
+        electric = {c for c in p.tiles if any(
+            distance(c, source, state["map"]["width"]) <= 1 for source in shockers)}
+        danger.update(electric)
         for obj in state.get("objects", []):
             if obj["name"].lower() == "smoke bomb" and "tengu" in obj.get("description", "").lower():
                 danger.update(c for c in p.tiles if distance(c, obj["cell"], state["map"]["width"]) <= 2)
@@ -405,7 +414,7 @@ class TenguStrategy(ObservedBossStrategy):
                       if re.fullmatch(r"[123]\.\.\.", t.strip())]
             pos, width, height = state["hero"]["cell"], state["map"]["width"], state["map"]["height"]
             buffs = " ".join(b["name"].lower() for b in state["hero"].get("buffs", []))
-            if not counts or pos in state.get("danger_cells", []) or any(s in buffs for s in ("root", "vertigo", "paralys")):
+            if not counts or pos in electric or pos in state.get("danger_cells", []) or any(s in buffs for s in ("root", "vertigo", "paralys")):
                 raise
             try:
                 from .combat_items import unencumbered
@@ -424,7 +433,7 @@ class TenguStrategy(ObservedBossStrategy):
                 if cell not in danger:
                     return p.cell(route[1], "boss: tengu staged escape within rendered bomb countdown")
                 for c in neighbors(cell, width, height):
-                    if c not in previous and c not in state.get("danger_cells", []) and c not in p.loot \
+                    if c not in previous and c not in electric and c not in state.get("danger_cells", []) and c not in p.loot \
                             and p.walkable(c, occupied) and p.tiles[c]["terrain"] not in {5,7,8,22,37}:
                         previous[c] = cell
                         queue.append(c)
