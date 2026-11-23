@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "id": "000199",
+  "started_at": "2026-11-23T14:47:37Z",
+  "completed_at": "2026-11-23T14:49:25.109425+00:00",
+  "source_commit": "0d05e4ae6ced5cd29fcd75508fc47aa6e113501a",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 263,
+  "duration_seconds": 104.799,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000198",
+  "previous_source_commit": "65d4d9002075672ef66a95d9c5dee4eddf31c833",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Distinguish complete sentry geometry from executable potion preparation. A hypothetical protected chest route does not make flammable entry flooring a safe unknown-potion bank. Preserve unidentified colors, inventory protection and mandatory pickup until a preparation transaction is actually admitted.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health when mandatory preparation exhausted. Decision 262 (selection 740, accepted transition 741) entered the sentry doorway; decision 263 (743–745) stopped without recovery or descent. Earlier mapping at decision 108 (304–306) exposed terrain without surveying it. The sentry geometry helper treated mapped but unobserved interior and perimeter cells as a complete enclosure, suppressing the existing safe observation prerequisite while no protected reward trip was established. Offline bookkeeping reconstruction matches all 263 earlier selections and reproduces the original blocker. The focused correction requires observed enclosure geometry; the same terminal input then selects ordinary-floor reconnaissance, not drinking or descent. The new regression fails by assertion on original source and passes on the candidate; the full suite passes 2,154 tests with four skips. This establishes an admitted observation step, not chest discovery, potion safety, collection or survival.",
+    "learnings": "Mapped terrain is not a completed sentry survey. Reobserve missing enclosure cells from admitted ordinary ground before exhausting preparation. Keep unknown potion identities, inventory protection, fresh arrival checks and mandatory progression pickup intact; choosing reconnaissance does not prove retrieval."
+  },
+  "recommendations": [
+    {
+      "id": "000199-mapped-sentry-survey",
+      "priority": "high",
+      "summary": "Do not let mapped but unobserved sentry geometry suppress safe reconnaissance.",
+      "evidence": [
+        "Decision 108, selection 304 and accepted transition 305; mapping confirmation 306.",
+        "Decision 262, selection 740 and accepted transition 741: arrival at the sentry doorway.",
+        "Decision 263, records 743–745: missing haste exhausts mandatory discovery with the hero alive.",
+        "Source-pinned offline reconstruction matches selections 0–262; original geometry suppresses reconnaissance despite unobserved interior 1313 and perimeter gaps.",
+        "tools/room_tactics.py:179–221; tools/preparation_prerequisites.py:83–144; tools/descent_potions.py:348–387."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000199"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000199/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000199/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 259,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 257,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 250
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "observed-landmark"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 259,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

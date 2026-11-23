@@ -208,6 +208,12 @@ def sentry_geometry(p, state):
         return set(), 0
     boundary = {y*width+x for x in range(left, right+1) for y in range(top, bottom+1)
                 if x in {left,right} or y in {top,bottom}}
+    # Mapping supplies terrain, not an actual survey. Treat unseen mapped
+    # interior/perimeter as incomplete so ordinary-floor reconnaissance can
+    # run; do not infer enclosure or suppress that prerequisite from map data.
+    if any(not p.tiles.get(c, {}).get("observed", p.tiles.get(c, {}).get("visible", False))
+           for c in interior | boundary):
+        return set(), 0
     doors = [c for c in boundary if p.tiles.get(c, {}).get("terrain") in {5,6}]
     if len(doors) != 1 or any(p.tiles.get(c, {}).get("terrain") not in {4,12} for c in boundary-set(doors)):
         return set(), 0
