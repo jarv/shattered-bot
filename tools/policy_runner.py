@@ -45,6 +45,13 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
     except ImportError:
         from fallback_progress import FallbackProgress
     fallback_progress = FallbackProgress()
+    try:
+        from .floor_abandonment import FloorAbandonment
+    except ImportError:
+        from floor_abandonment import FloorAbandonment
+    abandonment = FloorAbandonment(policy) if isinstance(policy, SurvivalPolicy) and until_death else None
+    if abandonment:
+        result["planner_incidents"] = abandonment.incidents
     last_resource_veto = None
     result['until_death']=until_death
     with Path(log_path).open("x") as log:
@@ -52,7 +59,9 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
             transaction = Transaction(policy, loop_guard, menu_guard)
             decision=None
             try:
-                decision = policy.choose(state)
+                decision = abandonment.next(state) if abandonment else None
+                if decision is None:
+                    decision = policy.choose(state)
                 loop_guard.check(state, decision)
                 menu_guard.check(state, decision)
             except Finished as done:
@@ -94,6 +103,25 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                         decision=continue_alive(policy,state,done) if until_death and isinstance(policy,SurvivalPolicy) else None
                     except Finished as hard:
                         done=hard
+                if decision is None and isinstance(done, PlannerStuck) and abandonment:
+                    transaction.rollback()
+                    if abandonment.active:
+                        abandonment.active.update(status="exhausted", recovery_reason=done.blocker)
+                        abandonment.active = None
+                    decision = abandonment.start(state, done, report, index)
+                    log.write(json.dumps({"index": index, "state": state,
+                                          "planner_incident": abandonment.incidents[-1]},
+                                         ensure_ascii=False) + "\n")
+                    log.flush()
+                    print(f"ERROR D{state.get('depth')} [planner-incident]: {done.blocker}; "
+                          f"recovery={abandonment.incidents[-1]['status']}", flush=True)
+                    if decision:
+                        try:
+                            loop_guard.check(state, decision)
+                            menu_guard.check(state, decision)
+                        except Finished:
+                            abandonment.rejected()
+                            decision = None
                 if decision is None:
                     result.update(outcome=done.outcome, reason=done.reason)
                     if isinstance(done, PlannerStuck):
@@ -131,7 +159,9 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                         result.update(outcome=blocked.outcome, reason=blocked.reason)
                         break
             record = {"index": index, "state": state, "action": decision.action, "reason": decision.reason,
-                        "intent": decision.intent, "controller": decision.controller}
+                         "intent": decision.intent, "controller": decision.controller}
+            if getattr(decision, "floor_abandonment", None):
+                record["planner_recovery_incident"] = decision.floor_abandonment
             if getattr(decision,"potion_purpose",None):record["potion_purpose"]=decision.potion_purpose
             if getattr(decision,"vertigo_kind",None):record["vertigo_action"]=decision.vertigo_kind
             if decision.movement_batch:record['requested_movement_route']=list(decision.movement_batch)
@@ -162,6 +192,8 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                 next_state = api.step(decision.action)
             except PlayerAPIError as error:
                 if rejected_before_execution(error):
+                    if abandonment:
+                        abandonment.rejected()
                     transaction.rollback()
                     log.write(json.dumps({"rejected": str(error), "index": index}) + "\n")
                     state = api.state()
@@ -174,6 +206,15 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
             log.write(json.dumps({'index':index,'accepted_transition':{'before':snapshot(state),
                 'action':decision.action,'after':snapshot(next_state),'reason':decision.reason}},ensure_ascii=False)+'\n')
             log.flush()
+            if abandonment:
+                incident = abandonment.active
+                abandonment.observe(state, decision, next_state)
+                if incident:
+                    log.write(json.dumps({"index": index, "planner_recovery_update": {
+                        key: incident.get(key) for key in
+                        ("id", "status", "accepted_actions", "stalled_actions", "target", "collection_credited")
+                    }}) + "\n")
+                    log.flush()
             if isinstance(policy,SurvivalPolicy):
                 try:
                     from .fly_tactics import observe_fallback
@@ -312,4 +353,9 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
             result["exploration"] = policy.exploration_report(state, policy.paths(state))
             result["last_decision_resources"] = policy.planner.resources(policy, last_decision_state)
         log.write(json.dumps({"result": result, "state": state}, ensure_ascii=False) + "\n")
+    if abandonment:
+        if abandonment.active:
+            abandonment.active["status"] = "interrupted"
+        result["planner_incident_count"] = len(abandonment.incidents)
+        result["planner_recoveries_succeeded"] = sum(i["status"] == "descended" for i in abandonment.incidents)
     return result
