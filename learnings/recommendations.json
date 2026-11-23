@@ -2658,5 +2658,18 @@
     "status": "deferred",
     "reason": "No patch is supplied because the pinned gas diffusion rules do not support reusing the existing cold or electrical safety footprint, and no current helper certifies a gas-excluded refuge, dissipation bound, and safe retrieval route. The terminal inventory has no known levitation or purity supply. Source browsing and validated offline reconstruction resolved the selecting-state gaps, but not this safety proof. Next, derive a public-map fixture from decisions 345 and 544 and prove conservative gas reach with unknown boundaries treated adversarially. Only then add remote activation and receipt-checked retrieval with a new original-red/candidate-green regression; never bypass the mandatory key or restore death-waits.",
     "origin_run": "000212"
+  },
+  {
+    "id": "000213-boxed-gas-purity",
+    "priority": "high",
+    "summary": "Consider verified purity self-splash before declaring boxed toxic-gas escape exhausted.",
+    "evidence": [
+      "Decision 759, log line 2266: doorway retreat commitment.",
+      "Decision 765, log lines 2296–2297: accepted entry into door 1024.",
+      "Decision 766, log line 2301: gas emergency, occupied clear exit, identified throwable purity, and unrecovered planner incident."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000213"
   }
 ]

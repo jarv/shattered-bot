@@ -87,6 +87,28 @@ def escape(p, state):
     transport = p.emergency_transport(state, [o for o in state.get("objects", []) if is_hostile(o)])
     if transport and transport.action.get("type") != "wait":
         return transport
+    # A boxed cloud is not exhausted while known purity can clear it. Shatter
+    # on the hero's ordinary floor; drinking grants immunity but does not clear
+    # the blocked route. This selects a rescue, never protection or loot credit.
+    try:
+        from .consumable_tactics import base_name
+        from .room_supplies import use as use_room_supply, eligible
+    except ImportError:
+        from consumable_tactics import base_name
+        from room_supplies import use as use_room_supply, eligible
+    tile = p.tiles.get(pos, {})
+    if tile.get("visible") and tile.get("observed") is not False \
+            and tile.get("terrain") in {1, 2, 3, 5, 6, 9, 14, 15, 19, 20, 29, 30} \
+            and not tile.get("plant") and (not tile.get("trap") or tile.get("terrain") == 19) \
+            and pos not in warnings and not any(b in buffs for b in ("paralys", "vertigo")):
+        purity = next((i for i in state.get("inventory", [])
+                       if base_name(i) == "potion of purity" and i.get("identified")
+                       and i.get("quantity", 1) > 0 and "THROW" in i.get("actions", [])
+                       and eligible(p, i, "THROW", "emergency")), None)
+        if purity:
+            return use_room_supply(p, purity, "THROW",
+                "survival: emergency known purity self-splash to clear boxed toxic gas",
+                kind="emergency", target=pos)
     # This is a technical stop, not an admission failure that until-death
     # continuation can turn back into a stationary wait.
     raise Finished("blocked", "Toxic gas: no observed traversable exit or usable escape; refusing recovery waits",

@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "id": "000213",
+  "started_at": "2026-11-23T18:46:07Z",
+  "completed_at": "2026-11-23T18:51:15.946875+00:00",
+  "source_commit": "b363b365b828fe05eee387064b3a6ab2fce00e14",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "blocked",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: blocked",
+  "planner_incident_count": 1,
+  "blocker_kind": "immediate-safety-emergency",
+  "outcome_summary": "Blocked alive in toxic gas",
+  "outcome_reason": "Toxic gas: no observed traversable exit or usable escape; refusing recovery waits",
+  "max_depth": 2,
+  "actions": 766,
+  "duration_seconds": 304.466,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000212",
+  "previous_source_commit": "01b9b61d23aa77a77e8f0fbc39b395de57cc16cd",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "A required key on a toxic gas plate needs its own safely bounded preparation plan. Do not reuse a chilling trap's radius check, assume levitation from an unidentified potion, or treat a throwable container as proof of safe gas clearance. Preserve the unfinished pickup until an actual collection receipt.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run stopped with the hero alive at full health, not an observed death. Decisions 759–765 committed to a doorway retreat while a mimic and gnoll pursued. The accepted transition at decision 765, log line 2297, entered door 1024; the next observation revealed toxic gas and a mimic occupying the clear exit. Earlier public observations did not reveal that gas room, so rejecting the door using later knowledge would be unjustified. The initiating planner defect was treating walking and transport exhaustion as total exhaustion: tools/toxic_escape.py stopped before considering the identified, throwable potion of purity already carried. The pinned game source supports self-splash gas clearance. The proposed correction selects that emergency action only after existing escape options fail and preserves item eligibility, impact safety, terminal stops and honest pickup receipts. A new evidence-derived regression fails on the original selector and passes on the candidate; the final full suite passes 2185 tests with four skipped. A fresh-state probe also reproduces the original stop on the complete terminal observation. No original runtime memory or subsequent gameplay was reconstructed. Selecting clearance does not establish successful throwing, gas removal, loot collection or survival.",
+    "learnings": "When gas escape routes are exhausted, consider an identified purity self-splash on a verified safe impact tile before declaring planner failure. Reobserve the result; never infer clearance, protection or collection from selecting the action. Unknown rooms must not be judged using later revelations."
+  },
+  "recommendations": [
+    {
+      "id": "000213-boxed-gas-purity",
+      "priority": "high",
+      "summary": "Consider verified purity self-splash before declaring boxed toxic-gas escape exhausted.",
+      "evidence": [
+        "Decision 759, log line 2266: doorway retreat commitment.",
+        "Decision 765, log lines 2296–2297: accepted entry into door 1024.",
+        "Decision 766, log line 2301: gas emergency, occupied clear exit, identified throwable purity, and unrecovered planner incident."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000213"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000213/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000213/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 123,
+        "turns": 462,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 464,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 759
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 16,
+        "gold_gained": 219,
+        "turns": 288,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 296,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 1,
+    "ending_level": 3,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 342,
+    "gold_complete": true,
+    "turns": 750,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
