@@ -972,6 +972,10 @@ class MagePolicy(SurvivalPolicy):
         return action
 
     def retreat_preferences(self,state,enemies,candidates):
+        try:
+            from .escape_commitment import reverses
+        except ImportError:
+            from escape_commitment import reverses
         paths=self.paths(state,{e["cell"] for e in enemies})
         preference={}
         width,height=state["map"]["width"],state["map"]["height"]
@@ -986,6 +990,11 @@ class MagePolicy(SurvivalPolicy):
                     and all(self.tiles[c]["terrain"] not in {7,8,21,22,31,37,38} and c not in self.loot
                             and not self.tiles[c].get("plant") for c in route[1:]):
                 step=route[1]
+                # A just-left door is not a new escape destination. Do not
+                # reward retracing an accepted retreat over onward ground;
+                # ordinary retreat safety/scoring still decides availability.
+                if reverses(self,state,step):
+                    continue
                 if exposure(self,state,active,step,distance,line_clear)["exposure"]:
                     continue
                 if water_guard and self.tiles[step]["terrain"]!=29 \
