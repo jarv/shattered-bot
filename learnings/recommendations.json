@@ -2671,5 +2671,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000213"
+  },
+  {
+    "id": "000214-tengu-victory-door",
+    "priority": "high",
+    "summary": "Rearm observed closed doors after final Tengu victory even when their terrain value is unchanged.",
+    "evidence": [
+      "Decisions 4489–4490, accepted log lines 13133 and 13135: door 746 is crossed.",
+      "Decision 4586, accepted log line 13391: final defeat relocates the hero and reveals the mask reward.",
+      "Decision 4587, log line 13392: reused door 746 is closed and visible.",
+      "Decisions 4587–4588, accepted log lines 13393 and 13396: reward pickup precedes exhaustion.",
+      "Decision 4589, log lines 13398–13399: no unopened doors admitted; living hero cannot proceed.",
+      "tools/survival_policy.py:340–355,878–879,1105–1109; tools/boss_strategies.py:TenguStrategy.victory."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000214"
   }
 ]

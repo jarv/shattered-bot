@@ -346,6 +346,13 @@ class TenguStrategy(ObservedBossStrategy):
             "free at last" in t.lower() for t in state.get("ui", {}).get("texts", []))
         if won:
             self.transitioning = False
+            # The final map can reuse a previously crossed closed door without
+            # changing its terrain ID. Rearm that observed work once, not on
+            # every later reclosure. Normal paths/loot/safety still arbitrate;
+            # neither the unseen exit nor reward collection is certified here.
+            if self.name not in p.defeated_bosses:
+                p.changed_door_cells.update(t["cell"] for t in state.get("map", {}).get("cells", [])
+                    if t.get("visible") and t.get("observed") is not False and t.get("terrain") == 5)
         elif any("tengu:" in t.lower() and "let's make this interesting" in t.lower()
                  for t in state.get("ui", {}).get("texts", [])):
             self.transitioning = True
