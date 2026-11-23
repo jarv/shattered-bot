@@ -1312,14 +1312,16 @@
   {
     "id": "000102-pool-discovery-admission",
     "priority": "high",
-    "summary": "Establish executable inventory-protected preparation and chest retrieval after the approach observation.",
+    "summary": "Establish executable preparation and retrieval when the pool entrance cannot fund the protected chest round trip.",
     "evidence": [
-      "Decision 1626, line 4828: the observed iron key remains excluded by the room hazard barrier and preparation reports no verified protected reward round trip.",
-      "Decision 1627, line 4831: multiple unidentified potion colors remain carried.",
-      "Decision 1892, lines 5637–5638: the piranha chest remains mandatory and uncollected."
+      "Decision 1059, log line 3041: a singleton ivory potion is carried without identification.",
+      "Decision 1121, selection line 3218 and accepted transition line 3219: arrival at doorway 175 advances the clock with full health.",
+      "Decision 1122, log line 3221: piranhas and Chest 152 become visible; the mandatory chest blocks descent and the planner exhausts.",
+      "Source-pinned offline reconstruction matches decisions 0-1121 and reproduces the terminal blocker.",
+      "tools/puzzle_supplies.py:147-179,899-943; tools/room_tactics.py:200-307; tools/mage_policy.py:443-457."
     ],
     "status": "deferred",
-    "reason": "Historical backlog, not revalidated in this recording. Prior disposition: Historical backlog, not revalidated or addressed in this recording. Prior disposition: The scout correction does not establish safe unknown-potion bank admission with the recorded multi-potion inventory. A collateral-safe stash/retrieval route, actionable entrance and protected chest return have not been validated together. Next derive fresh bank-734 fixtures with cached chests 780 and 911 and the contemporaneous inventory, then test those contracts before authorizing any drink. Do not weaken habitat checks, guess potion effects or waive pickup.",
+    "reason": "Revalidated here, but no safe focused patch is established. Terminal probes find no eligible fresh pool-test bank or admitted protected journey. No carried nonconsumptive identification resource remains, and the nearest safe entrance requires at least eight moves each way: 21 turns under existing accounting versus a nominal 20-turn invisibility effect. A larger route bound alone is insufficient. Next derive this doorway and habitat fixture and validate a bounded ranged-clearance alternative with public charge/damage funding, safe firing and retreat positions, fresh defeat receipts, and verified chest pickup, or establish an identification-plus-retrieval transaction. Do not guess ivory, relax habitat checks, waive mandatory pickup, or restore death-waits.",
     "origin_run": "000102"
   },
   {
