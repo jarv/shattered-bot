@@ -2372,5 +2372,19 @@
     "status": "deferred",
     "reason": "The concrete blocker is the combination of insufficient remaining observation-travel allowance and shortest-route rejection at the remembered shocking trap. Renewing allowance alone was not validated as an executable repair, and weakening the trap check is unsafe. Next, build a minimal fixture from decisions 1723–1724 that searches the observed hazard-filtered graph, explicitly funds a receipt-scoped return within hunger reserves, and demonstrates an admitted changed selection before retaining a patch. No further observations may be fed to that changed-decision state.",
     "origin_run": "000189"
+  },
+  {
+    "id": "000190-guarded-food-visibility",
+    "priority": "high",
+    "summary": "Prevent remembered sleeping guards from triggering food-versus-shopping reversals when visibility changes.",
+    "evidence": [
+      "Decisions 2483–2485, log lines 7336–7340: visible sleeping flies veto food priority and shopping moves away.",
+      "Decisions 2486–2488, log lines 7342–7347: hidden food approach reverses visible-enemy shopping; accepted lines 7343 and 7346 confirm movement.",
+      "Decision 2496, log line 7367: navigation-loop recovery begins.",
+      "Decision 2575, log lines 7583–7585: planner exhaustion with the hero alive."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000190"
   }
 ]
