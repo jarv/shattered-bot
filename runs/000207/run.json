@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "id": "000207",
+  "started_at": "2026-11-23T17:03:32Z",
+  "completed_at": "2026-11-23T17:07:39.179554+00:00",
+  "source_commit": "d6095a5d3e84d35bc54e25b2609ff0aef035ba3f",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "navigation-stalled",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 667,
+  "duration_seconds": 243.399,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000206",
+  "previous_source_commit": "069d481a6a5343fb61606168cdf2dd87d125a4a2",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "A remembered discovery bank is not sufficient for a reserved pool potion: testing and the protected chest return must share executable preparation. Diagnose the entrance transaction before spending more travel or waiting. Preserve unknown identities, habitat exclusions, mandatory progression pickup and explicit planner exhaustion.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The Mage stopped alive at full health because the planner could not proceed, not because an enemy killed it. D659 (selection line 1831, acceptance 1832) began a doorway lure whose hiding bank was its own approach origin. Accepted retreat protection then prohibited the return step. D660, D663 and D665 report escape-reversal failures; recovery repositioning did not resolve the contradiction, and D667 exhausted recovery (lines 1861–1863). Source-pinned offline reconstruction matches all 667 recorded actions and intents and establishes this bookkeeping; it is not originally recorded memory. Mandatory potion discovery independently prevented fallback descent and remains enforced. The proposed focused correction excludes the final approach bank when selecting a fresh ordinary doorway lure, without weakening retreat protection or hazard checks. A new regression fails on the original source and passes on the candidate. An isolated validated-state probe selects an already observed alternative bank, but no changed-policy continuation, successful ambush, potion discovery, collection or survival gain is established. The recorded source comparison is empty, so there are no recorded improvements to attribute.",
+    "learnings": "Before approaching an ambush doorway, ensure its hiding bank does not require immediately reversing the protected approach edge. Preserve fresh hazard checks, mandatory discovery and pickup obligations, honest collection receipts, and explicit planner exhaustion. A different selected bank is preparation, not proof that the ambush succeeds."
+  },
+  "recommendations": [
+    {
+      "id": "000207-doorway-approach-bank",
+      "priority": "high",
+      "summary": "Reject fresh doorway hiding banks that contradict protection of the accepted approach edge.",
+      "evidence": [
+        "D659, lines 1831–1832: doorway approach from 946 to 979.",
+        "Validated offline reconstruction: the fresh D659 plan chooses hiding bank 946; the accepted approach protects edge 946→979.",
+        "D660, D663 and D665, lines 1835, 1846 and 1853: escape-reversal failures followed by recovery repositioning.",
+        "D667, lines 1861–1863: terminal navigation exhaustion with the hero alive; mandatory potion discovery vetoes fallback descent.",
+        "tools/survival_policy.py:717–797; tools/doorway_tactics.py:275–296; tools/escape_commitment.py:14–37; tools/tactical_recovery.py:100–166."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000207"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000207/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000207/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 64,
+        "turns": 250,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 255,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 699
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 21,
+        "gold_gained": 152,
+        "turns": 426.6666259765625,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 406,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 580
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 979
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 6,
+    "ending_level": 3,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 216,
+    "gold_complete": true,
+    "turns": 676.6666259765625,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

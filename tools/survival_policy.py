@@ -772,6 +772,12 @@ class SurvivalPolicy:
             if len(route) > 7 or len(route) - 1 > min(distance(door, e["cell"], width) for e in enemies):
                 continue
             for hide in neighbors(door, width, height):
+                # Doorway arbitration protects accepted retreat edges. A fresh
+                # approach cannot then hide by reversing its final edge.
+                # Decline that bank now, not after spending the approach.
+                if kind == "doorway" and getattr(self, "unit_strategies_enabled", False) \
+                        and len(route) > 1 and hide == route[-2]:
+                    continue
                 if not self.walkable(hide, occupied) or self.tiles[hide]["terrain"] not in FLOOR - TRANSITIONS - {5, 6}:
                     continue
                 closed = dict(self.tiles)

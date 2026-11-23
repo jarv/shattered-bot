@@ -2568,5 +2568,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000205"
+  },
+  {
+    "id": "000207-doorway-approach-bank",
+    "priority": "high",
+    "summary": "Reject fresh doorway hiding banks that contradict protection of the accepted approach edge.",
+    "evidence": [
+      "D659, lines 1831–1832: doorway approach from 946 to 979.",
+      "Validated offline reconstruction: the fresh D659 plan chooses hiding bank 946; the accepted approach protects edge 946→979.",
+      "D660, D663 and D665, lines 1835, 1846 and 1853: escape-reversal failures followed by recovery repositioning.",
+      "D667, lines 1861–1863: terminal navigation exhaustion with the hero alive; mandatory potion discovery vetoes fallback descent.",
+      "tools/survival_policy.py:717–797; tools/doorway_tactics.py:275–296; tools/escape_commitment.py:14–37; tools/tactical_recovery.py:100–166."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000207"
   }
 ]
