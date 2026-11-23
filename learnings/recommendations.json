@@ -2583,5 +2583,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000207"
+  },
+  {
+    "id": "000208-pool-test-return-endpoint",
+    "priority": "high",
+    "summary": "Resolve the pool preparation contradiction between a safe testing bank and a protection-funded return endpoint.",
+    "evidence": [
+      "Decision 220, selected line 614 and accepted line 615: arrival at doorway 570 reveals chest 318.",
+      "Decision 221, lines 617–618: the uncollected pool chest blocks descent with the hero at 25/25 HP.",
+      "Result line 619: recovery accepts no actions because mandatory potion discovery remains.",
+      "Source-pinned offline reconstruction matches decisions 0–220 and reproduces the decision-221 blocker.",
+      "tools/puzzle_supplies.py:142–191,285–324,969–1007; tools/room_tactics.py:70–115,234–357; tools/mage_policy.py:456–458; tools/floor_abandonment.py:35–48."
+    ],
+    "status": "deferred",
+    "reason": "The demonstrated blocker is the same-bank return contract: fresh testing bank 606 has storage feasibility but needs a 21-turn symmetric plan; doorway 570 permits a 19-turn journey but is not admitted for an unknown drink. Journey execution, duration checks and completion currently assume return to the starting bank. No safe asymmetric replacement was validated, so changing only planning would contradict execution. Next derive a deterministic fixture for bank 606, doorway 570 and chest 318, then validate a distinct safe return endpoint with unchanged reserve, actual-buff checks, door costs, failed-hypothesis recovery, stash retrieval and pickup receipts before changing the selector. Do not relax testing admission or skip mandatory discovery.",
+    "origin_run": "000208"
   }
 ]
