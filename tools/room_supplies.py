@@ -58,13 +58,26 @@ def exhausted(p, state, kind):
 
 
 def discovery_requirements(p, state, needs=None):
-    """Unknown colors are not all hostage to a speculative bookshelf alcove.
+    """Unknown colors are not hostage to optional drops or speculative shelves.
 
     Keep ordinary known-supply reservations unchanged. Actual barricades and
     known shelf-separated loot still require flame preparation before testing.
     Unknown shelf backs remain unfinished exploration, never certified empty.
     """
     needs = requirements(p, state) if needs is None else needs
+    if any(d.kind == "fall" for d in needs):
+        # A distant well is an optional next-floor drop, not a protected
+        # reward round trip. Its controller needs verified feather fall or
+        # cleansing; levitation alone does not admit the drop. Keep known
+        # crafting/protection supplies reserved by requirements()/allowed(),
+        # but do not hold all unidentified colors for this optional project.
+        p.defer_obligations(state, [{"kind": "uncompleted distant-well drop", "cell": c}
+                                   for c, t in sorted(p.tiles.items())
+                                   if t.get("terrain") == 0
+                                   and "distant well" in t.get("name", "").lower()],
+                            "Optional drop remains unfinished; missing fall preparation "
+                            "does not block independently admitted strength discovery.")
+        needs = [d for d in needs if d.kind != "fall"]
     if not any(d.kind == "flame" for d in needs):
         return needs
     # demands() keeps only the nearest representative. Inspect the whole map:

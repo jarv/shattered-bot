@@ -803,15 +803,12 @@
     "priority": "high",
     "summary": "Reserve mandatory discovery preparation before exploration disconnects every admitted bank return.",
     "evidence": [
-      "Decision 349, selection line 938: exploration leaves water 802 for grass 759.",
-      "Decision 350, selection line 941 and accepted line 942: exploration moves from grass 759 to grass 716.",
-      "Decision 351, selection line 944 and accepted line 945: exploration reaches 673 alive at full health.",
-      "Decision 352, line 947: both preparation prerequisites decline and mandatory discovery exhausts.",
-      "Offline reconstruction matches decisions 0–351 and the terminal blocker; seven exact-inventory bank receipts remain, but all terminal returns are excluded.",
-      "tools/descent_potions.py:103–149,266–294,403–452; tools/mage_policy.py:445–495; tools/test_floor_potion_reservation.py:55–64."
+      "Decision 208, log line 613: the recorded terminal observation has no immediately admitted discovery bank.",
+      "Validated offline reconstruction through decision 207 retains earlier witnessed bank receipts.",
+      "An isolated decision-208 probe without the optional fall veto still rejects remembered-bank return and reconnaissance."
     ],
     "status": "deferred",
-    "reason": "Revalidated in this recording. No safe focused patch is certified: terminal return requires crossing excluded grass 716/759, while an earlier drink must preserve the existing pre-descent supply/progression gate and resume the unfinished frontier and collection work. Complete source and reconstruction resolve missing selector state, not this transaction safety contract. Next derive paired decision-350/351 fixtures and validate a bounded preparation reservation before disconnection, with accepted movement/drop/consumption/retrieval receipts, interruption handling, fresh bank/stash admission and restoration of unfinished exploration. Do not allow grass, increase bounds, infer potion effects or waive pickup.",
+    "reason": "Not addressed by the single reservation correction. Historical feasibility does not establish a currently safe transit route or fresh arrival admission, and the existing bank-return provider declines. Next derive a decision-208 fixture from the validated state, enumerate each historical bank's transit exclusions, and establish a funded allowed-graph return with fresh visibility and inventory-protection checks. No safe movement replacement is certified.",
     "origin_run": "000061"
   },
   {
@@ -1961,5 +1958,19 @@
     "status": "deferred",
     "reason": "Unaddressed by the single narrow correction. The existing remote-clearing controller admits only chilling traps; electricity also propagates through connected water, so copying its radius check is unsafe. The terminal inventory supplies no known flight. A separate repair must prove the publicly bounded water footprint, collateral safety, projectile bank and return route, then observe disarm and electrical expiry before retrieval. No such replacement is certified here.",
     "origin_run": "000159"
+  },
+  {
+    "id": "000160-optional-well-discovery",
+    "priority": "high",
+    "summary": "Separate optional distant-well preparation from mandatory unknown-potion discovery.",
+    "evidence": [
+      "Decision 68, log line 200: distant well 309 is publicly observed.",
+      "Decision 207, log lines 610–612: accepted movement from 426 to 427.",
+      "Decision 208, log lines 613–614: missing fall supply blocks discovery with the hero alive at 25/25 HP.",
+      "tools/puzzle_supplies.py:83–84; tools/room_supplies.py:31–46; tools/drop_tactics.py:30–49; tools/descent_potions.py:344–378."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000160"
   }
 ]
