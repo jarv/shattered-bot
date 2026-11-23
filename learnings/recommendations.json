@@ -2208,5 +2208,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000179"
+  },
+  {
+    "id": "000180-defeated-escape-edge",
+    "priority": "high",
+    "summary": "Retire a matching immediate escape edge after an unambiguous last-pursuer defeat, without weakening other movement gates.",
+    "evidence": [
+      "Decision 1106, accepted log line 3249: final adjacent scout defeated.",
+      "Decision 1107, selection line 3252: stale reversal protection substitutes a retreat for key routing.",
+      "Decisions 1119–1122, log lines 3291–3300: newly observed summoning trap interrupts the key approach.",
+      "Decisions 1135–1137, log lines 3337–3342: crab defeat, rejected food routing and terminal planner exhaustion.",
+      "Source-pinned reconstruction matches original selections through 1136; candidate stops at first divergence 1107.",
+      "tools/combat_observation.py; tools/escape_commitment.py; tools/mage_policy.py:416–422; tools/tactical_recovery.py:105–165."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000180"
   }
 ]

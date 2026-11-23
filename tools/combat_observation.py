@@ -11,6 +11,45 @@ def context(state,enemy):
     return (state["depth"],enemy["name"].lower(),champion(enemy))
 
 
+def retire_defeated_escape_edge(p, before, after, pending, before_texts):
+    """Retire only the immediate reverse edge occupied by a confirmed last foe.
+
+    A kill is not floor clearance. Other edges, loot receipts and movement
+    admission remain independent; disappearance alone never releases a route.
+    """
+    try:
+        from .survival_policy import is_hostile
+    except ImportError:
+        from survival_policy import is_hostile
+    plan = getattr(p, "escape_commitment", None)
+    cell, name = pending["cell"], pending["name"].lower()
+    pos = after["hero"]["cell"]
+    if not plan or (cell, pos) not in plan["edges"]:
+        return
+    if before["depth"] != after["depth"] or before.get("branch", 0) != after.get("branch", 0) \
+            or before["hero"]["cell"] != pos or after.get("status") != "ready" \
+            or after.get("modal") or after.get("danger_cells") \
+            or getattr(p, "unseen_damage_turns", 0):
+        return
+    if not any(t.strip().lower() == "you defeated " + name + "."
+               for t in after.get("ui", {}).get("texts", []) if t not in before_texts):
+        return
+    active = [o for o in before.get("objects", []) if is_hostile(o)]
+    if len(active) != 1 or active[0]["cell"] != cell or active[0]["name"].lower() != name \
+            or any(is_hostile(o) for o in after.get("objects", [])):
+        return
+    if any(c != cell or e.get("name", "").lower() != name
+           for c, e in getattr(p, "recent_threats", {}).items()):
+        return
+    if any(k in b["name"].lower() for b in after["hero"].get("buffs", [])
+           for k in ("poison", "burn", "bleed", "vertigo", "blind", "paral")):
+        return
+    tile = next((t for t in after.get("map", {}).get("cells", []) if t["cell"] == cell), {})
+    if not tile.get("visible"):
+        return
+    plan["edges"] = [edge for edge in plan["edges"] if edge != (cell, pos)]
+
+
 def source(state,item=None,action=None):
     if item is None:
         item=next((i for i in state["inventory"] if i.get("equipped") and stats(i) and stats(i)[0]=="melee"),None)
@@ -232,6 +271,7 @@ def observe_accepted_attack(p,before,decision,after):
                  for t in after.get("ui",{}).get("texts",[]) if t not in before_texts)
     key=(pending["context"],pending["source"])
     if defeated:
+        retire_defeated_escape_edge(p, before, after, pending, before_texts)
         # The separate lightning-lane memory outlives ordinary visible-cell
         # threat tracking. Retire it on this accepted, newly confirmed kill,
         # not on disappearance or a defeat message retained from an old fight.
