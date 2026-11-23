@@ -2074,5 +2074,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000167"
+  },
+  {
+    "id": "000169-summoning-supply-deadlock",
+    "priority": "high",
+    "summary": "Resolve the summoning-chamber supply and retrieval contradiction with a verified protected transaction.",
+    "evidence": [
+      "Decision 694, accepted log line 2022: arrival at doorway 1164.",
+      "Decision 695, log lines 2024–2025: trap 1165 and remains 1234 are public; a puzzle meal is consumed.",
+      "Decision 696, line 2026: no verified flight reward round trip despite restored satiety.",
+      "Decisions 861–862, lines 2486–2489: identification reveals toxic gas.",
+      "Decision 863, lines 2490–2491: missing levitation exhausts the planner with the hero alive.",
+      "tools/puzzle_supplies.py:97–100,915–926; tools/room_tactics.py:302–312; tools/special_rooms.py:103–107; tools/mage_policy.py:407–415; tools/descent_potions.py:350–384."
+    ],
+    "status": "deferred",
+    "reason": "Source browsing and matching offline reconstruction resolve the selecting-state gap, but no safe replacement is certified. The exact blocker is the missing inventory-protected unknown-potion preparation and summoning-room retrieval/abort contract: flight planning cannot cross quarantined ordinary floor, and the final movement guard independently refuses entry. Equipped gear does not meet the existing exterior-choke crowd-readiness gate. Next derive paired doorway-1164 and terminal fixtures, prove a fresh test bank and stash return, then validate actual-buff traversal, remains-interaction contingencies, interruption handling and pickup receipts before changing admission. Do not guess identities, weaken quarantine, waive mandatory progression pickup or restore death waits. No policy or test patch is proposed.",
+    "origin_run": "000169"
   }
 ]
