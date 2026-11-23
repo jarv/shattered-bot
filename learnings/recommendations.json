@@ -1730,15 +1730,17 @@
   {
     "id": "000137-summoning-exit-quarantine",
     "priority": "high",
-    "summary": "Establish safe progression when a summoning-trap quarantine encloses the key and stair approaches.",
+    "summary": "Establish a verified protected progression plan when summoning-room quarantine encloses the stair and mandatory upgrade approaches.",
     "evidence": [
-      "Decision 959, line 2836: summoning trap 76, iron key 106, upgrade scroll 75 and exit 195 are public; resource diagnostics reject pickup routes.",
-      "Decision 1042, line 3055: key and upgrade remain excluded by the room barrier.",
-      "Decision 1183, line 3510: unresolved iron door 669 and no reachable exit remain at planner exhaustion.",
-      "tools/summoning_tactics.py:70–107,129–138; tools/special_rooms.py:100–107; tools/mage_policy.py:407–415."
+      "Decision 3172, accepted log 9272: arrival at doorway 1150.",
+      "Decision 3173, log 9274: exit 1074, summoning trap 1114, upgrade scroll 1155 and sleeping thief 1156 are public; known levitation is carried.",
+      "Decision 3173, accepted log 9275: retreat to 1149 rather than protected progression.",
+      "Decision 3305, accepted log 9653: healing advances time and raises HP without resolving the route.",
+      "Decision 3306, log 9654: planner exhaustion with the hero alive.",
+      "tools/summoning_tactics.py:71-107; tools/special_rooms.py:103-107; tools/room_tactics.py:200-313; tools/mage_policy.py:403-415."
     ],
     "status": "deferred",
-    "reason": "Not repaired by the garden correction. Public-input helper probes show equipped armor score 1 and weapon score 5.5, below readiness requirements, and the chamber does not satisfy the supported single-door enclosure. Complete source resolves the selecting-chain gap, but no validated safe non-triggering passage or multi-door activation/clearance contract is established. Next derive the decision-959 trap/key/stair fixture and validate retrieval outside a conservative active-trap/chain envelope, or bounded multi-door containment with actual clearance receipts. Do not shrink quarantine or lower readiness without that safety evidence.",
+    "reason": "Revalidated here, but not safely repaired. The concrete blocker is a missing executable mixed-hazard flight/pickup/stair transaction, not missing source or an unidentified levitation supply. Existing flight planning retains ordinary-ground room exclusions, requires a loot endpoint and a protected return, while the final movement guard independently refuses summoning-room entry. The first doorway observation also includes a sleeping thief beside the upgrade. Neither removing these exclusions nor substituting the stair for a reward proves fresh enemy safety, buff duration, mandatory pickup or interruption recovery. Next derive paired doorway-1150 and terminal fixtures, validate a bounded preparation-only return with fresh arrival observations, then establish an actual-buff-verified itinerary that collects scroll 1155 before explicit descent at 1074 and retains an admitted abort route. Require baseline-red/candidate-green regressions for missing protection, enemy interruption, door reclosure, expired duration and failed pickup receipts. Do not weaken quarantine or waive mandatory progression pickup.",
     "origin_run": "000137"
   },
   {
