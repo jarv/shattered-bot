@@ -145,7 +145,12 @@ class RewardTrip:
         if (state['depth'],state.get('branch',0))!=(self.depth,self.branch):
             p.stop_obligation('room-journey','Protected multi-reward trip crossed floor or branch without returning')
         duration=remaining(state,PROTECTION[self.kind][1])
-        if self.stage=='protect' and not duration and pos==bank:
+        # A failed protection hypothesis never started a protected tour.
+        # Observed-effect recovery may already have left its staging bank.
+        # Only cancel away from the protected route/interior; an unprotected
+        # hero inside either must still raise the existing return obligation.
+        if self.stage=='protect' and not duration and (
+                pos==bank or pos not in self.room and pos not in self.route):
             p.room_journey=None;return None
         self.steps+=1
         buffs=' '.join(b['name'].lower() for b in state['hero'].get('buffs',[]))

@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "id": "000195",
+  "started_at": "2026-11-23T13:36:24Z",
+  "completed_at": "2026-11-23T13:41:35.295115+00:00",
+  "source_commit": "cbdf19ec8d0033af6100049fa4dfc693189f2281",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 810,
+  "duration_seconds": 306.466,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000194",
+  "previous_source_commit": "0beaaaae6cbf404166af834317944678ff5405d6",
+  "improvements": [
+    "While retrieving stashed potions, the bot now uses an available clear magic shot against a lone snake before starting a new doorway lure. Existing lures and combat safety checks still apply."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Do not let an optional new snake lure displace owned potion retrieval when an existing charged, permitted clear shot is available. Preserve the stash obligation, unknown potion identities, hazard checks and explicit planner exhaustion. A changed attack choice does not prove collection or eventual progress.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero was alive at 30/30 HP when mandatory potion preparation exhausted; this was a bot failure, not a death. The initiating defect occurred earlier: decision 574 (selection line 1651, accepted line 1652) tested a purity hypothesis that instead produced observed cold effects. Decisions 575–581 recovered to cell 595, outside the planned gas tour. At decision 582, line 1669, an unstarted RewardTrip incorrectly demanded a protection-funded return because recovery had left its bank. Line 1670 records the resulting unfinished room obligation. The recovery disables room-journey planning, while mandatory discovery still reserves missing purity for the unfinished gas room. Decision 810, lines 2326–2327, consequently exhausts preparation rather than descending. Source chain: tools/puzzle_supplies.py:983–1035, tools/room_tactics.py:228–287, tools/protected_rewards.py:143–167, tools/mage_policy.py:1408–1435, tools/tactical_recovery.py:47–49, tools/descent_potions.py:350–392. Offline reconstruction on the played source matched original actions and reasons through decision 809; reconstructed tour memory is not originally recorded memory. The candidate first changes decision 582 and no later observations were supplied to that changed state. The focused repair cancels an unstarted, unprotected hypothesis outside its planned route and interior without clearing rewards or disabling their controller. Started tours, interior/route exposure, actual protection return checks, branch checks and mandatory pickup remain enforced. The new five-test regression fails with the expected assertion on original source and passes on the candidate; the full suite passes 2143 tests with four skips. This establishes removal of the false obligation, not successful gas-room collection, strength discovery, descent or survival.",
+    "learnings": "Separate an unstarted protection hypothesis from an actual protected trip. Failed potion-effect recovery can leave the staging bank without creating a protected return obligation. Keep unresolved rewards and mandatory discovery honest; never infer potion identities or waive return safety. Stop offline continuation at the first changed selection."
+  },
+  "recommendations": [
+    {
+      "id": "000195-failed-gas-tour-hypothesis",
+      "priority": "high",
+      "summary": "Cancel an unstarted failed gas-tour hypothesis after recovery outside its route instead of disabling room preparation.",
+      "evidence": [
+        "Decision 574, log lines 1651–1652: unknown purity hypothesis and accepted consumption.",
+        "Decisions 575–581, log lines 1653–1668: observed cold-effect recovery leaves the staging bank.",
+        "Decision 582, log lines 1669–1671: false protected-return failure becomes an unfinished room obligation.",
+        "Decision 810, log lines 2326–2327: missing purity preparation exhausts with the hero alive.",
+        "Source-pinned offline reconstruction matches original selections 0–809; candidate stops at its first divergence, decision 582."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000195"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000195/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000195/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 63,
+        "turns": 351,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 354,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 175
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 21,
+        "gold_gained": 347,
+        "turns": 450.25,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 450,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1072
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt/choice container",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 6,
+    "ending_level": 3,
+    "starving_turns": 6,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 410,
+    "gold_complete": true,
+    "turns": 801.25,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

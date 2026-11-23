@@ -2429,5 +2429,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000194"
+  },
+  {
+    "id": "000195-failed-gas-tour-hypothesis",
+    "priority": "high",
+    "summary": "Cancel an unstarted failed gas-tour hypothesis after recovery outside its route instead of disabling room preparation.",
+    "evidence": [
+      "Decision 574, log lines 1651–1652: unknown purity hypothesis and accepted consumption.",
+      "Decisions 575–581, log lines 1653–1668: observed cold-effect recovery leaves the staging bank.",
+      "Decision 582, log lines 1669–1671: false protected-return failure becomes an unfinished room obligation.",
+      "Decision 810, log lines 2326–2327: missing purity preparation exhausts with the hero alive.",
+      "Source-pinned offline reconstruction matches original selections 0–809; candidate stops at its first divergence, decision 582."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000195"
   }
 ]
