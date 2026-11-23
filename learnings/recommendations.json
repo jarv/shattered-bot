@@ -2554,5 +2554,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000203"
+  },
+  {
+    "id": "000205-aquarium-key-clearance",
+    "priority": "high",
+    "summary": "Prepare aquarium-guarded keys with admitted stationary magic missiles instead of overlooking them until mandatory pickup blocks descent.",
+    "evidence": [
+      "Decision 491, log line 1460: iron key first observed beside the aquarium.",
+      "Decisions 523–540, log lines 1544–1595: visible piranha and charged staff during exterior exploration.",
+      "Decision 589, log line 1741: matching iron-key door observed.",
+      "Decision 644, log lines 1897–1899: key at cell 1687 excluded by room safety; mandatory preparation terminates planning."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000205"
   }
 ]

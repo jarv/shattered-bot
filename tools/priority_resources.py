@@ -1,4 +1,5 @@
 """Priority food, permanent progression, and matching-key pickups; no identity guesses."""
+import re
 try:
     from .consumable_tactics import base_name
     from .policy_decision import Intent
@@ -164,6 +165,67 @@ def clear_shocking_resource(p,state,resources,paths):
     return None
 
 
+def clear_aquarium_resource(p,state):
+    """A stationary, known missile only; no bank entry or defeat inferred."""
+    if not any(h['profile']=='aquarium' for h in getattr(p,'piranha_habitats',{}).values()):
+        return None
+    if getattr(p,'hostile_champions',False) or p.inventory_pressure \
+            or any(o.get('name','').lower()=='phantom piranha' for o in state.get('objects',[])):
+        return None
+    if any(getattr(p,key,None) for key in (
+            'potion_stash','room_journey','puzzle_probe','trap_payload_return','drop_plan')):
+        return None
+    hero=state['hero'];pos=hero['cell']
+    buffs=' '.join(b['name'].lower() for b in hero.get('buffs',[]))
+    tile=p.tiles.get(pos,{})
+    if hero['hp']<.85*hero['max_hp'] or any(b in buffs for b in (
+            'invisib','starving','ooze','frozen','chill','drowsy','sleep','levitat','magic immun')) \
+            or p.unseen_damage_turns or pos in p.room_blocked or pos in p.blocked \
+            or not tile.get('visible') or tile.get('terrain') not in {1,2,3,6,9,11,14,19,20,29} \
+            or any(tile.get(k) for k in ('effects','plant','trap')):
+        return None
+    missile=next((i for i in state['inventory'] if
+        re.sub(r' [+-]\d+$','',base_name(i)) in {'staff of magic missile','wand of magic missile'}
+        and i.get('identified') and i.get('curse_known') and not i.get('known_cursed')
+        and (i.get('status') or '?').split('/')[0].isdigit()
+        and int(i['status'].split('/')[0])>0 and 'ZAP' in i.get('actions',[])
+        and p.item_action_allowed(i,'ZAP')),None)
+    if not missile:return None
+    try:
+        from .hunger_budget import admits
+    except ImportError:
+        from hunger_budget import admits
+    width,height=state['map']['width'],state['map']['height']
+    for habitat in getattr(p,'piranha_habitats',{}).values():
+        if habitat['profile']!='aquarium':continue
+        water=habitat['water']
+        border={n for c in water for n in neighbors(c,width,height)}-water
+        # Close even diagonal water connections, and require fresh visibility
+        # throughout. The ordinary fish cannot leave this observed water island.
+        if any(not p.tiles.get(c,{}).get('visible') or not p.tiles[c].get('observed')
+               for c in water|border) or any(p.tiles[c]['terrain']==29 for c in border) \
+                or min(distance(pos,c,width) for c in water)<=1:
+            continue
+        # Keys are worth preparing before the matching lock is discovered.
+        # Optional food/gold alone must not start an aquarium fight.
+        if not any(c in water|border and c in p.room_blocked and not o.get('for_sale')
+                   and (base_name(o.get('top_item',o)) in NAMES
+                        or base_name(o.get('top_item',o)).endswith(' key'))
+                   for c,o in p.loot.items()):
+            continue
+        for fish in sorted(state.get('objects',[]),key=lambda o:o['cell']):
+            if fish.get('name','').lower()!='giant piranha' or fish['cell'] not in water \
+                    or not p.shot_clear(state,fish['cell']) \
+                    or not p.attack_kind_allowed(state,fish,'magic') \
+                    or not p.target_allowed(missile,fish):
+                continue
+            if not admits(p,state,1):return None
+            return p.use(missile,'ZAP',
+                'loot: clear observed aquarium resource guard with stationary magic missile; reobserve before pickup',
+                target=fish['cell'])
+    return None
+
+
 def choose(p,state,enemies):
     resources=targets(p)
     if resources and hasattr(p,'planner'):
@@ -171,6 +233,8 @@ def choose(p,state,enemies):
     if enemies or p.recent_threats or state.get('danger_cells') or state.get('status')!='ready' or state.get('modal'):return None
     buffs=' '.join(b['name'].lower() for b in state['hero'].get('buffs',[]))
     if any(b in buffs for b in ('burn','poison','bleed','paral','root','vertigo','blind')):return None
+    clearance=clear_aquarium_resource(p,state)
+    if clearance:return clearance
     if not resources:return None
     if getattr(p,'trap_payload_return',None):
         try:
