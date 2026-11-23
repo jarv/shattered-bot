@@ -2687,5 +2687,33 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000214"
+  },
+  {
+    "id": "000215-frost-intuition-priority",
+    "priority": "high",
+    "summary": "Prioritize the recognized missing frost hypothesis in an already admitted generic intuition action.",
+    "evidence": [
+      "Decision 626, log line 1847: green fire is publicly observed.",
+      "Decision 664, accepted log line 1962: crimson potion is collected.",
+      "Decisions 665–668, log lines 1964–1971: intuition selects strength and the hypothesis fails.",
+      "Decision 687, log lines 2026–2028: missing frost blocks mandatory discovery.",
+      "tools/runestone_tactics.py:103–128; tools/mage_policy.py:1342,1413."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000215"
+  },
+  {
+    "id": "000215-frost-recovery-handoff",
+    "priority": "high",
+    "summary": "Establish executable recovery before hungry, wounded frost preparation exhausts mandatory discovery.",
+    "evidence": [
+      "Decision 687, log lines 2026–2028: hungry hero at 26/30 HP retains two rations, but missing frost preparation exhausts with no recovery inputs.",
+      "tools/puzzle_supplies.py:727–754,776–803,879–880.",
+      "tools/recovery_economy.py:8–19; tools/descent_potions.py:350–392."
+    ],
+    "status": "deferred",
+    "reason": "The separate terminal handoff is not repaired. Existing helpers lack an admitted food/healing-to-testing transaction: meal admission requires 95% HP, hungry testing declines, and stationary recovery is unfunded. Lowering either threshold would not prove safe preparation. Next derive paired terminal-state and full-health/fed public-map fixtures, preflight a bounded known-resource recovery chain through bank and inventory protection admission, and verify accepted recovery receipts before changing scheduling. Preserve the unknown-drink health threshold and mandatory pickup.",
+    "origin_run": "000215"
   }
 ]
