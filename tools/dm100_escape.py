@@ -140,7 +140,11 @@ def choose(p,state,enemies):
             if p.previous_position==door:
                 plan['armed']=True  # Accepted step off a door closes its sight line.
             lost=state['hero']['hp']<plan['hp'];plan['hp']=state['hero']['hp']
+            # Breaking the remembered caster's sight is not cover from other
+            # currently observed attackers. Yield before spending a lure wait,
+            # including the first bank input before any damage is recorded.
             if not clean(p,state,pos,occupied) or sees(p,state,source,pos) or lost and plan['waits']>0 \
+                    or exposure(p,state,active,pos,distance,line_clear)['exposure']>0 \
                     or any(b in buffs for b in ('poison','bleed','burning','starving')):
                 abandon('do not wait in a reopened, damaging, or exposed doorway bank');plan=None
             elif plan['waits']<6 and p.ranged_cover_waits['dm-100']<12:

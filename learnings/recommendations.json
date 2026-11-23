@@ -2058,5 +2058,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000166"
+  },
+  {
+    "id": "000167-exposed-doorway-bank-wait",
+    "priority": "high",
+    "summary": "Interrupt committed caster-bank waits when another observed attacker can threaten the hero.",
+    "evidence": [
+      "Decision 2750, selection line 7928 and accepted line 7929: the hero reaches bank 687 and the guard reaches door 724.",
+      "Decision 2751, selection line 7932 and accepted line 7933: the exposed wait reduces health from 27 to 19.",
+      "tools/policy_tree.py:22; tools/policy_nodes.py:93; tools/dm100_escape.py:138-150: immediate-safety bank waiting omitted current attacker exposure.",
+      "New focused regression: original assertion failure, candidate success; full suite passes."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000167"
   }
 ]
