@@ -1,0 +1,446 @@
+{
+  "schema_version": 1,
+  "id": "000202",
+  "started_at": "2026-11-23T15:23:50Z",
+  "completed_at": "2026-11-23T15:49:01.786485+00:00",
+  "source_commit": "d53be7ad92bd04398c4df425a6fd43b233a841af",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "dead",
+  "death_category": "combat",
+  "death_category_evidence": "review summary: Killed by a prison guard after a slowed doorway retreat",
+  "blocker_kind": "execution-failure",
+  "outcome_summary": "Killed by a prison guard after a slowed doorway retreat",
+  "outcome_reason": "Hero died",
+  "max_depth": 8,
+  "actions": 3718,
+  "duration_seconds": 1496.361,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000201",
+  "previous_source_commit": "1a84687da9bd4614f8a4f8c18dfe79d9deeadaf4",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Investigate preparation feasibility when the gas room is first observed, before blaming later hunger. A hypothetical protected chest route does not establish a safe unknown-potion bank. Keep unknown colors unknown, preserve mandatory pickup and inventory protection, and retain explicit planner exhaustion rather than waiting or bypassing the obligation.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The complete public death receipt identifies a prison guard as the killer, although the compact packet omitted that message. The initiating retreat defect appears earlier: decision 3713 selected closed doorway 840 while the hero wore publicly identified bulk armor and the guard could see that doorway. Its accepted transition advanced about 2.27 turns, recorded a chain pull, and reduced HP from 17 to 2. Decision 3717 then selected another doorway transit and died. The cover selector checked destination concealment and target melee reach but omitted the known doorway slowdown. A focused correction rejects exposed doorway cover routes against pull-capable enemies while wearing known bulk armor, for both new and committed routes. A public-terrain fixture reproduces the unsafe admission on original source and selects the already-admitted ordinary-ground alternative after correction. The final regression has four expected baseline assertion failures and passes all five tests after correction; the full suite passes 2,159 tests with four skips. The fixture's optional plan is synthetic, not recovered original memory. This does not establish survival, future enemy movement, or loot completion. No recorded-code improvements are attributed because the supplied source comparison is empty.",
+    "learnings": "Treat known bulk armor as a doorway-specific retreat constraint. A hidden destination does not make exposed transit safe against a guard's pull. Recheck committed routes without assuming chains are spent, and retain all ordinary hazard and mandatory-pickup checks."
+  },
+  "recommendations": [
+    {
+      "id": "000202-bulk-guard-cover",
+      "priority": "high",
+      "summary": "Reject exposed bulk-slowed doorway transit when selecting or continuing cover against a pull-capable enemy.",
+      "evidence": [
+        "Decision 3713, selection line 10763: equipped bulk armor, guard at 807, and movement from 805 toward closed door 840.",
+        "Decision 3713, accepted transition line 10764: prolonged movement, explicit guard pull, displacement to 806, and HP 17 to 2.",
+        "Decision 3717, selection line 10776 and accepted transition line 10777: another doorway transit ends in explicit prison-guard death.",
+        "tools/ranged_tactics.py:123-146: transit admission and focused bulk-door correction.",
+        "tools/test_shattered_bulk_guard_cover.py: original-source assertion failures and candidate passing regressions."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000202"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000202/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000202/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 143,
+        "turns": 333,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 307,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 421
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 21,
+        "gold_gained": 0,
+        "turns": 404,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 410,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "objective-completed-dialogue"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 27,
+        "gold_gained": 116,
+        "turns": 279,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 331,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 655
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 54,
+        "gold_gained": 303,
+        "turns": 511,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 571,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 792
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 309,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 297,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 830
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 339
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 64,
+        "gold_gained": 251,
+        "turns": 501,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 543,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 821
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 376
+          }
+        ]
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "experience_gained": 89,
+        "gold_gained": 892,
+        "turns": 623,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 686,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "experience_gained": 52,
+        "gold_gained": 196,
+        "turns": 478,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 566,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 13,
+    "ending_experience": 2,
+    "ending_level": 11,
+    "starving_turns": 15,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 2,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "starving_turns": 1,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 11,
+    "gold_collected": 1901,
+    "gold_complete": true,
+    "turns": 3438,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 8,
+        "max_level_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 10,
+        "max_level_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 11,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

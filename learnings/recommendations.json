@@ -2520,5 +2520,20 @@
     "status": "deferred",
     "reason": "No safe focused patch is established. The terminal inventory has no food, identify scroll, remaining intuition stone or known strength dose. Healing does not remove starvation; waiting cannot resolve it. Ordinary discovery intentionally starts only after an admitted descent, but this floor's exit is first observed after starvation. Earlier arbitrary drinking would change that contract without validating room-supply reservations, fresh bank admission, inventory protection, effect recovery and a hunger-funded continuation. Next derive paired pre-starvation decision-1030 and first-crimson-pickup fixtures, establish an executable preparation or known-food transaction on validated copies, and add an accepted-input-funded prerequisite with refusal tests before changing scheduling. Preserve mandatory pickup, unknown identities, hazard checks and terminal exhaustion; do not simply allow starving tests or abandon the floor. Complete the source-pinned offline reconstruction beyond decision 1025 first; the current attempts ended on scratch serialization and computation limits, not a demonstrated policy divergence.",
     "origin_run": "000200"
+  },
+  {
+    "id": "000202-bulk-guard-cover",
+    "priority": "high",
+    "summary": "Reject exposed bulk-slowed doorway transit when selecting or continuing cover against a pull-capable enemy.",
+    "evidence": [
+      "Decision 3713, selection line 10763: equipped bulk armor, guard at 807, and movement from 805 toward closed door 840.",
+      "Decision 3713, accepted transition line 10764: prolonged movement, explicit guard pull, displacement to 806, and HP 17 to 2.",
+      "Decision 3717, selection line 10776 and accepted transition line 10777: another doorway transit ends in explicit prison-guard death.",
+      "tools/ranged_tactics.py:123-146: transit admission and focused bulk-door correction.",
+      "tools/test_shattered_bulk_guard_cover.py: original-source assertion failures and candidate passing regressions."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000202"
   }
 ]

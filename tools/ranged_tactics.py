@@ -79,6 +79,9 @@ def choose(p,state,enemies,*,escape_only=False):
     if dm100 and plan and plan['name']!='dm-100':
         p.ranged_plan=None;plan=None
     pull='ranged-pull' in p.unit_strategies.profile(target).capabilities
+    bulk=any(i.get('equipped') and (' of bulk' in i['name'].lower()
+             or 'curse of bulk' in i.get('description','').replace('_','').lower())
+             for i in state['inventory'])
     cover_first=trickster or pull or dm100
     def door_bank(cell):
         return next((door for door in neighbors(cell,width,state['map']['height'])
@@ -129,6 +132,12 @@ def choose(p,state,enemies,*,escape_only=False):
         # Pull control is not ranged damage, but the guard still hits adjacent
         # cells. The target is excluded from safe_route's other-threat check;
         # do not score a walk through its melee reach as an unexposed escape.
+        # Known bulk also slows doorway entry. A separated final bank cannot
+        # certify that exposed doorway transit against a guard's pull. Check
+        # both new and committed routes without guessing its chain-use state.
+        if pull and bulk and any(p.tiles[c]['terrain'] in {5,6} and sees(target,c)
+                                 for c in route[1:]):
+            return False
         return not pull or all(exposure(p,state,[target],c,distance,line_clear)['melee']==0
                                for c in route[1:])
 
