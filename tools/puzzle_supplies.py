@@ -414,8 +414,14 @@ def refresh_barrier(p,state,demand,paths,distance):
 
 
 def revisit_flight_room(p,state,demand,distance):
-    """Reach an observed approach before applying visible-only potion-test gates."""
-    if demand.kind!='flight' or p.recent_threats or p.puzzle_revisit_steps['flight']>=48:return None
+    """Reobserve a verified flight/gas approach before visible-only test gates.
+
+    A dry-run protected reward trip authorizes only ordinary approach travel,
+    never a drink or hazard entry. Gas needs this handoff too after floor work
+    has taken the hero out of sight of an earlier testing bank.
+    """
+    kind=demand.kind
+    if kind not in {'flight','gas'} or p.recent_threats or p.puzzle_revisit_steps[kind]>=48:return None
     hero=state['hero'];pos=hero['cell'];width=state['map']['width']
     try:
         from .policy_geometry import neighbors
@@ -432,32 +438,33 @@ def revisit_flight_room(p,state,demand,distance):
         # closest arbitrary chasm/trap across a wall. Require a dry-run round
         # trip, then reobserve the bank before permitting any potion drink.
         staged=dict(state,hero=dict(hero,cell=cell))
-        journey=plan_journey(p,staged,[],neighbors,probe_kind='flight',plan_only=True)
+        journey=plan_journey(p,staged,[],neighbors,probe_kind=kind,plan_only=True)
         if not journey or not entrance_actionable(p,staged,journey):continue
         around={cell,*neighbors(cell,width,state['map']['height'])}
         if any(c not in p.tiles or p.tiles[c]['terrain'] not in {0,1,3,4,5,6,9,11,12,14,18,19,20,29}
                or p.tiles[c].get('plant') or p.tiles[c].get('effects')
                or c in p.loot for c in around):continue
         if p.tiles[cell].get('trap') or sum(p.walkable(n) for n in neighbors(cell,width,state['map']['height']))<2:continue
-        choices.append((cell!=p.puzzle_flight_bank,len(route),cell))
+        choices.append((cell!=getattr(p,'puzzle_'+kind+'_bank',None),len(route),cell))
     if not choices:return None
     _,_,view=min(choices)
-    p.puzzle_flight_bank=view
+    setattr(p,'puzzle_'+kind+'_bank',view)
     if view==pos:
         # Scout an actionable entrance before the visible-only drink-bank check,
         # not after it. A hypothetical reward route alone is not a test bank.
         # This is only the existing adjacent observed-door input; the next
         # observation must still pass every test/protection/round-trip gate.
-        journey=plan_journey(p,state,[],neighbors,probe_kind='flight',plan_only=True)
+        journey=plan_journey(p,state,[],neighbors,probe_kind=kind,plan_only=True)
         if journey:
             _,opening=open_journey_entrance(p,state,journey)
             return opening
         return None
-    p.puzzle_revisit_steps['flight']+=1
-    p.planner.report['puzzle_revisit']={'kind':'flight','hazard':demand.cell,'approach':view,
+    p.puzzle_revisit_steps[kind]+=1
+    p.planner.report['puzzle_revisit']={'kind':kind,'hazard':demand.cell,'approach':view,
         'status':'Return to observed approach, then reobserve and replan candidate test/round trip',
         'identity_inferred':False,'qualification':'No hazard entry or potion use admitted by this staging move'}
-    return p.toward(state,view,'room: revisit levitation-room approach before deferring protected reward',paths,intent=Intent.REPOSITION)
+    room='levitation' if kind=='flight' else 'gas'
+    return p.toward(state,view,'room: revisit '+room+'-room approach before deferring protected reward',paths,intent=Intent.REPOSITION)
 
 
 def known_flight_choices(p,state,neighbors):
