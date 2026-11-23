@@ -116,8 +116,10 @@ def revisit_receipt(p, state, paths, receipt):
     forbidden = p.navigation_barriers(state, Intent.REPOSITION)
     # Transit is a separate prerequisite: search the allowed graph rather than
     # rejecting an otherwise reachable bank because the shortest path is unsafe.
+    # Plain observed grass is ordinary transit, not a drink/storage bank.
+    # Keep fire, plants, traps and all other hazard/arrival checks unchanged.
     excluded = {c for c, t in p.tiles.items() if c in forbidden or not t.get("observed")
-                or t.get("terrain") not in {1, 3, 5, 6, 9, 11, 14, 19, 20, 29}
+                or t.get("terrain") not in {1, 2, 3, 5, 6, 9, 11, 14, 19, 20, 29}
                 or any(t.get(k) for k in ("effects", "plant", "trap")) or c in p.loot}
     paths = p.paths(state, excluded)
     if bank not in paths:
@@ -127,7 +129,7 @@ def revisit_receipt(p, state, paths, receipt):
         return None
     # A closed door is admitted only as ordinary transit, not as a test bank.
     if any(c in forbidden or not p.tiles[c].get("observed")
-           or p.tiles[c]["terrain"] not in {1, 3, 5, 6, 9, 11, 14, 19, 20, 29}
+           or p.tiles[c]["terrain"] not in {1, 2, 3, 5, 6, 9, 11, 14, 19, 20, 29}
            or any(p.tiles[c].get(k) for k in ("effects", "plant", "trap"))
            or c in p.loot for c in route[1:]):
         return None

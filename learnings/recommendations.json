@@ -1986,5 +1986,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000161"
+  },
+  {
+    "id": "000162-grass-bank-transit",
+    "priority": "high",
+    "summary": "Allow hazard-checked plain-grass transit when returning to witnessed potion preparation ground.",
+    "evidence": [
+      "Decision 810, logs 2257–2258: the hero leaves water bank 362 for water 329.",
+      "Decisions 811–812, logs 2260–2264: accepted ordinary travel crosses plain grass 364 to floor 365.",
+      "Decision 814, log 2268: protected potion discovery and its return prerequisite exhaust with the hero at 30/30 HP.",
+      "tools/descent_potions.py:107–136: the return graph and route validator exclude plain grass.",
+      "Validated original-state reconstruction and an isolated candidate probe select return step 364 without authorizing a drink."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000162"
   }
 ]
