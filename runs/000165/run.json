@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "id": "000165",
+  "started_at": "2026-11-23T02:26:55Z",
+  "completed_at": "2026-11-23T02:29:01.816629+00:00",
+  "source_commit": "e5b2d0a4e55cc01b22c9fc2afd2e4c2a09240177",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "quota-skip-20261122",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 313,
+  "duration_seconds": 123.343,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000164",
+  "previous_source_commit": "694c7220fa822c92b80320212a1bbc9221f489c6",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Treat food funding for different special rooms as distinct preparation obligations, but require an admitted bank, potion protection and a bounded route before proposing additional provisioning. Keep unidentified colors unidentified, recheck actual fire removal, and preserve mandatory strength and upgrade pickups.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health when mandatory potion discovery exhausted. The initiating defect was a duplicate invisibility obligation: the pool chest reward had already been collected, but remembered piranhas still generated a new supply demand. Decision 115, accepted transition at log line 312, confirms the bolas pickup; decisions 116–122 show the protected return. Original-source offline reconstruction matches actions and reasons through decision 312, then reproduces the decision-313 blocker with chest 768 collected and its fish still remembered. The focused correction suppresses only supply demands from fish associated exclusively with collected rewards; it preserves habitat exclusions, pending rewards, unknown identities and mandatory progression pickups. A new four-test regression fails on original policy and passes on the candidate; the full suite passes 2,028 tests with four skips. Candidate reconstruction stops at its first changed selection, decision 166. A separate detached terminal-state probe selects preparation return, not drinking or descent. This does not establish future puzzle success or survival.",
+    "learnings": "Separate persistent hazards from completed reward obligations. An accepted pool-reward pickup can release its supply reservation without making the fish or their water safe. Revalidate preparation and potion protection on arrival; choosing a return route is not successful identification."
+  },
+  "recommendations": [
+    {
+      "id": "000165-collected-pool-supply",
+      "priority": "high",
+      "summary": "Stop requiring another invisibility potion for a pool whose known reward was verifiably collected.",
+      "evidence": [
+        "Decision 115, log lines 311–312: accepted bolas pickup at the opened pool chest.",
+        "Decisions 116–122, log lines 313–326: protected return after reward acquisition.",
+        "Decision 313, log line 843: discovery exhausted on missing invisibility for remembered fish.",
+        "Original-source offline reconstruction: actions and reasons match decisions 0–312; collected chest and stale actor demand reproduce the terminal blocker.",
+        "tools/puzzle_supplies.py:75–88; tools/piranha_tactics.py:14–32; tools/descent_potions.py:348–384."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000165"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000165/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000165/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 9,
+        "gold_gained": 61,
+        "turns": 299,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 307,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 369
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 9,
+    "ending_level": 1,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 1,
+    "gold_collected": 61,
+    "gold_complete": true,
+    "turns": 299,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 1,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

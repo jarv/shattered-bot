@@ -77,6 +77,14 @@ def demands(p, state, distance, *, include_deferred=False):
         if name == "red sentry":
             found.append(Demand("sentry", "potion of haste", cell))
         elif "piranha" in name:
+            # Fish remain hazardous after their chest reward is collected.
+            # Do not turn those same actors into a second supply obligation.
+            # Only an associated habitat with every known reward receipted
+            # qualifies; unmatched fish and pending rewards remain demands.
+            rooms = [room for room in p.piranha_rooms.values()
+                     if cell in room["water"]]
+            if rooms and all(room["collected"] for room in rooms):
+                continue
             found.append(Demand("pool", "potion of invisibility", cell))
     for cell, tile in p.tiles.items():
         effects = " ".join(tile.get("effects", [])).lower()

@@ -2030,5 +2030,20 @@
     "status": "deferred",
     "reason": "The exact safety blocker is the absence of a validated terminal frost-bank and potion-protection preflight, not absence of food or selecting source. The recorded terminal report omits frost-view commitments, exhausted vantages, potion-test bookkeeping and protective-container receipt state. Offline selected-input reconstruction had not reached this episode when reporting. Next, finish that reconstruction to the first divergence, probe existing frost preparation on copies without dispatch, and derive a regression for a bounded, puzzle-specific provisioning handoff only if the bank and protection checks actually admit it. Merely resetting the floor meal allowance could consume food without enabling a safe test.",
     "origin_run": "000164"
+  },
+  {
+    "id": "000165-collected-pool-supply",
+    "priority": "high",
+    "summary": "Stop requiring another invisibility potion for a pool whose known reward was verifiably collected.",
+    "evidence": [
+      "Decision 115, log lines 311–312: accepted bolas pickup at the opened pool chest.",
+      "Decisions 116–122, log lines 313–326: protected return after reward acquisition.",
+      "Decision 313, log line 843: discovery exhausted on missing invisibility for remembered fish.",
+      "Original-source offline reconstruction: actions and reasons match decisions 0–312; collected chest and stale actor demand reproduce the terminal blocker.",
+      "tools/puzzle_supplies.py:75–88; tools/piranha_tactics.py:14–32; tools/descent_potions.py:348–384."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000165"
   }
 ]
