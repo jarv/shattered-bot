@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "id": "000179",
+  "started_at": "2026-11-23T07:57:58Z",
+  "completed_at": "2026-11-23T07:59:54.285920+00:00",
+  "source_commit": "e4692528b7dbf3eb0f8bf2597fd4ea9f9d7c1fb7",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "quota-skip-20261122",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 310,
+  "duration_seconds": 112.799,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000178",
+  "previous_source_commit": "b38def9fa2e510ca1fadfd01403f1d4217c85767",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "A mandatory pool chest needs an executable preparation and retrieval plan, not just an expected floor potion. Preserve unknown identities, fish buffers, verified pickup requirements, and explicit planner exhaustion. Establish a funded alternative before changing this admission.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health when the planner exhausted recovery. The initiating failure was repeated potion-preparation travel, not hunger alone. Decision 227 reached water 652 (accepted line 631); decision 228 returned to dry bank 622 because storage was no longer visible (line 634). Decision 229 then preferred water again (lines 637–638), despite an admitted standing-bank protection plan using storage 534. Repetition triggered the navigation guard at decision 238, line 668, followed eventually by recovery exhaustion at decision 310, line 901. Source-pinned offline bookkeeping reconstruction matched selections 0–229; it is reconstructed state, not recorded memory. An isolated candidate probe on the validated decision-229 state starts the existing stash approach instead, without drinking or crediting collection. The focused correction prefers eligible standing preparation only when remote potion protection is needed, preserving ordinary water preference and all hazard, arrival, receipt and mandatory-progression checks. The new regression fails on original policy and passes on the candidate. This establishes preparation selection, not successful stashing, potion safety, retrieval or survival. The full Python unittest suite also passes.",
+    "learnings": "When unknown-potion discovery needs protected storage, begin an already admitted standing-bank preparation rather than repeatedly moving to preferred water that loses storage visibility. Recheck arrival and require real drop, consumption and retrieval receipts; preparation selection alone is not completion."
+  },
+  "recommendations": [
+    {
+      "id": "000179-standing-preparation-bank",
+      "priority": "high",
+      "summary": "Prefer an eligible standing protection start over another water detour when potion stashing is required.",
+      "evidence": [
+        "Decision 227, accepted line 631: arrival at water 652.",
+        "Decision 228, lines 633–634: return to bank 622 after storage visibility is lost.",
+        "Decision 229, lines 637–638: water preference abandons an admitted standing-bank protection start.",
+        "Decision 238, line 668: navigation-loop rejection; decision 310, line 901: living planner exhaustion.",
+        "tools/descent_potions.py:417–460; tools/potion_stash.py:103–160."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000179"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000179/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000179/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 57,
+        "turns": 302,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 304,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 248
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded storage",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 57,
+    "gold_complete": true,
+    "turns": 302,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

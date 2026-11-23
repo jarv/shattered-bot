@@ -2193,5 +2193,20 @@
     "status": "deferred",
     "reason": "The blocker is replacement-action safety, not omitted selector source. Cripple-aware rejection alone can force combat under multiple attackers, and no alternative has been validated on the original selecting state. Next reconstruct public-input bookkeeping through decision 2852, stopping at the first selection divergence, then compare the current route with existing attack and escape options on copies. Derive a regression for two-turn transit exposure and preserve hazard gates, accepted-input accounting and honest pickup receipts. Do not assume either waiting or speculative movement is safe.",
     "origin_run": "000177"
+  },
+  {
+    "id": "000179-standing-preparation-bank",
+    "priority": "high",
+    "summary": "Prefer an eligible standing protection start over another water detour when potion stashing is required.",
+    "evidence": [
+      "Decision 227, accepted line 631: arrival at water 652.",
+      "Decision 228, lines 633–634: return to bank 622 after storage visibility is lost.",
+      "Decision 229, lines 637–638: water preference abandons an admitted standing-bank protection start.",
+      "Decision 238, line 668: navigation-loop rejection; decision 310, line 901: living planner exhaustion.",
+      "tools/descent_potions.py:417–460; tools/potion_stash.py:103–160."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000179"
   }
 ]

@@ -5,7 +5,7 @@ try:
     from .policy_geometry import distance, neighbors
     from .policy_decision import Intent, PlannerStuck
     from .puzzle_supplies import safe_test_bank
-    from .potion_stash import can_protect_potions, protect_potions, advance_stash, potions
+    from .potion_stash import can_protect_potions, protect_potions, advance_stash, potions, bandolier_protected
     from .room_supplies import requirements, discovery_requirements
     from .survival_policy import is_hostile
     from .objective_planning import Status, Result, publish, resolve, available, mark, exhausted
@@ -14,7 +14,7 @@ except ImportError:
     from policy_geometry import distance, neighbors
     from policy_decision import Intent, PlannerStuck
     from puzzle_supplies import safe_test_bank
-    from potion_stash import can_protect_potions, protect_potions, advance_stash, potions
+    from potion_stash import can_protect_potions, protect_potions, advance_stash, potions, bandolier_protected
     from room_supplies import requirements, discovery_requirements
     from survival_policy import is_hostile
     from objective_planning import Status, Result, publish, resolve, available, mark, exhausted
@@ -456,7 +456,14 @@ def advance(p, state):
         p.planner.report["descent_potion_testing"] = {"status": "blocked",
             "reason": "No safe water/water-escape bank with verified potion-inventory protection"}
         return None
-    _, _, _, bank, candidate = min(choices, key=lambda c: c[:4])
+    # Start needed stashing at an already admitted standing bank before
+    # travelling to preferred water. Departure visibility can admit storage that
+    # disappears on arrival; repeatedly preferring that water abandons an
+    # executable local stash plan. All bank, water-escape and inventory checks
+    # above still apply, and actual stash arrival is independently rechecked.
+    needs_stash = not p.potion_stash and len(potions(state)) > 1 and not bandolier_protected(p, state)
+    _, _, _, bank, candidate = min(
+        choices, key=lambda c: (needs_stash and c[3] != pos, *c[:4]))
     plan.update(candidate=base_name(candidate), bank=bank)
     if pos != bank:
         return p.toward(state, bank, "identify: stage pre-descent strength discovery on safe water",
