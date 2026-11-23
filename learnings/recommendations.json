@@ -2105,5 +2105,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000170"
+  },
+  {
+    "id": "000171-visible-necro-contact",
+    "priority": "high",
+    "summary": "Apply the wounded contact-approach veto to visible necromancers as well as remembered sightings.",
+    "evidence": [
+      "Decision 3486, selection line 10167 and accepted line 10168: wounded bypass remains beside the supported skeleton.",
+      "Decision 3490, lines 10179-10180: approach from 556 to 557 lowers HP from 21 to 20.",
+      "Decision 3491, lines 10182-10183: retreat reverses that step and HP falls to 17.",
+      "Decision 3492, lines 10188-10189: the same wounded approach is selected again.",
+      "tools/necromancer_tactics.py:98-158; tools/unit_strategies.py:68-70,87-119."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000171"
   }
 ]
