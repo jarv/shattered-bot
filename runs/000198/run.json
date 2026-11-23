@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "id": "000198",
+  "started_at": "2026-11-23T14:37:15Z",
+  "completed_at": "2026-11-23T14:39:40.717546+00:00",
+  "source_commit": "65d4d9002075672ef66a95d9c5dee4eddf31c833",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 336,
+  "duration_seconds": 141.874,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000197",
+  "previous_source_commit": "903dfc51ea161d9c6196b7ae56500688063982d7",
+  "improvements": [
+    "When selling spare items, the bot now checks the visible velvet pouch as well as the backpack, so it can find eligible items stored there."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Sale candidates need supported navigation to their observed containers. Browse the visible pouch tab without guessing item slots, and require a matching item title, live quote and inventory-removal-plus-gold receipt before recording a sale. Stop offline investigation at the first changed decision.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health when mandatory preparation exhausted the planner. Decision 333 first revealed the sentry and chest (accepted line 991). After a puzzle-backed meal, decision 335 moved onto grass (accepted line 996); decision 336 then failed because haste remained unidentified and no safe room-potion test was admitted (lines 998–1000). Offline bookkeeping reconstruction against the played source matched all 336 selected actions, reasons, intents and controllers. It establishes that the sentry enclosure was already complete: this was not missing reconnaissance. Its only ordinarily reachable interior cells were two grass squares and one floor square bordering grass. All failed the existing unknown-potion bank checks, although hypothetical protected chest routes existed. No known identification resource or haste was carried. No patch or regression is supplied because neither a safe unknown-drink bank nor a contained terrain-preparation transaction is established. Removing grass checks, testing remotely and wasting possible haste, or waiving the chest would bypass the unresolved obligation rather than repair it.",
+    "learnings": "Distinguish complete sentry geometry from executable potion preparation. A hypothetical protected chest route does not make flammable entry flooring a safe unknown-potion bank. Preserve unidentified colors, inventory protection and mandatory pickup until a preparation transaction is actually admitted."
+  },
+  "recommendations": [
+    {
+      "id": "000198-sentry-test-terrain",
+      "priority": "high",
+      "summary": "Establish executable preparation for a complete sentry room whose reachable testing pocket contains grass.",
+      "evidence": [
+        "Decision 333, accepted line 991: arrival at 250 reveals sentry 219 and chest 139.",
+        "Decisions 334–335, accepted lines 994 and 996: meal and frontier movement precede exhaustion at full health.",
+        "Decision 336, lines 998–1000: missing haste blocks mandatory discovery; no recovery action or descent is accepted.",
+        "Source-pinned offline reconstruction matches all 336 selections; reachable interior cells 250, 287 and 324 all fail unknown-test bank admission.",
+        "tools/puzzle_supplies.py:142–191,567–598; tools/room_tactics.py:179–216; tools/descent_potions.py:advance."
+      ],
+      "status": "deferred",
+      "reason": "Source browsing and validated reconstruction resolve the packet's geometry and bookkeeping gaps, but not a safe replacement. No nonconsumptive identification resource is carried. Grass is flammable, and the existing known-flame controller has no grass-bank preparation contract proving splash/spread containment through entrance door 249, isolated retreat, inventory protection, fire expiry and fresh bank/stash admission. The flame dose also remains reserved for shelves. Next derive the public entry-pocket fixture and validate one bounded terrain-preparation transaction with consumption/clearance receipts and last-dose arbitration before broadening targets. Preserve all hazard checks, unknown identities, mandatory pickup and terminal exhaustion; merely choosing preparation would not prove chest retrieval.",
+      "origin_run": "000198"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000198/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000198/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 42,
+        "turns": 334,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 330,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 204
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 42,
+    "gold_complete": true,
+    "turns": 334,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
