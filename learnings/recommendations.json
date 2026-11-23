@@ -1316,16 +1316,16 @@
   {
     "id": "000102-pool-discovery-admission",
     "priority": "high",
-    "summary": "Establish an executable preparation and retrieval transaction for the earlier unresolved piranha chest.",
+    "summary": "Establish executable identification and protected retrieval when the pool's only admitted trip origin is a doorway.",
     "evidence": [
-      "D2995-D2997: pool arrival, healing-only rescue and first planner incident, log lines 8751-8759",
-      "D2997: chest 283 explicitly deferred without collection credit",
-      "tools/piranha_tactics.py: choose",
-      "tools/puzzle_supplies.py: prepare_supplies",
-      "tools/mage_policy.py: unfinished pool descent gate"
+      "Decision 174, selected line 503 and accepted line 504: entrance 898 reached.",
+      "Decision 175, selected line 506 and accepted line 507: piranhas and Chest 963 observed, followed by withdrawal.",
+      "Decision 218, lines 635–637: unfinished pool blocks descent; mandatory discovery prevents abandonment.",
+      "Source-pinned offline reconstruction matches selections 0–217; detached arrival and terminal probes admit only trip origin 898.",
+      "tools/piranha_tactics.py:35–66; tools/puzzle_supplies.py:142–191,285–324,969–1029; tools/room_tactics.py:234–355; tools/mage_policy.py:456–457; tools/floor_abandonment.py:47–48."
     ],
     "status": "deferred",
-    "reason": "Source inspection resolved the controller chain, but the recorded snapshot has neither known invisibility nor an identification resource, and hunger excludes unknown-drink testing. Raw blandfruit is not admitted food. No safe initiating repair is established without bypassing those constraints. Next, evaluate the recorded arrival geometry on a detached snapshot with explicit hunger funding, inventory protection, entrance and reward-return prerequisite results; admit preparation only if that complete transaction is evidenced.",
+    "reason": "Revalidated with complete source and matching reconstruction, but no safe focused replacement is established. Door 898 admits the seven-step hypothetical chest route but fails unknown-test and staging admission; exterior water does not admit the protected return. No nonconsumptive identification resource is carried. Next derive paired arrival/terminal doorway fixtures and validate effect containment, door reclosure, inventory protection, accepted recovery and actual-buff-funded return before changing selection. Simply allowing doors, drinking remotely, increasing limits or waiving the chest would bypass unresolved safety constraints. The existing aquarium clearance proof also requires visibility of the complete water island, absent here.",
     "origin_run": "000102"
   },
   {
