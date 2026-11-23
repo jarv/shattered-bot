@@ -2177,5 +2177,19 @@
     "status": "deferred",
     "reason": "Source and full-log inspection establish the admission gap, but not a safe replacement. The fatal public snapshot has no active gas immunity or available nonconsumptive identification item; no verified preparation transaction covers continuous paralysis. Water, alternate exits or mind vision alone do not prove recovery. Next derive paired approach/activation fixtures and validate an identification or duration-checked gas-immunity prerequisite with fresh arrival, enemy-interruption and recovery checks before implementing it. Preserve mandatory pickup, potion protection and explicit planner exhaustion; a blanket veto or speculative movement is not certified here.",
     "origin_run": "000176"
+  },
+  {
+    "id": "000177-crippled-retreat-exposure",
+    "priority": "high",
+    "summary": "Validate a cripple-aware retreat reassessment after guard displacement before committing to a doorway setup.",
+    "evidence": [
+      "Decision 2849, lines 8189–8190: requested cover differs from actual landing; cripple appears.",
+      "Decisions 2850–2852, accepted lines 8194, 8198 and 8203: crippled retreat inputs consume two turns.",
+      "Decisions 2852–2855, lines 8202–8218: damaging doorway setup ends without an admitted single-attacker retreat.",
+      "tools/multi_enemy_tactics.py:136–163,190–264; tools/ranged_tactics.py:109–133."
+    ],
+    "status": "deferred",
+    "reason": "The blocker is replacement-action safety, not omitted selector source. Cripple-aware rejection alone can force combat under multiple attackers, and no alternative has been validated on the original selecting state. Next reconstruct public-input bookkeeping through decision 2852, stopping at the first selection divergence, then compare the current route with existing attack and escape options on copies. Derive a regression for two-turn transit exposure and preserve hazard gates, accepted-input accounting and honest pickup receipts. Do not assume either waiting or speculative movement is safe.",
+    "origin_run": "000177"
   }
 ]
