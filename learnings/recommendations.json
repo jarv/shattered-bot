@@ -2090,5 +2090,20 @@
     "status": "deferred",
     "reason": "Source browsing and matching offline reconstruction resolve the selecting-state gap, but no safe replacement is certified. The exact blocker is the missing inventory-protected unknown-potion preparation and summoning-room retrieval/abort contract: flight planning cannot cross quarantined ordinary floor, and the final movement guard independently refuses entry. Equipped gear does not meet the existing exterior-choke crowd-readiness gate. Next derive paired doorway-1164 and terminal fixtures, prove a fresh test bank and stash return, then validate actual-buff traversal, remains-interaction contingencies, interruption handling and pickup receipts before changing admission. Do not guess identities, weaken quarantine, waive mandatory progression pickup or restore death waits. No policy or test patch is proposed.",
     "origin_run": "000169"
+  },
+  {
+    "id": "000170-dm100-trapped-door-preflight",
+    "priority": "high",
+    "summary": "Reject caster-flight destinations whose fully observed far-side banks cannot satisfy existing cover admission.",
+    "evidence": [
+      "Decision 2729, log line 8144: door 981 selected despite wall 934 and explosive traps 935–936 beyond its approach.",
+      "Decisions 2730–2735, log lines 8148–8168: committed flight reaches the unusable threshold.",
+      "Decision 2742, accepted transition line 8189: HP falls from 34 to 24 while the skeleton disappears.",
+      "Decision 2743, log line 8191: ranged-exposure planner exhaustion with the hero alive.",
+      "tools/dm100_escape.py:166–184,201–219; tools/test_shattered_dm100_trapped_door_preflight.py."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000170"
   }
 ]

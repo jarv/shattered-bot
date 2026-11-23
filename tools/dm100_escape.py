@@ -204,6 +204,19 @@ def choose(p,state,enemies):
         route=p.route(paths,door)
         if not 2<=len(route)<=17 or not route_ok(route):continue
         if any(distance(c,e['cell'],width)<=1 for c in route[1:] for e in targets):continue
+        # Reaching a threshold is not an escape when its known far side
+        # cannot admit the very next bank step. Preserve entrance scouting
+        # for genuinely unobserved banks, but do not flee into known traps.
+        approach=route[-2]
+        far=[c for c in neighbors(door,width,height)
+             if (c%width-door%width)*(approach%width-door%width)
+                +(c//width-door//width)*(approach//width-door//width)<0]
+        closed=sight_tiles(p,state);closed[door]={'terrain':5}
+        if far and all(c in p.tiles and p.tiles[c].get('observed') is not False for c in far) \
+                and not any(clean(p,state,c,occupied) and p.tiles[c]['terrain'] not in {5,6}
+                            and not line_clear(source,c,width,closed)
+                            and not projectile_line_clear(source,c,width,closed) for c in far):
+            continue
         options.append((not tile.get('visible'),len(route),door,route))
     if not options:return None
     remembered,_,door,route=min(options)
