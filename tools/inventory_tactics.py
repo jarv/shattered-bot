@@ -165,10 +165,14 @@ def sale_menu(p,state):
         if len(selected)==1 or interchangeable:
             plan['stage']='quote'
             return p.decision({'type':'button','id':selected[0]['id']},'shop: select explicitly inferior spare gear')
-        bag=next((b for b in buttons if b['label'].lower()=='backpack' and 'backpack' not in plan['bags']),None)
+        # Goo is a sale candidate but can live in the velvet pouch. Search
+        # only observed supported tabs, once each; never guess an item slot.
+        bag=next((b for b in buttons if b['label'].lower() in {'backpack','velvet pouch'}
+                  and b['label'].lower() not in plan['bags']),None)
         if bag:
-            plan['bags'].append('backpack')
-            return p.decision({'type':'button','id':bag['id']},'shop: find spare gear in observed backpack')
+            label=bag['label'].lower()
+            plan['bags'].append(label)
+            return p.decision({'type':'button','id':bag['id']},f'shop: find spare gear in observed {label}')
     elif plan['stage']=='quote' and plan['name'] in texts:
         quotes=[(b,re.fullmatch(r'sell (?:1 for |for )(\d+)g',b['label'].strip().lower())) for b in buttons]
         quotes=[(b,int(m[1])) for b,m in quotes if m and int(m[1])>0]

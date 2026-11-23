@@ -2459,5 +2459,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000196"
+  },
+  {
+    "id": "000197-sale-pouch-navigation",
+    "priority": "high",
+    "summary": "Support the observed Velvet Pouch tab when locating an already-admitted sale candidate.",
+    "evidence": [
+      "Decision 1748, lines 5050–5051: keeper interaction begins the sale attempt; public inventory contains identified goo and a velvet pouch.",
+      "Decisions 1750–1751, lines 5054–5057: backpack navigation is followed by cancellation despite a visible Velvet Pouch tab.",
+      "Decision 1777, line 5108: repeated selling-menu attempts terminate as an execution failure with the hero alive.",
+      "tools/inventory_tactics.py:142–179: the original sale selector searches only Backpack before cancelling."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000197"
   }
 ]

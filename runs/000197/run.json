@@ -1,0 +1,356 @@
+{
+  "schema_version": 1,
+  "id": "000197",
+  "started_at": "2026-11-23T14:18:23Z",
+  "completed_at": "2026-11-23T14:30:02.649687+00:00",
+  "source_commit": "903dfc51ea161d9c6196b7ae56500688063982d7",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "blocked",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: blocked",
+  "planner_incident_count": 1,
+  "blocker_kind": "execution-failure",
+  "outcome_summary": "Blocked in a shop selling-menu loop",
+  "outcome_reason": "No-progress menu loop: shop: open ordinary sell selector; refusing repeated read/select/cancel acti",
+  "max_depth": 6,
+  "actions": 1777,
+  "duration_seconds": 691.557,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000196",
+  "previous_source_commit": "74c9f26007467c97e9ca28dddff409c9dd06c754",
+  "improvements": [
+    "The bot now reviews the results of its retreats before emergency movement interrupts preparation. This lets it retire exhausted, unverified doorway setups while keeping its existing retreat safety checks."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Review accepted pursuit outcomes before yielding preparation to emergency retreat. Retiring unverified doorway setups must leave existing hazard-filtered retreats and verified holds available. Do not infer that a changed retreat resolves pursuit or prevents death; stop offline continuation at the first changed selection.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended blocked, not dead, with the hero at full health. The initiating defect was incomplete selling-menu navigation: identified goo was eligible for sale, but the selector searched only the backpack and ignored the visible Velvet Pouch tab. Decisions 1748–1751 (lines 5050–5057) show the first offer/open/backpack/cancel cycle. Repeated unchanged attempts culminated in the execution-failure incident at decision 1777 (line 5108). Accepted transitions show no elapsed game time during this menu cycle. Source confirms that the pouch can contain goo. A local helper-chain reconstruction, not recorded policy memory, matches original actions and reasons for decisions 1748–1751. The candidate matches through 1750 and selects the observed pouch tab at 1751; investigation stops there without supplying later observations. The focused correction adds once-only pouch navigation while retaining candidate validation, quote checks, receipt verification and terminal loop protection. The new regression has two expected assertion failures on original policy and passes all four tests after correction; the full suite passes 2,150 tests with four skipped. No actual sale, purchase or improved survival is established.",
+    "learnings": "Sale candidates need supported navigation to their observed containers. Browse the visible pouch tab without guessing item slots, and require a matching item title, live quote and inventory-removal-plus-gold receipt before recording a sale. Stop offline investigation at the first changed decision."
+  },
+  "recommendations": [
+    {
+      "id": "000197-sale-pouch-navigation",
+      "priority": "high",
+      "summary": "Support the observed Velvet Pouch tab when locating an already-admitted sale candidate.",
+      "evidence": [
+        "Decision 1748, lines 5050–5051: keeper interaction begins the sale attempt; public inventory contains identified goo and a velvet pouch.",
+        "Decisions 1750–1751, lines 5054–5057: backpack navigation is followed by cancellation despite a visible Velvet Pouch tab.",
+        "Decision 1777, line 5108: repeated selling-menu attempts terminate as an execution failure with the hero alive.",
+        "tools/inventory_tactics.py:142–179: the original sale selector searches only Backpack before cancelling."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000197"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000197/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000197/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 64,
+        "turns": 315,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 318,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 705
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 13,
+        "gold_gained": 232,
+        "turns": 201,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 201,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 565
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 35,
+        "gold_gained": 323,
+        "turns": 421,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 442,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 39,
+        "gold_gained": 0,
+        "turns": 344,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 434,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1714
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 208,
+        "turns": 254,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 302,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 657
+          },
+          {
+            "kind": "quest",
+            "label": "Rat King",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 464
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1369
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 0,
+        "gold_gained": 0,
+        "turns": 24.6705322265625,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 65,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 7,
+    "ending_level": 6,
+    "starving_turns": 12,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 6,
+    "gold_collected": 827,
+    "gold_complete": true,
+    "turns": 1559.6705322265625,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
