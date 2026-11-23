@@ -2015,5 +2015,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000163"
+  },
+  {
+    "id": "000164-frost-provisioning-handoff",
+    "priority": "high",
+    "summary": "Resolve the shared puzzle-meal and hungry frost-preparation contradiction without bypassing pickup or potion safety.",
+    "evidence": [
+      "Decision 2694, log line 7746: puzzle meal before known levitation preparation.",
+      "Decisions 2965–2979, log lines 8530–8571: cooked food followed by committed frost reconnaissance.",
+      "Decisions 2980–2984, log lines 8574–8582: hunger returns during combat, then exploration replaces preparation.",
+      "Decision 3024, log lines 8702–8703: strength pickup blocked by eternal-fire buffer; prior puzzle meal already attempted.",
+      "tools/puzzle_supplies.py:665–677,724–726; tools/priority_resources.py:124–157; tools/mage_policy.py:459–476."
+    ],
+    "status": "deferred",
+    "reason": "The exact safety blocker is the absence of a validated terminal frost-bank and potion-protection preflight, not absence of food or selecting source. The recorded terminal report omits frost-view commitments, exhausted vantages, potion-test bookkeeping and protective-container receipt state. Offline selected-input reconstruction had not reached this episode when reporting. Next, finish that reconstruction to the first divergence, probe existing frost preparation on copies without dispatch, and derive a regression for a bounded, puzzle-specific provisioning handoff only if the bank and protection checks actually admit it. Merely resetting the floor meal allowance could consume food without enabling a safe test.",
+    "origin_run": "000164"
   }
 ]
