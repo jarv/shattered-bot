@@ -2802,5 +2802,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000221"
+  },
+  {
+    "id": "000222-burning-dm100-receipt",
+    "priority": "high",
+    "summary": "Retire a confirmed melee-defeated DM-100 even when fire prevents damage measurement.",
+    "evidence": [
+      "Decision 2841, log lines 8202–8203: burning doorway attack followed by a fresh DM-100 defeat message, disappearance and experience gain.",
+      "Decision 2842, log lines 8204–8205: exploration moves away from the defeated caster's doorway.",
+      "Decision 2843, log lines 8207–8208: stale lightning-lane blocker exhausts the planner with the hero alive.",
+      "tools/combat_observation.py:70–75: effects censor capture before original defeat retirement can run.",
+      "The new regression fails on original source and passes after separating confirmed retirement from damage capture."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000222"
   }
 ]

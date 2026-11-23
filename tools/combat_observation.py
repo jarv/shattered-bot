@@ -236,6 +236,22 @@ def dm100_arcane_disintegration_receipt(before,after,pending):
     return not any(o.get("name","").lower()=="dm-100" for o in after.get("objects",[]))
 
 
+def retire_confirmed_dm100(p,before,after,target):
+    """A fresh kill receipt is usable even when fire censors damage samples."""
+    memory=getattr(p,"dm100_threat",None)
+    before_texts=set(before.get("ui",{}).get("texts",[]))
+    if target["name"].lower()=="dm-100" and memory and memory["cell"]==target["cell"] \
+            and after.get("status")=="ready" \
+            and before["depth"]==after["depth"] and before.get("branch",0)==after.get("branch",0) \
+            and any(t.strip().lower()=="you defeated dm-100."
+                    for t in after.get("ui",{}).get("texts",[]) if t not in before_texts) \
+            and not any(o.get("cell")==target["cell"] and o.get("name","").lower()=="dm-100"
+                        for o in after.get("objects",[])):
+        p.dm100_threat=None
+        if p.ranged_plan and p.ranged_plan.get("name")=="dm-100":
+            p.ranged_plan=None
+
+
 def observe_accepted_attack(p,before,decision,after):
     """Called only after a confirmed API execution; targeting menus cost no sample."""
     action=decision.action
@@ -254,6 +270,9 @@ def observe_accepted_attack(p,before,decision,after):
         target=next((o for o in before.get("objects",[]) if o["cell"]==action.get("cell")
                      and not o.get("top_item") and o.get("health_bar")),None)
         if not target:return
+        # Accepted melee can confirm a kill on a burning square without
+        # attributing that foe's health loss to the weapon rather than fire.
+        retire_confirmed_dm100(p,before,after,target)
         p.damage_pending=capture(before,target,source(before))
     else:
         return
@@ -277,16 +296,7 @@ def observe_accepted_attack(p,before,decision,after):
         # The separate lightning-lane memory outlives ordinary visible-cell
         # threat tracking. Retire it on this accepted, newly confirmed kill,
         # not on disappearance or a defeat message retained from an old fight.
-        memory=getattr(p,"dm100_threat",None)
-        if pending["name"].lower()=="dm-100" and memory and memory["cell"]==pending["cell"] \
-                and before["depth"]==after["depth"] and before.get("branch",0)==after.get("branch",0) \
-                and any(t.strip().lower()=="you defeated dm-100."
-                        for t in after.get("ui",{}).get("texts",[]) if t not in before_texts) \
-                and not any(o.get("cell")==pending["cell"] and o.get("name","").lower()=="dm-100"
-                            for o in after.get("objects",[])):
-            p.dm100_threat=None
-            if p.ranged_plan and p.ranged_plan.get("name")=="dm-100":
-                p.ranged_plan=None
+        retire_confirmed_dm100(p,before,after,pending)
         sample=p.damage_samples.setdefault(key,{"count":0,"bar_loss":0.0})
         sample["censored_count"]=sample.get("censored_count",0)+1
         sample["censored_bar_loss_lower_bound"]=sample.get("censored_bar_loss_lower_bound",0)+pending["before"]
