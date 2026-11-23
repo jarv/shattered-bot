@@ -70,13 +70,19 @@ class Journey:
         if self.depth != state["depth"]:
             p.room_journey = None
             return None
+        _, buff = PROTECTION[self.kind]
+        duration = remaining(state, buff)
+        if self.stage == "protect" and duration == 0:
+            # This is still a hypothesis, not a protected trip. Recovery from
+            # an actual failed potion effect may have moved off the dry-run
+            # route; discard the unstarted plan before checking displacement.
+            p.room_journey = None
+            return None
         if pos not in self.route:
             p.stop_obligation("room-journey","Protected room journey displaced off its verified return route")
         if not unencumbered(state):
             p.stop_obligation("room-journey","Protected movement budget invalidated by unknown or over-strength armor")
         index = self.route.index(pos)
-        _, buff = PROTECTION[self.kind]
-        duration = remaining(state, buff)
         buffs = " ".join(b["name"].lower() for b in state["hero"].get("buffs", []))
         if any(name in buffs for name in ("vertigo", "paralys", "root")):
             p.stop_obligation("room-journey","Protected room movement is no longer deterministic; refusing a blind route step")
@@ -84,9 +90,6 @@ class Journey:
         if self.kind == "sentry" and impaired:
             p.stop_obligation("room-journey","Sentry haste crossing invalidated by observed movement impairment")
         if self.stage == "protect":
-            if duration == 0:
-                p.room_journey = None
-                return None  # Potion did not produce the required observed protection.
             self.stage = "outbound"
         if self.route[-1] in p.combat_deferred_loot:
             self.stage = "return"  # Keep protection/return checks; abandon only the reward.

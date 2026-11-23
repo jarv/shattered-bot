@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "id": "000159",
+  "started_at": "2026-11-23T00:22:24Z",
+  "completed_at": "2026-11-23T00:27:22.084259+00:00",
+  "source_commit": "1bdd290a11b8c38fbafbc8341df4e59ab3448ea3",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "quota-skip-20261122",
+  "outcome": "stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 810,
+  "duration_seconds": 293.933,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000158",
+  "previous_source_commit": "ae207fa94dbfc168b5a6e05e2be3a38ca2588bf1",
+  "improvements": [
+    "The bot now uses a quiet opportunity to cleanse a known cursed spare wand, even when it is not equipped. Cursed worn equipment keeps priority, and the bot keeps its chosen cursed target when opening another bag."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "A wand need not be equipped to justify cleansing. Prepare a publicly known cursed spare during a quiet, freshly observed opportunity, preserve worn-curse priority, and keep its target through bag navigation. Do not infer successful cleansing, charge capacity or survival from choosing preparation.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended in planner exhaustion with the hero alive at full health, not an observed death. The upgrade scroll first appeared at decision 702 (log 2033); its square was revealed as a shocking trap at decision 717 (log 2074). An unconfirmed levitation test at decision 730 instead produced observed cold effects. Recovery moved the hero off the hypothetical route; when a gnoll interrupted recovery at decision 733, the journey checked displacement before checking whether protection ever appeared. That false obligation disabled further room journeys. The proposed narrow correction retires only unstarted hypotheses without observed protection, preserving displacement checks for actual trips. A reduced public-evidence regression fails on the original policy and passes on the candidate; the full suite passes 2,009 tests with four skips. This does not resolve the separate final pickup barrier: decision 810 diagnostics still show the mandatory scroll on an active shocking trap, without carried levitation or unknown potions. No safe electrical clearing controller is established, and neither collection nor successful continuation is claimed.",
+    "learnings": "Check whether experimental protection actually appeared before treating a dry-run route as an active journey. Failed-effect recovery can legitimately leave that route. Keep mandatory progression loot pending and retain hazard vetoes; electrical traps near water need a separately verified clearing and expiry plan, not a cold-trap shortcut."
+  },
+  "recommendations": [
+    {
+      "id": "000159-failed-protection-journey",
+      "priority": "high",
+      "summary": "Retire an unstarted protection hypothesis before checking displacement when its required buff never appeared.",
+      "evidence": [
+        "Decision 730, log 2107: unconfirmed levitation test.",
+        "Decisions 731-732, logs 2110-2114: actual cold recovery leaves the planned bank.",
+        "Decision 733, logs 2115-2118: false displaced-journey obligation and tactical fallback."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000159"
+    },
+    {
+      "id": "000159-shocking-progression-pickup",
+      "priority": "high",
+      "summary": "Develop a verified electrical-trap clearing plan for mandatory loot, including connected water and observed expiry.",
+      "evidence": [
+        "Decision 717, log 2074: upgrade scroll lies on a revealed shocking trap beside water.",
+        "Decision 810, log 2343: active trap excludes the mandatory pickup despite no general threat veto.",
+        "Decision 810, logs 2344-2345: planner exhaustion with the hero alive."
+      ],
+      "status": "deferred",
+      "reason": "Unaddressed by the single narrow correction. The existing remote-clearing controller admits only chilling traps; electricity also propagates through connected water, so copying its radius check is unsafe. The terminal inventory supplies no known flight. A separate repair must prove the publicly bounded water footprint, collateral safety, projectile bank and return route, then observe disarm and electrical expiry before retrieval. No such replacement is certified here.",
+      "origin_run": "000159"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000159/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000159/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 213,
+        "turns": 304,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 306,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 551
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 26,
+        "gold_gained": 236,
+        "turns": 521.4559326171875,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 498,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 942
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 11,
+    "ending_level": 3,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 449,
+    "gold_complete": true,
+    "turns": 825.4559326171875,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
