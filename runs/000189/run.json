@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "id": "000189",
+  "started_at": "2026-11-23T11:46:46Z",
+  "completed_at": "2026-11-23T11:58:52.837337+00:00",
+  "source_commit": "ed9a1304de0525b32cd0490affe067004a92b0e7",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 4,
+  "actions": 1748,
+  "duration_seconds": 718.322,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000188",
+  "previous_source_commit": "0d82ea4e758c7b9de0fc0088f18add45699252f8",
+  "improvements": [
+    "The bot now releases a shop-search travel target as soon as arrival is confirmed, even when searching, collecting loot or avoiding danger takes over. Arrival alone still does not count as visiting the shop."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Release a travel commitment when its matching accepted arrival is observed, even if another controller immediately takes over. Keep arrival separate from shop visitation, hazard admission and collection. Receipt repair does not prove the store or piranha chest will be reached.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero was alive at full health when mandatory preparation exhausted the planner; no death was observed. Decision 1748 (log lines 5077–5079) blocked descent for the iron key at cell 1497 behind remembered magical fire, not an uncollected strength potion. The strength potion was picked up at decision 1415 and drunk at 1416. Frost supply testing at decisions 1527 and 1534 did not extinguish the wall. An identified frost potion was subsequently collected at decision 1723, but preparation still could not complete its return. Offline reconstruction against the played source matched all 1,748 recorded selected actions and reasons. Reconstructed bookkeeping had spent 32 of 48 frost observation-travel inputs before obtaining that supply, leaving only 16. A separate public-map probe found 32-step shortest observation routes through the remembered shocking trap at cell 1336; the known-frost helper rejects these routes instead of searching a hazard-filtered alternative. No terminal safe route was certified. Source browsing resolved the missing obligation and bookkeeping, but a tested pickup-triggered budget renewal did not establish an executable preparation selection and was withdrawn. No policy change or new regression is retained. A safe replacement must handle both bounded return funding and hazard-filtered routing without admitting the trap or declaring the key collected.",
+    "learnings": "Keep failed unidentified-potion scouting separate from the bounded return enabled by a newly acquired identified extinguisher. Search for a safe route before rejecting a destination because its ordinary shortest route crosses a hazard. Preserve mandatory key pickup and the terminal stuck-planner label."
+  },
+  "recommendations": [
+    {
+      "id": "000189-frost-return-preparation",
+      "priority": "high",
+      "summary": "Repair bounded known-frost return planning for the mandatory key behind magical fire.",
+      "evidence": [
+        "Decision 1439, log line 4134: frost observation travel begins.",
+        "Decisions 1527 and 1534, log lines 4392 and 4415: unsuccessful frost hypotheses.",
+        "Decision 1723, log line 5001: pickup preceding the carried identified frost potion at decision 1724.",
+        "Decision 1748, log lines 5077–5079: mandatory iron-key obligation blocks descent."
+      ],
+      "status": "deferred",
+      "reason": "The concrete blocker is the combination of insufficient remaining observation-travel allowance and shortest-route rejection at the remembered shocking trap. Renewing allowance alone was not validated as an executable repair, and weakening the trap check is unsafe. Next, build a minimal fixture from decisions 1723–1724 that searches the observed hazard-filtered graph, explicitly funds a receipt-scoped return within hunger reserves, and demonstrates an admitted changed selection before retaining a patch. No further observations may be fed to that changed-decision state.",
+      "origin_run": "000189"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000189/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000189/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 78,
+        "turns": 354,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 355,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 970
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 31,
+        "gold_gained": 198,
+        "turns": 645,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 617,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "objective-completed-dialogue"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 23,
+        "gold_gained": 266,
+        "turns": 265,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 286,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 53,
+        "gold_gained": 116,
+        "turns": 475,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 484,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1269
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Possible drop-room exit",
+            "status": "reported-hypothesis"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 18,
+    "ending_level": 6,
+    "starving_turns": 24,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 18,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 6,
+    "gold_collected": 658,
+    "gold_complete": true,
+    "turns": 1739,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

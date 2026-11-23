@@ -2358,5 +2358,19 @@
     "status": "deferred",
     "reason": "The arrival receipt patch does not establish a repair for the search envelope. Public observations do not identify which remaining unopened branch contains the store, and no alternative branch order or complete admitted itinerary has been validated within the existing allowance. Changing the limit, skipping the store, or reclassifying this as abandonable navigation would mask the failure. Next reconstruct through the first entrance-component expansion, derive its observed door/frontier graph and interrupted key-detour costs, and test a rooted, remaining-budget-aware itinerary on copies with existing route and fresh-arrival checks. Do not feed later recorded observations after any changed selection.",
     "origin_run": "000188"
+  },
+  {
+    "id": "000189-frost-return-preparation",
+    "priority": "high",
+    "summary": "Repair bounded known-frost return planning for the mandatory key behind magical fire.",
+    "evidence": [
+      "Decision 1439, log line 4134: frost observation travel begins.",
+      "Decisions 1527 and 1534, log lines 4392 and 4415: unsuccessful frost hypotheses.",
+      "Decision 1723, log line 5001: pickup preceding the carried identified frost potion at decision 1724.",
+      "Decision 1748, log lines 5077–5079: mandatory iron-key obligation blocks descent."
+    ],
+    "status": "deferred",
+    "reason": "The concrete blocker is the combination of insufficient remaining observation-travel allowance and shortest-route rejection at the remembered shocking trap. Renewing allowance alone was not validated as an executable repair, and weakening the trap check is unsafe. Next, build a minimal fixture from decisions 1723–1724 that searches the observed hazard-filtered graph, explicitly funds a receipt-scoped return within hunger reserves, and demonstrates an admitted changed selection before retaining a patch. No further observations may be fed to that changed-decision state.",
+    "origin_run": "000189"
   }
 ]
