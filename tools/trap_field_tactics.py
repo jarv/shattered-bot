@@ -23,7 +23,12 @@ def before_move(p,state,decision,enemies):
     buffs=' '.join(b['name'].lower() for b in state['hero'].get('buffs',[]))
     if 'starving' in buffs or state['hero']['hp']<.5*state['hero']['max_hp']:return None
     tile=p.tiles[pos]
-    if tile.get('trap') or tile.get('plant') or p.effects_block_movement(tile) or pos in p.room_blocked:return None
+    # A publicly triggered plate retains its trap name but is inactive.
+    # It may anchor an ordinary search only after the independent effect,
+    # plant and room checks; this never certifies neighboring hidden ground.
+    inactive=tile.get('terrain')==19 and (tile.get('visible') or tile.get('observed'))
+    if (tile.get('trap') and not inactive) or tile.get('plant') \
+            or p.effects_block_movement(tile) or pos in p.room_blocked:return None
     traps=[c for c,t in p.tiles.items() if t.get('trap') and t['terrain']==18
            and (t.get('visible') or t.get('observed')) and distance(step,c,width)<=4
            and p.shot_clear(state,c)]
