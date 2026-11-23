@@ -191,6 +191,12 @@ def choose(p,state,enemies,*,escape_only=False):
             route=p.route(paths,plan['goal'])
             affordable=plan['mode']!='close' or hp>.35*maximum+(len(route)-1)*estimate \
                 and distance(plan['goal'],target['cell'],width)==1
+            if plan['mode']=='cover' and pull:
+                # A following guard can see a formerly separated destination
+                # before we reach it. Revalidate the endpoint as well as the
+                # transit, using the same admission as a newly selected bank.
+                affordable=affordable and not exposed(plan['goal']) and risk(plan['goal'])==0 \
+                    and p.tiles[plan['goal']]['terrain'] not in {5,6}
             if dm100:
                 affordable=affordable and not exposed(plan['goal']) and door_bank(plan['goal']) is not None \
                     and hp>10*sum(exposed(c) for c in route[1:])

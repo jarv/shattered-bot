@@ -2120,5 +2120,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000171"
+  },
+  {
+    "id": "000172-guard-cover-goal-refresh",
+    "priority": "high",
+    "summary": "Revalidate committed guard-cover destinations against current threat positions before continuing.",
+    "evidence": [
+      "Decision 2549, accepted line 7465: the last-charge attack is followed by a guard pull and cripple.",
+      "Decision 2553, line 7475: isolated original helper reconstruction selects cover goal 430.",
+      "Decision 2554, selection line 7479 and accepted line 7480: the helper retains goal 430 after the guard follows to 485 and exposes that destination.",
+      "tools/ranged_tactics.py:190-207: committed guard cover now applies the endpoint conditions already required by fresh cover selection.",
+      "The new regression has two expected baseline assertion failures and passes all three tests with the candidate; the complete suite passes."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000172"
   }
 ]
