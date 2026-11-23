@@ -141,6 +141,34 @@ class Journey:
         tile=p.tiles.get(target,{})
         reopen=tile.get('terrain')==5 and target not in occupied and target not in p.blocked \
             and not tile.get('plant') and not tile.get('trap') and not p.effects_block_movement(tile)
+        if self.kind == "gas" and self.stage == "return" and target in occupied \
+                and duration >= index*move_time+2:
+            # A newly visible actor can block the old return prefix. Replace
+            # only that prefix with a freshly observed DRY route to the SAME
+            # bank. Allow at most one extra move, funded by observed immunity.
+            # Never extend immunity or claim a pickup.
+            width, height = state["map"]["width"], state["map"]["height"]
+            max_moves = min(index+1, int((duration-2)//move_time))
+            queue, seen = deque([[pos]]), {pos}
+            while queue:
+                path = queue.popleft()
+                if path[-1] == self.route[0]:
+                    self.route = list(reversed(path)) + self.route[index+1:]
+                    index = len(path)-1
+                    target = self.route[index-1]
+                    break
+                if len(path)-1 >= max_moves:
+                    continue
+                for c in neighbors(path[-1], width, height):
+                    t = p.tiles.get(c, {})
+                    if c not in seen and t.get("visible") and t.get("observed") is not False \
+                            and not t.get("effects") and not t.get("trap") \
+                            and c not in p.room_blocked and c not in p.loot \
+                            and c not in state.get("danger_cells", []) \
+                            and p.escape_step_allowed(state, c) \
+                            and safe_tile(p, c, self.kind, occupied):
+                        seen.add(c)
+                        queue.append(path+[c])
         if target in state.get("danger_cells", []) or not (safe_tile(p, target, self.kind, occupied) or reopen) or duration < (index*move_time+2 if self.stage == "return" else 3):
             p.stop_obligation("room-journey","Protected room return route obstructed or protection budget insufficient")
         if self.stage=='outbound' and index==0:

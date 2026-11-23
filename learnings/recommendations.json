@@ -2286,5 +2286,21 @@
     "status": "deferred",
     "reason": "No safe replacement is established. The exact blocker is incomplete public perimeter geometry, including unknown cells near 938, 963, 1144 and 1145, coupled with staging that requires already complete geometry. Immediate entrance banks fail unknown-test admission; terminal inventory cannot execute the existing identification or information prerequisites. An ordinary route back does not establish arrival visibility, potion storage safety or reward retrieval. Next derive paired decision-70/228 fixtures for entrance 941 and ordinary floor 964–966, validate a bounded preparation-only reobservation transaction against door closure and public sight rules, and require accepted movement and fresh observations before existing bank, stash and journey checks. Do not fabricate missing walls, collection or potion effects, relax hazard gates, or remove terminal exhaustion. Complete selecting source and matching reconstruction resolve the packet’s memory gap, but not these replacement-action safety requirements.",
     "origin_run": "000184"
+  },
+  {
+    "id": "000185-gas-return-detour",
+    "priority": "high",
+    "summary": "Replan an occupied gas-room return waypoint onto a bounded, observed dry route to the same bank.",
+    "evidence": [
+      "Decision 4207, line 12408: known purity activation for the protected journey.",
+      "Decisions 4216–4219, lines 12426–12433: accepted return toward doorway 439.",
+      "Decision 4220, lines 12434–12437: occupied return waypoint triggers an obligation failure, followed by an attack without escape.",
+      "Decision 4220 public map: dry alternative 439→482→523→522→563 and seven turns of immunity.",
+      "Terminal result, line 12438: blocked by toxic-gas escape exhaustion, with the hero alive.",
+      "tools/room_tactics.py:144–173; tools/test_shattered_gas_return_detour.py."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000185"
   }
 ]
