@@ -1,0 +1,444 @@
+{
+  "schema_version": 1,
+  "id": "000217",
+  "started_at": "2026-11-23T20:39:09Z",
+  "completed_at": "2026-11-23T21:39:39.408652+00:00",
+  "source_commit": "b51c2f2e5e740b47811a9ef42cc7bbcc795f800f",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "timeout",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no recorded player death or bot-stuck outcome",
+  "outcome_summary": "Timed out repeating a refused food pickup with the hero alive",
+  "max_depth": null,
+  "duration_seconds": 3603.933,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": null
+  },
+  "previous_run_id": "000216",
+  "previous_source_commit": "64c184a376a60df98caa6d4cf724bcd9a360a447",
+  "improvements": [
+    "The bot now avoids a Shocker and every adjacent tile even between visible electrical pulses. It also keeps those tiles out of smoke-bomb escape routes rather than treating the bomb countdown as protection from electricity."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Treat a publicly described Shocker and all adjacent cells as electrical exposure even between visible pulses. Use existing checked escapes rather than waiting for damage to reveal the next orientation. Keep electrical exposure separate from smoke-bomb countdowns, and retain explicit refusal when no admitted immediate escape exists.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The recording timed out with a living hero, not an observed death. Decision 3180 (log lines 9145–9147) reached a pasty but received an explicit full-pack refusal. Decisions 3181–3183 repeated the pickup without changing inventory. At decision 3183 (9157–9159), starvation preparation selected the refused food before the existing inventory-cleanup controller could act. The ordinary room collector deferred the item correctly, but the higher-priority food helper ignored the refusal. Bounded recovery then moved away and returned; decision 3217 (9271) reported exhausted hungry recovery, whose continuation reused the same food helper. The last accepted transition, decision 11530 (42525), kept position, health and game clock unchanged. Source tracing identifies tools/policy_tree.py:25–45, tools/mage_policy.py:1162 and tools/exploration_budget.py:22–37 as the initiating scheduling chain. A limited reconstruction of the public full-pack receipt reproduced the original decision-3183 helper action and reason; it was not a reconstruction of all runtime memory. An isolated candidate probe selected existing checked inventory relief and stopped before any later observation. The focused patch routes current same-bag refusal evidence through existing guarded cleanup, preserving required pickups and honest receipts. The new regression failed three assertions on the original policy and passed all five tests after the fix; the full suite passed 2,203 tests with four skipped. This does not establish successful disposal, food collection, eating or improved survival.",
+    "learnings": "A publicly refused food pickup needs inventory relief before another attempt, even while starving. Keep refusal evidence tied to the current inventory and correct bag; preserve guarded disposal and require actual receipts before crediting either a drop or collection. A stopped game clock is not continuing starvation damage."
+  },
+  "recommendations": [
+    {
+      "id": "000217-starving-full-pack-handoff",
+      "priority": "high",
+      "summary": "Let starvation food selection use verified full-pack relief instead of repeatedly clicking refused food.",
+      "evidence": [
+        "Decision 3180, log lines 9145–9147: pasty pickup explicitly refused by full pack.",
+        "Decision 3183, log lines 9157–9159: starvation preparation preempts inventory relief and repeats the refused pickup.",
+        "Decision 3217, log lines 9271–9273: exhausted recovery continues through the same food helper.",
+        "Decision 11530, log line 42525: accepted pickup leaves health, position and game clock unchanged.",
+        "tools/exploration_budget.py:22–52; tools/inventory_tactics.py:100–150,186–225."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000217"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000217/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000217/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": false,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 0,
+        "turns": 262,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 279,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 165
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 27,
+        "gold_gained": 705,
+        "turns": 509,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 518,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 768
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "objective-completed-dialogue"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 28,
+        "gold_gained": 233,
+        "turns": 386,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 389,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 238
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 63,
+        "gold_gained": 707,
+        "turns": 580,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 590,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 669
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 228,
+        "turns": 326,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 308,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 825
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 344
+          },
+          {
+            "kind": "quest",
+            "label": "Rat King",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 409
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 46,
+        "gold_gained": 60,
+        "turns": 394,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 431,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1007
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "experience_gained": 66,
+        "gold_gained": 120,
+        "turns": 400,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 415,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Old Wandmaker",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1257
+          }
+        ]
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "experience_gained": 48,
+        "gold_gained": 0,
+        "turns": 241,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 8594,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 744
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1172
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": null,
+    "ending_experience": null,
+    "ending_level": null,
+    "starving_turns": 285,
+    "starving_turns_complete": false,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": false,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 5,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 1,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 18,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "starving_turns": 14,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "starving_turns": 241,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": false,
+    "max_level": null,
+    "gold_collected": 2053,
+    "gold_complete": false,
+    "turns": null,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 8,
+        "max_level_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 9,
+        "max_level_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 10,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

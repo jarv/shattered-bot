@@ -2729,5 +2729,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000216"
+  },
+  {
+    "id": "000217-starving-full-pack-handoff",
+    "priority": "high",
+    "summary": "Let starvation food selection use verified full-pack relief instead of repeatedly clicking refused food.",
+    "evidence": [
+      "Decision 3180, log lines 9145–9147: pasty pickup explicitly refused by full pack.",
+      "Decision 3183, log lines 9157–9159: starvation preparation preempts inventory relief and repeats the refused pickup.",
+      "Decision 3217, log lines 9271–9273: exhausted recovery continues through the same food helper.",
+      "Decision 11530, log line 42525: accepted pickup leaves health, position and game clock unchanged.",
+      "tools/exploration_budget.py:22–52; tools/inventory_tactics.py:100–150,186–225."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000217"
   }
 ]
