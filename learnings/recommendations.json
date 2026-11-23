@@ -2787,5 +2787,20 @@
     "status": "deferred",
     "reason": "Complete source and offline reconstruction resolved the selecting-state uncertainty, but no helper jointly certifies test-bank safety and remote protection of the actual three-color inventory. The only admitted bank has no storage candidate in the required distance interval of its door-excluding transit corridor. A gas meal alone still leaves preparation blocked; relaxing geometry, collateral checks or unknown-drink safety is unsupported. Next build a paired public-observation fixture from decisions 672/673 and prove departure-aware storage across a known ordinary door, including fresh arrival, bounded return and collection receipts. Only then add the executable gas-preparation handoff with an original-red/candidate-green regression. Preserve terminal exhaustion and mandatory pickup.",
     "origin_run": "000220"
+  },
+  {
+    "id": "000221-ghost-fire-return-observation",
+    "priority": "high",
+    "summary": "Distinguish a fire-blocked Sad Ghost reward return from an exhausted room search.",
+    "evidence": [
+      "Decision 337, line 976: first Sad Ghost sighting establishes the return area.",
+      "Decisions 843–844, lines 2457–2460: a potion throw precedes publicly observed fire.",
+      "Decision 851, lines 2474–2475: retreat ends with quest completion text and the hero unharmed.",
+      "Decision 852, lines 2476–2477: visible fire at doorway 613 disconnects the unsearched reward area; planner exhaustion follows.",
+      "tools/ghost_quest.py:142–175; tools/policy_nodes.py:209–215."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000221"
   }
 ]
