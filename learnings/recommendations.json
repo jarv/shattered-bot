@@ -2642,5 +2642,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000211"
+  },
+  {
+    "id": "000212-toxic-trap-key-preparation",
+    "priority": "high",
+    "summary": "Plan safe preparation for mandatory keys stranded on toxic gas traps.",
+    "evidence": [
+      "Decision 344, log lines 976–977: approach exposes the trap beneath the key.",
+      "Decision 345, log line 979: iron key remains on a revealed toxic gas trap.",
+      "Decision 406, log lines 1138–1139: potion test raises strength without levitation.",
+      "Decision 543, log lines 1537–1540: trapped-key veto followed by healing only.",
+      "Decision 544, log lines 1541–1543: mandatory-preparation planner exhaustion with a living hero.",
+      "tools/priority_resources.py:122–165,229–294; tools/environment_tactics.py:115–142; tools/mage_policy.py:459–478."
+    ],
+    "status": "deferred",
+    "reason": "No patch is supplied because the pinned gas diffusion rules do not support reusing the existing cold or electrical safety footprint, and no current helper certifies a gas-excluded refuge, dissipation bound, and safe retrieval route. The terminal inventory has no known levitation or purity supply. Source browsing and validated offline reconstruction resolved the selecting-state gaps, but not this safety proof. Next, derive a public-map fixture from decisions 345 and 544 and prove conservative gas reach with unknown boundaries treated adversarially. Only then add remote activation and receipt-checked retrieval with a new original-red/candidate-green regression; never bypass the mandatory key or restore death-waits.",
+    "origin_run": "000212"
   }
 ]

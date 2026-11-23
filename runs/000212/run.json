@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "id": "000212",
+  "started_at": "2026-11-23T18:34:52Z",
+  "completed_at": "2026-11-23T18:38:30.432670+00:00",
+  "source_commit": "01b9b61d23aa77a77e8f0fbc39b395de57cc16cd",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 544,
+  "duration_seconds": 213.866,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000211",
+  "previous_source_commit": "be640f88d8778a73cec8af4a3ba40b2f2405512f",
+  "improvements": [
+    "After a failed potion-stash return, the bot can retry room preparation when it picks up a new, untested potion supply. It still treats the abandoned stash as unfinished."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "A failed stash return should not permanently veto independently acquired potion supplies. Retry preparation only after a verified, matching new pickup; keep prior drops unfinished and retain every health, identification, hazard, protection and collection check. Selecting preparation is not proof of puzzle completion.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at 30/30 HP when planning exhausted. The initiating blocker was an iron key on a revealed toxic gas trap, first exposed around decision 344, not the upgrade scroll mentioned by the generic refusal message. The scroll was collected at decision 372. At decisions 543–544, the resource diagnostic lists only the trapped key; the last waterskin drink advances the clock and restores HP but cannot resolve that obligation. Source inspection and offline bookkeeping reconstruction matched all 544 recorded actions and reasons, then reproduced the terminal veto. Independent non-dispatch probes confirm that existing trap clearance handles shocking or chilling mechanisms, while the remaining levitation preparation has no carried supply. No policy change is proposed: a remote throw is possible, but neither distance nor a clear shot certifies safety from spreading toxic gas. The missing safety certificate is a bounded gas-excluded refuge and verified return after dissipation, not missing selector source. A new expected-action regression would otherwise encode an unsupported safety assumption. Mandatory pickup checks and the terminal planner-failure label remain intact.",
+    "learnings": "A required key on a toxic gas plate needs its own safely bounded preparation plan. Do not reuse a chilling trap's radius check, assume levitation from an unidentified potion, or treat a throwable container as proof of safe gas clearance. Preserve the unfinished pickup until an actual collection receipt."
+  },
+  "recommendations": [
+    {
+      "id": "000212-toxic-trap-key-preparation",
+      "priority": "high",
+      "summary": "Plan safe preparation for mandatory keys stranded on toxic gas traps.",
+      "evidence": [
+        "Decision 344, log lines 976–977: approach exposes the trap beneath the key.",
+        "Decision 345, log line 979: iron key remains on a revealed toxic gas trap.",
+        "Decision 406, log lines 1138–1139: potion test raises strength without levitation.",
+        "Decision 543, log lines 1537–1540: trapped-key veto followed by healing only.",
+        "Decision 544, log lines 1541–1543: mandatory-preparation planner exhaustion with a living hero.",
+        "tools/priority_resources.py:122–165,229–294; tools/environment_tactics.py:115–142; tools/mage_policy.py:459–478."
+      ],
+      "status": "deferred",
+      "reason": "No patch is supplied because the pinned gas diffusion rules do not support reusing the existing cold or electrical safety footprint, and no current helper certifies a gas-excluded refuge, dissipation bound, and safe retrieval route. The terminal inventory has no known levitation or purity supply. Source browsing and validated offline reconstruction resolved the selecting-state gaps, but not this safety proof. Next, derive a public-map fixture from decisions 345 and 544 and prove conservative gas reach with unknown boundaries treated adversarially. Only then add remote activation and receipt-checked retrieval with a new original-red/candidate-green regression; never bypass the mandatory key or restore death-waits.",
+      "origin_run": "000212"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000212/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000212/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 111,
+        "turns": 250,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 255,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 410
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 18,
+        "gold_gained": 497,
+        "turns": 289,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 283,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 536
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Possible drop-room exit",
+            "status": "reported-hypothesis"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 3,
+    "ending_level": 3,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 608,
+    "gold_complete": true,
+    "turns": 539,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
