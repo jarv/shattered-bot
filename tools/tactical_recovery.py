@@ -30,10 +30,22 @@ def recover(p,state,enemies,blocked,distance,neighbors,line_clear):
         pending=[{"kind":"unresolved "+controller,"cell":state["hero"]["cell"]}]
         if controller=="potion-stash":
             if p.potion_stash:pending[0]["cell"]=p.potion_stash["cell"]
+            plan=p.potion_stash
+            # Only a blocked, confirmed retrieval can be retried with a new
+            # floor supply. Failed drops, budgets and probes stay disabled.
+            p.stash_supply_retry = (
+                (state["depth"],state.get("branch",0))
+                if plan and plan["depth"]==state["depth"]
+                and plan["phase"]=="retrieve" and plan["dropped"]
+                and not plan["pending"] and plan["steps"]<=48
+                and (plan["cell"] not in p.paths(state)
+                     or p.tiles.get(plan["cell"],{}).get("effects"))
+                else None)
             p.potion_stash=None
             p.puzzle_probe=None
             p.deferred_room_controllers.add("potion-supplies")
         elif controller=="potion-probe":
+            p.stash_supply_retry=None
             p.puzzle_probe=None
             p.deferred_room_controllers.add("potion-supplies")
         elif controller=="trap-payload":

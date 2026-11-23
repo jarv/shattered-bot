@@ -2627,5 +2627,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000210"
+  },
+  {
+    "id": "000211-stash-supply-rearming",
+    "priority": "high",
+    "summary": "Reconsider potion preparation when verified new supplies invalidate an earlier blocked-stash context.",
+    "evidence": [
+      "Decision 290, log line 822: unknown frost hypothesis test.",
+      "Decision 291, log line 825: toxic gas observed after the test.",
+      "Decision 299, log lines 848–850: blocked stash retrieval disables potion preparation.",
+      "Decision 429, log lines 1214–1215: matching ground pickup adds ivory potion.",
+      "Decision 669, log lines 1936–1938: mandatory upgrade remains blocked while potion preparation is deferred."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000211"
   }
 ]

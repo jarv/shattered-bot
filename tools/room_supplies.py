@@ -222,7 +222,16 @@ def observe(p, before, decision, after):
             name = base_name(item)
             if unknown_potion(item) or name in NAMES:
                 gained = new[name]-old[name]
-                if gained > 0:owned[name] += gained
+                if gained > 0:
+                    owned[name] += gained
+                    # A newly receipted, untested floor supply changes the
+                    # failed stash's preparation context, not its collection.
+                    # All test/stash/health gates and per-floor limits remain.
+                    if getattr(p,"stash_supply_retry",None)==(
+                            after["depth"],after.get("branch",0)) \
+                            and (after["depth"],name) not in p.puzzle_drinks:
+                        p.deferred_room_controllers.discard("potion-supplies")
+                        p.stash_supply_retry=None
     return receipt
 
 

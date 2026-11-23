@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "id": "000211",
+  "started_at": "2026-11-23T18:19:58Z",
+  "completed_at": "2026-11-23T18:24:10.074150+00:00",
+  "source_commit": "be640f88d8778a73cec8af4a3ba40b2f2405512f",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 669,
+  "duration_seconds": 247.866,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000210",
+  "previous_source_commit": "63bb00b99875fe6290b5dda6f6be4d6d48e97324",
+  "improvements": [],
+  "code_changed": true,
+  "incoming_learnings": "A triggered trap can retain its trap name after becoming inactive. Distinguish that public status when considering bounded preparation, while independently rejecting active effects and other hazards. Count only accepted searches, never treat searching as hidden-trap clearance or loot collection, and do not mistake a living planner failure for death.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health when required upgrade collection blocked descent (decision 669, log lines 1936–1938). The initiating defect was earlier: after an unknown potion test produced observed toxic gas, stash retrieval failed at decision 299 and disabled all potion preparation for the floor. That veto persisted despite verified new potion pickups, beginning at decision 429. Source inspection and offline reconstruction matched all 669 original selected actions and reasons. The proposed correction rearms preparation after a matching, accepted pickup of an untested floor supply following a blocked stash retrieval. It preserves the unfinished stash, mandatory upgrade pickup, identification boundaries and existing safety gates. The new regression failed by assertion on original policy and passed on the candidate; the full suite passed 2,180 tests with four skipped. Candidate reconstruction stopped at its first changed choice, decision 430: existing puzzle-backed preparation instead of exploration. This does not establish successful testing, a safe replacement route, barrier clearance, collection or survival. The supplied source-comparison excerpt exposes only part of a new regression, so no unshown gameplay change is attributed as a completed-run improvement.",
+    "learnings": "A failed stash return should not permanently veto independently acquired potion supplies. Retry preparation only after a verified, matching new pickup; keep prior drops unfinished and retain every health, identification, hazard, protection and collection check. Selecting preparation is not proof of puzzle completion."
+  },
+  "recommendations": [
+    {
+      "id": "000211-stash-supply-rearming",
+      "priority": "high",
+      "summary": "Reconsider potion preparation when verified new supplies invalidate an earlier blocked-stash context.",
+      "evidence": [
+        "Decision 290, log line 822: unknown frost hypothesis test.",
+        "Decision 291, log line 825: toxic gas observed after the test.",
+        "Decision 299, log lines 848–850: blocked stash retrieval disables potion preparation.",
+        "Decision 429, log lines 1214–1215: matching ground pickup adds ivory potion.",
+        "Decision 669, log lines 1936–1938: mandatory upgrade remains blocked while potion preparation is deferred."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000211"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000211/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000211/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 269,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 265,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 959
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 19,
+        "gold_gained": 60,
+        "turns": 399,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 398,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 346
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Possible drop-room exit",
+            "status": "reported-hypothesis"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 4,
+    "ending_level": 3,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 60,
+    "gold_complete": true,
+    "turns": 668,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

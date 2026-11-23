@@ -215,6 +215,7 @@ class ResourceMemory:
     natural_healing_waits: int = value(0, floor=True)
     food_freeze_plan: object = value(None, floor=True)
     deferred_room_controllers: set = local(set)
+    stash_supply_retry: object = value(None, floor=True)
     wand_usage: dict = field(default_factory=dict)
     wand_observation_clock: int = 0
     trap_payload_return: object = value(None, floor=True)
