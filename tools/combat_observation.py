@@ -121,9 +121,10 @@ def dm100_missile_receipt(before,after,pending):
 
 
 def dm100_arcane_missile_levelup_receipt(before,after,pending):
-    """One consumed, clear-ray missile with Arcane Vision and six rollover XP.
+    """One consumed, clear-ray missile with Arcane Vision and six XP.
 
     Tracking rules out a struck survivor hiding beyond the old neighborhood.
+    Accept either unchanged level or one rollover, with public XP thresholds.
     Keep the older adjacent/no-level-up receipt unchanged.
     """
     import re
@@ -131,8 +132,9 @@ def dm100_arcane_missile_levelup_receipt(before,after,pending):
             or pending["context"][2]:
         return False
     hero=before["hero"];level=hero.get("level",0)
+    after_level=after["hero"].get("level")
     if hero.get("hero_class")!="mage" or not 1<=level<=13 \
-            or after["hero"].get("level")!=level+1 \
+            or after_level not in (level,level+1) \
             or not any(t.get("name")=="arcane vision" and t.get("points",0)>0
                        for t in hero.get("talents",[])):
         return False
@@ -143,10 +145,10 @@ def dm100_arcane_missile_levelup_receipt(before,after,pending):
     if not all(isinstance(s.get(k),(int,float)) for s in (b,a)
                for k in ("experience","experience_to_level","elapsed_turns")) \
             or b["experience_to_level"]!=5+5*level \
-            or a["experience_to_level"]!=5+5*(level+1) \
+            or a["experience_to_level"]!=5+5*after_level \
             or not 0<=b["experience"]<b["experience_to_level"] \
             or not 0<=a["experience"]<a["experience_to_level"] \
-            or a["experience"]+b["experience_to_level"]-b["experience"]!=6 \
+            or a["experience"]+(b["experience_to_level"] if after_level==level+1 else 0)-b["experience"]!=6 \
             or a["elapsed_turns"]-b["elapsed_turns"]!=1:
         return False
     item=next((i for i in before.get("inventory",[])

@@ -2598,5 +2598,19 @@
     "status": "deferred",
     "reason": "The demonstrated blocker is the same-bank return contract: fresh testing bank 606 has storage feasibility but needs a 21-turn symmetric plan; doorway 570 permits a 19-turn journey but is not admitted for an unknown drink. Journey execution, duration checks and completion currently assume return to the starting bank. No safe asymmetric replacement was validated, so changing only planning would contradict execution. Next derive a deterministic fixture for bank 606, doorway 570 and chest 318, then validate a distinct safe return endpoint with unchanged reserve, actual-buff checks, door costs, failed-hypothesis recovery, stash retrieval and pickup receipts before changing the selector. Do not relax testing admission or skip mandatory discovery.",
     "origin_run": "000208"
+  },
+  {
+    "id": "000209-arcane-missile-same-level-receipt",
+    "priority": "high",
+    "summary": "Retire matching DM-100 memory after a verified same-level ranged missile kill receipt.",
+    "evidence": [
+      "Decision 3307, selected log line 9664: known staff, Arcane Vision and DM-100 bar 6/21.",
+      "Decision 3308, selected line 9666 and accepted line 9667: charge 3/7 to 2/7, one turn, XP 8 to 14, unchanged level and no surviving actor.",
+      "Decision 3310, lines 9671–9673: phantom lightning-lane exhaustion with hero alive.",
+      "tools/combat_observation.py:123–180,237–287; tools/policy_nodes.py:93–115."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000209"
   }
 ]
