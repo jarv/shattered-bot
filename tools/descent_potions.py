@@ -421,6 +421,11 @@ def advance(p, state):
         if plan["candidate"] and base_name(item) != plan["candidate"]:
             continue
         for cell in paths:
+            # Storage was admitted against this bank's collateral footprint.
+            # Do not choose preferred water that the ready stash sends us away
+            # from again. Arrival still needs all fresh bank/protection checks.
+            if p.potion_stash and cell != p.potion_stash["bank"]:
+                continue
             route = p.route(paths, cell)
             if len(route) > 13 or not safe_test_bank(p, state, cell, distance, neighbors, allow_dry=True):
                 continue
@@ -435,7 +440,7 @@ def advance(p, state):
                    or p.tiles[c]["terrain"] not in {1, 3, 9, 11, 14, 19, 20, 29} for c in route[1:]):
                 continue
             staged = dict(state, hero=dict(hero, cell=cell))
-            if not p.potion_stash and not can_protect_potions(
+            if not can_protect_potions(
                     p, staged, item, distance, neighbors, safe_test_bank, isolated_stack=True):
                 continue
             choices.append((p.tiles[cell]["terrain"] != 29, len(route),

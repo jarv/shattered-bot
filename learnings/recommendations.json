@@ -2255,5 +2255,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000182"
+  },
+  {
+    "id": "000183-stash-bank-commitment",
+    "priority": "high",
+    "summary": "Keep pre-descent potion discovery at its committed stash bank, with fresh safety and collateral checks.",
+    "evidence": [
+      "Decisions 1225–1226, log lines 3606–3609: other potion colors are dropped at 451.",
+      "Decisions 1229–1231, log lines 3616–3623: return to 562, preferred-water staging to 525, then return to 562.",
+      "Decisions 1316–1324, log lines 3868–3894: the staging contradiction repeats at another bank.",
+      "Decision 1454, log lines 4335–4337: preparation budget exhaustion with the hero alive.",
+      "Offline reconstruction matches decisions 0–1230; copied-state candidate probe selects testing at the committed bank."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000183"
   }
 ]
