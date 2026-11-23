@@ -2273,17 +2273,17 @@
   {
     "id": "000184-sentry-geometry-preparation",
     "priority": "high",
-    "summary": "Establish bounded ordinary-floor reconnaissance when incomplete sentry geometry blocks reserved potion supplies.",
+    "summary": "Resolve sentry preparation when missing perimeter observations lie beyond a statue-separated safe pocket.",
     "evidence": [
-      "Decision 69, selection line 191 and accepted line 192: entrance 941 opens.",
-      "Decision 70, line 194: Chest 968 and red sentry 1117 appear; preparation declines and exploration withdraws to 915.",
-      "Decision 153, line 429: Chest 968 is absent despite visible terrain, without a pickup receipt.",
-      "Decision 228, lines 651–653: missing room supply exhausts discovery with the hero alive at 25/25 HP.",
-      "Offline reconstruction matches selections 0–227 and reproduces the terminal blocker.",
-      "tools/room_tactics.py:151–187; tools/puzzle_supplies.py:537–569,933–974; tools/descent_potions.py:216–268,350–379."
+      "Decision 313, log lines 882–884: accepted entrance approach to 848.",
+      "Decision 314, log lines 885–886: sentry observed and puzzle meal consumed.",
+      "Decision 319, log lines 899–901: Chest 1004 observed from 926; exploration withdraws.",
+      "Decision 340, log lines 962–964: accepted movement advances the game clock.",
+      "Decision 341, log lines 965–967: missing haste exhausts all preparation prerequisites with the hero alive.",
+      "Source-pinned offline reconstruction matches selections 0–340 and reproduces the terminal blocker."
     ],
     "status": "deferred",
-    "reason": "No safe replacement is established. The exact blocker is incomplete public perimeter geometry, including unknown cells near 938, 963, 1144 and 1145, coupled with staging that requires already complete geometry. Immediate entrance banks fail unknown-test admission; terminal inventory cannot execute the existing identification or information prerequisites. An ordinary route back does not establish arrival visibility, potion storage safety or reward retrieval. Next derive paired decision-70/228 fixtures for entrance 941 and ordinary floor 964–966, validate a bounded preparation-only reobservation transaction against door closure and public sight rules, and require accepted movement and fresh observations before existing bank, stash and journey checks. Do not fabricate missing walls, collection or potion effects, relax hazard gates, or remove terminal exhaustion. Complete selecting source and matching reconstruction resolve the packet’s memory gap, but not these replacement-action safety requirements.",
+    "reason": "Complete source and reconstruction resolve the selecting-memory gap, but not replacement safety. Missing boundary cells 1051, 1084 and 1090 have no qualifying reachable ordinary observation vantage. Statue 965 and unopened Chest 1004 separate pocket 1043–1044; defended carpet cannot be used as unprotected transit, and no known identification or reveal supply is carried. Next derive paired decision-319/341 fixtures and validate an observation-and-return transaction without carpet, statue or unopened-chest transit. If protection is necessary, first establish a conservative actual-buff-funded reconnaissance contract without inferring missing walls or potion identities. Merely returning, eating again, increasing limits or admitting high grass does not establish this repair.",
     "origin_run": "000184"
   },
   {

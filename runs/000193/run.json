@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "id": "000193",
+  "started_at": "2026-11-23T13:09:51Z",
+  "completed_at": "2026-11-23T13:12:00.106598+00:00",
+  "source_commit": "61c5bc7fb283444dd6e2143223cd166e963224b8",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 341,
+  "duration_seconds": 126.266,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000192",
+  "previous_source_commit": "7b1589953a4d252e1698d738086cf0045ae94dd3",
+  "improvements": [],
+  "code_changed": true,
+  "incoming_learnings": "Before committing to a doorway against flying pursuers, use already observed geometry to rule out doors with no viable holding square. Keep unknown-side reconnaissance distinct from verified refuge, preserve mandatory pickups and hazard gates, and do not equate a corrected plan with successful escape.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The living Mage stopped because mandatory strength discovery reserved an unidentified haste supply for an unfinished sentry room, while every preparation prerequisite declined. Decision 314 observes the sentry and spends a puzzle meal; decision 319 observes Chest 1004 but withdraws. Decision 341 exhausts preparation at full health, not an observed death. Offline bookkeeping reconstruction on the played source matches all 341 earlier selections and reproduces the terminal blocker. The enclosure still lacks boundary observations at 1051, 1084 and 1090. Ordinary scouting cannot reach a useful vantage: statue 965 and the unopened chest separate the lower safe pocket, while defended carpet remains excluded. No carried identification or reveal resource is available. No patch is supplied because neither an admitted observation route nor a safe protected alternative is established; adding grass transit alone also fails an isolated copied-state probe. The source chain is tools/room_tactics.py:179–215, tools/puzzle_supplies.py:967–1000, tools/preparation_prerequisites.py:65–146 and tools/descent_potions.py:begin/advance. Nine existing reconnaissance tests pass, but there is no candidate red/green or full candidate-suite claim. The truncated executable source comparison does not support attributing additional viewer-facing improvements.",
+    "learnings": "Distinguish a route back to a sentry entrance from an observation route that can actually reveal its missing perimeter. A meal and a known chest do not establish preparation feasibility. Preserve unknown potion identities, defended-carpet exclusions, mandatory pickups and explicit planner exhaustion."
+  },
+  "recommendations": [
+    {
+      "id": "000184-sentry-geometry-preparation",
+      "priority": "high",
+      "summary": "Resolve sentry preparation when missing perimeter observations lie beyond a statue-separated safe pocket.",
+      "evidence": [
+        "Decision 313, log lines 882–884: accepted entrance approach to 848.",
+        "Decision 314, log lines 885–886: sentry observed and puzzle meal consumed.",
+        "Decision 319, log lines 899–901: Chest 1004 observed from 926; exploration withdraws.",
+        "Decision 340, log lines 962–964: accepted movement advances the game clock.",
+        "Decision 341, log lines 965–967: missing haste exhausts all preparation prerequisites with the hero alive.",
+        "Source-pinned offline reconstruction matches selections 0–340 and reproduces the terminal blocker."
+      ],
+      "status": "deferred",
+      "reason": "Complete source and reconstruction resolve the selecting-memory gap, but not replacement safety. Missing boundary cells 1051, 1084 and 1090 have no qualifying reachable ordinary observation vantage. Statue 965 and unopened Chest 1004 separate pocket 1043–1044; defended carpet cannot be used as unprotected transit, and no known identification or reveal supply is carried. Next derive paired decision-319/341 fixtures and validate an observation-and-return transaction without carpet, statue or unopened-chest transit. If protection is necessary, first establish a conservative actual-buff-funded reconnaissance contract without inferring missing walls or potion identities. Merely returning, eating again, increasing limits or admitting high grass does not establish this repair.",
+      "origin_run": "000184"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000193/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000193/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 47,
+        "turns": 336,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 335,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 576
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 1,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 47,
+    "gold_complete": true,
+    "turns": 336,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
