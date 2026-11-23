@@ -1,62 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000169",
-  "started_at": "2026-11-23T03:57:19Z",
-  "completed_at": "2026-11-23T04:04:55.044204+00:00",
-  "source_commit": "ab549990cf2bd1852032890c259e6cbbeb4fa142",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 2,
   "actions": 863,
-  "duration_seconds": 450.333,
+  "code_changed": false,
+  "completed_at": "2026-11-23T04:04:55.044204+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000168",
-  "previous_source_commit": "608aa10eb010031ddabd3a7fd0915040a0b05327",
-  "improvements": [],
-  "code_changed": false,
-  "incoming_learnings": "Distinguish an unobserved exit from an observed exit whose approach is excluded. Investigate the chamber's protection and pickup transaction before spending missing-exit searches. Known levitation is a preparation resource, not evidence that a hazardous crossing or mandatory pickup has succeeded.",
-  "incoming_update_status": "review-only",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero was alive at full health when mandatory potion discovery exhausted. The initiating contradiction appeared at decisions 695–696 (log lines 2024–2027): a revealed summoning trap beside skeletal remains created a levitation requirement, but the entire chamber was quarantined. A puzzle-backed meal removed hunger without enabling the protected retrieval. The flight planner permits excluded trap squares, not the chamber's excluded ordinary floor; a separate movement guard also rejects summoning-room entry. At decisions 861–862, identification revealed charcoal as toxic gas, not levitation. Decision 863 (line 2490) reports missing levitation and three declined preparation prerequisites. Offline bookkeeping reconstruction matched all 863 selected inputs and reproduced the terminal blocker; this is reconstructed state, not recorded memory. No patch or new regression is supplied because a safe inventory-protected test, chamber traversal, remains interaction and abort transaction has not been established. Removing quarantine or spending unknown colors would bypass safety rather than repair that transaction. Existing tests pass but do not establish a solution.",
-    "learnings": "A summoning chamber can create a levitation reservation while independently excluding every protected retrieval route. Before funding a puzzle meal or leaving its approach, establish an executable preparation and return contract. Unknown colors are not known protection; identification is not collection."
-  },
-  "recommendations": [
-    {
-      "id": "000169-summoning-supply-deadlock",
-      "priority": "high",
-      "summary": "Resolve the summoning-chamber supply and retrieval contradiction with a verified protected transaction.",
-      "evidence": [
-        "Decision 694, accepted log line 2022: arrival at doorway 1164.",
-        "Decision 695, log lines 2024–2025: trap 1165 and remains 1234 are public; a puzzle meal is consumed.",
-        "Decision 696, line 2026: no verified flight reward round trip despite restored satiety.",
-        "Decisions 861–862, lines 2486–2489: identification reveals toxic gas.",
-        "Decision 863, lines 2490–2491: missing levitation exhausts the planner with the hero alive.",
-        "tools/puzzle_supplies.py:97–100,915–926; tools/room_tactics.py:302–312; tools/special_rooms.py:103–107; tools/mage_policy.py:407–415; tools/descent_potions.py:350–384."
-      ],
-      "status": "deferred",
-      "reason": "Source browsing and matching offline reconstruction resolve the selecting-state gap, but no safe replacement is certified. The exact blocker is the missing inventory-protected unknown-potion preparation and summoning-room retrieval/abort contract: flight planning cannot cross quarantined ordinary floor, and the final movement guard independently refuses entry. Equipped gear does not meet the existing exterior-choke crowd-readiness gate. Next derive paired doorway-1164 and terminal fixtures, prove a fresh test bank and stash return, then validate actual-buff traversal, remains-interaction contingencies, interruption handling and pickup receipts before changing admission. Do not guess identities, weaken quarantine, waive mandatory progression pickup or restore death waits. No policy or test patch is proposed.",
-      "origin_run": "000169"
-    }
-  ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000169/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000169/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 450.333,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -142,15 +97,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 12,
-    "ending_level": 3,
-    "starving_turns": 3,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -170,6 +116,23 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000169",
+  "improvements": [],
+  "incoming_learnings": "Distinguish an unobserved exit from an observed exit whose approach is excluded. Investigate the chamber's protection and pickup transaction before spending missing-exit searches. Known levitation is a preparation resource, not evidence that a hazardous crossing or mandatory pickup has succeeded.",
+  "incoming_update_status": "review-only",
+  "max_depth": 2,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000169/poster.jpg",
+  "previous_run_id": "000168",
+  "previous_source_commit": "608aa10eb010031ddabd3a7fd0915040a0b05327",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -196,5 +159,44 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000169-summoning-supply-deadlock",
+      "priority": "high",
+      "summary": "Resolve the summoning-chamber supply and retrieval contradiction with a verified protected transaction.",
+      "evidence": [
+        "Decision 694, accepted log line 2022: arrival at doorway 1164.",
+        "Decision 695, log lines 2024–2025: trap 1165 and remains 1234 are public; a puzzle meal is consumed.",
+        "Decision 696, line 2026: no verified flight reward round trip despite restored satiety.",
+        "Decisions 861–862, lines 2486–2489: identification reveals toxic gas.",
+        "Decision 863, lines 2490–2491: missing levitation exhausts the planner with the hero alive.",
+        "tools/puzzle_supplies.py:97–100,915–926; tools/room_tactics.py:302–312; tools/special_rooms.py:103–107; tools/mage_policy.py:407–415; tools/descent_potions.py:350–384."
+      ],
+      "status": "deferred",
+      "reason": "Source browsing and matching offline reconstruction resolve the selecting-state gap, but no safe replacement is certified. The exact blocker is the missing inventory-protected unknown-potion preparation and summoning-room retrieval/abort contract: flight planning cannot cross quarantined ordinary floor, and the final movement guard independently refuses entry. Equipped gear does not meet the existing exterior-choke crowd-readiness gate. Next derive paired doorway-1164 and terminal fixtures, prove a fresh test bank and stash return, then validate actual-buff traversal, remains-interaction contingencies, interruption handling and pickup receipts before changing admission. Do not guess identities, weaken quarantine, waive mandatory progression pickup or restore death waits. No policy or test patch is proposed.",
+      "origin_run": "000169"
+    }
+  ],
+  "review": {
+    "review": "The hero was alive at full health when mandatory potion discovery exhausted. The initiating contradiction appeared at decisions 695–696 (log lines 2024–2027): a revealed summoning trap beside skeletal remains created a levitation requirement, but the entire chamber was quarantined. A puzzle-backed meal removed hunger without enabling the protected retrieval. The flight planner permits excluded trap squares, not the chamber's excluded ordinary floor; a separate movement guard also rejects summoning-room entry. At decisions 861–862, identification revealed charcoal as toxic gas, not levitation. Decision 863 (line 2490) reports missing levitation and three declined preparation prerequisites. Offline bookkeeping reconstruction matched all 863 selected inputs and reproduced the terminal blocker; this is reconstructed state, not recorded memory. No patch or new regression is supplied because a safe inventory-protected test, chamber traversal, remains interaction and abort transaction has not been established. Removing quarantine or spending unknown colors would bypass safety rather than repair that transaction. Existing tests pass but do not establish a solution.",
+    "learnings": "A summoning chamber can create a levitation reservation while independently excluding every protected retrieval route. Before funding a puzzle meal or leaving its approach, establish an executable preparation and return contract. Unknown colors are not known protection; identification is not collection."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 12,
+    "ending_level": 3,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "ab549990cf2bd1852032890c259e6cbbeb4fa142",
+  "started_at": "2026-11-23T03:57:19Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000169/video.mp4"
 }

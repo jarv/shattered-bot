@@ -1,42 +1,219 @@
 {
-  "schema_version": 1,
-  "id": "000109",
-  "started_at": "2026-11-22T04:06:05Z",
-  "completed_at": "2026-11-22T04:16:54.374966+00:00",
-  "source_commit": "ad4c154ed944a49f441769915a52f0c6b9e1d6d1",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 4,
   "actions": 1669,
-  "duration_seconds": 642.107,
+  "code_changed": true,
+  "completed_at": "2026-11-22T04:16:54.374966+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000108",
-  "previous_source_commit": "c90ab0fceb10cc998d0966ed9f791cbdafde00a3",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 642.107,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 115,
+        "turns": 387,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 379,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 250
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 31,
+        "gold_gained": 455,
+        "turns": 695,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 675,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 28,
+        "gold_gained": 392,
+        "turns": 428,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 433,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 14,
+        "gold_gained": 0,
+        "turns": 193.7503662109375,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 176,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 760
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 12,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000109",
   "improvements": [
     "After a retreat through a closing door hides pursuing enemies, the bot can keep following its accepted doorway escape instead of immediately exploring back toward them. It still requires a freshly visible, safe next step."
   ],
-  "code_changed": true,
   "incoming_learnings": "Losing sight of pursuing enemies behind a closing door is not clearance evidence. Preserve an accepted retreat when its next observed step remains admissible, rather than letting exploration immediately reverse it. Continue to require fresh safety checks and real collection evidence.",
   "incoming_update_status": "accepted",
+  "max_depth": 4,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run ended in planner exhaustion, not death: decision 1669 (log line 4805) shows a living Mage at full health with no reachable exit, no remaining frontier and an unresolved iron lock. Decision 1668’s accepted search advanced the game clock (lines 4803–4804). Source-pinned offline bookkeeping reconstruction matched all 1669 recorded selections, including actions, reasons, intents and controllers. Nine committed wall searches and four corridor-tip searches had spent thirteen searches; the hungry missing-key allowance was twelve. The ordinary planner therefore excluded remaining wall-search work before considering the carried ration and its public hunger forecast. The terminal inventory does not identify the unknown potions or prove where the exit or key lies. The proposed correction permits food-funded, bounded missing-exit searching under healthy, quiet conditions, retaining the existing forty-search ceiling and fresh round-trip admission for committed approaches. It adds no early eating, speculative terrain access, assumed collection or death waits. The new regression fails by the expected assertion on original policy and passes on the candidate; all 1868 suite tests pass, with four skipped. This establishes search admission, not discovery of a door, acquisition of a key or completion of the floor. Policy and regression changes are supplied through the trusted changed-file adapter; files is intentionally empty.",
-    "learnings": "Distinguish a hunger label from exhaustion of carried food when planning mandatory missing-exit searches. Fund each approach and search conservatively, preserve observed hazard checks, and require actual discovery and pickup receipts before claiming progression."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000109/poster.jpg",
+  "previous_run_id": "000108",
+  "previous_source_commit": "c90ab0fceb10cc998d0966ed9f791cbdafde00a3",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 5,
+    "gold_collected": 962,
+    "gold_complete": true,
+    "turns": 1703.7503662109375,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -345,119 +522,11 @@
       "origin_run": "000109"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000109/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000109/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 115,
-        "turns": 387,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 379,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 250
-          },
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 31,
-        "gold_gained": 455,
-        "turns": 695,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 675,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 28,
-        "gold_gained": 392,
-        "turns": 428,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 433,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Alchemy area",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Piranha pool landmark",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "quest",
-            "label": "Sad Ghost",
-            "status": "encountered"
-          }
-        ]
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "experience_gained": 14,
-        "gold_gained": 0,
-        "turns": 193.7503662109375,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 176,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 760
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run ended in planner exhaustion, not death: decision 1669 (log line 4805) shows a living Mage at full health with no reachable exit, no remaining frontier and an unresolved iron lock. Decision 1668’s accepted search advanced the game clock (lines 4803–4804). Source-pinned offline bookkeeping reconstruction matched all 1669 recorded selections, including actions, reasons, intents and controllers. Nine committed wall searches and four corridor-tip searches had spent thirteen searches; the hungry missing-key allowance was twelve. The ordinary planner therefore excluded remaining wall-search work before considering the carried ration and its public hunger forecast. The terminal inventory does not identify the unknown potions or prove where the exit or key lies. The proposed correction permits food-funded, bounded missing-exit searching under healthy, quiet conditions, retaining the existing forty-search ceiling and fresh round-trip admission for committed approaches. It adds no early eating, speculative terrain access, assumed collection or death waits. The new regression fails by the expected assertion on original policy and passes on the candidate; all 1868 suite tests pass, with four skipped. This establishes search admission, not discovery of a door, acquisition of a key or completion of the floor. Policy and regression changes are supplied through the trusted changed-file adapter; files is intentionally empty.",
+    "learnings": "Distinguish a hunger label from exhaustion of carried food when planning mandatory missing-exit searches. Fund each approach and search conservatively, preserve observed hazard checks, and require actual discovery and pickup receipts before claiming progression."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 11,
@@ -467,78 +536,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 12,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 6,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 5,
-    "gold_collected": 962,
-    "gold_complete": true,
-    "turns": 1703.7503662109375,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 4,
-        "max_level_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 5,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "ad4c154ed944a49f441769915a52f0c6b9e1d6d1",
+  "started_at": "2026-11-22T04:06:05Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000109/video.mp4"
 }

@@ -1,39 +1,205 @@
 {
-  "schema_version": 1,
-  "id": "000083",
-  "started_at": "2026-11-21T22:24:02Z",
-  "completed_at": "2026-11-21T22:39:10.473603+00:00",
-  "source_commit": "e6803a2a29a3c0c4b8ad2e9d5bebf9d28b66159c",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "dead",
-  "outcome_summary": "Killed by a great crab after retreat stalled",
-  "outcome_reason": "Hero died",
-  "max_depth": 4,
   "actions": 2232,
-  "duration_seconds": 900.098,
+  "code_changed": true,
+  "completed_at": "2026-11-21T22:39:10.473603+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000082",
-  "previous_source_commit": "04a770bece5848c7b082d61206a422524a2c94b3",
+  "death_category": "combat",
+  "death_category_evidence": "review summary: Killed by a great crab after retreat stalled",
+  "duration_seconds": 900.098,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 387,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 391,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 881
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 16,
+        "gold_gained": 52,
+        "turns": 314,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 308,
+        "terminal_floor": false,
+        "highlights": []
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 40,
+        "gold_gained": 685,
+        "turns": 576,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 596,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 693
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 84,
+        "gold_gained": 395,
+        "turns": 899.428466796875,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 929,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 22,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000083",
   "improvements": [],
-  "code_changed": true,
   "incoming_learnings": "A verified doorway limits approach slots, not incoming damage or bone-explosion risk. Established holds should preserve admitted enemy-specific attack choices. Selecting an earlier ranged attack does not prove a kill, escape, charge sufficiency or survival; keep all hazard and mandatory collection checks.",
   "incoming_update_status": "accepted",
+  "max_depth": 4,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The full public terminal message confirms that a great crab killed the hero; the final accepted wait reduces health from three to zero (decision 2231, log line 6467). The initiating local failure is earlier: after a doorway surprise, decision 2001 chooses square 233 instead of directly following the already admitted escape route through 273 (lines 5743–5746). Both steps give equal separation, but 233 adds a step to the same second-exit route. The retreat selector ranks visit novelty without considering that detour. The crab then occupies 232, making the connecting square adjacent and excluded; decision 2002 declines combat and enters recovery waiting (lines 5749–5751). There are 227 recovery waits from decisions 2002–2231. The proposed focused correction prefers the shorter admitted exit route when separation is equal, preserving every admission gate. A new reduced public-geometry regression fails on the original choice and passes on the candidate; all 1,820 suite tests pass, with four skipped. This is not a reconstruction of original runtime memory or proof of escape or survival. Unknown pre-death potion and equipment identities were not used. The general recovery-wait behavior remains a separate limitation. The supplied source diff is truncated before a complete behavioral policy change, so no played-code improvements are attributed. Proposal files are changed locally for independent validation; the files field is intentionally empty.",
-    "learnings": "When equally separated retreat steps share an observed second exit, prefer direct exit progress over an unvisited side square. An admitted route is not a guarantee that a pursuing enemy will leave it open. Preserve fresh movement, surprise, hazard and mandatory pickup checks; do not treat an awake guarding crab as a direct-damage target."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Killed by a great crab after retreat stalled",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000083/poster.jpg",
+  "previous_run_id": "000082",
+  "previous_source_commit": "04a770bece5848c7b082d61206a422524a2c94b3",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 7,
+    "gold_collected": 1132,
+    "gold_complete": true,
+    "turns": 2176.428466796875,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 3,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -344,108 +510,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000083/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000083/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 0,
-        "turns": 387,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 391,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 881
-          },
-          {
-            "kind": "room",
-            "label": "Crypt container",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 16,
-        "gold_gained": 52,
-        "turns": 314,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 308,
-        "terminal_floor": false,
-        "highlights": []
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 40,
-        "gold_gained": 685,
-        "turns": 576,
-        "experience_complete": false,
-        "gold_complete": false,
-        "turns_complete": false,
-        "accepted_inputs": 596,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 693
-          },
-          {
-            "kind": "room",
-            "label": "Piranha pool landmark",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Alchemy area",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "experience_gained": 84,
-        "gold_gained": 395,
-        "turns": 899.428466796875,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 929,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "quest",
-            "label": "Sad Ghost",
-            "status": "encountered"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The full public terminal message confirms that a great crab killed the hero; the final accepted wait reduces health from three to zero (decision 2231, log line 6467). The initiating local failure is earlier: after a doorway surprise, decision 2001 chooses square 233 instead of directly following the already admitted escape route through 273 (lines 5743–5746). Both steps give equal separation, but 233 adds a step to the same second-exit route. The retreat selector ranks visit novelty without considering that detour. The crab then occupies 232, making the connecting square adjacent and excluded; decision 2002 declines combat and enters recovery waiting (lines 5749–5751). There are 227 recovery waits from decisions 2002–2231. The proposed focused correction prefers the shorter admitted exit route when separation is equal, preserving every admission gate. A new reduced public-geometry regression fails on the original choice and passes on the candidate; all 1,820 suite tests pass, with four skipped. This is not a reconstruction of original runtime memory or proof of escape or survival. Unknown pre-death potion and equipment identities were not used. The general recovery-wait behavior remains a separate limitation. The supplied source diff is truncated before a complete behavioral policy change, so no played-code improvements are attributed. Proposal files are changed locally for independent validation; the files field is intentionally empty.",
+    "learnings": "When equally separated retreat steps share an observed second exit, prefer direct exit progress over an unvisited side square. An admitted route is not a guarantee that a pursuing enemy will leave it open. Preserve fresh movement, surprise, hazard and mandatory pickup checks; do not treat an awake guarding crab as a direct-damage target."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 12,
@@ -455,78 +524,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 6,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "starving_turns": 22,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 7,
-    "gold_collected": 1132,
-    "gold_complete": true,
-    "turns": 2176.428466796875,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 4,
-        "max_level_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "levels_gained": 3,
-        "levels_complete": true,
-        "max_level": 7,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "e6803a2a29a3c0c4b8ad2e9d5bebf9d28b66159c",
+  "started_at": "2026-11-21T22:24:02Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000083/video.mp4"
 }

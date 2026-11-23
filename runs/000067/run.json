@@ -1,41 +1,202 @@
 {
-  "schema_version": 1,
-  "id": "000067",
-  "started_at": "2026-11-21T16:56:57Z",
-  "completed_at": "2026-11-21T17:06:23.384968+00:00",
-  "source_commit": "15214b61d8d0719112cef9427dcfadecb2512762",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "dead",
-  "outcome_summary": "Burned to death after a retreat triggered a hidden trap",
-  "outcome_reason": "Hero died",
-  "max_depth": 4,
   "actions": 1491,
-  "duration_seconds": 559.845,
+  "code_changed": true,
+  "completed_at": "2026-11-21T17:06:23.384968+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000066",
-  "previous_source_commit": "e8ba42bb06f53f7ad3295257174aee95ee09e50d",
+  "death_category": "environment",
+  "death_category_evidence": "review summary: Burned to death after a retreat triggered a hidden trap",
+  "duration_seconds": 559.845,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 144,
+        "turns": 317,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 315,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 184
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 35,
+        "gold_gained": 667,
+        "turns": 710,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 713,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 466
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 26,
+        "gold_gained": 415,
+        "turns": 328,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 347,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 13,
+        "gold_gained": 0,
+        "turns": 105.408935546875,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 110,
+        "terminal_floor": true,
+        "highlights": []
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 9,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 14,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000067",
   "improvements": [
     "The bot now looks for potion-stashing routes that avoid unsafe shortcuts, so a rejected doorway route does not hide an available floor-only alternative. It uses the same route restrictions when carrying potions to the stash and returning to the testing spot."
   ],
-  "code_changed": true,
   "incoming_learnings": "Apply route restrictions during search, not only after choosing an unrestricted shortest path. A rejected shortcut does not prove that no admissible route exists. Keep preparation feasibility separate from accepted drops, potion effects, fire clearance and mandatory pickup receipts.",
   "incoming_update_status": "accepted",
+  "max_depth": 4,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero burned to death, confirmed by the final accepted transition, not inferred from nearby enemies. The initiating encounter began with a ranged suspicious-chest test at decision 1443. After the mimic appeared, target arbitration repeatedly preferred a distant fly over the adjacent mimic: species urgency ranked flies above mimics, while damage-history priority returned zero when fewer than two enemies were already in melee reach. Decisions 1445–1450 spent the remaining three staff charges on the approaching fly; the first shot coincided with a nine-HP loss. That loss is not assigned conclusively to the mimic. Exhausted combat led to doorway retreats, further mixed-enemy pressure, dew consumption and prolonged withdrawal. At decision 1485, apparently ordinary floor 589 activated a hidden burning trap. The bot then attacked once without an admitted rescue and attempted a distant water route; HP reached zero before water. The trap was not publicly identified on that square before the move. No pre-death charge count is inferred for the unidentified corrosion wand from its death-screen revelation. Full selecting source resolves the target-choice gap. Isolated probes on the recorded decision-1445 public scene select fly 550 on original code and mimic 758 on the candidate; these are not recovered original memory or a gameplay replay. The reduced regression reproduces that arbitration defect without requiring runtime reconstruction. The correction only substitutes an already admitted magic shot against an adjacent ordinary mimic when the selected fly is beyond current and one-step melee reach. It neither creates a physical fly attack nor moves the hero. Earlier safety controllers, hazard gates and mandatory pickup requirements are unchanged. All 156 test modules passed, totaling 1,760 tests, when run in separate processes; monolithic discovery was killed by the environment. Survival improvement remains unproven.",
-    "learnings": "Species danger rankings must account for immediate contact: a remote splitting enemy should not automatically consume magic needed against an adjacent durable attacker. Preserve non-splitting attack admission and distinguish an admitted shot from a kill or a successful escape. Hidden traps remain unknown until public evidence reveals them."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Burned to death after a retreat triggered a hidden trap",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000067/poster.jpg",
+  "previous_run_id": "000066",
+  "previous_source_commit": "e8ba42bb06f53f7ad3295257174aee95ee09e50d",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 5,
+    "gold_collected": 1226,
+    "gold_complete": true,
+    "turns": 1460.408935546875,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -276,103 +437,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000067/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000067/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 144,
-        "turns": 317,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 315,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 184
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 35,
-        "gold_gained": 667,
-        "turns": 710,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 713,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Crypt container",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 466
-          }
-        ]
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 26,
-        "gold_gained": 415,
-        "turns": 328,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 347,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Barricaded area",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Piranha pool landmark",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "quest",
-            "label": "Sad Ghost",
-            "status": "encountered"
-          }
-        ]
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "experience_gained": 13,
-        "gold_gained": 0,
-        "turns": 105.408935546875,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 110,
-        "terminal_floor": true,
-        "highlights": []
-      }
-    ]
+  "review": {
+    "review": "The hero burned to death, confirmed by the final accepted transition, not inferred from nearby enemies. The initiating encounter began with a ranged suspicious-chest test at decision 1443. After the mimic appeared, target arbitration repeatedly preferred a distant fly over the adjacent mimic: species urgency ranked flies above mimics, while damage-history priority returned zero when fewer than two enemies were already in melee reach. Decisions 1445–1450 spent the remaining three staff charges on the approaching fly; the first shot coincided with a nine-HP loss. That loss is not assigned conclusively to the mimic. Exhausted combat led to doorway retreats, further mixed-enemy pressure, dew consumption and prolonged withdrawal. At decision 1485, apparently ordinary floor 589 activated a hidden burning trap. The bot then attacked once without an admitted rescue and attempted a distant water route; HP reached zero before water. The trap was not publicly identified on that square before the move. No pre-death charge count is inferred for the unidentified corrosion wand from its death-screen revelation. Full selecting source resolves the target-choice gap. Isolated probes on the recorded decision-1445 public scene select fly 550 on original code and mimic 758 on the candidate; these are not recovered original memory or a gameplay replay. The reduced regression reproduces that arbitration defect without requiring runtime reconstruction. The correction only substitutes an already admitted magic shot against an adjacent ordinary mimic when the selected fly is beyond current and one-step melee reach. It neither creates a physical fly attack nor moves the hero. Earlier safety controllers, hazard gates and mandatory pickup requirements are unchanged. All 156 test modules passed, totaling 1,760 tests, when run in separate processes; monolithic discovery was killed by the environment. Survival improvement remains unproven.",
+    "learnings": "Species danger rankings must account for immediate contact: a remote splitting enemy should not automatically consume magic needed against an adjacent durable attacker. Preserve non-splitting attack admission and distinguish an admitted shot from a kill or a successful escape. Hidden traps remain unknown until public evidence reveals them."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 11,
@@ -382,78 +451,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 9,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "starving_turns": 14,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 5,
-    "gold_collected": 1226,
-    "gold_complete": true,
-    "turns": 1460.408935546875,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 2,
-        "levels_complete": true,
-        "max_level": 4,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 5,
-        "max_level_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 5,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "15214b61d8d0719112cef9427dcfadecb2512762",
+  "started_at": "2026-11-21T16:56:57Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000067/video.mp4"
 }

@@ -1,40 +1,364 @@
 {
-  "schema_version": 1,
-  "id": "000142",
-  "started_at": "2026-11-22T16:24:44Z",
-  "completed_at": "2026-11-22T16:49:21.738470+00:00",
-  "source_commit": "c28039a41ac318a3a3d87d74eaf6648b08b875e3",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "8433c6c-equipment",
-  "outcome": "blocked",
-  "outcome_summary": "Blocked at an enhanced thrown-weapon loss warning",
-  "max_depth": 7,
   "actions": 3162,
-  "duration_seconds": 1464.466,
+  "code_changed": true,
+  "completed_at": "2026-11-22T16:49:21.738470+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000141",
-  "previous_source_commit": "d3334a5880e79fe63e1556f3496939e6ce7fec1e",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: blocked",
+  "duration_seconds": 1464.466,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 73,
+        "turns": 293,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 291,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 500
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 24,
+        "gold_gained": 194,
+        "turns": 503,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 517,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 959
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 42,
+        "gold_gained": 848,
+        "turns": 746,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 756,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 975
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1233
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 82,
+        "gold_gained": 120,
+        "turns": 813,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 836,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "objective-completed-dialogue"
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 110,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 116,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 51,
+        "gold_gained": 134,
+        "turns": 362,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 390,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 392
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "experience_gained": 51,
+        "gold_gained": 362,
+        "turns": 231,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 245,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 4,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 104,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 14,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000142",
   "improvements": [
     "The bot now recognizes a narrowly verified magic-missile kill of a DM-100 even when the Mage levels up and no fresh defeat message appears. It can then stop treating that defeated enemy as an ongoing lightning threat."
   ],
-  "code_changed": true,
   "incoming_learnings": "A ranged magic-missile kill can cross a hero level boundary without fresh defeat text. Retire only the matching lightning memory when charge consumption, an observed clear ray, Arcane Vision and exact six-XP rollover jointly confirm the kill. Preserve ambiguity checks, unfinished pickups and terminal exhaustion rather than manufacturing waits.",
   "incoming_update_status": "accepted",
+  "max_depth": 7,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The recording ended blocked at an unhandled thrown-weapon warning, not in death or planner exhaustion. Decision 3161 (selection line 9356) chose the identified shocking shuriken +1 against the visible thief after the staff reached zero charges. Its public description showed one remaining use. Accepted transition line 9357 opened a Yes/No warning about permanent loss without advancing time; terminal line 9358 still showed 65/65 HP. The thief selector and attack scorer supported the throw, but the menu controller lacked this confirmation. A local reconstruction of only the selecting helper, using the exact recorded public input, matches the selected item and target; this is not recovered whole-run memory. The proposed correction confirms only this exact warning for an immediately selected, matching thrown weapon with a pending observed target and revalidated attack gates. It preserves ordinary targeting and unknown-menu refusal. The new regression fails with two expected assertions on original policy and passes all three tests on the candidate; the full suite passes 1,964 tests with four skips. This establishes menu handling, not a hit, kill, optimal resource expenditure or future survival. Historical backlog items were not revalidated.",
-    "learnings": "Enhanced thrown weapons can show a last-use loss warning before targeting. Continue only an explicitly selected matching attack, retain its observed target, and keep unknown confirmations fail-closed. Accepting the warning permits possible permanent weapon loss; it is not evidence that a throw or kill occurred."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "blocked",
+  "outcome_summary": "Blocked at an enhanced thrown-weapon loss warning",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000142/poster.jpg",
+  "previous_run_id": "000141",
+  "previous_source_commit": "d3334a5880e79fe63e1556f3496939e6ce7fec1e",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 10,
+    "gold_collected": 1731,
+    "gold_complete": true,
+    "turns": 3058,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 8,
+        "max_level_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 10,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -356,224 +680,11 @@
       "origin_run": "000043"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000142/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000142/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 73,
-        "turns": 293,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 291,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 500
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 24,
-        "gold_gained": 194,
-        "turns": 503,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 517,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Distant well",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Crypt container",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 959
-          },
-          {
-            "kind": "room",
-            "label": "Barricaded area",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 42,
-        "gold_gained": 848,
-        "turns": 746,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 756,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 975
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 1233
-          },
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "experience_gained": 82,
-        "gold_gained": 120,
-        "turns": 813,
-        "experience_complete": false,
-        "gold_complete": false,
-        "turns_complete": false,
-        "accepted_inputs": 836,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Crypt container",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "quest",
-            "label": "Sad Ghost",
-            "status": "encountered"
-          },
-          {
-            "kind": "room",
-            "label": "Alchemy area",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "quest",
-            "label": "Sad Ghost",
-            "status": "objective-completed-dialogue"
-          }
-        ]
-      },
-      {
-        "depth": 5,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 0,
-        "turns": 110,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 116,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "boss",
-            "label": "Goo",
-            "status": "encountered"
-          },
-          {
-            "kind": "boss",
-            "label": "Goo",
-            "status": "reported-defeated"
-          }
-        ]
-      },
-      {
-        "depth": 6,
-        "branch": 0,
-        "experience_gained": 51,
-        "gold_gained": 134,
-        "turns": 362,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 390,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Shop",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 392
-          },
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 7,
-        "branch": 0,
-        "experience_gained": 51,
-        "gold_gained": 362,
-        "turns": 231,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 245,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The recording ended blocked at an unhandled thrown-weapon warning, not in death or planner exhaustion. Decision 3161 (selection line 9356) chose the identified shocking shuriken +1 against the visible thief after the staff reached zero charges. Its public description showed one remaining use. Accepted transition line 9357 opened a Yes/No warning about permanent loss without advancing time; terminal line 9358 still showed 65/65 HP. The thief selector and attack scorer supported the throw, but the menu controller lacked this confirmation. A local reconstruction of only the selecting helper, using the exact recorded public input, matches the selected item and target; this is not recovered whole-run memory. The proposed correction confirms only this exact warning for an immediately selected, matching thrown weapon with a pending observed target and revalidated attack gates. It preserves ordinary targeting and unknown-menu refusal. The new regression fails with two expected assertions on original policy and passes all three tests on the candidate; the full suite passes 1,964 tests with four skips. This establishes menu handling, not a hit, kill, optimal resource expenditure or future survival. Historical backlog items were not revalidated.",
+    "learnings": "Enhanced thrown weapons can show a last-use loss warning before targeting. Continue only an explicitly selected matching attack, retain its observed target, and keep unknown confirmations fail-closed. Accepting the warning permits possible permanent weapon loss; it is not evidence that a throw or kill occurred."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 13,
@@ -583,120 +694,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 6,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "starving_turns": 4,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 5,
-        "branch": 0,
-        "starving_turns": 104,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 6,
-        "branch": 0,
-        "starving_turns": 14,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 7,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 10,
-    "gold_collected": 1731,
-    "gold_complete": true,
-    "turns": 3058,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 2,
-        "levels_complete": true,
-        "max_level": 5,
-        "max_level_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "levels_gained": 2,
-        "levels_complete": true,
-        "max_level": 7,
-        "max_level_complete": true
-      },
-      {
-        "depth": 5,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 7,
-        "max_level_complete": true
-      },
-      {
-        "depth": 6,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 8,
-        "max_level_complete": true
-      },
-      {
-        "depth": 7,
-        "branch": 0,
-        "levels_gained": 2,
-        "levels_complete": true,
-        "max_level": 10,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "c28039a41ac318a3a3d87d74eaf6648b08b875e3",
+  "started_at": "2026-11-22T16:24:44Z",
+  "supervisor_version": "8433c6c-equipment",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000142/video.mp4"
 }

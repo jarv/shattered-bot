@@ -1,23 +1,8 @@
 {
-  "schema_version": 1,
-  "id": "000007",
-  "started_at": "2026-11-20T09:36:33Z",
-  "completed_at": "2026-11-20T09:41:46.932989+00:00",
-  "source_commit": "32bc2515322697a9dab89125578625739f675040",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "6420a5926a31ee53cf0bf263f98f5952a15f5f572f7eb492799003802dd61b93",
-  "outcome": "dead",
-  "outcome_summary": "Died after repeated retreat setups under poison and burning pressure",
-  "outcome_reason": "Hero died",
-  "max_depth": 3,
   "actions": 840,
-  "duration_seconds": 310.664,
   "audio_recorded": true,
+  "code_changed": false,
+  "completed_at": "2026-11-20T09:41:46.932989+00:00",
   "configuration": {
     "hero": "Mage",
     "record_audio": true,
@@ -25,36 +10,9 @@
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000006",
-  "previous_source_commit": "4ec002ce3677c1787affef7cad04e2f96503a444",
-  "improvements": [],
-  "code_changed": false,
-  "incoming_learnings": "No new gameplay lesson is claimed by this operator disposition. Investigate the failed automated review separately. Continue with the unchanged bot policy and a separately configured audio-recording trial.",
-  "incoming_update_status": "review-only",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The Mage died after a deteriorating retreat under poison and burning pressure; the exact killing source is not established. A focused initiating defect occurs at decision 825: after door 739 lacked an observed holding square, the multi-threat controller began another unverified door setup even though its recorded pursuit report marked new doorway setups exhausted (four retreats, 11 cumulative HP lost). Decision 825, log line 2332, moved toward door 737; accepted transition 2333 records HP 19 to 12. Decision 827 continued that setup, followed by observed burning. The shared pursuit budget already blocks ordinary doorway lures, but tools/multi_enemy_tactics.py bypassed it. The correction blocks only new unverified setups after exhaustion, preserving revalidated commitments and ordinary retreat checks. Offline baseline bookkeeping matched all 840 recorded selections; candidate bookkeeping matched through 824 and stopped at its first divergence, 825. Its alternative is not certified safe. Terminal transitions 2376 and 2380 record HP 5 to 1 to 0 during committed cover movement. Unknown potion effects and post-death revelations were not used. The new regression fails by assertion on original policy and passes on the candidate; the full suite passes 1,423 tests with four skips. This establishes budget consistency, not survival or quest success. Files is empty as required for adapter-derived changes.",
-    "learnings": "Honor exhausted pursuit budgets across every controller that starts an unverified doorway setup. Reaching a door without an observed holding square is not successful cover. Preserve honest unfinished-loot accounting and do not treat an offline alternative as proven safe."
-  },
-  "recommendations": [
-    {
-      "id": "000007-doorway-staging-budget",
-      "priority": "high",
-      "summary": "Make new multi-threat doorway staging honor the existing exhausted-pursuit budget.",
-      "evidence": [
-        "Decision 824, log lines 2326-2327",
-        "Decision 825, log lines 2331-2333",
-        "Decision 827, log line 2340 and accepted transition"
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000007"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000007/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000007/poster.jpg",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "duration_seconds": 310.664,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -130,15 +88,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 11,
-    "ending_experience": 18,
-    "ending_level": 3,
-    "starving_turns": 3,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -164,6 +113,23 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000007",
+  "improvements": [],
+  "incoming_learnings": "No new gameplay lesson is claimed by this operator disposition. Investigate the failed automated review separately. Continue with the unchanged bot policy and a separately configured audio-recording trial.",
+  "incoming_update_status": "review-only",
+  "max_depth": 3,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Died after repeated retreat setups under poison and burning pressure",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000007/poster.jpg",
+  "previous_run_id": "000006",
+  "previous_source_commit": "4ec002ce3677c1787affef7cad04e2f96503a444",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -198,5 +164,41 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000007-doorway-staging-budget",
+      "priority": "high",
+      "summary": "Make new multi-threat doorway staging honor the existing exhausted-pursuit budget.",
+      "evidence": [
+        "Decision 824, log lines 2326-2327",
+        "Decision 825, log lines 2331-2333",
+        "Decision 827, log line 2340 and accepted transition"
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000007"
+    }
+  ],
+  "review": {
+    "review": "The Mage died after a deteriorating retreat under poison and burning pressure; the exact killing source is not established. A focused initiating defect occurs at decision 825: after door 739 lacked an observed holding square, the multi-threat controller began another unverified door setup even though its recorded pursuit report marked new doorway setups exhausted (four retreats, 11 cumulative HP lost). Decision 825, log line 2332, moved toward door 737; accepted transition 2333 records HP 19 to 12. Decision 827 continued that setup, followed by observed burning. The shared pursuit budget already blocks ordinary doorway lures, but tools/multi_enemy_tactics.py bypassed it. The correction blocks only new unverified setups after exhaustion, preserving revalidated commitments and ordinary retreat checks. Offline baseline bookkeeping matched all 840 recorded selections; candidate bookkeeping matched through 824 and stopped at its first divergence, 825. Its alternative is not certified safe. Terminal transitions 2376 and 2380 record HP 5 to 1 to 0 during committed cover movement. Unknown potion effects and post-death revelations were not used. The new regression fails by assertion on original policy and passes on the candidate; the full suite passes 1,423 tests with four skips. This establishes budget consistency, not survival or quest success. Files is empty as required for adapter-derived changes.",
+    "learnings": "Honor exhausted pursuit budgets across every controller that starts an unverified doorway setup. Reaching a door without an observed holding square is not successful cover. Preserve honest unfinished-loot accounting and do not treat an offline alternative as proven safe."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 18,
+    "ending_level": 3,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "32bc2515322697a9dab89125578625739f675040",
+  "started_at": "2026-11-20T09:36:33Z",
+  "supervisor_version": "6420a5926a31ee53cf0bf263f98f5952a15f5f572f7eb492799003802dd61b93",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000007/video.mp4"
 }

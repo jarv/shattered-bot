@@ -1,87 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000023",
-  "started_at": "2026-11-20T18:18:31Z",
-  "completed_at": "2026-11-20T18:41:05.431989+00:00",
-  "source_commit": "8faa5e26c98b34ed0d393ae9903dfa61a2de6a90",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "b6c86f5f5d24b28005d8611ec04e6fe79f6d9e53501448791b99376cd2e21e54",
-  "outcome": "dead",
-  "outcome_summary": "Starved while mandatory piranha chest remained uncollected",
-  "outcome_reason": "Hero died",
-  "max_depth": 2,
   "actions": 2359,
-  "duration_seconds": 1343.27,
+  "code_changed": false,
+  "completed_at": "2026-11-20T18:41:05.431989+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000022",
-  "previous_source_commit": "c74169b5c7a70bb5bb1ca010acd900330731e14d",
-  "improvements": [],
-  "code_changed": false,
-  "incoming_learnings": "Distinguish inaccessible mandatory loot from completed loot. Healing to full health does not restore potion-test eligibility while starving. Check the actual preparation gate before blaming potion protection or extending fallback waits. Preserve public identification, hazard checks and mandatory progression; selecting preparation alone would not prove extinguishing or retrieval.",
-  "incoming_update_status": "review-only",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run died from hunger: decision 2358, accepted log line 6921, explicitly reports starvation death. The initiating pool blockage preceded starvation. Invisibility was publicly identified at decision 553 (accepted line 1589), yet full-health fallback resumed at decision 564 (line 1616). Original-source offline reconstruction matched selections through 564. The only budgeted protected chest route started at closed entrance 1287; puzzle_supplies.stage_known_pool excluded doorway origins even for identified invisibility. The focused candidate permits guarded ordinary doorway staging, without changing unknown-potion tests, hazard exclusions, protection budgets or mandatory collection. Its first changed selection is decision 557, an observed approach step; reconstruction stops there. The new regression fails on original source and passes on the candidate; the full suite passes 1,569 tests with four skips. This does not establish successful opening, protection, chest retrieval or survival. The other backlog cases remain unresolved; their stated missing evidence is unchanged.",
-    "learnings": "Distinguish unknown-potion test banks from staging identified invisibility. A guarded entrance doorway may be the only origin within the protected round-trip budget. Open and reobserve before spending protection; require actual buffs and collection evidence. Choosing preparation is not puzzle completion."
-  },
-  "recommendations": [
-    {
-      "id": "000019-crab-surprise-recovery",
-      "priority": "high",
-      "summary": "Establish a bounded admitted surprise alternative before crab recovery degenerates into adjacent waits.",
-      "evidence": [
-        "Run 000019: decisions 1708, 1718 and 1737, accepted log lines 4852, 4885 and 4938.",
-        "Run 000019: decisions 1774, 1805, 1863 and 1966, retained backlog evidence."
-      ],
-      "status": "deferred",
-      "reason": "This recording does not establish a safe crab surprise alternative. The earlier case still needs recorded-input-validated doorway-attempt, pursuit and escape bookkeeping plus an admitted bounded surprise approach with a second exit under existing health and hazard checks.",
-      "origin_run": "000019"
-    },
-    {
-      "id": "000018-strength-preparation-admission",
-      "priority": "high",
-      "summary": "Establish admitted preparation for mandatory progression loot instead of exhausting resources in fallback.",
-      "evidence": [
-        "Run 000018: decisions 2826–2827 and 3903, retained backlog evidence.",
-        "Run 000020: decisions 3990, 3992, 4438 and 4553, retained backlog evidence.",
-        "Run 000022: decision 2683, log line 7634, starvation precedes fire-room discovery.",
-        "Run 000022: decision 2756, log line 7847, unreachable upgrade and food with HP 53/55.",
-        "Run 000022: decisions 2909–2910, log lines 8278–8283, mandatory veto, healing and fallback wait.",
-        "Run 000022: decision 3632, accepted log line 10666, explicit starvation death."
-      ],
-      "status": "deferred",
-      "reason": "The full helper chain is available and already delegates inaccessible pickups to guarded supplies. Here starvation blocks preparation before the frost preflight; a bandolier is present, so missing protection is not established as the blocker. A safe correction needs a contemporaneously known identification/extinguishing resource or a recorded-input-validated preparation alternative satisfying hunger, health, hazard, bank/protection and retrieval budgets. None is certified. Unknown potion identities revealed on death cannot supply that evidence, and neither relaxing test admission nor waiving mandatory pickup is justified.",
-      "origin_run": "000018"
-    },
-    {
-      "id": "000013-pool-preparation-admission",
-      "priority": "high",
-      "summary": "Admit bounded ordinary doorway staging for identified pool invisibility.",
-      "evidence": [
-        "Run 000013: decisions 3014–3016 and 4063, retained backlog evidence.",
-        "Run 000023: decision 553, accepted log line 1589, public identification.",
-        "Run 000023: decisions 557 and 564, log lines 1596 and 1616; original-source reconstruction validated through 564.",
-        "Run 000023: candidate first diverges at decision 557 and reconstruction stops."
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000013"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000023/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000023/poster.jpg",
+  "death_category": "hunger",
+  "death_category_evidence": "review summary: Starved while mandatory piranha chest remained uncollected",
+  "duration_seconds": 1343.27,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -154,15 +83,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 11,
-    "ending_experience": 13,
-    "ending_level": 4,
-    "starving_turns": 968,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -182,6 +102,23 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000023",
+  "improvements": [],
+  "incoming_learnings": "Distinguish inaccessible mandatory loot from completed loot. Healing to full health does not restore potion-test eligibility while starving. Check the actual preparation gate before blaming potion protection or extending fallback waits. Preserve public identification, hazard checks and mandatory progression; selecting preparation alone would not prove extinguishing or retrieval.",
+  "incoming_update_status": "review-only",
+  "max_depth": 2,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Starved while mandatory piranha chest remained uncollected",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000023/poster.jpg",
+  "previous_run_id": "000022",
+  "previous_source_commit": "c74169b5c7a70bb5bb1ca010acd900330731e14d",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -208,5 +145,70 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000019-crab-surprise-recovery",
+      "priority": "high",
+      "summary": "Establish a bounded admitted surprise alternative before crab recovery degenerates into adjacent waits.",
+      "evidence": [
+        "Run 000019: decisions 1708, 1718 and 1737, accepted log lines 4852, 4885 and 4938.",
+        "Run 000019: decisions 1774, 1805, 1863 and 1966, retained backlog evidence."
+      ],
+      "status": "deferred",
+      "reason": "This recording does not establish a safe crab surprise alternative. The earlier case still needs recorded-input-validated doorway-attempt, pursuit and escape bookkeeping plus an admitted bounded surprise approach with a second exit under existing health and hazard checks.",
+      "origin_run": "000019"
+    },
+    {
+      "id": "000018-strength-preparation-admission",
+      "priority": "high",
+      "summary": "Establish admitted preparation for mandatory progression loot instead of exhausting resources in fallback.",
+      "evidence": [
+        "Run 000018: decisions 2826–2827 and 3903, retained backlog evidence.",
+        "Run 000020: decisions 3990, 3992, 4438 and 4553, retained backlog evidence.",
+        "Run 000022: decision 2683, log line 7634, starvation precedes fire-room discovery.",
+        "Run 000022: decision 2756, log line 7847, unreachable upgrade and food with HP 53/55.",
+        "Run 000022: decisions 2909–2910, log lines 8278–8283, mandatory veto, healing and fallback wait.",
+        "Run 000022: decision 3632, accepted log line 10666, explicit starvation death."
+      ],
+      "status": "deferred",
+      "reason": "The full helper chain is available and already delegates inaccessible pickups to guarded supplies. Here starvation blocks preparation before the frost preflight; a bandolier is present, so missing protection is not established as the blocker. A safe correction needs a contemporaneously known identification/extinguishing resource or a recorded-input-validated preparation alternative satisfying hunger, health, hazard, bank/protection and retrieval budgets. None is certified. Unknown potion identities revealed on death cannot supply that evidence, and neither relaxing test admission nor waiving mandatory pickup is justified.",
+      "origin_run": "000018"
+    },
+    {
+      "id": "000013-pool-preparation-admission",
+      "priority": "high",
+      "summary": "Admit bounded ordinary doorway staging for identified pool invisibility.",
+      "evidence": [
+        "Run 000013: decisions 3014–3016 and 4063, retained backlog evidence.",
+        "Run 000023: decision 553, accepted log line 1589, public identification.",
+        "Run 000023: decisions 557 and 564, log lines 1596 and 1616; original-source reconstruction validated through 564.",
+        "Run 000023: candidate first diverges at decision 557 and reconstruction stops."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000013"
+    }
+  ],
+  "review": {
+    "review": "The run died from hunger: decision 2358, accepted log line 6921, explicitly reports starvation death. The initiating pool blockage preceded starvation. Invisibility was publicly identified at decision 553 (accepted line 1589), yet full-health fallback resumed at decision 564 (line 1616). Original-source offline reconstruction matched selections through 564. The only budgeted protected chest route started at closed entrance 1287; puzzle_supplies.stage_known_pool excluded doorway origins even for identified invisibility. The focused candidate permits guarded ordinary doorway staging, without changing unknown-potion tests, hazard exclusions, protection budgets or mandatory collection. Its first changed selection is decision 557, an observed approach step; reconstruction stops there. The new regression fails on original source and passes on the candidate; the full suite passes 1,569 tests with four skips. This does not establish successful opening, protection, chest retrieval or survival. The other backlog cases remain unresolved; their stated missing evidence is unchanged.",
+    "learnings": "Distinguish unknown-potion test banks from staging identified invisibility. A guarded entrance doorway may be the only origin within the protected round-trip budget. Open and reobserve before spending protection; require actual buffs and collection evidence. Choosing preparation is not puzzle completion."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 13,
+    "ending_level": 4,
+    "starving_turns": 968,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "8faa5e26c98b34ed0d393ae9903dfa61a2de6a90",
+  "started_at": "2026-11-20T18:18:31Z",
+  "supervisor_version": "b6c86f5f5d24b28005d8611ec04e6fe79f6d9e53501448791b99376cd2e21e54",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000023/video.mp4"
 }

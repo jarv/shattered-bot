@@ -1,42 +1,104 @@
 {
-  "schema_version": 1,
-  "id": "000084",
-  "started_at": "2026-11-21T22:46:53Z",
-  "completed_at": "2026-11-21T22:48:58.736197+00:00",
-  "source_commit": "b4859f21dfb871c4f38d1947ab9ec6d65dabba5d",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 331,
-  "duration_seconds": 122.256,
+  "code_changed": true,
+  "completed_at": "2026-11-21T22:48:58.736197+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000083",
-  "previous_source_commit": "e6803a2a29a3c0c4b8ad2e9d5bebf9d28b66159c",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 122.256,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 59,
+        "turns": 326,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 325,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 522
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000084",
   "improvements": [
     "When equally distant retreat steps lead toward the same known exit, the bot now prefers the more direct escape route over a less-visited side square while drawing the great crab away."
   ],
-  "code_changed": true,
   "incoming_learnings": "When equally separated retreat steps share an observed second exit, prefer direct exit progress over an unvisited side square. An admitted route is not a guarantee that a pursuing enemy will leave it open. Preserve fresh movement, surprise, hazard and mandatory pickup checks; do not treat an awake guarding crab as a direct-damage target.",
   "incoming_update_status": "accepted",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at full health when mandatory potion discovery exhausted the planner; this was not a death. Decision 331 (log line 930) reports no admitted testing bank or return. Source-pinned offline reconstruction matches all 331 earlier selected actions, reasons and intents and reproduces that blocker. Earlier bank 520 was feasible with the same two unidentified potions, but later bank observations overwrote its receipt. The newest bank has no route through the unchanged permitted transit terrain; the older bank does. The proposed correction retains compatible observed alternatives and chooses only freshly admitted return movement. A new reduced public-evidence regression fails as expected on original policy and passes on the candidate; the full suite passes with four skips. No observations were supplied after the changed terminal choice. This does not establish successful arrival, protected testing, strength discovery or descent. Existing backlog entries are historical context, not revalidated conclusions from this recording.",
-    "learnings": "Do not let a newly observed preparation location erase other verified locations with the same potion inventory. Recheck transit, hunger and fresh arrival protection before using any remembered bank. Keep mandatory progression pickups and the terminal planner-failure outcome intact."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000084/poster.jpg",
+  "previous_run_id": "000083",
+  "previous_source_commit": "e6803a2a29a3c0c4b8ad2e9d5bebf9d28b66159c",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 59,
+    "gold_complete": true,
+    "turns": 326,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -346,46 +408,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000084/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000084/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 59,
-        "turns": 326,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 325,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 522
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero remained alive at full health when mandatory potion discovery exhausted the planner; this was not a death. Decision 331 (log line 930) reports no admitted testing bank or return. Source-pinned offline reconstruction matches all 331 earlier selected actions, reasons and intents and reproduces that blocker. Earlier bank 520 was feasible with the same two unidentified potions, but later bank observations overwrote its receipt. The newest bank has no route through the unchanged permitted transit terrain; the older bank does. The proposed correction retains compatible observed alternatives and chooses only freshly admitted return movement. A new reduced public-evidence regression fails as expected on original policy and passes on the candidate; the full suite passes with four skips. No observations were supplied after the changed terminal choice. This does not establish successful arrival, protected testing, strength discovery or descent. Existing backlog entries are historical context, not revalidated conclusions from this recording.",
+    "learnings": "Do not let a newly observed preparation location erase other verified locations with the same potion inventory. Recheck transit, hunger and fresh arrival protection before using any remembered bank. Keep mandatory progression pickups and the terminal planner-failure outcome intact."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -395,36 +422,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 59,
-    "gold_complete": true,
-    "turns": 326,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "b4859f21dfb871c4f38d1947ab9ec6d65dabba5d",
+  "started_at": "2026-11-21T22:46:53Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000084/video.mp4"
 }

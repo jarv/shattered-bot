@@ -1,40 +1,107 @@
 {
-  "schema_version": 1,
-  "id": "000090",
-  "started_at": "2026-11-21T23:51:27Z",
-  "completed_at": "2026-11-21T23:53:19.749582+00:00",
-  "source_commit": "dd707d375d0da4814ee5d3f03af67a09fb79d5d5",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 277,
-  "duration_seconds": 109.799,
+  "code_changed": false,
+  "completed_at": "2026-11-21T23:53:19.749582+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000089",
-  "previous_source_commit": "b92a8cff1415462b9f81a09550afd5fabcee5e80",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 109.799,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 54,
+        "turns": 263,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 271,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 386
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000090",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "A currently low-pressure retreat endpoint is not a verified choke or a sustainable escape. Validate the next intervention and freshly admitted onward spacing before altering multi-enemy priorities. Opening a door or choosing preparation does not establish successful escape; unknown potions and post-death identities cannot certify a rescue.",
   "incoming_update_status": "review-only",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The living hero exhausts the planner at full health, not through an observed death. Bookshelves observed at decision 188 create a missing liquid-flame demand. At decision 277, the descent controller requires strength discovery but refuses unknown-potion testing while that supply remains missing. Flame preparation only admits barricades, and identification and reconnaissance alternatives yield no action. Complete-source offline reconstruction matches all 277 selections and reproduces the terminal blocker; it is reconstructed bookkeeping, not recorded memory. No active retrieval causes the veto. The three carried potion colors remain unidentified. No patch is submitted because neither safe shelf preparation nor evidence that these shelves need no reserved supply is established: their far side is unobserved, and the game includes both ordinary and flame-supplied shelf rooms. Removing the reservation or permitting blind shelf-side drinking would not be a certified repair. Existing focused tests pass (28); the full original suite passes (1833, four skipped). No new regression or baseline-red/candidate-green result is claimed. Other backlog items are carried forward without revalidation.",
-    "learnings": "A remembered bookshelf is not sufficient evidence of a guaranteed flame supply or a safely executable burn. Separate optional fuel reservation from a genuine retrieval obligation using positive public evidence, and validate preparation against unknown far-side geometry. A bank return alone does not resolve missing room supplies; choosing preparation is not puzzle completion."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000090/poster.jpg",
+  "previous_run_id": "000089",
+  "previous_source_commit": "b92a8cff1415462b9f81a09550afd5fabcee5e80",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 54,
+    "gold_complete": true,
+    "turns": 263,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -348,51 +415,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000090/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000090/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 54,
-        "turns": 263,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 271,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 386
-          },
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The living hero exhausts the planner at full health, not through an observed death. Bookshelves observed at decision 188 create a missing liquid-flame demand. At decision 277, the descent controller requires strength discovery but refuses unknown-potion testing while that supply remains missing. Flame preparation only admits barricades, and identification and reconnaissance alternatives yield no action. Complete-source offline reconstruction matches all 277 selections and reproduces the terminal blocker; it is reconstructed bookkeeping, not recorded memory. No active retrieval causes the veto. The three carried potion colors remain unidentified. No patch is submitted because neither safe shelf preparation nor evidence that these shelves need no reserved supply is established: their far side is unobserved, and the game includes both ordinary and flame-supplied shelf rooms. Removing the reservation or permitting blind shelf-side drinking would not be a certified repair. Existing focused tests pass (28); the full original suite passes (1833, four skipped). No new regression or baseline-red/candidate-green result is claimed. Other backlog items are carried forward without revalidation.",
+    "learnings": "A remembered bookshelf is not sufficient evidence of a guaranteed flame supply or a safely executable burn. Separate optional fuel reservation from a genuine retrieval obligation using positive public evidence, and validate preparation against unknown far-side geometry. A bank return alone does not resolve missing room supplies; choosing preparation is not puzzle completion."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -402,36 +429,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 54,
-    "gold_complete": true,
-    "turns": 263,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "dd707d375d0da4814ee5d3f03af67a09fb79d5d5",
+  "started_at": "2026-11-21T23:51:27Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000090/video.mp4"
 }

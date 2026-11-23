@@ -1,62 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000121",
-  "started_at": "2026-11-22T10:23:33Z",
-  "completed_at": "2026-11-22T10:50:47.286137+00:00",
-  "source_commit": "3d775d930f2272f599500318ecc65b025a07e2a3",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "1e55d72-review-recovery",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 8,
   "actions": 3909,
-  "duration_seconds": 1619.799,
+  "code_changed": true,
+  "completed_at": "2026-11-22T10:50:47.286137+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000120",
-  "previous_source_commit": "77ab280af9e30a0215cee22c52fb43713f7ccf8c",
-  "improvements": [
-    "The bot can now briefly observe isolated freezing air from clear ground while waiting for a route to reopen. It still requires fresh confirmation that the cold has cleared before moving, and declines this wait when threats, hunger or nearby hazards make it unsafe."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Freshly visible temporary cold is not an impossible route. Retain a bounded, threat-free observation from verified clear ground, then require fresh clearance before movement. Never treat a selected wait as clearance or collection.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at full health when the planner stopped. Decisions 3907-3908 selected disintegration and targeted the DM-100; accepted transition 3908 records one turn, six experience, consumption of the public magic boost and disappearance of the enemy. Decision 3909 then rejected progress because a separate lightning-lane memory survived. The displayed defeat message was stale, and the existing missile-only receipt did not cover this attack. Public Arcane Vision provides a narrower supported correction: an enemy successfully struck by this guaranteed-hit beam would remain tracked if alive. The proposed receipt requires that talent, a publicly established beam range, a consumed non-expiring boost, matching attack memory and corroborating experience. Original policy fails two new regression assertions; the candidate passes all three tests. The full suite passes 1910 tests with four skips. An isolated probe using the recorded public targeting inputs reproduces the original gate and removes it on the candidate. This does not establish a safe next movement or subsequent survival.",
-    "learnings": "Keep remembered lightning threats separate from ordinary sightings, but retire matching memory when a rigorously confirmed tracked attack proves that caster cannot remain alive. Experience and disappearance alone are insufficient for a penetrating beam; preserve threat memory when tracking, range or successful execution is uncertain."
-  },
-  "recommendations": [
-    {
-      "id": "000121-arcane-disintegration-receipt",
-      "priority": "high",
-      "summary": "Recognize the confirmed Arcane Vision disintegration receipt before stale DM-100 memory blocks progression.",
-      "evidence": [
-        "Decision 3907, lines 11180-11181: uncursed disintegration selected with public +3 Magic Charge and Arcane Vision.",
-        "Decision 3908, lines 11182-11183: target 874 disappears after one turn and six experience; the boost is consumed.",
-        "Decision 3909, line 11184: remembered lightning lane causes planner exhaustion despite full health and no observed enemies.",
-        "tools/combat_observation.py; tools/dm100_escape.py:15-46; tools/policy_nodes.py:93-116."
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000121"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000121/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000121/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 1619.799,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -290,15 +245,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 13,
-    "ending_experience": 32,
-    "ending_level": 11,
-    "starving_turns": 423,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -354,6 +300,25 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000121",
+  "improvements": [
+    "The bot can now briefly observe isolated freezing air from clear ground while waiting for a route to reopen. It still requires fresh confirmation that the cold has cleared before moving, and declines this wait when threats, hunger or nearby hazards make it unsafe."
+  ],
+  "incoming_learnings": "Freshly visible temporary cold is not an impossible route. Retain a bounded, threat-free observation from verified clear ground, then require fresh clearance before movement. Never treat a selected wait as clearance or collection.",
+  "incoming_update_status": "accepted",
+  "max_depth": 8,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000121/poster.jpg",
+  "previous_run_id": "000120",
+  "previous_source_commit": "77ab280af9e30a0215cee22c52fb43713f7ccf8c",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -428,5 +393,42 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000121-arcane-disintegration-receipt",
+      "priority": "high",
+      "summary": "Recognize the confirmed Arcane Vision disintegration receipt before stale DM-100 memory blocks progression.",
+      "evidence": [
+        "Decision 3907, lines 11180-11181: uncursed disintegration selected with public +3 Magic Charge and Arcane Vision.",
+        "Decision 3908, lines 11182-11183: target 874 disappears after one turn and six experience; the boost is consumed.",
+        "Decision 3909, line 11184: remembered lightning lane causes planner exhaustion despite full health and no observed enemies.",
+        "tools/combat_observation.py; tools/dm100_escape.py:15-46; tools/policy_nodes.py:93-116."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000121"
+    }
+  ],
+  "review": {
+    "review": "The hero remained alive at full health when the planner stopped. Decisions 3907-3908 selected disintegration and targeted the DM-100; accepted transition 3908 records one turn, six experience, consumption of the public magic boost and disappearance of the enemy. Decision 3909 then rejected progress because a separate lightning-lane memory survived. The displayed defeat message was stale, and the existing missile-only receipt did not cover this attack. Public Arcane Vision provides a narrower supported correction: an enemy successfully struck by this guaranteed-hit beam would remain tracked if alive. The proposed receipt requires that talent, a publicly established beam range, a consumed non-expiring boost, matching attack memory and corroborating experience. Original policy fails two new regression assertions; the candidate passes all three tests. The full suite passes 1910 tests with four skips. An isolated probe using the recorded public targeting inputs reproduces the original gate and removes it on the candidate. This does not establish a safe next movement or subsequent survival.",
+    "learnings": "Keep remembered lightning threats separate from ordinary sightings, but retire matching memory when a rigorously confirmed tracked attack proves that caster cannot remain alive. Experience and disappearance alone are insufficient for a penetrating beam; preserve threat memory when tracking, range or successful execution is uncertain."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 13,
+    "ending_experience": 32,
+    "ending_level": 11,
+    "starving_turns": 423,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "3d775d930f2272f599500318ecc65b025a07e2a3",
+  "started_at": "2026-11-22T10:23:33Z",
+  "supervisor_version": "1e55d72-review-recovery",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000121/video.mp4"
 }

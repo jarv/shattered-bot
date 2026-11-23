@@ -1,42 +1,180 @@
 {
-  "schema_version": 1,
-  "id": "000059",
-  "started_at": "2026-11-21T15:27:42Z",
-  "completed_at": "2026-11-21T15:32:41.465432+00:00",
-  "source_commit": "dd9b8dfb19c6ed3783b6bc56c979f4b9829cdf39",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 3,
   "actions": 817,
-  "duration_seconds": 295.094,
+  "code_changed": true,
+  "completed_at": "2026-11-21T15:32:41.465432+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000058",
-  "previous_source_commit": "150b4e59330a7407a42fb1d2f99856aeb264f5a6",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 295.094,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 134,
+        "turns": 361,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 362,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 675
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 18,
+        "gold_gained": 259,
+        "turns": 275,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 281,
+        "terminal_floor": false,
+        "highlights": []
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 147,
+        "turns": 165,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 168,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1089
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000059",
   "improvements": [
     "The bot now checks the immediate loot approach beside a revealed summoning trap, even when only one trap is visible. It keeps these searches bounded and does not assume that searching makes the route safe."
   ],
-  "code_changed": true,
   "incoming_learnings": "A single revealed summoning trap beside a quiet loot approach merits bounded inspection, even without three visible traps. Keep preparation separate from verified discovery and collection. Once a swarm occupies every traversable adjacent exit, do not invent a safe retreat or infer a particular killer.",
   "incoming_update_status": "accepted",
+  "max_depth": 3,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The living Mage exhausted the planner at full health after stepping onto a previously unrevealed confusion trap. Decision 816 requested an escape toward 1222 but randomly landed at 1223 as gas spread. At decision 817, a newly visible sleeping gnoll eight cells away vetoed further escape: the controller required no enemies at all before reaching its existing all-direction landing checks. The accepted receipt records one move, not an exhausted movement budget. A reduced public-observation fixture reproduces this contradiction. The proposed correction permits bounded escape arbitration with distant sleepers while preserving every landing restriction, active-threat vetoes, gas-wait prohibition, resource checks and mandatory pickup obligations. The new regression fails by the expected assertion on original source and passes on the candidate; the completed full suite passes 1,733 tests with four skips. Isolated snapshot probes match decision 816 and admit a next input at 817, but are not a full-run memory reconstruction or proof of successful escape. Policy and regression changes are supplied in the workspace; files is intentionally empty for adapter derivation. Historical backlog entries are retained without revalidation.",
-    "learnings": "A distant sleeping enemy must not globally veto a confusion-gas escape when every possible random landing passes the existing safety checks. Keep active threats and nearby sleepers excluded, count only accepted movement receipts, and reobserve after each single input. Selecting an escape does not establish actual gas exit or loot collection."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000059/poster.jpg",
+  "previous_run_id": "000058",
+  "previous_source_commit": "150b4e59330a7407a42fb1d2f99856aeb264f5a6",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 540,
+    "gold_complete": true,
+    "turns": 801,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -229,94 +367,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000059/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000059/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 134,
-        "turns": 361,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 362,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 675
-          },
-          {
-            "kind": "room",
-            "label": "Barricaded area",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Crystal choice container",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 18,
-        "gold_gained": 259,
-        "turns": 275,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 281,
-        "terminal_floor": false,
-        "highlights": []
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 11,
-        "gold_gained": 147,
-        "turns": 165,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 168,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 1089
-          },
-          {
-            "kind": "quest",
-            "label": "Sad Ghost",
-            "status": "encountered"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The living Mage exhausted the planner at full health after stepping onto a previously unrevealed confusion trap. Decision 816 requested an escape toward 1222 but randomly landed at 1223 as gas spread. At decision 817, a newly visible sleeping gnoll eight cells away vetoed further escape: the controller required no enemies at all before reaching its existing all-direction landing checks. The accepted receipt records one move, not an exhausted movement budget. A reduced public-observation fixture reproduces this contradiction. The proposed correction permits bounded escape arbitration with distant sleepers while preserving every landing restriction, active-threat vetoes, gas-wait prohibition, resource checks and mandatory pickup obligations. The new regression fails by the expected assertion on original source and passes on the candidate; the completed full suite passes 1,733 tests with four skips. Isolated snapshot probes match decision 816 and admit a next input at 817, but are not a full-run memory reconstruction or proof of successful escape. Policy and regression changes are supplied in the workspace; files is intentionally empty for adapter derivation. Historical backlog entries are retained without revalidation.",
+    "learnings": "A distant sleeping enemy must not globally veto a confusion-gas escape when every possible random landing passes the existing safety checks. Keep active threats and nearby sleepers excluded, count only accepted movement receipts, and reobserve after each single input. Selecting an escape does not establish actual gas exit or loot collection."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 11,
@@ -326,64 +381,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 3,
-    "gold_collected": 540,
-    "gold_complete": true,
-    "turns": 801,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "dd9b8dfb19c6ed3783b6bc56c979f4b9829cdf39",
+  "started_at": "2026-11-21T15:27:42Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000059/video.mp4"
 }

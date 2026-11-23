@@ -1,42 +1,148 @@
 {
-  "schema_version": 1,
-  "id": "000104",
-  "started_at": "2026-11-22T03:02:20Z",
-  "completed_at": "2026-11-22T03:08:57.467141+00:00",
-  "source_commit": "270e6bd274f44f40adc41e37010c9ace394a8b40",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 2,
   "actions": 1003,
-  "duration_seconds": 393.148,
+  "code_changed": true,
+  "completed_at": "2026-11-22T03:08:57.467141+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000103",
-  "previous_source_commit": "0d34c637a8979b1034236091effabceeb3e63785",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 393.148,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 99,
+        "turns": 304,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 304,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 289
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 38,
+        "gold_gained": 318,
+        "turns": 647.15478515625,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 693,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 849
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt/choice container",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000104",
   "improvements": [
     "The bot now postpones upgrade scrolls while blinded and reassesses them once it can read again. Known strength potions remain available during blindness."
   ],
-  "code_changed": true,
   "incoming_learnings": "An advertised item action is not proof it can execute under current status effects. Defer upgrade-scroll intent during observed blindness and reassess from a fresh observation; do not extend the loop bound or spend turns through an invented recovery plan.",
   "incoming_update_status": "accepted",
+  "max_depth": 2,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at 32/35 HP when the planner exhausted. The initiating defect was a levitation trip that treated locked chests as movement waypoints while seeking a golden key. Decision 427 spent the only held key opening chest 804 without moving (transition line 1227). Decision 429 then clicked locked chest 762 without a matching key; repeated accepted inputs through decision 464 left position and clock unchanged. The trip eventually returned without collecting its target. The final veto at decision 1002, line 2924, actually lists three unreachable golden keys despite its generic upgrade/strength wording. One waterskin rescue advanced time and healed before decision 1003 ended in planner exhaustion. A reduced public-input fixture reproduces the container-transit defect without reconstructing original runtime memory. The proposed correction prevents protected routes from traversing unopened containers while retaining eligible container destinations and all existing safety and mandatory-pickup gates. The new regression fails on original policy and passes on the candidate; the full suite passes 1,856 tests with four skipped. This does not establish successful collection or resolution of every later preparation blocker.",
-    "learnings": "Protected movement plans must distinguish container interactions from walking. A held key can be consumed at an intermediate chest, leaving the intended key pickup unreachable. Keep protection budgets, observed pickup receipts and mandatory progression requirements intact; do not infer an unidentified potion effect or replace planner exhaustion with idle waits."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000104/poster.jpg",
+  "previous_run_id": "000103",
+  "previous_source_commit": "0d34c637a8979b1034236091effabceeb3e63785",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 4,
+    "gold_collected": 417,
+    "gold_complete": true,
+    "turns": 951.15478515625,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -115,76 +221,11 @@
       "origin_run": "000104"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000104/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000104/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 99,
-        "turns": 304,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 304,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 289
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 38,
-        "gold_gained": 318,
-        "turns": 647.15478515625,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 693,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 849
-          },
-          {
-            "kind": "room",
-            "label": "Crypt container",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Crypt/choice container",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero remained alive at 32/35 HP when the planner exhausted. The initiating defect was a levitation trip that treated locked chests as movement waypoints while seeking a golden key. Decision 427 spent the only held key opening chest 804 without moving (transition line 1227). Decision 429 then clicked locked chest 762 without a matching key; repeated accepted inputs through decision 464 left position and clock unchanged. The trip eventually returned without collecting its target. The final veto at decision 1002, line 2924, actually lists three unreachable golden keys despite its generic upgrade/strength wording. One waterskin rescue advanced time and healed before decision 1003 ended in planner exhaustion. A reduced public-input fixture reproduces the container-transit defect without reconstructing original runtime memory. The proposed correction prevents protected routes from traversing unopened containers while retaining eligible container destinations and all existing safety and mandatory-pickup gates. The new regression fails on original policy and passes on the candidate; the full suite passes 1,856 tests with four skipped. This does not establish successful collection or resolution of every later preparation blocker.",
+    "learnings": "Protected movement plans must distinguish container interactions from walking. A held key can be consumed at an intermediate chest, leaving the intended key pickup unreachable. Keep protection budgets, observed pickup receipts and mandatory progression requirements intact; do not infer an unidentified potion effect or replace planner exhaustion with idle waits."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -194,50 +235,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 4,
-    "gold_collected": 417,
-    "gold_complete": true,
-    "turns": 951.15478515625,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 2,
-        "levels_complete": true,
-        "max_level": 4,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "270e6bd274f44f40adc41e37010c9ace394a8b40",
+  "started_at": "2026-11-22T03:02:20Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000104/video.mp4"
 }

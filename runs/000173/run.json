@@ -1,63 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000173",
-  "started_at": "2026-11-23T05:42:19Z",
-  "completed_at": "2026-11-23T05:46:48.039599+00:00",
-  "source_commit": "1689355c843678c1ee4603a6dfe82ec1d981252e",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 2,
   "actions": 674,
-  "duration_seconds": 264.933,
+  "code_changed": true,
+  "completed_at": "2026-11-23T05:46:48.039599+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000172",
-  "previous_source_commit": "54cdfcaff98203618762e4a5bc50545e6a45efa0",
-  "improvements": [
-    "When escaping a prison guard, the bot now rechecks whether its chosen cover destination is still hidden and safe. If the guard has moved into view of that destination, the bot abandons the old plan."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "A following guard can invalidate a cover destination before arrival. Recheck the destination as well as the route on every committed escape step. Currently admitted cover is not proof of lasting safety or successful escape.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero was alive at full health when planning exhausted; this was not an in-game death. Decision 672 reached doorway 591 (accepted log line 1934). Decision 673 first observed summoning trap 552 and skeletal remains 513, then ate a puzzle-backed meal (lines 1936–1937). The clock advanced from 717 to 720, but preparation remained impossible. Decision 674 (line 1938) exhausted mandatory potion discovery because the recognized flight obligation lacked levitation. Four potion colors remained unidentified; none can be treated as known levitation.\n\nSource-pinned offline bookkeeping reconstruction matched all 674 recorded selections, including actions, reasons, intents and controllers, before reproducing the terminal blocker. This is reconstructed policy memory, not originally recorded memory. The initiating contradiction is between summoning-room reward preparation and potion reservation: tools/puzzle_supplies.py:97–100 reserves levitation for the inaccessible remains, while tools/room_tactics.py:277–278 rejects skeletal remains unless explicitly admitted. The terminal policy has no admitted chest endpoints. Isolated copied-state probes found safe test-bank geometry but no protected reward journey. Admitting only the remains endpoint diagnostically produced the hypothetical route 591–552–513; this is not an executable repair. Independently, tools/mage_policy.py:403–415 refuses summoning-field entry, and tools/summoning_tactics.py:90–107 rejects deliberate remote activation with the observed gear. The meal removes hunger, not these blockers.\n\nNo policy patch or new regression is supplied: endpoint admission alone would leave the independent movement prohibition and unvalidated remains interaction, inventory protection and interruption handling. Removing the reservation would instead risk spending the room supply without retrieval. Complete source browsing and matching reconstruction resolve the packet's selecting-state gap, but do not certify a safe transaction. The unchanged source passed 26 targeted tests and the full suite: 2044 tests, four skipped. These are reference results, not candidate validation or evidence of puzzle success.",
-    "learnings": "A puzzle-backed meal cannot resolve conflicting reward and movement admissions. Summoning-room preparation must agree with potion reservation, endpoint eligibility and the final movement guard before consuming supplies. A hypothetical flight route is not proof of safe remains interaction, successful collection or survival."
-  },
-  "recommendations": [
-    {
-      "id": "000169-summoning-supply-deadlock",
-      "priority": "high",
-      "summary": "Establish a verified summoning-room preparation and retrieval transaction before reserving unknown potions indefinitely.",
-      "evidence": [
-        "Decision 672, accepted log line 1934: arrival at doorway 591.",
-        "Decision 673, log lines 1936–1937: summoning trap 552 and remains 513 are observed; the puzzle meal advances the clock without resolving preparation.",
-        "Decision 674, log line 1938: missing levitation exhausts potion discovery with the hero at 30/30 HP.",
-        "Source-pinned offline reconstruction matches selections 0–673 and reproduces the terminal blocker.",
-        "tools/puzzle_supplies.py:97–100,915–926; tools/room_tactics.py:277–278; tools/mage_policy.py:403–415; tools/summoning_tactics.py:90–107."
-      ],
-      "status": "deferred",
-      "reason": "Revalidated in this recording, but no safe focused patch is established. The concrete blockers are excluded skeletal-remains interaction and an independent summoning-entry prohibition, not missing selector source or hunger. An endpoint-only diagnostic admits a hypothetical 591–552–513 flight route, but does not validate carried-potion protection, actual-buff entry, remains-triggered contingencies or an interruption-safe return. Next derive paired decision-673/674 fixtures around that route, prove fresh bank and stash admission, then implement and test a bounded transaction with accepted movement, effect, interaction and pickup receipts. Include refusal cases for absent protection, enemy interruption, expired duration and failed collection. Do not merely admit the endpoint, weaken quarantine, waive progression pickup or restore death waits.",
-      "origin_run": "000169"
-    }
-  ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000173/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000173/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 264.933,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -125,15 +79,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 3,
-    "ending_level": 3,
-    "starving_turns": 4,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -153,6 +98,25 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000173",
+  "improvements": [
+    "When escaping a prison guard, the bot now rechecks whether its chosen cover destination is still hidden and safe. If the guard has moved into view of that destination, the bot abandons the old plan."
+  ],
+  "incoming_learnings": "A following guard can invalidate a cover destination before arrival. Recheck the destination as well as the route on every committed escape step. Currently admitted cover is not proof of lasting safety or successful escape.",
+  "incoming_update_status": "accepted",
+  "max_depth": 2,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000173/poster.jpg",
+  "previous_run_id": "000172",
+  "previous_source_commit": "54cdfcaff98203618762e4a5bc50545e6a45efa0",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -179,5 +143,43 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000169-summoning-supply-deadlock",
+      "priority": "high",
+      "summary": "Establish a verified summoning-room preparation and retrieval transaction before reserving unknown potions indefinitely.",
+      "evidence": [
+        "Decision 672, accepted log line 1934: arrival at doorway 591.",
+        "Decision 673, log lines 1936–1937: summoning trap 552 and remains 513 are observed; the puzzle meal advances the clock without resolving preparation.",
+        "Decision 674, log line 1938: missing levitation exhausts potion discovery with the hero at 30/30 HP.",
+        "Source-pinned offline reconstruction matches selections 0–673 and reproduces the terminal blocker.",
+        "tools/puzzle_supplies.py:97–100,915–926; tools/room_tactics.py:277–278; tools/mage_policy.py:403–415; tools/summoning_tactics.py:90–107."
+      ],
+      "status": "deferred",
+      "reason": "Revalidated in this recording, but no safe focused patch is established. The concrete blockers are excluded skeletal-remains interaction and an independent summoning-entry prohibition, not missing selector source or hunger. An endpoint-only diagnostic admits a hypothetical 591–552–513 flight route, but does not validate carried-potion protection, actual-buff entry, remains-triggered contingencies or an interruption-safe return. Next derive paired decision-673/674 fixtures around that route, prove fresh bank and stash admission, then implement and test a bounded transaction with accepted movement, effect, interaction and pickup receipts. Include refusal cases for absent protection, enemy interruption, expired duration and failed collection. Do not merely admit the endpoint, weaken quarantine, waive progression pickup or restore death waits.",
+      "origin_run": "000169"
+    }
+  ],
+  "review": {
+    "review": "The hero was alive at full health when planning exhausted; this was not an in-game death. Decision 672 reached doorway 591 (accepted log line 1934). Decision 673 first observed summoning trap 552 and skeletal remains 513, then ate a puzzle-backed meal (lines 1936–1937). The clock advanced from 717 to 720, but preparation remained impossible. Decision 674 (line 1938) exhausted mandatory potion discovery because the recognized flight obligation lacked levitation. Four potion colors remained unidentified; none can be treated as known levitation.\n\nSource-pinned offline bookkeeping reconstruction matched all 674 recorded selections, including actions, reasons, intents and controllers, before reproducing the terminal blocker. This is reconstructed policy memory, not originally recorded memory. The initiating contradiction is between summoning-room reward preparation and potion reservation: tools/puzzle_supplies.py:97–100 reserves levitation for the inaccessible remains, while tools/room_tactics.py:277–278 rejects skeletal remains unless explicitly admitted. The terminal policy has no admitted chest endpoints. Isolated copied-state probes found safe test-bank geometry but no protected reward journey. Admitting only the remains endpoint diagnostically produced the hypothetical route 591–552–513; this is not an executable repair. Independently, tools/mage_policy.py:403–415 refuses summoning-field entry, and tools/summoning_tactics.py:90–107 rejects deliberate remote activation with the observed gear. The meal removes hunger, not these blockers.\n\nNo policy patch or new regression is supplied: endpoint admission alone would leave the independent movement prohibition and unvalidated remains interaction, inventory protection and interruption handling. Removing the reservation would instead risk spending the room supply without retrieval. Complete source browsing and matching reconstruction resolve the packet's selecting-state gap, but do not certify a safe transaction. The unchanged source passed 26 targeted tests and the full suite: 2044 tests, four skipped. These are reference results, not candidate validation or evidence of puzzle success.",
+    "learnings": "A puzzle-backed meal cannot resolve conflicting reward and movement admissions. Summoning-room preparation must agree with potion reservation, endpoint eligibility and the final movement guard before consuming supplies. A hypothetical flight route is not proof of safe remains interaction, successful collection or survival."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 3,
+    "ending_level": 3,
+    "starving_turns": 4,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "1689355c843678c1ee4603a6dfe82ec1d981252e",
+  "started_at": "2026-11-23T05:42:19Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000173/video.mp4"
 }

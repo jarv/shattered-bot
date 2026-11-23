@@ -1,63 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000164",
-  "started_at": "2026-11-23T01:47:39Z",
-  "completed_at": "2026-11-23T02:14:31.292040+00:00",
-  "source_commit": "694c7220fa822c92b80320212a1bbc9221f489c6",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 6,
   "actions": 3024,
-  "duration_seconds": 1595.927,
+  "code_changed": true,
+  "completed_at": "2026-11-23T02:14:31.292040+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000163",
-  "previous_source_commit": "b6f70edd30a76bd3a9c4db68b3f173ff055584ae",
-  "improvements": [
-    "When standing in an open doorway under DM-100 pressure, the bot now checks whether stepping just outside it could block lightning. It avoids blocked thresholds and still verifies that the door actually closes before treating the position as cover."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Before crossing a lightning-exposed room toward another door, check whether stepping off the current threshold provides observed cover. Account for sleeping casters too, exclude heaps that prevent closure, and verify actual closure and exposure on arrival. A planned retreat is not proof of safety.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero was alive at full health when planning failed, not killed. Decision 3024, log lines 8702–8703, identifies an uncollected potion of strength at cell 1305 behind remembered magical fire. The pickup route was excluded by the eternal-fire buffer; the mandatory progression check correctly refused descent. The upgrade scroll was a separate pickup at decision 2960, not the outstanding terminal target. The earlier provisioning conflict matters: decision 2694 spent the floor's single puzzle meal before a levitation trip. After cooked meat was eaten at decision 2965, frost reconnaissance resumed at decisions 2966–2979. Hunger returned at decision 2980 during combat; subsequent quiet decisions abandoned preparation. The preparation selector vetoes hungry potion work, while its shared meal allowance was already spent. The terminal inventory still contained food and unidentified potions, but neither proves an admissible frost test or an extinguisher. Source browsing resolved the packet's missing controller chain and the recorded resource diagnostic resolved the target ambiguity. No patch is supplied: a second meal or continued travel cannot yet be certified as a usable, bounded frost preparation plan from a validated terminal policy state. In particular, no contemporaneous safe test-bank/protection preflight has been established. The unchanged suite passed 2024 tests, with four skipped; this is not a new regression or evidence of repair.",
-    "learnings": "Treat food funding for different special rooms as distinct preparation obligations, but require an admitted bank, potion protection and a bounded route before proposing additional provisioning. Keep unidentified colors unidentified, recheck actual fire removal, and preserve mandatory strength and upgrade pickups."
-  },
-  "recommendations": [
-    {
-      "id": "000164-frost-provisioning-handoff",
-      "priority": "high",
-      "summary": "Resolve the shared puzzle-meal and hungry frost-preparation contradiction without bypassing pickup or potion safety.",
-      "evidence": [
-        "Decision 2694, log line 7746: puzzle meal before known levitation preparation.",
-        "Decisions 2965–2979, log lines 8530–8571: cooked food followed by committed frost reconnaissance.",
-        "Decisions 2980–2984, log lines 8574–8582: hunger returns during combat, then exploration replaces preparation.",
-        "Decision 3024, log lines 8702–8703: strength pickup blocked by eternal-fire buffer; prior puzzle meal already attempted.",
-        "tools/puzzle_supplies.py:665–677,724–726; tools/priority_resources.py:124–157; tools/mage_policy.py:459–476."
-      ],
-      "status": "deferred",
-      "reason": "The exact safety blocker is the absence of a validated terminal frost-bank and potion-protection preflight, not absence of food or selecting source. The recorded terminal report omits frost-view commitments, exhausted vantages, potion-test bookkeeping and protective-container receipt state. Offline selected-input reconstruction had not reached this episode when reporting. Next, finish that reconstruction to the first divergence, probe existing frost preparation on copies without dispatch, and derive a regression for a bounded, puzzle-specific provisioning handoff only if the bank and protection checks actually admit it. Merely resetting the floor meal allowance could consume food without enabling a safe test.",
-      "origin_run": "000164"
-    }
-  ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000164/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000164/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 1595.927,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -205,15 +159,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 12,
-    "ending_experience": 11,
-    "ending_level": 9,
-    "starving_turns": 15,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -257,6 +202,25 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000164",
+  "improvements": [
+    "When standing in an open doorway under DM-100 pressure, the bot now checks whether stepping just outside it could block lightning. It avoids blocked thresholds and still verifies that the door actually closes before treating the position as cover."
+  ],
+  "incoming_learnings": "Before crossing a lightning-exposed room toward another door, check whether stepping off the current threshold provides observed cover. Account for sleeping casters too, exclude heaps that prevent closure, and verify actual closure and exposure on arrival. A planned retreat is not proof of safety.",
+  "incoming_update_status": "accepted",
+  "max_depth": 6,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000164/poster.jpg",
+  "previous_run_id": "000163",
+  "previous_source_commit": "b6f70edd30a76bd3a9c4db68b3f173ff055584ae",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -315,5 +279,43 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000164-frost-provisioning-handoff",
+      "priority": "high",
+      "summary": "Resolve the shared puzzle-meal and hungry frost-preparation contradiction without bypassing pickup or potion safety.",
+      "evidence": [
+        "Decision 2694, log line 7746: puzzle meal before known levitation preparation.",
+        "Decisions 2965–2979, log lines 8530–8571: cooked food followed by committed frost reconnaissance.",
+        "Decisions 2980–2984, log lines 8574–8582: hunger returns during combat, then exploration replaces preparation.",
+        "Decision 3024, log lines 8702–8703: strength pickup blocked by eternal-fire buffer; prior puzzle meal already attempted.",
+        "tools/puzzle_supplies.py:665–677,724–726; tools/priority_resources.py:124–157; tools/mage_policy.py:459–476."
+      ],
+      "status": "deferred",
+      "reason": "The exact safety blocker is the absence of a validated terminal frost-bank and potion-protection preflight, not absence of food or selecting source. The recorded terminal report omits frost-view commitments, exhausted vantages, potion-test bookkeeping and protective-container receipt state. Offline selected-input reconstruction had not reached this episode when reporting. Next, finish that reconstruction to the first divergence, probe existing frost preparation on copies without dispatch, and derive a regression for a bounded, puzzle-specific provisioning handoff only if the bank and protection checks actually admit it. Merely resetting the floor meal allowance could consume food without enabling a safe test.",
+      "origin_run": "000164"
+    }
+  ],
+  "review": {
+    "review": "The hero was alive at full health when planning failed, not killed. Decision 3024, log lines 8702–8703, identifies an uncollected potion of strength at cell 1305 behind remembered magical fire. The pickup route was excluded by the eternal-fire buffer; the mandatory progression check correctly refused descent. The upgrade scroll was a separate pickup at decision 2960, not the outstanding terminal target. The earlier provisioning conflict matters: decision 2694 spent the floor's single puzzle meal before a levitation trip. After cooked meat was eaten at decision 2965, frost reconnaissance resumed at decisions 2966–2979. Hunger returned at decision 2980 during combat; subsequent quiet decisions abandoned preparation. The preparation selector vetoes hungry potion work, while its shared meal allowance was already spent. The terminal inventory still contained food and unidentified potions, but neither proves an admissible frost test or an extinguisher. Source browsing resolved the packet's missing controller chain and the recorded resource diagnostic resolved the target ambiguity. No patch is supplied: a second meal or continued travel cannot yet be certified as a usable, bounded frost preparation plan from a validated terminal policy state. In particular, no contemporaneous safe test-bank/protection preflight has been established. The unchanged suite passed 2024 tests, with four skipped; this is not a new regression or evidence of repair.",
+    "learnings": "Treat food funding for different special rooms as distinct preparation obligations, but require an admitted bank, potion protection and a bounded route before proposing additional provisioning. Keep unidentified colors unidentified, recheck actual fire removal, and preserve mandatory strength and upgrade pickups."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 11,
+    "ending_level": 9,
+    "starving_turns": 15,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "694c7220fa822c92b80320212a1bbc9221f489c6",
+  "started_at": "2026-11-23T01:47:39Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000164/video.mp4"
 }

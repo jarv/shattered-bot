@@ -1,40 +1,102 @@
 {
-  "schema_version": 1,
-  "id": "000095",
-  "started_at": "2026-11-22T00:40:38Z",
-  "completed_at": "2026-11-22T00:44:51.717554+00:00",
-  "source_commit": "36213c529a48ca7f75cb7b75048402d92eb8b374",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 429,
-  "duration_seconds": 249.999,
+  "code_changed": false,
+  "completed_at": "2026-11-22T00:44:51.717554+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000094",
-  "previous_source_commit": "3bfeb5c5050ec2512b4ef85d05c41088ac17cecb",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 249.999,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 45,
+        "turns": 430,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 423,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 105
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000095",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "Known invisibility does not guarantee executable pool retrieval. Budget travel to the protected-trip origin separately from arrival, door handling and the protected round trip. Preserve fresh hazard checks, actual invisibility verification, mandatory pickup and collection receipts; do not infer success from a hypothetical route.",
   "incoming_update_status": "review-only",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at full health when mandatory potion discovery exhausted the planner (decision 429, log line 1165). The initiating error was a false flight-room supply demand: trap 541 was associated by distance alone with chest 633 across an observed solid wall and crystal door. The actual flight reward at 480 had already been retrieved. Full source-pinned offline bookkeeping reconstruction matches decisions 0–428 and the terminal blocker; this is reconstructed state, not recorded memory. A focused local-connectivity correction rejects the wall-separated association while retaining reservations through unknown geometry and preserving genuine flight rewards, hazard checks and mandatory pickup. The new regression fails on the original policy and passes on the candidate. All 175 test modules pass independently, totaling 1,836 tests; monolithic discovery exceeded isolated resource limits. Candidate reconstruction stops at its first changed decision, 381, where existing crystal-key work replaces an unjustified puzzle meal. No later gameplay outcome is established. No publication or deployment was performed.",
-    "learnings": "Nearby loot across a positively observed wall is not evidence that levitation retrieves it. Keep uncertain geometry conservative, preserve real uncollected rewards, and require fresh protection and pickup receipts. Selecting crystal-key preparation does not establish successful retrieval or eventual descent."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000095/poster.jpg",
+  "previous_run_id": "000094",
+  "previous_source_commit": "3bfeb5c5050ec2512b4ef85d05c41088ac17cecb",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 45,
+    "gold_complete": true,
+    "turns": 430,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -358,46 +420,11 @@
       "origin_run": "000026"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000095/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000095/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 11,
-        "gold_gained": 45,
-        "turns": 430,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 423,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 105
-          },
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero remained alive at full health when mandatory potion discovery exhausted the planner (decision 429, log line 1165). The initiating error was a false flight-room supply demand: trap 541 was associated by distance alone with chest 633 across an observed solid wall and crystal door. The actual flight reward at 480 had already been retrieved. Full source-pinned offline bookkeeping reconstruction matches decisions 0–428 and the terminal blocker; this is reconstructed state, not recorded memory. A focused local-connectivity correction rejects the wall-separated association while retaining reservations through unknown geometry and preserving genuine flight rewards, hazard checks and mandatory pickup. The new regression fails on the original policy and passes on the candidate. All 175 test modules pass independently, totaling 1,836 tests; monolithic discovery exceeded isolated resource limits. Candidate reconstruction stops at its first changed decision, 381, where existing crystal-key work replaces an unjustified puzzle meal. No later gameplay outcome is established. No publication or deployment was performed.",
+    "learnings": "Nearby loot across a positively observed wall is not evidence that levitation retrieves it. Keep uncertain geometry conservative, preserve real uncollected rewards, and require fresh protection and pickup receipts. Selecting crystal-key preparation does not establish successful retrieval or eventual descent."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -407,36 +434,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 45,
-    "gold_complete": true,
-    "turns": 430,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "36213c529a48ca7f75cb7b75048402d92eb8b374",
+  "started_at": "2026-11-22T00:40:38Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000095/video.mp4"
 }

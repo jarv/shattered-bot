@@ -1,44 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000146",
-  "started_at": "2026-11-22T21:33:52Z",
-  "completed_at": "2026-11-22T21:36:27.802021+00:00",
-  "source_commit": "98809c75fc8ebe7f15a64492f685c7a87dcc58b6",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "stuck-planner",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 395,
-  "duration_seconds": 152.317,
+  "code_changed": false,
+  "completed_at": "2026-11-22T21:36:27.802021+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000145",
-  "previous_source_commit": "5113b78b747ff823875d9c06e182d6a39d6b4dce",
-  "improvements": [],
-  "code_changed": false,
-  "incoming_learnings": "No review performed; no new learnings claimed.",
-  "incoming_update_status": "review-skipped",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "Review skipped: provider usage limit. Gameplay and publication continue without a proposed code change.",
-    "learnings": "No review performed; no new learnings claimed."
-  },
-  "recommendations": [],
-  "update_status": "review-skipped",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000146/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000146/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 152.317,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -71,15 +44,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 0,
-    "ending_level": 2,
-    "starving_turns": 0,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -93,6 +57,22 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000146",
+  "improvements": [],
+  "incoming_learnings": "No review performed; no new learnings claimed.",
+  "incoming_update_status": "review-skipped",
+  "max_depth": 1,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000146/poster.jpg",
+  "previous_run_id": "000145",
+  "previous_source_commit": "5113b78b747ff823875d9c06e182d6a39d6b4dce",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -111,5 +91,27 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [],
+  "review": {
+    "review": "Review skipped: provider usage limit. Gameplay and publication continue without a proposed code change.",
+    "learnings": "No review performed; no new learnings claimed."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "98809c75fc8ebe7f15a64492f685c7a87dcc58b6",
+  "started_at": "2026-11-22T21:33:52Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "review-skipped",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000146/video.mp4"
 }

@@ -1,41 +1,125 @@
 {
-  "schema_version": 1,
-  "id": "000056",
-  "started_at": "2026-11-21T14:20:14Z",
-  "completed_at": "2026-11-21T14:22:16.659474+00:00",
-  "source_commit": "5bf821eff83c5a2d86506d39e8facabdf762da39",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "dead",
-  "outcome_summary": "Died under converging gnoll and rat pressure after a hidden alarm",
-  "outcome_reason": "Hero died",
-  "max_depth": 2,
   "actions": 298,
-  "duration_seconds": 119.799,
+  "code_changed": true,
+  "completed_at": "2026-11-21T14:22:16.659474+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000055",
-  "previous_source_commit": "a6e5a92cf58b9063a3f1f8b9dedd145335ab55bf",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "duration_seconds": 119.799,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 258,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 254,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 336
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 2,
+        "gold_gained": 0,
+        "turns": 32,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 38,
+        "terminal_floor": true,
+        "highlights": []
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000056",
   "improvements": [
     "The bot can now open the magical holster when an upgrade is allocated to a carried wand that is not shown in the backpack. It still requires the exact wand and the normal upgrade confirmation."
   ],
-  "code_changed": true,
   "incoming_learnings": "A carried item may be in another bag even when the upgrade menu opens in the backpack. Navigate the observed holster tab for the allocated wand, then require its exact visible name and ordinary confirmation. A tab click is not proof of an upgrade, and missing targets must still fail closed.",
   "incoming_update_status": "accepted",
+  "max_depth": 2,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "A hidden alarm triggered during exploration (decision 276, accepted transition line 790; activation reported at decision 277, line 792). During the resulting convergence, the doorway plan lost its usable hiding side. Decisions 284–285 (lines 814–817) then waited with a known staff charge because ordinary charge conservation counted only enemies within two cells, overlooking the awake gnoll and rats approaching from different sides. Existing attack gates admitted a shot at the selected gnoll. Later combat and unsuccessful withdrawal ended in HP falling from three to zero at decision 297, accepted transition line 857; the killing enemy is not confirmed. Source-pinned offline reconstruction matched all 298 original selections. The proposed focused change limits this ordinary conservation rule to a single awake enemy, preserving attack, hazard and queued-snake safety checks. Its new regression fails by assertion on original policy and passes with the change; the full candidate suite passes 1,698 tests with four skipped. Candidate reconstruction stops at its first changed decision, 284. This establishes earlier admitted shooting, not survival or successful loot collection.",
-    "learnings": "Distant awake enemies can form multiple approaching fronts even before they enter the nearby crowding radius. Do not suppress an otherwise admitted staff shot solely to await ordinary melee in that situation. Preserve lone-enemy conservation, known-charge and clear-shot checks, and mandatory progression pickup; an earlier shot does not prove a kill or safe recovery."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Died under converging gnoll and rat pressure after a hidden alarm",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000056/poster.jpg",
+  "previous_run_id": "000055",
+  "previous_source_commit": "a6e5a92cf58b9063a3f1f8b9dedd145335ab55bf",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 290,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -230,54 +314,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000056/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000056/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 0,
-        "turns": 258,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 254,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 336
-          },
-          {
-            "kind": "room",
-            "label": "Barricaded area",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 2,
-        "gold_gained": 0,
-        "turns": 32,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 38,
-        "terminal_floor": true,
-        "highlights": []
-      }
-    ]
+  "review": {
+    "review": "A hidden alarm triggered during exploration (decision 276, accepted transition line 790; activation reported at decision 277, line 792). During the resulting convergence, the doorway plan lost its usable hiding side. Decisions 284–285 (lines 814–817) then waited with a known staff charge because ordinary charge conservation counted only enemies within two cells, overlooking the awake gnoll and rats approaching from different sides. Existing attack gates admitted a shot at the selected gnoll. Later combat and unsuccessful withdrawal ended in HP falling from three to zero at decision 297, accepted transition line 857; the killing enemy is not confirmed. Source-pinned offline reconstruction matched all 298 original selections. The proposed focused change limits this ordinary conservation rule to a single awake enemy, preserving attack, hazard and queued-snake safety checks. Its new regression fails by assertion on original policy and passes with the change; the full candidate suite passes 1,698 tests with four skipped. Candidate reconstruction stops at its first changed decision, 284. This establishes earlier admitted shooting, not survival or successful loot collection.",
+    "learnings": "Distant awake enemies can form multiple approaching fronts even before they enter the nearby crowding radius. Do not suppress an otherwise admitted staff shot solely to await ordinary melee in that situation. Preserve lone-enemy conservation, known-charge and clear-shot checks, and mandatory progression pickup; an earlier shot does not prove a kill or safe recovery."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -287,50 +328,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 0,
-    "gold_complete": true,
-    "turns": 290,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "5bf821eff83c5a2d86506d39e8facabdf762da39",
+  "started_at": "2026-11-21T14:20:14Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000056/video.mp4"
 }

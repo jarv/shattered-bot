@@ -1,41 +1,142 @@
 {
-  "schema_version": 1,
-  "id": "000081",
-  "started_at": "2026-11-21T20:30:21Z",
-  "completed_at": "2026-11-21T20:33:31.539460+00:00",
-  "source_commit": "3f542818ee8751b4722f979a8ee0d9a653ac4dc9",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "dead",
-  "outcome_summary": "Killed by a gnoll scout after a hidden summoning-trap cascade",
-  "outcome_reason": "Hero died",
-  "max_depth": 2,
   "actions": 477,
-  "duration_seconds": 187.405,
+  "code_changed": true,
+  "completed_at": "2026-11-21T20:33:31.539460+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000080",
-  "previous_source_commit": "1bd483d55fb6925da0f0d9400410943a07c34012",
+  "death_category": "combat",
+  "death_category_evidence": "review summary: Killed by a gnoll scout after a hidden summoning-trap cascade",
+  "duration_seconds": 187.405,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 76,
+        "turns": 378,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 370,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 148
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 173,
+        "turns": 96,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 101,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 558
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded storage",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000081",
   "improvements": [
     "While looking for the entrance shop, the bot now checks an already reachable door when it is closer than the next scouting point in the same area. Equally close scouting points still take priority."
   ],
-  "code_changed": true,
   "incoming_learnings": "A door-layer limit alone does not bound shop scouting across a large open component. Prefer an already admitted nearer door over a more distant frontier at the same layer, while retaining local-frontier ties, fresh visit evidence and all safety checks. Choosing preparation is not proof of shop discovery.",
   "incoming_update_status": "accepted",
+  "max_depth": 2,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The initiating event was a hidden summoning-trap cascade, not the final snake-stall fallback. Decision 466 approached skeletal remains from an open doorway at full health with three staff charges; its accepted transition first reveals the trap and twelve enemies. No trap or enemy was publicly observed before that step. The matching-key chest wording was generic: reconstructed memory identifies skeletal remains as the target. All eight neighboring cells were then occupied, including the return doorway, and the existing retreat selector had no admitted movement route. Three snake zaps exhausted magic, followed by damaging recovery attacks and dew consumption with no net health gain. The final accepted transition explicitly confirms a gnoll scout killed the hero; this attribution comes from the full public message, not proximity. Offline reconstruction on the exact source digest matches all 477 recorded actions, reasons, intents and controllers. This is reconstructed bookkeeping, not originally saved memory or a gameplay replay. Unidentified armor's post-death properties were not available for earlier equipment decisions. No patch is supplied: hidden-trap hindsight cannot justify a search trigger, and no budgeted escape-opening alternative is established against the occupied doorway. The concrete next repair investigation is specified in the new recommendation. The unchanged Python suite passes 1788 tests with four skipped; no baseline-red or candidate-green result is claimed.",
-    "learnings": "Separate an unseen trap's first activation from later visible hazards. A three-charge container approach does not guarantee readiness for chain summons. Investigate fresh-evidence, budgeted attacks on an occupied return doorway before changing boxed-swarm priorities; clearing a target is not yet a verified escape. Retain all hazard, collateral and mandatory collection checks."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Killed by a gnoll scout after a hidden summoning-trap cascade",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000081/poster.jpg",
+  "previous_run_id": "000080",
+  "previous_source_commit": "1bd483d55fb6925da0f0d9400410943a07c34012",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 249,
+    "gold_complete": true,
+    "turns": 474,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -330,71 +431,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000081/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000081/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 76,
-        "turns": 378,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 370,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 148
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 173,
-        "turns": 96,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 101,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Barricaded area",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 558
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Barricaded storage",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The initiating event was a hidden summoning-trap cascade, not the final snake-stall fallback. Decision 466 approached skeletal remains from an open doorway at full health with three staff charges; its accepted transition first reveals the trap and twelve enemies. No trap or enemy was publicly observed before that step. The matching-key chest wording was generic: reconstructed memory identifies skeletal remains as the target. All eight neighboring cells were then occupied, including the return doorway, and the existing retreat selector had no admitted movement route. Three snake zaps exhausted magic, followed by damaging recovery attacks and dew consumption with no net health gain. The final accepted transition explicitly confirms a gnoll scout killed the hero; this attribution comes from the full public message, not proximity. Offline reconstruction on the exact source digest matches all 477 recorded actions, reasons, intents and controllers. This is reconstructed bookkeeping, not originally saved memory or a gameplay replay. Unidentified armor's post-death properties were not available for earlier equipment decisions. No patch is supplied: hidden-trap hindsight cannot justify a search trigger, and no budgeted escape-opening alternative is established against the occupied doorway. The concrete next repair investigation is specified in the new recommendation. The unchanged Python suite passes 1788 tests with four skipped; no baseline-red or candidate-green result is claimed.",
+    "learnings": "Separate an unseen trap's first activation from later visible hazards. A three-charge container approach does not guarantee readiness for chain summons. Investigate fresh-evidence, budgeted attacks on an occupied return doorway before changing boxed-swarm priorities; clearing a target is not yet a verified escape. Retain all hazard, collateral and mandatory collection checks."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 11,
@@ -404,50 +445,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 249,
-    "gold_complete": true,
-    "turns": 474,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "3f542818ee8751b4722f979a8ee0d9a653ac4dc9",
+  "started_at": "2026-11-21T20:30:21Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000081/video.mp4"
 }

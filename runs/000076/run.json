@@ -1,40 +1,112 @@
 {
-  "schema_version": 1,
-  "id": "000076",
-  "started_at": "2026-11-21T19:18:47Z",
-  "completed_at": "2026-11-21T19:22:54.988094+00:00",
-  "source_commit": "114b0f85bf0593af7eae394e166bbf530b8b683b",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 388,
-  "duration_seconds": 243.933,
+  "code_changed": false,
+  "completed_at": "2026-11-21T19:22:54.988094+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000075",
-  "previous_source_commit": "732100b919cc1e731a07d873c4a0387652bbcd77",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 243.933,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 64,
+        "turns": 376,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 382,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1080
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000076",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "Recognizing a sentry room is not enough to authorize a potion test or retrieve its reward. Separate safe observation preparation from protected retrieval, and require public evidence for both. Full health and a puzzle meal do not resolve missing geometry or unknown potion identities.",
   "incoming_update_status": "review-only",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at full health when mandatory potion discovery exhausted the planner. An earlier, directly observed failure repeatedly reopened a gas-room door and retreated without using carried, identified purity: reclosure discarded the practical value of the entrance observation. The focused correction remembers that scout without granting protection or collection. A reduced public-evidence fixture validates the preceding scout and retreat, fails on original policy, and passes on the candidate. It is synthetic helper memory, not a full-run reconstruction. The complete suite passes 1776 tests with four skips. Terminal exhaustion is not claimed fixed: missing-supply arbitration also includes remembered bookshelves and runtime retrieval flags. The proposal preserves hazard checks, actual-buff verification, mandatory pickup, and the stuck-planner terminal label. Policy edits and the new regression are present; the files field is empty because the trusted adapter derives changed files.",
-    "learnings": "An observed entrance remains scouted when its ordinary door recloses. Use that observation to prepare known protection from clear ground, never to assume a buff or reward. Separately validate terminal supply obligations and protected gas-controller arbitration before claiming retrieval or descent success."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000076/poster.jpg",
+  "previous_run_id": "000075",
+  "previous_source_commit": "732100b919cc1e731a07d873c4a0387652bbcd77",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 64,
+    "gold_complete": true,
+    "turns": 376,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -326,56 +398,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000076/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000076/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 64,
-        "turns": 376,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 382,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 1080
-          },
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero remained alive at full health when mandatory potion discovery exhausted the planner. An earlier, directly observed failure repeatedly reopened a gas-room door and retreated without using carried, identified purity: reclosure discarded the practical value of the entrance observation. The focused correction remembers that scout without granting protection or collection. A reduced public-evidence fixture validates the preceding scout and retreat, fails on original policy, and passes on the candidate. It is synthetic helper memory, not a full-run reconstruction. The complete suite passes 1776 tests with four skips. Terminal exhaustion is not claimed fixed: missing-supply arbitration also includes remembered bookshelves and runtime retrieval flags. The proposal preserves hazard checks, actual-buff verification, mandatory pickup, and the stuck-planner terminal label. Policy edits and the new regression are present; the files field is empty because the trusted adapter derives changed files.",
+    "learnings": "An observed entrance remains scouted when its ordinary door recloses. Use that observation to prepare known protection from clear ground, never to assume a buff or reward. Separately validate terminal supply obligations and protected gas-controller arbitration before claiming retrieval or descent success."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -385,36 +412,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 64,
-    "gold_complete": true,
-    "turns": 376,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "114b0f85bf0593af7eae394e166bbf530b8b683b",
+  "started_at": "2026-11-21T19:18:47Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000076/video.mp4"
 }

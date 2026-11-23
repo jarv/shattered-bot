@@ -1,40 +1,102 @@
 {
-  "schema_version": 1,
-  "id": "000139",
-  "started_at": "2026-11-22T15:33:42Z",
-  "completed_at": "2026-11-22T15:36:26.435118+00:00",
-  "source_commit": "9b334d430cf9f3093d8c29ad5c8955e5ee5370bc",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "8433c6c-equipment",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 268,
-  "duration_seconds": 114.79,
+  "code_changed": false,
+  "completed_at": "2026-11-22T15:36:26.435118+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000138",
-  "previous_source_commit": "86ef3207339dbb65cf055d46552b1d1b501a6c80",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 114.79,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 129,
+        "turns": 297,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 262,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 726
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000139",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "Reserve an executable preparation return before the last collection route disconnects it. A feasible bank or proposed preparation move is not proof of completed identification or retrieval. Preserve unfinished loot, reserved puzzle supplies, fresh arrival checks and accepted collection receipts. The previous summoning-quarantine diagnosis does not establish this recording's cause.",
   "incoming_update_status": "review-only",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The living hero exhausted the planner, not the game health bar. After one unknown frost hypothesis and retrieval of the still-unidentified bistre potion, decision 267 selected a door shortcut back toward the previously admitted test bank. The accepted move to 1034 changed visibility: cells 1031, 1032 and 1066 around bank 1067 became unseen. At decision 268 no freshly admissible frost bank remained; the separate flight plan also had no verified protected reward round trip. Unfinished fire-room food remained excluded by the fire buffer, and potion reservation prevented ordinary discovery and descent. This is a routing/admission contradiction, not evidence that the potion identity or rewards were unavailable. Offline bookkeeping reconstructed from the pinned played source and public inputs matched all 268 actions, reasons, intents and controllers and reproduced the terminal blocker. The proposed corridor-only staging change chooses 1069 in an isolated copy of the validated pre-267 state; no later observation was supplied after that alternative. Three new regression tests pass, and all 1,958 suite tests pass with four skips. No in-game continuation, successful potion identification, fire removal or pickup is established. The completed recording has no source diff, so improvements is empty. Existing backlog items remain historical, not independently revalidated here.",
-    "learnings": "A shortest route to an admissible preparation bank can invalidate its own visibility prerequisites. Prefer the already admitted ordinary stash corridor, then recheck the bank and inventory protection on arrival. An alternative preparation selection does not establish puzzle success or waive unfinished loot."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000139/poster.jpg",
+  "previous_run_id": "000138",
+  "previous_source_commit": "86ef3207339dbb65cf055d46552b1d1b501a6c80",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 129,
+    "gold_complete": true,
+    "turns": 297,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -358,46 +420,11 @@
       "origin_run": "000043"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000139/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000139/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 11,
-        "gold_gained": 129,
-        "turns": 297,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 262,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 726
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The living hero exhausted the planner, not the game health bar. After one unknown frost hypothesis and retrieval of the still-unidentified bistre potion, decision 267 selected a door shortcut back toward the previously admitted test bank. The accepted move to 1034 changed visibility: cells 1031, 1032 and 1066 around bank 1067 became unseen. At decision 268 no freshly admissible frost bank remained; the separate flight plan also had no verified protected reward round trip. Unfinished fire-room food remained excluded by the fire buffer, and potion reservation prevented ordinary discovery and descent. This is a routing/admission contradiction, not evidence that the potion identity or rewards were unavailable. Offline bookkeeping reconstructed from the pinned played source and public inputs matched all 268 actions, reasons, intents and controllers and reproduced the terminal blocker. The proposed corridor-only staging change chooses 1069 in an isolated copy of the validated pre-267 state; no later observation was supplied after that alternative. Three new regression tests pass, and all 1,958 suite tests pass with four skips. No in-game continuation, successful potion identification, fire removal or pickup is established. The completed recording has no source diff, so improvements is empty. Existing backlog items remain historical, not independently revalidated here.",
+    "learnings": "A shortest route to an admissible preparation bank can invalidate its own visibility prerequisites. Prefer the already admitted ordinary stash corridor, then recheck the bank and inventory protection on arrival. An alternative preparation selection does not establish puzzle success or waive unfinished loot."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -407,36 +434,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 129,
-    "gold_complete": true,
-    "turns": 297,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "9b334d430cf9f3093d8c29ad5c8955e5ee5370bc",
+  "started_at": "2026-11-22T15:33:42Z",
+  "supervisor_version": "8433c6c-equipment",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000139/video.mp4"
 }

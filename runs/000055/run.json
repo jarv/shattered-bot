@@ -1,40 +1,303 @@
 {
-  "schema_version": 1,
-  "id": "000055",
-  "started_at": "2026-11-21T13:59:05Z",
-  "completed_at": "2026-11-21T14:13:33.549615+00:00",
-  "source_commit": "a6e5a92cf58b9063a3f1f8b9dedd145335ab55bf",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "blocked",
-  "outcome_summary": "Blocked during wand upgrade selection",
-  "max_depth": 6,
   "actions": 2162,
-  "duration_seconds": 860.133,
+  "code_changed": true,
+  "completed_at": "2026-11-21T14:13:33.549615+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000054",
-  "previous_source_commit": "43a6028dcd44194349deedbf8d0ca97099dde32f",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: blocked",
+  "duration_seconds": 860.133,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 294,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 293,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 566
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 21,
+        "gold_gained": 324,
+        "turns": 469,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 470,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 765
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 422
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 30,
+        "gold_gained": 328,
+        "turns": 364,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 385,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 258
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 52,
+        "gold_gained": 731,
+        "turns": 509,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 525,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1239
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 871
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 267,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 276,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 491
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 28,
+        "gold_gained": 0,
+        "turns": 183,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 191,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000055",
   "improvements": [
     "Before approaching a narrow corridor end that needs searching, the bot can try a known-uncursed wand of prismatic light along a fully visible, unobstructed shot. It then checks the surroundings again without assuming that the cast found traps or completed the search."
   ],
-  "code_changed": true,
   "incoming_learnings": "Before a required narrow-corridor search approach, prefer a bounded known-uncursed prismatic-light scan when the shot is fully observed and safely ends at a solid wall. Reobserve afterward; an attempted cast does not prove charge, trap discovery, search completion or collection. Persistent confusion gas can renew vertigo despite advancing turns. Preserve the terminal planner-failure label and all mandatory pickup and hazard gates.",
   "incoming_update_status": "accepted",
+  "max_depth": 6,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run ended blocked in an upgrade-selection menu, not dead or planner-exhausted. Decision 2161 (log line 6033) read an upgrade scroll for a spare-wand investment. Its accepted transition (line 6034) left the hero at 50/50 HP with the clock unchanged at 2086. The final menu (line 6035) showed backpack equipment and a Magical Holster tab, but not the carried prismatic-light wand. The allocator supports spare wands, while the original menu handler only searched the current bag for the allocated name and then stopped. A local, source-pinned reconstruction of allocation from that exact public input matches the recorded reason and reproduces the terminal block; this is not recovered whole-run memory. The focused candidate opens the observed holster once, preserving exact target selection, confirmation and failure on continued absence. Isolated fixtures establish bounded navigation, not an actual completed upgrade or improved survival. Existing backlog entries retain prior-review context and were not re-investigated.",
-    "learnings": "A carried item may be in another bag even when the upgrade menu opens in the backpack. Navigate the observed holster tab for the allocated wand, then require its exact visible name and ordinary confirmation. A tab click is not proof of an upgrade, and missing targets must still fail closed."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "blocked",
+  "outcome_summary": "Blocked during wand upgrade selection",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000055/poster.jpg",
+  "previous_run_id": "000054",
+  "previous_source_commit": "43a6028dcd44194349deedbf8d0ca97099dde32f",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 7,
+    "gold_collected": 1383,
+    "gold_complete": true,
+    "turns": 2086,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -227,177 +490,11 @@
       "origin_run": "000055"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000055/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000055/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 0,
-        "turns": 294,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 293,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 566
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 21,
-        "gold_gained": 324,
-        "turns": 469,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 470,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 765
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 422
-          }
-        ]
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 30,
-        "gold_gained": 328,
-        "turns": 364,
-        "experience_complete": false,
-        "gold_complete": false,
-        "turns_complete": false,
-        "accepted_inputs": 385,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Alchemy area",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 258
-          }
-        ]
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "experience_gained": 52,
-        "gold_gained": 731,
-        "turns": 509,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 525,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Crystal choice container",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 1239
-          },
-          {
-            "kind": "quest",
-            "label": "Sad Ghost",
-            "status": "encountered"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 871
-          }
-        ]
-      },
-      {
-        "depth": 5,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 0,
-        "turns": 267,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 276,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "boss",
-            "label": "Goo",
-            "status": "encountered"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 491
-          },
-          {
-            "kind": "boss",
-            "label": "Goo",
-            "status": "reported-defeated"
-          }
-        ]
-      },
-      {
-        "depth": 6,
-        "branch": 0,
-        "experience_gained": 28,
-        "gold_gained": 0,
-        "turns": 183,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 191,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Shop",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run ended blocked in an upgrade-selection menu, not dead or planner-exhausted. Decision 2161 (log line 6033) read an upgrade scroll for a spare-wand investment. Its accepted transition (line 6034) left the hero at 50/50 HP with the clock unchanged at 2086. The final menu (line 6035) showed backpack equipment and a Magical Holster tab, but not the carried prismatic-light wand. The allocator supports spare wands, while the original menu handler only searched the current bag for the allocated name and then stopped. A local, source-pinned reconstruction of allocation from that exact public input matches the recorded reason and reproduces the terminal block; this is not recovered whole-run memory. The focused candidate opens the observed holster once, preserving exact target selection, confirmation and failure on continued absence. Isolated fixtures establish bounded navigation, not an actual completed upgrade or improved survival. Existing backlog entries retain prior-review context and were not re-investigated.",
+    "learnings": "A carried item may be in another bag even when the upgrade menu opens in the backpack. Navigate the observed holster tab for the allocated wand, then require its exact visible name and ordinary confirmation. A tab click is not proof of an upgrade, and missing targets must still fail closed."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 12,
@@ -407,106 +504,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 6,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "starving_turns": 6,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 5,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 6,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 7,
-    "gold_collected": 1383,
-    "gold_complete": true,
-    "turns": 2086,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 4,
-        "max_level_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "levels_gained": 2,
-        "levels_complete": true,
-        "max_level": 6,
-        "max_level_complete": true
-      },
-      {
-        "depth": 5,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 6,
-        "max_level_complete": true
-      },
-      {
-        "depth": 6,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 7,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "a6e5a92cf58b9063a3f1f8b9dedd145335ab55bf",
+  "started_at": "2026-11-21T13:59:05Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000055/video.mp4"
 }

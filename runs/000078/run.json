@@ -1,64 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000078",
-  "started_at": "2026-11-21T19:44:36Z",
-  "completed_at": "2026-11-21T19:46:23.554726+00:00",
-  "source_commit": "71876354058d381b62085164a23656c21a3010f0",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 275,
-  "duration_seconds": 104.241,
+  "code_changed": true,
+  "completed_at": "2026-11-21T19:46:23.554726+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000077",
-  "previous_source_commit": "32a178410156514f86cc72c6da887a7789057a05",
-  "improvements": [
-    "The bot now distinguishes picking up a freshly visible pile on the stairs from actually using the stairs. It permits the existing safe pickup interaction while retaining checks against unintended descent."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Distinguish fresh adjacent heap pickup from actually using the stairs. Preserve the existing threat and observation requirements, and require an accepted collection receipt before considering the heap finished. Choosing this interaction does not establish collection or subsequent descent success.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at full health when mandatory potion discovery exhausted the planner. Decision 109 (log line 302) recognized a sentry without enough observed enclosure geometry or reward information to plan its protected round trip. That unresolved room reserved a missing haste supply. At decision 275 (line 785), this reservation blocked discovery; reconstructed bookkeeping excludes journey, drop, stash and trap-retrieval flags as alternative causes. A known clairvoyance stone was carried, but ordinary mapping required prior searches and never selected it. Offline reconstruction matched all 275 preceding selected actions, reasons and intents and reproduced the terminal blocker. The proposed correction admits one stationary, known-stone reveal of nearby missing sentry geometry before that veto, preserving threat, health, hunger, hazard, potion-protection and mandatory pickup gates. The new regression has two expected assertion failures on original policy and passes after correction; the full candidate suite passes 1783 tests with four skipped. Candidate reconstruction first changes only decision 275 and stops there. This establishes preparation selection, not an executed reveal, complete room observation, potion identification, collection or successful descent. Policy and regression edits are supplied in the working source; files is empty for trusted change extraction.",
-    "learnings": "Before treating incomplete sentry geometry as exhausted preparation, consider a carried known clairvoyance stone from an observed safe square. Mapping must remain information gathering only: reobserve afterward and require all normal protection, inventory and retrieval checks. Never infer potion identities or room completion from the proposed reveal."
-  },
-  "recommendations": [
-    {
-      "id": "000075-sentry-observation-preparation",
-      "priority": "high",
-      "summary": "Use safe known reconnaissance before incomplete sentry geometry exhausts mandatory discovery.",
-      "evidence": [
-        "Run 000078 decision 109, log line 302: sentry recognition precedes departure from its incompletely observed entrance.",
-        "Run 000078 decision 176, log line 503: a known clairvoyance stone is publicly carried.",
-        "Run 000078 decision 274, accepted transition at line 783: movement advances time without damage.",
-        "Run 000078 decision 275, log line 785: missing room supply blocks mandatory discovery despite carried reconnaissance.",
-        "Original offline reconstruction matches all preceding actions, reasons and intents and isolates only the sentry haste demand.",
-        "tools/runestone_tactics.py:146–165 excludes ordinary clairvoyance before two searches; tools/descent_potions.py now admits narrowly bounded stationary reconnaissance."
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000075"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000078/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000078/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 104.241,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -101,15 +54,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 0,
-    "ending_level": 2,
-    "starving_turns": 0,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -123,6 +67,25 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000078",
+  "improvements": [
+    "The bot now distinguishes picking up a freshly visible pile on the stairs from actually using the stairs. It permits the existing safe pickup interaction while retaining checks against unintended descent."
+  ],
+  "incoming_learnings": "Distinguish fresh adjacent heap pickup from actually using the stairs. Preserve the existing threat and observation requirements, and require an accepted collection receipt before considering the heap finished. Choosing this interaction does not establish collection or subsequent descent success.",
+  "incoming_update_status": "accepted",
+  "max_depth": 1,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000078/poster.jpg",
+  "previous_run_id": "000077",
+  "previous_source_commit": "32a178410156514f86cc72c6da887a7789057a05",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -141,5 +104,44 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000075-sentry-observation-preparation",
+      "priority": "high",
+      "summary": "Use safe known reconnaissance before incomplete sentry geometry exhausts mandatory discovery.",
+      "evidence": [
+        "Run 000078 decision 109, log line 302: sentry recognition precedes departure from its incompletely observed entrance.",
+        "Run 000078 decision 176, log line 503: a known clairvoyance stone is publicly carried.",
+        "Run 000078 decision 274, accepted transition at line 783: movement advances time without damage.",
+        "Run 000078 decision 275, log line 785: missing room supply blocks mandatory discovery despite carried reconnaissance.",
+        "Original offline reconstruction matches all preceding actions, reasons and intents and isolates only the sentry haste demand.",
+        "tools/runestone_tactics.py:146–165 excludes ordinary clairvoyance before two searches; tools/descent_potions.py now admits narrowly bounded stationary reconnaissance."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000075"
+    }
+  ],
+  "review": {
+    "review": "The hero remained alive at full health when mandatory potion discovery exhausted the planner. Decision 109 (log line 302) recognized a sentry without enough observed enclosure geometry or reward information to plan its protected round trip. That unresolved room reserved a missing haste supply. At decision 275 (line 785), this reservation blocked discovery; reconstructed bookkeeping excludes journey, drop, stash and trap-retrieval flags as alternative causes. A known clairvoyance stone was carried, but ordinary mapping required prior searches and never selected it. Offline reconstruction matched all 275 preceding selected actions, reasons and intents and reproduced the terminal blocker. The proposed correction admits one stationary, known-stone reveal of nearby missing sentry geometry before that veto, preserving threat, health, hunger, hazard, potion-protection and mandatory pickup gates. The new regression has two expected assertion failures on original policy and passes after correction; the full candidate suite passes 1783 tests with four skipped. Candidate reconstruction first changes only decision 275 and stops there. This establishes preparation selection, not an executed reveal, complete room observation, potion identification, collection or successful descent. Policy and regression edits are supplied in the working source; files is empty for trusted change extraction.",
+    "learnings": "Before treating incomplete sentry geometry as exhausted preparation, consider a carried known clairvoyance stone from an observed safe square. Mapping must remain information gathering only: reobserve afterward and require all normal protection, inventory and retrieval checks. Never infer potion identities or room completion from the proposed reveal."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "71876354058d381b62085164a23656c21a3010f0",
+  "started_at": "2026-11-21T19:44:36Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000078/video.mp4"
 }

@@ -1,61 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000178",
-  "started_at": "2026-11-23T07:37:20Z",
-  "completed_at": "2026-11-23T07:46:37.305209+00:00",
-  "source_commit": "b38def9fa2e510ca1fadfd01403f1d4217c85767",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 3,
   "actions": 1122,
-  "duration_seconds": 551.399,
+  "code_changed": false,
+  "completed_at": "2026-11-23T07:46:37.305209+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000177",
-  "previous_source_commit": "52d49c8306afa50b450619deb6d88090dbaf322b",
-  "improvements": [],
-  "code_changed": false,
-  "incoming_learnings": "Guard pulls can displace a requested escape and leave crippled movement consuming two turns. Revalidate the actual landing and transit exposure before committing to another doorway setup; a geometric endpoint alone is not a safe escape.",
-  "incoming_update_status": "review-only",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at full health. Decision 1121's accepted move exposed a piranha pool and uncollected chest; decision 1122 then exhausted the planner because retrieval preparation declined while descent remained forbidden. Offline reconstruction matched all 1,122 preceding actions and reasons. The carried ivory potion was unidentified, with no carried identification resource. The entrance is not an eligible unknown-potion test bank, and its eight-move chest approach already exceeds the existing conservative invisibility round-trip budget. Complete source inspection resolves the selecting-state gap but does not establish a safe replacement. No policy patch or new regression is supplied: guessing the potion, stepping inside the fish buffer, or merely increasing the route bound would not resolve these safety blockers. Existing relevant tests passed, but no candidate red/green or full candidate-suite result is claimed.",
-    "learnings": "A mandatory pool chest needs an executable preparation and retrieval plan, not just an expected floor potion. Preserve unknown identities, fish buffers, verified pickup requirements, and explicit planner exhaustion. Establish a funded alternative before changing this admission."
-  },
-  "recommendations": [
-    {
-      "id": "000102-pool-discovery-admission",
-      "priority": "high",
-      "summary": "Establish executable preparation and retrieval when the pool entrance cannot fund the protected chest round trip.",
-      "evidence": [
-        "Decision 1059, log line 3041: a singleton ivory potion is carried without identification.",
-        "Decision 1121, selection line 3218 and accepted transition line 3219: arrival at doorway 175 advances the clock with full health.",
-        "Decision 1122, log line 3221: piranhas and Chest 152 become visible; the mandatory chest blocks descent and the planner exhausts.",
-        "Source-pinned offline reconstruction matches decisions 0-1121 and reproduces the terminal blocker.",
-        "tools/puzzle_supplies.py:147-179,899-943; tools/room_tactics.py:200-307; tools/mage_policy.py:443-457."
-      ],
-      "status": "deferred",
-      "reason": "Revalidated here, but no safe focused patch is established. Terminal probes find no eligible fresh pool-test bank or admitted protected journey. No carried nonconsumptive identification resource remains, and the nearest safe entrance requires at least eight moves each way: 21 turns under existing accounting versus a nominal 20-turn invisibility effect. A larger route bound alone is insufficient. Next derive this doorway and habitat fixture and validate a bounded ranged-clearance alternative with public charge/damage funding, safe firing and retreat positions, fresh defeat receipts, and verified chest pickup, or establish an identification-plus-retrieval transaction. Do not guess ivory, relax habitat checks, waive mandatory pickup, or restore death-waits.",
-      "origin_run": "000102"
-    }
-  ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000178/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000178/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 551.399,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -158,15 +114,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 11,
-    "ending_experience": 8,
-    "ending_level": 4,
-    "starving_turns": 3,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -192,6 +139,23 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000178",
+  "improvements": [],
+  "incoming_learnings": "Guard pulls can displace a requested escape and leave crippled movement consuming two turns. Revalidate the actual landing and transit exposure before committing to another doorway setup; a geometric endpoint alone is not a safe escape.",
+  "incoming_update_status": "review-only",
+  "max_depth": 3,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000178/poster.jpg",
+  "previous_run_id": "000177",
+  "previous_source_commit": "52d49c8306afa50b450619deb6d88090dbaf322b",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -226,5 +190,43 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000102-pool-discovery-admission",
+      "priority": "high",
+      "summary": "Establish executable preparation and retrieval when the pool entrance cannot fund the protected chest round trip.",
+      "evidence": [
+        "Decision 1059, log line 3041: a singleton ivory potion is carried without identification.",
+        "Decision 1121, selection line 3218 and accepted transition line 3219: arrival at doorway 175 advances the clock with full health.",
+        "Decision 1122, log line 3221: piranhas and Chest 152 become visible; the mandatory chest blocks descent and the planner exhausts.",
+        "Source-pinned offline reconstruction matches decisions 0-1121 and reproduces the terminal blocker.",
+        "tools/puzzle_supplies.py:147-179,899-943; tools/room_tactics.py:200-307; tools/mage_policy.py:443-457."
+      ],
+      "status": "deferred",
+      "reason": "Revalidated here, but no safe focused patch is established. Terminal probes find no eligible fresh pool-test bank or admitted protected journey. No carried nonconsumptive identification resource remains, and the nearest safe entrance requires at least eight moves each way: 21 turns under existing accounting versus a nominal 20-turn invisibility effect. A larger route bound alone is insufficient. Next derive this doorway and habitat fixture and validate a bounded ranged-clearance alternative with public charge/damage funding, safe firing and retreat positions, fresh defeat receipts, and verified chest pickup, or establish an identification-plus-retrieval transaction. Do not guess ivory, relax habitat checks, waive mandatory pickup, or restore death-waits.",
+      "origin_run": "000102"
+    }
+  ],
+  "review": {
+    "review": "The hero remained alive at full health. Decision 1121's accepted move exposed a piranha pool and uncollected chest; decision 1122 then exhausted the planner because retrieval preparation declined while descent remained forbidden. Offline reconstruction matched all 1,122 preceding actions and reasons. The carried ivory potion was unidentified, with no carried identification resource. The entrance is not an eligible unknown-potion test bank, and its eight-move chest approach already exceeds the existing conservative invisibility round-trip budget. Complete source inspection resolves the selecting-state gap but does not establish a safe replacement. No policy patch or new regression is supplied: guessing the potion, stepping inside the fish buffer, or merely increasing the route bound would not resolve these safety blockers. Existing relevant tests passed, but no candidate red/green or full candidate-suite result is claimed.",
+    "learnings": "A mandatory pool chest needs an executable preparation and retrieval plan, not just an expected floor potion. Preserve unknown identities, fish buffers, verified pickup requirements, and explicit planner exhaustion. Establish a funded alternative before changing this admission."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 8,
+    "ending_level": 4,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "b38def9fa2e510ca1fadfd01403f1d4217c85767",
+  "started_at": "2026-11-23T07:37:20Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000178/video.mp4"
 }

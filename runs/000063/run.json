@@ -1,40 +1,91 @@
 {
-  "schema_version": 1,
-  "id": "000063",
-  "started_at": "2026-11-21T16:16:07Z",
-  "completed_at": "2026-11-21T16:18:44.566165+00:00",
-  "source_commit": "1b20d5f0b21b360800c9b8e142055a46371c4fc3",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 265,
-  "duration_seconds": 154.402,
+  "code_changed": false,
+  "completed_at": "2026-11-21T16:18:44.566165+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000062",
-  "previous_source_commit": "353aaae8ff90a5980f26f0969df6ed458aa5693c",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 154.402,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 257,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 259,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000063",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "Source-pinned offline reconstruction matched all 1,439 selected inputs and terminal exhaustion. Copied-state probes admit a staff shot at the visible fish but no potion preparation; no alternative was dispatched. Do not assume every piranha-adjacent chest guarantees invisibility. Next, validate bounded dry-bank ranged control, resource costs, fresh defeat-backed habitat retirement and keyed collection receipts. Preserve mandatory pickup and water-reach checks: a clear shot alone does not establish retrieval.",
   "incoming_update_status": "review-only",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The living hero exhausted the planner at decision 265 (line 768), with 25/25 HP. Missing recognized-room supplies blocked pre-descent discovery. The initiating bookkeeping defect was earlier: decision 182 (line 531) entered door 593, and decision 183 (line 534) publicly showed an open-door arrival, but only controller-requested scouts were remembered. Later reclosure therefore excluded preparation through an already scouted entrance. Original-source offline bookkeeping reconstruction matched all 265 selected actions, reasons and intents and the terminal blocker. A copied terminal-state probe retaining that genuine receipt admits existing bounded preparation toward bank 509. The proposed correction remembers verified ordinary door arrivals without changing drinking, protection, hazard, hunger or collection checks. The new regression fails on original policy with the expected missing-receipt assertion and passes on the candidate; the full suite passes 1,748 tests with four skips. Candidate reconstruction stops at its first changed decision, 209 (line 605), which selects existing room preparation instead of ordinary loot. No later observations were used after that changed choice. This establishes selectable preparation, not puzzle completion or prevention of every future stall. Proposed changes are present in the policy and new test; the file list is intentionally empty for adapter derivation.",
-    "learnings": "Remember actual visible open-door arrivals even when ordinary exploration performed the scout. A door closing again does not erase the observation. Preserve independent arrival-time potion-test, inventory-protection, actual-buff and pickup checks: choosing preparation is not successful identification or retrieval. Offline reconstruction must stop at its first changed selection."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000063/poster.jpg",
+  "previous_run_id": "000062",
+  "previous_source_commit": "353aaae8ff90a5980f26f0969df6ed458aa5693c",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 257,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -273,35 +324,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000063/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000063/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 0,
-        "turns": 257,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 259,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The living hero exhausted the planner at decision 265 (line 768), with 25/25 HP. Missing recognized-room supplies blocked pre-descent discovery. The initiating bookkeeping defect was earlier: decision 182 (line 531) entered door 593, and decision 183 (line 534) publicly showed an open-door arrival, but only controller-requested scouts were remembered. Later reclosure therefore excluded preparation through an already scouted entrance. Original-source offline bookkeeping reconstruction matched all 265 selected actions, reasons and intents and the terminal blocker. A copied terminal-state probe retaining that genuine receipt admits existing bounded preparation toward bank 509. The proposed correction remembers verified ordinary door arrivals without changing drinking, protection, hazard, hunger or collection checks. The new regression fails on original policy with the expected missing-receipt assertion and passes on the candidate; the full suite passes 1,748 tests with four skips. Candidate reconstruction stops at its first changed decision, 209 (line 605), which selects existing room preparation instead of ordinary loot. No later observations were used after that changed choice. This establishes selectable preparation, not puzzle completion or prevention of every future stall. Proposed changes are present in the policy and new test; the file list is intentionally empty for adapter derivation.",
+    "learnings": "Remember actual visible open-door arrivals even when ordinary exploration performed the scout. A door closing again does not erase the observation. Preserve independent arrival-time potion-test, inventory-protection, actual-buff and pickup checks: choosing preparation is not successful identification or retrieval. Offline reconstruction must stop at its first changed selection."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -311,36 +338,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 0,
-    "gold_complete": true,
-    "turns": 257,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "1b20d5f0b21b360800c9b8e142055a46371c4fc3",
+  "started_at": "2026-11-21T16:16:07Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000063/video.mp4"
 }

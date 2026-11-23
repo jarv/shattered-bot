@@ -1,64 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000010",
-  "started_at": "2026-11-20T11:27:06Z",
-  "completed_at": "2026-11-20T11:46:43.803264+00:00",
-  "source_commit": "eb98602cb93bf317cf85ea0697cafcee91ad2120",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "3c5880a85d52fddf93a521c67826be879acd77a2a14bc8d77e9bfc363a91a398",
-  "outcome": "dead",
-  "outcome_summary": "Died to a lightning bolt after an exhausted ranged retreat",
-  "outcome_reason": "Hero died",
-  "max_depth": 7,
   "actions": 2986,
-  "duration_seconds": 1166.933,
+  "code_changed": true,
+  "completed_at": "2026-11-20T11:46:43.803264+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000009",
-  "previous_source_commit": "6484516ea91b36f5da4c264d0444a805fad0f05e",
-  "improvements": [
-    "When its backpack is full, the bot ranks items before making room for a new pickup. It protects essential supplies and compares spare equipment using upgrades and strength requirements.",
-    "The bot uses held keys and visible room layouts to choose which crystal-room rewards it can pursue, rather than treating every locked reward as available.",
-    "The bot can spend six alchemical energy to turn a magical catalyst into a trinket, then choose among the offered trinkets using a Mage-specific ranking.",
-    "The bot checks whether it is allowed to attack the Great Crab before attempting the hit."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Special-enemy attack admission must survive recovery target reselection. An awake great crab is not an ordinary damage-scoring target, and regenerated wand charges do not prove a usable attack. Preserve separate evidenced surprise setups; declining blocked attacks does not establish a safe alternative or quest success.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The initiating missed opportunity was in ranged arbitration, not just the final recovery waits. At decision 2970 (log lines 8391–8393), the staff was empty, both throwing clubs were on the visible DM-100's cell, and an identified throwable stone of deep sleep remained carried. The early ranged controller raised NoSafeAction before shared runestone tactics could run; continuation spent the waterskin and then retreated. Offline memory reconstruction matched selected inputs 0–2970; an isolated candidate probe selected the sleep stone, without supplying subsequent observations. This is reconstructed policy state, not recorded memory. Decision 2979's accepted transition (8434) records a hidden explosive trap and HP falling from 33 to 7. Decision 2985's terminal transition (8457) explicitly reports lethal lightning and the Zapped badge; the final killer is not inferred merely from enemy proximity. The clock advanced during recovery. Post-death potion and ring revelations were not treated as prior knowledge. A focused selector correction and new regression are supplied for next-run validation; files is empty because the adapter derives changes. The original selector fails two expected assertions; the candidate passes all nine new tests and the full 1470-test suite, with four skips. This establishes control selection, not a successful throw, safe escape, puzzle completion or survival.",
-    "learnings": "Before exhausted ranged arbitration enters best-effort continuation, consider carried, identified point-target control. Preserve clear-shot, eligibility, cooldown, hazard and mandatory-pickup constraints. Selecting sleep is not evidence that it landed or that escape became safe."
-  },
-  "recommendations": [
-    {
-      "id": "000010-dm100-exhausted-sleep",
-      "priority": "high",
-      "summary": "Consider identified deep sleep before exhausted single-DM-100 continuation.",
-      "evidence": [
-        "Decision 2964–2969, log lines 8377–8389: available ranged attacks exhausted",
-        "Decision 2970, log lines 8391–8393: known sleep bypassed before waterskin continuation",
-        "Decision 2979, accepted transition 8434: hidden explosive trap and severe HP loss",
-        "Decision 2985, accepted transition 8457: explicit lethal lightning"
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000010"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000010/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000010/poster.jpg",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "duration_seconds": 1166.933,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -271,15 +223,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 13,
-    "ending_experience": 31,
-    "ending_level": 8,
-    "starving_turns": 29,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -329,6 +272,28 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000010",
+  "improvements": [
+    "When its backpack is full, the bot ranks items before making room for a new pickup. It protects essential supplies and compares spare equipment using upgrades and strength requirements.",
+    "The bot uses held keys and visible room layouts to choose which crystal-room rewards it can pursue, rather than treating every locked reward as available.",
+    "The bot can spend six alchemical energy to turn a magical catalyst into a trinket, then choose among the offered trinkets using a Mage-specific ranking.",
+    "The bot checks whether it is allowed to attack the Great Crab before attempting the hit."
+  ],
+  "incoming_learnings": "Special-enemy attack admission must survive recovery target reselection. An awake great crab is not an ordinary damage-scoring target, and regenerated wand charges do not prove a usable attack. Preserve separate evidenced surprise setups; declining blocked attacks does not establish a safe alternative or quest success.",
+  "incoming_update_status": "accepted",
+  "max_depth": 7,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Died to a lightning bolt after an exhausted ranged retreat",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000010/poster.jpg",
+  "previous_run_id": "000009",
+  "previous_source_commit": "6484516ea91b36f5da4c264d0444a805fad0f05e",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -395,5 +360,42 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000010-dm100-exhausted-sleep",
+      "priority": "high",
+      "summary": "Consider identified deep sleep before exhausted single-DM-100 continuation.",
+      "evidence": [
+        "Decision 2964–2969, log lines 8377–8389: available ranged attacks exhausted",
+        "Decision 2970, log lines 8391–8393: known sleep bypassed before waterskin continuation",
+        "Decision 2979, accepted transition 8434: hidden explosive trap and severe HP loss",
+        "Decision 2985, accepted transition 8457: explicit lethal lightning"
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000010"
+    }
+  ],
+  "review": {
+    "review": "The initiating missed opportunity was in ranged arbitration, not just the final recovery waits. At decision 2970 (log lines 8391–8393), the staff was empty, both throwing clubs were on the visible DM-100's cell, and an identified throwable stone of deep sleep remained carried. The early ranged controller raised NoSafeAction before shared runestone tactics could run; continuation spent the waterskin and then retreated. Offline memory reconstruction matched selected inputs 0–2970; an isolated candidate probe selected the sleep stone, without supplying subsequent observations. This is reconstructed policy state, not recorded memory. Decision 2979's accepted transition (8434) records a hidden explosive trap and HP falling from 33 to 7. Decision 2985's terminal transition (8457) explicitly reports lethal lightning and the Zapped badge; the final killer is not inferred merely from enemy proximity. The clock advanced during recovery. Post-death potion and ring revelations were not treated as prior knowledge. A focused selector correction and new regression are supplied for next-run validation; files is empty because the adapter derives changes. The original selector fails two expected assertions; the candidate passes all nine new tests and the full 1470-test suite, with four skips. This establishes control selection, not a successful throw, safe escape, puzzle completion or survival.",
+    "learnings": "Before exhausted ranged arbitration enters best-effort continuation, consider carried, identified point-target control. Preserve clear-shot, eligibility, cooldown, hazard and mandatory-pickup constraints. Selecting sleep is not evidence that it landed or that escape became safe."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 13,
+    "ending_experience": 31,
+    "ending_level": 8,
+    "starving_turns": 29,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "eb98602cb93bf317cf85ea0697cafcee91ad2120",
+  "started_at": "2026-11-20T11:27:06Z",
+  "supervisor_version": "3c5880a85d52fddf93a521c67826be879acd77a2a14bc8d77e9bfc363a91a398",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000010/video.mp4"
 }

@@ -1,62 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000011",
-  "started_at": "2026-11-20T12:06:35Z",
-  "completed_at": "2026-11-20T12:15:03.292176+00:00",
-  "source_commit": "ad9b3e2b25aa5fc5228c35d9a4292c9f582abaef",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "b4b6d4bde72d7eaf7967bc747d2a476f8f4c0d6e20dae39e74a26bf4cd7332ea",
-  "outcome": "blocked",
-  "outcome_summary": "Blocked alive after secret discovery suppressed missing-exit searches",
-  "outcome_reason": "Fallback stopped after 128 accepted waits without observed gameplay progress",
-  "max_depth": 3,
   "actions": 1331,
-  "duration_seconds": 502.276,
+  "code_changed": true,
+  "completed_at": "2026-11-20T12:15:03.292176+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000010",
-  "previous_source_commit": "eb98602cb93bf317cf85ea0697cafcee91ad2120",
-  "improvements": [
-    "The bot explores reachable areas and deals with required locked rooms before starting a new Sad Ghost quest. It can still return to claim a completed quest's reward.",
-    "Against the Great Crab, the bot looks for a doorway ambush with an escape route. It attempts one strike after breaking sight, rather than repeatedly attacking from the same position."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Before exhausted ranged arbitration enters best-effort continuation, consider carried, identified point-target control. Preserve clear-shot, eligibility, cooldown, hazard and mandatory-pickup constraints. Selecting sleep is not evidence that it landed or that escape became safe.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "Blocked alive after fallback waiting, not a death or frozen clock. Decision 1055's public input showed wall 565; decision 1056 showed a closed door there (log lines 3069 and 3072). The discovery correctly sets a floor-local secret flag. The defect is downstream: tools/survival_policy.py:1104–1108 then suppresses general wall searches even when no reachable exit exists. At decision 1075 (lines 3128–3130), there were no frontiers or corridor-end candidates, zero searches and available search budget; exploration raised a blockage and continuation selected waiting. All 256 decisions from 1075 through 1330 were last-resort waits. The final accepted wait advanced the clock and left HP at 35/35. Offline bookkeeping reconstruction, not originally recorded memory, validated original actions and reasons through decision 1075 against the pinned source and saved public inputs. Candidate reconstruction matched through 1074 and stopped at its first changed selection, a search-vantage approach at 1075. The focused correction retains bounded missing-exit searches after secret discovery while preserving optional suppression when an exit exists. The new regression fails by assertion on original policy and passes on the candidate; all 1494 suite tests pass, with four skipped. No search result, exit discovery, completed loot or survival improvement is established. The trusted adapter supplies changed files; files is intentionally empty here.",
-    "learnings": "Finding one secret does not establish that an exit is reachable. Keep necessary bounded missing-exit search distinct from optional secret-room hunting. A search-vantage selection is preparation, not evidence of a door or successful progression."
-  },
-  "recommendations": [
-    {
-      "id": "000011-missing-exit-after-secret",
-      "priority": "high",
-      "summary": "Retain bounded missing-exit wall searches after a secret discovery.",
-      "evidence": [
-        "Decision 1055, log line 3069: visible wall 565",
-        "Decision 1056, log line 3072: visible closed door 565",
-        "Decision 1075, log lines 3128–3130: zero searches, no reachable exit, accepted fallback wait",
-        "Decision 1330, log lines 3894–3895: final wait advanced time; hero remained alive"
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000011"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000011/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000011/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: blocked",
+  "duration_seconds": 502.276,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -138,15 +92,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 4,
-    "ending_level": 4,
-    "starving_turns": 10,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -172,6 +117,26 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000011",
+  "improvements": [
+    "The bot explores reachable areas and deals with required locked rooms before starting a new Sad Ghost quest. It can still return to claim a completed quest's reward.",
+    "Against the Great Crab, the bot looks for a doorway ambush with an escape route. It attempts one strike after breaking sight, rather than repeatedly attacking from the same position."
+  ],
+  "incoming_learnings": "Before exhausted ranged arbitration enters best-effort continuation, consider carried, identified point-target control. Preserve clear-shot, eligibility, cooldown, hazard and mandatory-pickup constraints. Selecting sleep is not evidence that it landed or that escape became safe.",
+  "incoming_update_status": "accepted",
+  "max_depth": 3,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "blocked",
+  "outcome_reason": "Fallback stopped after 128 accepted waits without observed gameplay progress",
+  "outcome_summary": "Blocked alive after secret discovery suppressed missing-exit searches",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000011/poster.jpg",
+  "previous_run_id": "000010",
+  "previous_source_commit": "eb98602cb93bf317cf85ea0697cafcee91ad2120",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -206,5 +171,42 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000011-missing-exit-after-secret",
+      "priority": "high",
+      "summary": "Retain bounded missing-exit wall searches after a secret discovery.",
+      "evidence": [
+        "Decision 1055, log line 3069: visible wall 565",
+        "Decision 1056, log line 3072: visible closed door 565",
+        "Decision 1075, log lines 3128–3130: zero searches, no reachable exit, accepted fallback wait",
+        "Decision 1330, log lines 3894–3895: final wait advanced time; hero remained alive"
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000011"
+    }
+  ],
+  "review": {
+    "review": "Blocked alive after fallback waiting, not a death or frozen clock. Decision 1055's public input showed wall 565; decision 1056 showed a closed door there (log lines 3069 and 3072). The discovery correctly sets a floor-local secret flag. The defect is downstream: tools/survival_policy.py:1104–1108 then suppresses general wall searches even when no reachable exit exists. At decision 1075 (lines 3128–3130), there were no frontiers or corridor-end candidates, zero searches and available search budget; exploration raised a blockage and continuation selected waiting. All 256 decisions from 1075 through 1330 were last-resort waits. The final accepted wait advanced the clock and left HP at 35/35. Offline bookkeeping reconstruction, not originally recorded memory, validated original actions and reasons through decision 1075 against the pinned source and saved public inputs. Candidate reconstruction matched through 1074 and stopped at its first changed selection, a search-vantage approach at 1075. The focused correction retains bounded missing-exit searches after secret discovery while preserving optional suppression when an exit exists. The new regression fails by assertion on original policy and passes on the candidate; all 1494 suite tests pass, with four skipped. No search result, exit discovery, completed loot or survival improvement is established. The trusted adapter supplies changed files; files is intentionally empty here.",
+    "learnings": "Finding one secret does not establish that an exit is reachable. Keep necessary bounded missing-exit search distinct from optional secret-room hunting. A search-vantage selection is preparation, not evidence of a door or successful progression."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 4,
+    "ending_level": 4,
+    "starving_turns": 10,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "ad9b3e2b25aa5fc5228c35d9a4292c9f582abaef",
+  "started_at": "2026-11-20T12:06:35Z",
+  "supervisor_version": "b4b6d4bde72d7eaf7967bc747d2a476f8f4c0d6e20dae39e74a26bf4cd7332ea",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000011/video.mp4"
 }

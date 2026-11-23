@@ -1,40 +1,107 @@
 {
-  "schema_version": 1,
-  "id": "000113",
-  "started_at": "2026-11-22T05:00:17Z",
-  "completed_at": "2026-11-22T05:01:44.524690+00:00",
-  "source_commit": "7064f72d0b363137f5edc37ee49738f4e64e080f",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 219,
-  "duration_seconds": 84.322,
+  "code_changed": false,
+  "completed_at": "2026-11-22T05:01:44.524690+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000112",
-  "previous_source_commit": "990b95176c7ee16df48225ebde60f8c964586941",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 84.322,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 71,
+        "turns": 210,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 213,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 580
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000113",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "Distinguish the requested throw target from the actual impact cell when preparing fire barriers. For gas-room discovery, separate safe observation travel from permission to drink: reobserve the bank and inventory-protection route, establish the preparation budget, and verify actual chest pickup afterward. Hunger and stale visibility are independent prerequisites.",
   "incoming_update_status": "review-only",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at 19/25 HP when mandatory potion discovery exhausted the planner (decision 219, line 615). Combat and leveling left a health deficit; four natural-healing waits stopped at 19 HP because ordinary recovery targets 75%, while discovery requires 85%. Decision 218 still advanced time before exhaustion. Source-pinned offline reconstruction matches all 219 prior selections and reproduces the blocker. The candidate selects bounded stationary recovery at the terminal input without changing drinking safety, potion identities, mandatory pickup or the waiting allowance. This establishes a preparation alternative, not subsequent healing, identification or special-room completion. No played-source changes are attributed as improvements.",
-    "learnings": "Mandatory preparation can require more health than ordinary exploration recovery. Admit a bounded, freshly checked health prerequisite rather than treating that threshold gap as exhausted discovery. Keep potion identification, protected inventory and actual reward pickup as separate obligations."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000113/poster.jpg",
+  "previous_run_id": "000112",
+  "previous_source_commit": "990b95176c7ee16df48225ebde60f8c964586941",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 71,
+    "gold_complete": true,
+    "turns": 210,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -350,51 +417,11 @@
       "origin_run": "000038"
     }
   ],
-  "update_status": "rejected",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000113/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000113/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 71,
-        "turns": 210,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 213,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 580
-          },
-          {
-            "kind": "room",
-            "label": "Sentry area",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Sentry area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero remained alive at 19/25 HP when mandatory potion discovery exhausted the planner (decision 219, line 615). Combat and leveling left a health deficit; four natural-healing waits stopped at 19 HP because ordinary recovery targets 75%, while discovery requires 85%. Decision 218 still advanced time before exhaustion. Source-pinned offline reconstruction matches all 219 prior selections and reproduces the blocker. The candidate selects bounded stationary recovery at the terminal input without changing drinking safety, potion identities, mandatory pickup or the waiting allowance. This establishes a preparation alternative, not subsequent healing, identification or special-room completion. No played-source changes are attributed as improvements.",
+    "learnings": "Mandatory preparation can require more health than ordinary exploration recovery. Admit a bounded, freshly checked health prerequisite rather than treating that threshold gap as exhausted discovery. Keep potion identification, protected inventory and actual reward pickup as separate obligations."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -404,36 +431,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 71,
-    "gold_complete": true,
-    "turns": 210,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "7064f72d0b363137f5edc37ee49738f4e64e080f",
+  "started_at": "2026-11-22T05:00:17Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "rejected",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000113/video.mp4"
 }

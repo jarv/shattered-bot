@@ -1,42 +1,119 @@
 {
-  "schema_version": 1,
-  "id": "000071",
-  "started_at": "2026-11-21T18:13:43Z",
-  "completed_at": "2026-11-21T18:15:20.687975+00:00",
-  "source_commit": "af4ac4538a303bde1b9fb717cbc47d19dc8ced66",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 239,
-  "duration_seconds": 95.266,
+  "code_changed": true,
+  "completed_at": "2026-11-21T18:15:20.687975+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000070",
-  "previous_source_commit": "a683aa48dc2f486f8d1a24252f2421d084e67c97",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 95.266,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 235,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 233,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 334
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt/choice container",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000071",
   "improvements": [
     "The bot now finishes its chosen approach to observe a magical fire barrier, even if the flames become visible before it reaches the intended vantage point."
   ],
-  "code_changed": true,
   "incoming_learnings": "Seeing a barrier during observation travel is not the same as reaching the selected vantage. Finish the bounded, admitted observation route before reconsidering potion-test feasibility; keep inventory protection, actual extinguishing and mandatory key collection as separate checks.",
   "incoming_update_status": "accepted",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run ends in planner exhaustion with the hero alive at full health, not an observed death. Decision 238 advances the clock normally; decision 239 cannot satisfy mandatory pre-descent potion discovery. Earlier identification revealed frost, but azure and charcoal remain unknown. Offline reconstruction matches all 239 selected actions, reasons and intents and reproduces the terminal blocker. The last compatible testing-bank receipt is at 361, outside the short-return contract. Visible safe banks lack adjacent water; nearby water is excluded by the observed statue safety gate. Complete source resolves the controller-state ambiguity but does not establish a safe multi-stage return with fresh inventory-protection admission. No policy patch or new regression is submitted; merely extending the bound or relaxing safety would not repair that missing contract. The unchanged Python suite passes 1766 tests with four skipped.",
-    "learnings": "Mandatory discovery needs an executable return plan before exploration leaves the verified testing area. A remembered bank is not current permission to drink: separate bounded transit, fresh visible safety checks, inventory protection, accepted consumption and retrieval receipts."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000071/poster.jpg",
+  "previous_run_id": "000070",
+  "previous_source_commit": "a683aa48dc2f486f8d1a24252f2421d084e67c97",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 235,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -271,61 +348,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000071/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000071/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 0,
-        "turns": 235,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 233,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 334
-          },
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Crystal choice container",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Crypt/choice container",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run ends in planner exhaustion with the hero alive at full health, not an observed death. Decision 238 advances the clock normally; decision 239 cannot satisfy mandatory pre-descent potion discovery. Earlier identification revealed frost, but azure and charcoal remain unknown. Offline reconstruction matches all 239 selected actions, reasons and intents and reproduces the terminal blocker. The last compatible testing-bank receipt is at 361, outside the short-return contract. Visible safe banks lack adjacent water; nearby water is excluded by the observed statue safety gate. Complete source resolves the controller-state ambiguity but does not establish a safe multi-stage return with fresh inventory-protection admission. No policy patch or new regression is submitted; merely extending the bound or relaxing safety would not repair that missing contract. The unchanged Python suite passes 1766 tests with four skipped.",
+    "learnings": "Mandatory discovery needs an executable return plan before exploration leaves the verified testing area. A remembered bank is not current permission to drink: separate bounded transit, fresh visible safety checks, inventory protection, accepted consumption and retrieval receipts."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -335,36 +362,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 0,
-    "gold_complete": true,
-    "turns": 235,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "af4ac4538a303bde1b9fb717cbc47d19dc8ced66",
+  "started_at": "2026-11-21T18:13:43Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000071/video.mp4"
 }

@@ -1,64 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000130",
-  "started_at": "2026-11-22T12:52:35Z",
-  "completed_at": "2026-11-22T12:54:49.376330+00:00",
-  "source_commit": "0a4d2af0989bd84dfbff305ea8c8f60910f6b366",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "1e55d72-review-recovery",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 346,
-  "duration_seconds": 130.799,
+  "code_changed": true,
+  "completed_at": "2026-11-22T12:54:49.376330+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000129",
-  "previous_source_commit": "7614640589cb4b130701cc0deb8c21fbefd0e97e",
-  "improvements": [
-    "At an established doorway, the bot can now attack a lone visible necromancer with an already-approved ranged attack instead of waiting for another summoned minion. It stays in place and preserves invisibility and targeting safeguards."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "A doorway controls approaching melee enemies, not a summoner’s ability to replace them. When the minion is gone, use an already admitted stationary ranged attack on the visible caster rather than granting free lure turns. Keep the established bank, protection, resource and targeting checks; do not assume the shot kills or the room is cleared.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at full health when mandatory potion discovery exhausted. The initiating failure was exploration leaving the component permitted for preparation return: decision 312, accepted line 917, crosses from 1061 to grass 1062; at decision 313, line 919, the constrained return graph contains only the current cell. Offline reconstruction of the played source matches all actions and reasons for decisions 0–345 and reproduces the terminal blocker at decision 346, line 1013. Reconstructed bookkeeping retains 66 inventory-compatible bank receipts, but none is reachable through the terminal preparation graph. This is not inventory mismatch, hunger exhaustion or death. Both recorded preparation prerequisites decline. No patch is supplied: admitting the grass return would weaken an explicit flammable-terrain restriction, while an earlier preparation reservation still needs validated timing, storage, interruption and return-to-exploration semantics. Complete source and reconstruction resolve the selecting-state gap, not replacement safety. The unchanged full suite passes 1,926 tests with four skipped; no new regression or candidate success is claimed.",
-    "learnings": "Reserve an executable preparation opportunity before exploration disconnects every compatible bank. Remembered feasibility alone cannot guarantee an admitted return. Preserve fresh bank and storage validation, actual consumption and pickup receipts, reserved supplies and terminal exhaustion."
-  },
-  "recommendations": [
-    {
-      "id": "000061-descent-bank-return",
-      "priority": "high",
-      "summary": "Establish preparation reservation before exploration disconnects every remembered discovery bank.",
-      "evidence": [
-        "Decision 307, selection line 901 and accepted line 902: exploration leaves 966 for 1012 with compatible preparation receipts.",
-        "Decision 312, selection line 916 and accepted line 917: exploration moves from 1061 to grass 1062.",
-        "Decision 313, line 919: reconstructed strict preparation-return graph contains only the current cell.",
-        "Decision 345, accepted line 1011: movement advances the clock at full health; decision 346, line 1013, exhausts mandatory discovery.",
-        "Source-pinned offline reconstruction matches decisions 0–345 and reproduces terminal exhaustion; all 66 compatible receipt probes decline.",
-        "tools/descent_potions.py:102–143,376–417; tools/mage_policy.py:492–495; tools/preparation_prerequisites.py:16–65."
-      ],
-      "status": "deferred",
-      "reason": "Revalidated in this recording. The exact blocker is the strict return whitelist excluding flammable grass, not missing source or incompatible inventory. Terminal inventory has no known identification or reconnaissance resource. Adding grass would relax an existing safety restriction; early discovery alone does not establish legitimate timing and resumption of unfinished exploration. Next derive paired decision-307/312/313/346 fixtures around banks 919/921 and grass 1061/1062, then validate bounded preparation reservation before disconnection, fresh inventory-compatible bank/storage admission, accepted movement accounting, interruption handling and return to mandatory exploration/pickup. No safe complete transaction or new red/green regression is established, so no policy patch is proposed.",
-      "origin_run": "000061"
-    }
-  ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000130/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000130/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 130.799,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -96,15 +49,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 0,
-    "ending_level": 2,
-    "starving_turns": 0,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -118,6 +62,25 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000130",
+  "improvements": [
+    "At an established doorway, the bot can now attack a lone visible necromancer with an already-approved ranged attack instead of waiting for another summoned minion. It stays in place and preserves invisibility and targeting safeguards."
+  ],
+  "incoming_learnings": "A doorway controls approaching melee enemies, not a summoner’s ability to replace them. When the minion is gone, use an already admitted stationary ranged attack on the visible caster rather than granting free lure turns. Keep the established bank, protection, resource and targeting checks; do not assume the shot kills or the room is cleared.",
+  "incoming_update_status": "accepted",
+  "max_depth": 1,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000130/poster.jpg",
+  "previous_run_id": "000129",
+  "previous_source_commit": "7614640589cb4b130701cc0deb8c21fbefd0e97e",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -136,5 +99,44 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000061-descent-bank-return",
+      "priority": "high",
+      "summary": "Establish preparation reservation before exploration disconnects every remembered discovery bank.",
+      "evidence": [
+        "Decision 307, selection line 901 and accepted line 902: exploration leaves 966 for 1012 with compatible preparation receipts.",
+        "Decision 312, selection line 916 and accepted line 917: exploration moves from 1061 to grass 1062.",
+        "Decision 313, line 919: reconstructed strict preparation-return graph contains only the current cell.",
+        "Decision 345, accepted line 1011: movement advances the clock at full health; decision 346, line 1013, exhausts mandatory discovery.",
+        "Source-pinned offline reconstruction matches decisions 0–345 and reproduces terminal exhaustion; all 66 compatible receipt probes decline.",
+        "tools/descent_potions.py:102–143,376–417; tools/mage_policy.py:492–495; tools/preparation_prerequisites.py:16–65."
+      ],
+      "status": "deferred",
+      "reason": "Revalidated in this recording. The exact blocker is the strict return whitelist excluding flammable grass, not missing source or incompatible inventory. Terminal inventory has no known identification or reconnaissance resource. Adding grass would relax an existing safety restriction; early discovery alone does not establish legitimate timing and resumption of unfinished exploration. Next derive paired decision-307/312/313/346 fixtures around banks 919/921 and grass 1061/1062, then validate bounded preparation reservation before disconnection, fresh inventory-compatible bank/storage admission, accepted movement accounting, interruption handling and return to mandatory exploration/pickup. No safe complete transaction or new red/green regression is established, so no policy patch is proposed.",
+      "origin_run": "000061"
+    }
+  ],
+  "review": {
+    "review": "The hero remained alive at full health when mandatory potion discovery exhausted. The initiating failure was exploration leaving the component permitted for preparation return: decision 312, accepted line 917, crosses from 1061 to grass 1062; at decision 313, line 919, the constrained return graph contains only the current cell. Offline reconstruction of the played source matches all actions and reasons for decisions 0–345 and reproduces the terminal blocker at decision 346, line 1013. Reconstructed bookkeeping retains 66 inventory-compatible bank receipts, but none is reachable through the terminal preparation graph. This is not inventory mismatch, hunger exhaustion or death. Both recorded preparation prerequisites decline. No patch is supplied: admitting the grass return would weaken an explicit flammable-terrain restriction, while an earlier preparation reservation still needs validated timing, storage, interruption and return-to-exploration semantics. Complete source and reconstruction resolve the selecting-state gap, not replacement safety. The unchanged full suite passes 1,926 tests with four skipped; no new regression or candidate success is claimed.",
+    "learnings": "Reserve an executable preparation opportunity before exploration disconnects every compatible bank. Remembered feasibility alone cannot guarantee an admitted return. Preserve fresh bank and storage validation, actual consumption and pickup receipts, reserved supplies and terminal exhaustion."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "0a4d2af0989bd84dfbff305ea8c8f60910f6b366",
+  "started_at": "2026-11-22T12:52:35Z",
+  "supervisor_version": "1e55d72-review-recovery",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000130/video.mp4"
 }

@@ -1,42 +1,148 @@
 {
-  "schema_version": 1,
-  "id": "000070",
-  "started_at": "2026-11-21T18:03:39Z",
-  "completed_at": "2026-11-21T18:07:39.206655+00:00",
-  "source_commit": "a683aa48dc2f486f8d1a24252f2421d084e67c97",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 2,
   "actions": 646,
-  "duration_seconds": 236.466,
+  "code_changed": true,
+  "completed_at": "2026-11-21T18:07:39.206655+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000069",
-  "previous_source_commit": "9935fbcf5c5ad1dabd038bcdbdc5a89d04375525",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 236.466,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 41,
+        "turns": 330,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 333,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 745
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 17,
+        "gold_gained": 393,
+        "turns": 306,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 307,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1079
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000070",
   "improvements": [
     "The bot no longer returns toward a levitation room while hungry unless it carries a drinkable supply it can still try. Without one, it leaves protected rewards unfinished and yields to other floor work."
   ],
-  "code_changed": true,
   "incoming_learnings": "Preparation travel needs an executable resource purpose. Food and a hypothetical protected route do not constitute a flight supply. When no drinkable candidate remains, yield to already admitted floor work without declaring protected loot collected, guessing potion identities, weakening hazards, or removing planner exhaustion.",
   "incoming_update_status": "accepted",
+  "max_depth": 2,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero was alive at full health when the planner exhausted its options. The final mandatory target was an iron key behind magical fire, not the already collected upgrade scroll. Decisions 628-644 alternated between fire-observation travel and unrelated door exploration: seeing fire midway interrupted the committed observation route before a protected potion test was available. A reduced public-geometry fixture reproduces this interruption. The proposed correction preserves that admitted observation commitment and its original fire-wall anchor; it does not authorize a potion test, fire crossing, collection receipt or descent. Full original runtime memory was not recovered, and completing the puzzle remains unproven. The new regression fails on the original policy and passes on the candidate; the full Python suite passes with four skips.",
-    "learnings": "Seeing a barrier during observation travel is not the same as reaching the selected vantage. Finish the bounded, admitted observation route before reconsidering potion-test feasibility; keep inventory protection, actual extinguishing and mandatory key collection as separate checks."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000070/poster.jpg",
+  "previous_run_id": "000069",
+  "previous_source_commit": "9935fbcf5c5ad1dabd038bcdbdc5a89d04375525",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 434,
+    "gold_complete": true,
+    "turns": 636,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -157,76 +263,11 @@
       "origin_run": "000041"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000070/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000070/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 41,
-        "turns": 330,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 333,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 745
-          },
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 17,
-        "gold_gained": 393,
-        "turns": 306,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 307,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "quest",
-            "label": "Sad Ghost",
-            "status": "encountered"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 1079
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero was alive at full health when the planner exhausted its options. The final mandatory target was an iron key behind magical fire, not the already collected upgrade scroll. Decisions 628-644 alternated between fire-observation travel and unrelated door exploration: seeing fire midway interrupted the committed observation route before a protected potion test was available. A reduced public-geometry fixture reproduces this interruption. The proposed correction preserves that admitted observation commitment and its original fire-wall anchor; it does not authorize a potion test, fire crossing, collection receipt or descent. Full original runtime memory was not recovered, and completing the puzzle remains unproven. The new regression fails on the original policy and passes on the candidate; the full Python suite passes with four skips.",
+    "learnings": "Seeing a barrier during observation travel is not the same as reaching the selected vantage. Finish the bounded, admitted observation route before reconsidering potion-test feasibility; keep inventory protection, actual extinguishing and mandatory key collection as separate checks."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 11,
@@ -236,50 +277,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 3,
-    "gold_collected": 434,
-    "gold_complete": true,
-    "turns": 636,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "a683aa48dc2f486f8d1a24252f2421d084e67c97",
+  "started_at": "2026-11-21T18:03:39Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000070/video.mp4"
 }

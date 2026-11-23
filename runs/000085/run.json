@@ -1,41 +1,171 @@
 {
-  "schema_version": 1,
-  "id": "000085",
-  "started_at": "2026-11-21T22:57:29Z",
-  "completed_at": "2026-11-21T23:00:40.011227+00:00",
-  "source_commit": "052620294e2fd8faf13d404bc74a787b10b55923",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "blocked",
-  "outcome_summary": "Blocked trying to read an identify scroll while blinded",
-  "outcome_reason": "No-progress menu loop: identify: prioritize likely strength potion; refusing repeated read/select/c",
-  "max_depth": 3,
   "actions": 502,
-  "duration_seconds": 187.333,
+  "code_changed": true,
+  "completed_at": "2026-11-21T23:00:40.011227+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000084",
-  "previous_source_commit": "b4859f21dfb871c4f38d1947ab9ec6d65dabba5d",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: blocked",
+  "duration_seconds": 187.333,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 76,
+        "turns": 209,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 227,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 849
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 13,
+        "gold_gained": 216,
+        "turns": 198,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 222,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 700
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 2,
+        "gold_gained": 0,
+        "turns": 29.2608642578125,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 47,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 2150
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000085",
   "improvements": [
     "The bot now remembers earlier potion preparation spots instead of replacing them with the newest one. If the latest spot cannot be reached safely, it can consider an earlier witnessed spot, while still checking the route, hunger and protection on arrival."
   ],
-  "code_changed": true,
   "incoming_learnings": "Do not let a newly observed preparation location erase other verified locations with the same potion inventory. Recheck transit, hunger and fresh arrival protection before using any remembered bank. Keep mandatory progression pickups and the terminal planner-failure outcome intact.",
   "incoming_update_status": "accepted",
+  "max_depth": 3,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run stopped alive in a no-progress reading loop, not an observed death. Decision 485 publicly produced blindness after an unknown scroll read. Decision 488 then collected an identify scroll, whose listed READ action was not executable while blinded. Decisions 489–497 repeatedly selected it through preparation; decisions 498–501 selected it through consumable discovery. The accepted transitions show refusal messages and an unchanged clock at full health. Both callers shared an inventory-only retry check that omitted blindness. The proposed focused correction defers identification during observed blindness without changing failed-inventory memory, waiting limits, hazard checks, mandatory pickup or terminal guards. A new reduced public-evidence fixture failed on both original selectors, passed after the correction, and the full suite passed 1,826 tests with four skips. These isolated probes do not reconstruct full runtime memory or establish the next safe action, eventual identification or survival. Historical backlog items remain unvalidated in this review.",
-    "learnings": "A listed item action is not proof that it can execute under current impairments. Check observed blindness before creating identification menu intent, and retain retry eligibility for a fresh sighted observation without erasing genuine failed-inventory exclusions."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "blocked",
+  "outcome_reason": "No-progress menu loop: identify: prioritize likely strength potion; refusing repeated read/select/c",
+  "outcome_summary": "Blocked trying to read an identify scroll while blinded",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000085/poster.jpg",
+  "previous_run_id": "000084",
+  "previous_source_commit": "b4859f21dfb871c4f38d1947ab9ec6d65dabba5d",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 292,
+    "gold_complete": true,
+    "turns": 436.2608642578125,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -346,86 +476,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000085/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000085/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 76,
-        "turns": 209,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 227,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 849
-          },
-          {
-            "kind": "room",
-            "label": "Distant well",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 13,
-        "gold_gained": 216,
-        "turns": 198,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 222,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 700
-          }
-        ]
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 2,
-        "gold_gained": 0,
-        "turns": 29.2608642578125,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 47,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 2150
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run stopped alive in a no-progress reading loop, not an observed death. Decision 485 publicly produced blindness after an unknown scroll read. Decision 488 then collected an identify scroll, whose listed READ action was not executable while blinded. Decisions 489–497 repeatedly selected it through preparation; decisions 498–501 selected it through consumable discovery. The accepted transitions show refusal messages and an unchanged clock at full health. Both callers shared an inventory-only retry check that omitted blindness. The proposed focused correction defers identification during observed blindness without changing failed-inventory memory, waiting limits, hazard checks, mandatory pickup or terminal guards. A new reduced public-evidence fixture failed on both original selectors, passed after the correction, and the full suite passed 1,826 tests with four skips. These isolated probes do not reconstruct full runtime memory or establish the next safe action, eventual identification or survival. Historical backlog items remain unvalidated in this review.",
+    "learnings": "A listed item action is not proof that it can execute under current impairments. Check observed blindness before creating identification menu intent, and retain retry eligibility for a fresh sighted observation without erasing genuine failed-inventory exclusions."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 11,
@@ -435,64 +490,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 3,
-    "gold_collected": 292,
-    "gold_complete": true,
-    "turns": 436.2608642578125,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "052620294e2fd8faf13d404bc74a787b10b55923",
+  "started_at": "2026-11-21T22:57:29Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000085/video.mp4"
 }

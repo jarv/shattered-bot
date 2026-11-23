@@ -1,62 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000038",
-  "started_at": "2026-11-21T08:52:03Z",
-  "completed_at": "2026-11-21T09:06:20.553933+00:00",
-  "source_commit": "6caa07b56b54c0fbc8a2b537c46608901d6bf804",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "e7754df5cce69a2b71b9aef2c9cd58c226e4c953dc0c88d3b9316ff6ccb89ecd",
-  "outcome": "dead",
-  "outcome_summary": "Died while retreating from skeletons",
-  "outcome_reason": "Hero died",
-  "max_depth": 7,
   "actions": 2203,
-  "duration_seconds": 848.246,
+  "code_changed": true,
+  "completed_at": "2026-11-21T09:06:20.553933+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000037",
-  "previous_source_commit": "fa9f64a82cdd3c50a5c47bb6523329f87045612d",
-  "improvements": [
-    "The bot no longer starts a new, unverified doorway escape when its health is already below the limit used to continue that escape. Retreats to an already verified single-attacker position remain available."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Apply an unverified escape plan’s health floor before its first step, not only when continuing it. Reobserve successful crowd control before spending another escape resource. A frightened enemy is still relevant, but its presence alone does not establish an immediate attack threat or a safe teleport destination.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero died while retreating, not from planner exhaustion. Earlier, decisions 2093–2094 woke a sleeping DM-100; the attack and subsequent flight consumed health and dew. Later, decisions 2179–2186 spent charges as two skeletons approached. Decision 2187 began repeated retreat at 12 HP. Ten retreats preserved health without resolving pursuit; decision 2197 exhausted skeleton spacing and fell back to unverified movement. Decision 2201 lost five HP, and decision 2202's accepted transition reduced seven HP to zero. The journal does not identify the killer, so a bone-explosion death is not established. Complete source browsing explains the arbitration, but no safe replacement is validated. Offline reconstruction matched actions, reasons and controllers through decision 2093 before a scratch checkpoint serialization failure; late runtime memory was not recovered. No patch is supplied: extending spacing, trusting projected endpoints, forcing adjacent attacks or guessing potion identities would not establish safety. Existing targeted tests passed, but there is no candidate or new red/green regression.",
-    "learnings": "A projected single-attacker destination is not an achieved contact break. Investigate control before melee contact and the cost of waking sleeping ranged enemies. Preserve explosion avoidance, observed hazard checks, resource receipts and mandatory progression pickups; unknown potion identities are not escape resources."
-  },
-  "recommendations": [
-    {
-      "id": "000038-skeleton-pursuit-intervention",
-      "priority": "high",
-      "summary": "Establish an admitted intervention before two-skeleton retreat degenerates into spacing exhaustion.",
-      "evidence": [
-        "Decisions 2093–2099, lines 5925–5946: waking a sleeping DM-100 leads to damaging flight and dew consumption.",
-        "Decisions 2181–2186, lines 6182–6194: two skeletons approach while waits and wand shots precede retreat.",
-        "Decision 2187, line 6195: retreat begins at 12 HP with one separate-wand charge remaining.",
-        "Decisions 2197–2199, lines 6239–6252: spacing exhaustion leads to unverified retreats.",
-        "Decisions 2201–2202, accepted transitions at lines 6260 and 6265: health falls from 12 to seven, then zero."
-      ],
-      "status": "deferred",
-      "reason": "The blocker is an unvalidated replacement, not omitted selecting source. Existing shock admission excludes two enemies while magic remains, and adjacent damage retains explosion risk. Reconstruction matched through decision 2093 but stopped at scratch serialization. Next, retain reconstruction in-process through decisions 2181–2187 and probe the existing control selector on copies, verifying a throw footprint outside the hero, allies and loot before proposing earlier arbitration. Stop at any selecting divergence. No safe control target or contact-breaking route is certified, so neither a policy patch nor a fabricated regression is supplied.",
-      "origin_run": "000038"
-    }
-  ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000038/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000038/poster.jpg",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "duration_seconds": 848.246,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -243,15 +197,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 35,
-    "ending_level": 7,
-    "starving_turns": 201,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -301,6 +246,25 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000038",
+  "improvements": [
+    "The bot no longer starts a new, unverified doorway escape when its health is already below the limit used to continue that escape. Retreats to an already verified single-attacker position remain available."
+  ],
+  "incoming_learnings": "Apply an unverified escape plan’s health floor before its first step, not only when continuing it. Reobserve successful crowd control before spending another escape resource. A frightened enemy is still relevant, but its presence alone does not establish an immediate attack threat or a safe teleport destination.",
+  "incoming_update_status": "accepted",
+  "max_depth": 7,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Died while retreating from skeletons",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000038/poster.jpg",
+  "previous_run_id": "000037",
+  "previous_source_commit": "fa9f64a82cdd3c50a5c47bb6523329f87045612d",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -367,5 +331,43 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000038-skeleton-pursuit-intervention",
+      "priority": "high",
+      "summary": "Establish an admitted intervention before two-skeleton retreat degenerates into spacing exhaustion.",
+      "evidence": [
+        "Decisions 2093–2099, lines 5925–5946: waking a sleeping DM-100 leads to damaging flight and dew consumption.",
+        "Decisions 2181–2186, lines 6182–6194: two skeletons approach while waits and wand shots precede retreat.",
+        "Decision 2187, line 6195: retreat begins at 12 HP with one separate-wand charge remaining.",
+        "Decisions 2197–2199, lines 6239–6252: spacing exhaustion leads to unverified retreats.",
+        "Decisions 2201–2202, accepted transitions at lines 6260 and 6265: health falls from 12 to seven, then zero."
+      ],
+      "status": "deferred",
+      "reason": "The blocker is an unvalidated replacement, not omitted selecting source. Existing shock admission excludes two enemies while magic remains, and adjacent damage retains explosion risk. Reconstruction matched through decision 2093 but stopped at scratch serialization. Next, retain reconstruction in-process through decisions 2181–2187 and probe the existing control selector on copies, verifying a throw footprint outside the hero, allies and loot before proposing earlier arbitration. Stop at any selecting divergence. No safe control target or contact-breaking route is certified, so neither a policy patch nor a fabricated regression is supplied.",
+      "origin_run": "000038"
+    }
+  ],
+  "review": {
+    "review": "The hero died while retreating, not from planner exhaustion. Earlier, decisions 2093–2094 woke a sleeping DM-100; the attack and subsequent flight consumed health and dew. Later, decisions 2179–2186 spent charges as two skeletons approached. Decision 2187 began repeated retreat at 12 HP. Ten retreats preserved health without resolving pursuit; decision 2197 exhausted skeleton spacing and fell back to unverified movement. Decision 2201 lost five HP, and decision 2202's accepted transition reduced seven HP to zero. The journal does not identify the killer, so a bone-explosion death is not established. Complete source browsing explains the arbitration, but no safe replacement is validated. Offline reconstruction matched actions, reasons and controllers through decision 2093 before a scratch checkpoint serialization failure; late runtime memory was not recovered. No patch is supplied: extending spacing, trusting projected endpoints, forcing adjacent attacks or guessing potion identities would not establish safety. Existing targeted tests passed, but there is no candidate or new red/green regression.",
+    "learnings": "A projected single-attacker destination is not an achieved contact break. Investigate control before melee contact and the cost of waking sleeping ranged enemies. Preserve explosion avoidance, observed hazard checks, resource receipts and mandatory progression pickups; unknown potion identities are not escape resources."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 35,
+    "ending_level": 7,
+    "starving_turns": 201,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "6caa07b56b54c0fbc8a2b537c46608901d6bf804",
+  "started_at": "2026-11-21T08:52:03Z",
+  "supervisor_version": "e7754df5cce69a2b71b9aef2c9cd58c226e4c953dc0c88d3b9316ff6ccb89ecd",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000038/video.mp4"
 }

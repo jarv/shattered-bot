@@ -43,10 +43,10 @@ def choose(p,state,enemies):
     if not rooms or enemies or p.recent_threats or state.get('danger_cells') or p.room_journey \
             or p.puzzle_probe or state.get('status')!='ready' or state.get('modal'):return None
     try:
-        from .puzzle_supplies import stage_known_pool,prepare_supplies,Demand
+        from .puzzle_supplies import stage_known_pool,prepare_supplies,prepare_pool_armor,Demand
         from .consumable_tactics import base_name
     except ImportError:
-        from puzzle_supplies import stage_known_pool,prepare_supplies,Demand
+        from puzzle_supplies import stage_known_pool,prepare_supplies,prepare_pool_armor,Demand
         from consumable_tactics import base_name
     potion=next((i for i in state['inventory'] if base_name(i)=='potion of invisibility'
                  and 'DRINK' in i.get('actions',[])),None)
@@ -56,6 +56,8 @@ def choose(p,state,enemies):
         'status':'Use carried known invisibility' if potion else 'Seek/identify/test observed floor potions'}
     if potion:
         return stage_known_pool(p,state,Demand('pool','potion of invisibility',target),potion,distance,neighbors)
+    armor=prepare_pool_armor(p,state,neighbors)
+    if armor:return armor
     return prepare_supplies(p,state,enemies,distance,neighbors)
 
 

@@ -1,42 +1,132 @@
 {
-  "schema_version": 1,
-  "id": "000137",
-  "started_at": "2026-11-22T15:03:20Z",
-  "completed_at": "2026-11-22T15:10:41.799457+00:00",
-  "source_commit": "69b44fba1d0eeb637a3b312c3480eff51561bb9a",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "927d6e6-canonical-review",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 2,
   "actions": 1183,
-  "duration_seconds": 435.666,
+  "code_changed": true,
+  "completed_at": "2026-11-22T15:10:41.799457+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000136",
-  "previous_source_commit": "edb1d8b72c44373fdca7b9c439ff8c64f67a3f6c",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 435.666,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 41,
+        "turns": 739,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 737,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 194
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 21,
+        "gold_gained": 248,
+        "turns": 451,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 440,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 172,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000137",
   "improvements": [
     "The bot can return to a previously checked potion-testing area after collecting more potions. It rechecks the route and storage plan for its current inventory, then requires fresh safety checks on arrival before testing anything."
   ],
-  "code_changed": true,
   "incoming_learnings": "Treat inventory-changing pickup as a preparation-planning dependency. Previously feasible banks need an independently validated, inventory-aware reobservation transaction, followed by fresh bank and remote-storage admission. Historical geometry must not become permission to drink, and unknown potion colors must remain unknown.",
   "incoming_update_status": "review-only",
+  "max_depth": 2,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at planner exhaustion. Decision 959 (line 2836) reveals summoning trap 76 beside the chamber containing iron key 106, upgrade scroll 75 and exit 195. Room quarantine excludes the approaches; the remote-activation controller requires stronger equipped gear and a single-door enclosure that this public geometry does not establish. Thus the final missing-exit message does not mean no exit was observed. A second, independently reproducible defect wastes preparation time: garden ambience first observed at decision 799 (line 2392) is treated as a stale hazard despite already being recognized as harmless. Decisions 1042–1110 select 58 garden-recheck moves, including repeated reversals; accepted transitions advance time. The focused correction excludes garden-only descriptions from expiry-recheck objectives, retaining mixed effects, unknown effects, smoke and every movement hazard gate. A new reduced public-geometry regression fails two assertions against original source and passes all four tests after correction; the full suite passes 1,955 tests with four skips. This is a synthetic fixture, not reconstructed runtime memory or a replay. Decision 1182 (lines 3508–3509) consumes known healing and reaches full health; decision 1183 (line 3510) still exhausts with starvation and unresolved progression. The patch does not establish summoning clearance, key pickup, exit access or survival. Existing backlog entries below are historical evidence, not newly revalidated claims.",
-    "learnings": "Do not schedule expiry observation for permanent garden ambience. Preserve uncertainty for every other effect. Investigate the summoning quarantine as the initiating progression blocker rather than treating the final search ceiling or healing fallback as its cause."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000137/poster.jpg",
+  "previous_run_id": "000136",
+  "previous_source_commit": "edb1d8b72c44373fdca7b9c439ff8c64f67a3f6c",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 289,
+    "gold_complete": true,
+    "turns": 1190,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -358,60 +448,11 @@
       "origin_run": "000043"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000137/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000137/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 41,
-        "turns": 739,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 737,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 194
-          },
-          {
-            "kind": "room",
-            "label": "Crystal choice container",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 21,
-        "gold_gained": 248,
-        "turns": 451,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 440,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero remained alive at planner exhaustion. Decision 959 (line 2836) reveals summoning trap 76 beside the chamber containing iron key 106, upgrade scroll 75 and exit 195. Room quarantine excludes the approaches; the remote-activation controller requires stronger equipped gear and a single-door enclosure that this public geometry does not establish. Thus the final missing-exit message does not mean no exit was observed. A second, independently reproducible defect wastes preparation time: garden ambience first observed at decision 799 (line 2392) is treated as a stale hazard despite already being recognized as harmless. Decisions 1042–1110 select 58 garden-recheck moves, including repeated reversals; accepted transitions advance time. The focused correction excludes garden-only descriptions from expiry-recheck objectives, retaining mixed effects, unknown effects, smoke and every movement hazard gate. A new reduced public-geometry regression fails two assertions against original source and passes all four tests after correction; the full suite passes 1,955 tests with four skips. This is a synthetic fixture, not reconstructed runtime memory or a replay. Decision 1182 (lines 3508–3509) consumes known healing and reaches full health; decision 1183 (line 3510) still exhausts with starvation and unresolved progression. The patch does not establish summoning clearance, key pickup, exit access or survival. Existing backlog entries below are historical evidence, not newly revalidated claims.",
+    "learnings": "Do not schedule expiry observation for permanent garden ambience. Preserve uncertainty for every other effect. Investigate the summoning quarantine as the initiating progression blocker rather than treating the final search ceiling or healing fallback as its cause."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -421,50 +462,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 172,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 3,
-    "gold_collected": 289,
-    "gold_complete": true,
-    "turns": 1190,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "69b44fba1d0eeb637a3b312c3480eff51561bb9a",
+  "started_at": "2026-11-22T15:03:20Z",
+  "supervisor_version": "927d6e6-canonical-review",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000137/video.mp4"
 }

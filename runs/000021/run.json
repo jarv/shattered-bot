@@ -1,42 +1,104 @@
 {
-  "schema_version": 1,
-  "id": "000021",
-  "started_at": "2026-11-20T17:34:33Z",
-  "completed_at": "2026-11-20T17:37:11.356283+00:00",
-  "source_commit": "f91ecf358b7d899aab51c07c42e44eca03b27e13",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "b6c86f5f5d24b28005d8611ec04e6fe79f6d9e53501448791b99376cd2e21e54",
-  "outcome": "blocked",
-  "outcome_summary": "Blocked after frost preparation failed and an uncollected key prevented descent",
-  "outcome_reason": "Fallback stopped after 128 accepted waits without observed gameplay progress",
-  "max_depth": 1,
   "actions": 443,
-  "duration_seconds": 154.799,
+  "code_changed": true,
+  "completed_at": "2026-11-20T17:37:11.356283+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000020",
-  "previous_source_commit": "515dee1a5721898463df9a14bfbb7cf8600458a5",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: blocked",
+  "duration_seconds": 154.799,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 430,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 437,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 210
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000021",
   "improvements": [
     "The bot now tracks potion-bandolier protection when preparing unknown potion tests, including stacked potions. It still requires observed acquisition and treats possible overflow cautiously.",
     "When a strength potion or upgrade scroll has no admitted pickup route, the bot can use a known mapping scroll after puzzle preparation declines, without first requiring optional searches."
   ],
-  "code_changed": true,
   "incoming_learnings": "Resolve preparation before health and food are exhausted, but require a demonstrated safe test/stash approach or observed non-drinking identification. Keep mandatory strength pickup, actual-effect verification and honest collection evidence. A preparation selection alone would not prove retrieval or survival.",
   "incoming_update_status": "review-only",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run blocked alive, rather than dying. Decision 219 (log 609) began a frost-test approach without an admitted route for protecting the other unidentified potions. Decisions 220–222 (logs 612–620) reached the bank, failed the stash check and deferred potion preparation for the floor. Decision 247 (logs 695–698) then hit the descent obligation; its diagnostics identify an iron key, not a newly observed strength potion. The generic progression warning covers keys too. Fallback advanced the game clock but did not resolve that obligation. Offline bookkeeping reconstructed from this source and recorded public inputs matches original actions and reasons through decision 222. Isolated probes on validated state find no stash route from the selected banks. The proposed correction checks protection before starting a remote frost approach, while preserving actual current-bank checks, hazard restrictions and mandatory progression pickup. Candidate reconstruction stops at its first changed decision, 219; no later observations are fed to it. This establishes an approach-admission defect, not a safe replacement route or puzzle success.",
-    "learnings": "Check potion-protection feasibility before walking toward an unknown frost test. An infeasible unstarted approach should not consume floor-wide preparation availability. Continue to require real stash, effect and collection evidence; selecting another action does not establish retrieval or survival."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "blocked",
+  "outcome_reason": "Fallback stopped after 128 accepted waits without observed gameplay progress",
+  "outcome_summary": "Blocked after frost preparation failed and an uncollected key prevented descent",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000021/poster.jpg",
+  "previous_run_id": "000020",
+  "previous_source_commit": "515dee1a5721898463df9a14bfbb7cf8600458a5",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 430,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -94,46 +156,11 @@
       "origin_run": "000021"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000021/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000021/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 0,
-        "turns": 430,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 437,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 210
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run blocked alive, rather than dying. Decision 219 (log 609) began a frost-test approach without an admitted route for protecting the other unidentified potions. Decisions 220–222 (logs 612–620) reached the bank, failed the stash check and deferred potion preparation for the floor. Decision 247 (logs 695–698) then hit the descent obligation; its diagnostics identify an iron key, not a newly observed strength potion. The generic progression warning covers keys too. Fallback advanced the game clock but did not resolve that obligation. Offline bookkeeping reconstructed from this source and recorded public inputs matches original actions and reasons through decision 222. Isolated probes on validated state find no stash route from the selected banks. The proposed correction checks protection before starting a remote frost approach, while preserving actual current-bank checks, hazard restrictions and mandatory progression pickup. Candidate reconstruction stops at its first changed decision, 219; no later observations are fed to it. This establishes an approach-admission defect, not a safe replacement route or puzzle success.",
+    "learnings": "Check potion-protection feasibility before walking toward an unknown frost test. An infeasible unstarted approach should not consume floor-wide preparation availability. Continue to require real stash, effect and collection evidence; selecting another action does not establish retrieval or survival."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -143,36 +170,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 0,
-    "gold_complete": true,
-    "turns": 430,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "f91ecf358b7d899aab51c07c42e44eca03b27e13",
+  "started_at": "2026-11-20T17:34:33Z",
+  "supervisor_version": "b6c86f5f5d24b28005d8611ec04e6fe79f6d9e53501448791b99376cd2e21e54",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000021/video.mp4"
 }

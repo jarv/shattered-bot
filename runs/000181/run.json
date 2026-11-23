@@ -1,0 +1,383 @@
+{
+  "schema_version": 1,
+  "id": "000181",
+  "started_at": "2026-11-23T08:30:15Z",
+  "completed_at": "2026-11-23T08:50:12.761547+00:00",
+  "source_commit": "587970de723be632adf8202b2c4402dc3b986969",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "death-category-20261123",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 6,
+  "actions": 2529,
+  "duration_seconds": 1186.733,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000180",
+  "previous_source_commit": "bda17d76d254a7eba8034d328e7d6cd9bcf317a2",
+  "improvements": [
+    "After a confirmed defeat of the last pursuer, the bot can reuse the step that enemy had blocked along its escape route. It still checks hazards and requires actual pickup confirmation before treating loot as collected."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "A confirmed last pursuer defeat can retire its matching immediate escape edge without declaring the floor clear. Retain unrelated edges and threat memories, and continue requiring actual pickup receipts and independent hazard admission.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health when the planner exhausted. Decision 2529 (log 7139) blocks descent because the piranha chest remains uncollected; the preceding purchase advanced time without resolving it. The initiating missed preparation appears at decision 2444 (6933): the pool chest and fish are observed while the hero is healthy and not hungry, carrying unknown potions, removable unidentified leather armor and identified uncursed cloth armor. Timed room planning correctly rejects unidentified armor, but unlike flight preparation, pool preparation never considers the carried safe replacement. Source-pinned offline reconstruction matches all 2529 recorded selections and the terminal blocker. On a copy of reconstructed decision-2444 state, the candidate selects the carried cloth armor instead of leaving. A separate equipment-copy probe admits a budgeted pool route and fresh dry test bank without guessing potion identities. No subsequent observations are supplied after the changed decision. The correction preserves fresh potion, protection, hazard and pickup checks. The new regression fails on the original selector and passes on the candidate; the full suite passes 2060 tests with four skips. This establishes preparation, not successful identification or chest retrieval.",
+    "learnings": "Before abandoning a required pool chest, check whether carried, identified, uncursed armor can satisfy timed-movement preparation. Seeing a bandolier alone does not establish potion protection. Recheck actual equipment and every potion, entrance, protection and pickup requirement after preparation; never infer unknown colors or waive the chest."
+  },
+  "recommendations": [
+    {
+      "id": "000181-pool-armor-preparation",
+      "priority": "high",
+      "summary": "Consider a verified carried armor replacement before pool preparation declines on uncertain movement equipment.",
+      "evidence": [
+        "Decision 2443, selection 6930 and acceptance 6931: arrival at pool entrance 1843.",
+        "Decision 2444, log 6933: full health, no hunger, unknown potions, removable unidentified leather and identified uncursed cloth; pool preparation declines.",
+        "Decision 2444, acceptance 6934, and decision 2445, 6936–6937: leave the unresolved pool.",
+        "Decision 2529, log 7139: mandatory uncollected chest ends the living planner.",
+        "Original-source offline reconstruction matches decisions 0–2528 and the terminal blocker; an isolated copied-state candidate probe selects cloth EQUIP at decision 2444 without dispatch.",
+        "tools/combat_items.py:39–45; tools/room_tactics.py:200–209; tools/piranha_tactics.py:36–61; tools/puzzle_supplies.py:447–517."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000181"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000181/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000181/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 59,
+        "turns": 247,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 247,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 366
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 23,
+        "gold_gained": 355,
+        "turns": 528,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 519,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 422
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 29,
+        "gold_gained": 520,
+        "turns": 431,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 428,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 609
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 325
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 417
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 59,
+        "gold_gained": 160,
+        "turns": 544,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 547,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 206,
+        "turns": 335,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 323,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 602
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 354
+          },
+          {
+            "kind": "quest",
+            "label": "Rat King",
+            "status": "encountered"
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 51,
+        "gold_gained": 531,
+        "turns": 448,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 457,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 7,
+    "ending_level": 8,
+    "starving_turns": 9,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 8,
+    "gold_collected": 1831,
+    "gold_complete": true,
+    "turns": 2533,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 8,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

@@ -1,42 +1,104 @@
 {
-  "schema_version": 1,
-  "id": "000107",
-  "started_at": "2026-11-22T03:36:24Z",
-  "completed_at": "2026-11-22T03:38:21.871578+00:00",
-  "source_commit": "3c1f589fdb3106f31c9c9cb5a8a3829d667375c5",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 286,
-  "duration_seconds": 115.266,
+  "code_changed": true,
+  "completed_at": "2026-11-22T03:38:21.871578+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000106",
-  "previous_source_commit": "f2861b9d55a5456dce3b05c692be42b818587d59",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 115.266,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 283,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 280,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1628
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000107",
   "improvements": [
     "The bot now continues a planned gas-room retrieval while observed purification protection remains active, instead of immediately fleeing the gas. It still checks whether enough protection remains to return safely."
   ],
-  "code_changed": true,
   "incoming_learnings": "An observed, active purification barrier on an owned gas retrieval must reach the existing protected-route validator rather than unconditional gas escape. Preserve duration, return-route, threat and pickup checks; never assume the reward was collected.",
   "incoming_update_status": "accepted",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The planner stopped with the hero alive at full health. Bookshelves first appear at decision 229 (line 665). At decision 286 (line 826), missing liquid flame reserved for bookshelf 1494 blocks mandatory potion discovery. The preparation scout recognizes only unknown cells next to walkable routes, excluding unseen shelf backs despite a carried stone of clairvoyance. Source-pinned offline reconstruction matches decisions 0–285 and reproduces the blocker. The candidate matches those same inputs, then selects stationary clairvoyance at decision 286 and stops without using any imagined subsequent observation. The focused correction includes unseen backs of observed shelves beside reachable ground as information-gathering targets. It changes neither potion safety nor mandatory pickup. The new regression fails by assertion on original source and passes with the correction; the full suite passes. Scouting is not proof that discovery, retrieval or descent will succeed.",
-    "learnings": "Unknown space behind sight-blocking shelves can justify stationary known reconnaissance even when ordinary movement frontiers are exhausted. Keep flame reservation and mandatory collection unresolved until fresh public observations support further action."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000107/poster.jpg",
+  "previous_run_id": "000106",
+  "previous_source_commit": "f2861b9d55a5456dce3b05c692be42b818587d59",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 283,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -344,46 +406,11 @@
       "origin_run": "000037"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000107/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000107/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 0,
-        "turns": 283,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 280,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 1628
-          },
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The planner stopped with the hero alive at full health. Bookshelves first appear at decision 229 (line 665). At decision 286 (line 826), missing liquid flame reserved for bookshelf 1494 blocks mandatory potion discovery. The preparation scout recognizes only unknown cells next to walkable routes, excluding unseen shelf backs despite a carried stone of clairvoyance. Source-pinned offline reconstruction matches decisions 0–285 and reproduces the blocker. The candidate matches those same inputs, then selects stationary clairvoyance at decision 286 and stops without using any imagined subsequent observation. The focused correction includes unseen backs of observed shelves beside reachable ground as information-gathering targets. It changes neither potion safety nor mandatory pickup. The new regression fails by assertion on original source and passes with the correction; the full suite passes. Scouting is not proof that discovery, retrieval or descent will succeed.",
+    "learnings": "Unknown space behind sight-blocking shelves can justify stationary known reconnaissance even when ordinary movement frontiers are exhausted. Keep flame reservation and mandatory collection unresolved until fresh public observations support further action."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -393,36 +420,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 0,
-    "gold_complete": true,
-    "turns": 283,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "3c1f589fdb3106f31c9c9cb5a8a3829d667375c5",
+  "started_at": "2026-11-22T03:36:24Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000107/video.mp4"
 }

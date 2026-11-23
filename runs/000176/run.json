@@ -1,61 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000176",
-  "started_at": "2026-11-23T06:45:05Z",
-  "completed_at": "2026-11-23T07:04:05.842629+00:00",
-  "source_commit": "5765bc6462a77c17a3434673bc842e125a7789c0",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "dead",
-  "outcome_summary": "Died to lightning after an unidentified potion caused paralysis",
-  "outcome_reason": "Hero died",
-  "max_depth": 7,
   "actions": 2783,
-  "duration_seconds": 1129.127,
+  "code_changed": true,
+  "completed_at": "2026-11-23T07:04:05.842629+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000175",
-  "previous_source_commit": "ad14c805b9342ea84eafe5b31d9333056dd4e077",
-  "improvements": [
-    "The bot now reassesses prolonged retreats from multiple enemies and can use a limited, safety-checked intervention before continuing to retreat, including in regular games."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "A bounded pursuit intervention must remain reachable when the multi-enemy retreat controller preempts preparation, including regular mode. Preserve verified sight breaks, emergency rescue priority, known-charge checks and intervention limits. A geometric retreat endpoint is not evidence that pursuit has ended.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The initiating failure was an unidentified-potion experiment for a levitation room. Decision 2779 (line 8158) staged at dry floor 762. Decisions 2780–2781 tested potions that revealed haste and healing. Decision 2782 (selection 8167, accepted transition 8168) drank unidentified bistre at full health; the clock advanced 27 turns and HP fell from 55 to zero without another selection. Public effects show paralytic gas, repeated paralysis, and an explicit lightning-bolt death message. The attacker is not established. Azure became known as levitation only after death. The selecting chain is rule-preparation through tools/mage_policy.py:1377 to tools/puzzle_supplies.py:899–967. Its bank check verifies nearby terrain and exits, not the ability to act after paralysis. Isolated original-source helper probes admit the recorded bank; they are not reconstructed runtime memory or a replay. No patch is proposed: the missing safety witness is executable identification or verified gas-immunity preparation before testing. The recorded inventory and geometry do not establish either, and a bank veto or speculative relocation alone could replace death with mandatory-discovery exhaustion. Original tests pass (2,053 run, four skipped); no red/green repair claim is made.",
-    "learnings": "An empty visible room, full health and walkable exits do not establish safe unidentified-potion testing: paralysis can consume many turns before the next decision. Separate protection of carried potions from protection of the hero, and never treat post-death potion identities as prior knowledge."
-  },
-  "recommendations": [
-    {
-      "id": "000176-paralysis-test-admission",
-      "priority": "high",
-      "summary": "Require executable identification or verified paralysis-safe preparation before admitting unknown room-potion tests.",
-      "evidence": [
-        "Decision 2779, selection line 8158: preparation moves toward dry bank 762.",
-        "Decisions 2780–2781, accepted lines 8162 and 8165: haste and healing tests leave levitation unresolved.",
-        "Decision 2782, selection 8167 and accepted transition 8168: unknown bistre drink advances 27 turns, with paralysis, paralytic gas and lightning death.",
-        "tools/puzzle_supplies.py:138–162,899–967,988–1060: geometric bank admission precedes recovery that needs a later observation."
-      ],
-      "status": "deferred",
-      "reason": "Source and full-log inspection establish the admission gap, but not a safe replacement. The fatal public snapshot has no active gas immunity or available nonconsumptive identification item; no verified preparation transaction covers continuous paralysis. Water, alternate exits or mind vision alone do not prove recovery. Next derive paired approach/activation fixtures and validate an identification or duration-checked gas-immunity prerequisite with fresh arrival, enemy-interruption and recovery checks before implementing it. Preserve mandatory pickup, potion protection and explicit planner exhaustion; a blanket veto or speculative movement is not certified here.",
-      "origin_run": "000176"
-    }
-  ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000176/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000176/poster.jpg",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "duration_seconds": 1129.127,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -249,15 +204,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 12,
-    "ending_experience": 30,
-    "ending_level": 8,
-    "starving_turns": 133,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -307,6 +253,25 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000176",
+  "improvements": [
+    "The bot now reassesses prolonged retreats from multiple enemies and can use a limited, safety-checked intervention before continuing to retreat, including in regular games."
+  ],
+  "incoming_learnings": "A bounded pursuit intervention must remain reachable when the multi-enemy retreat controller preempts preparation, including regular mode. Preserve verified sight breaks, emergency rescue priority, known-charge checks and intervention limits. A geometric retreat endpoint is not evidence that pursuit has ended.",
+  "incoming_update_status": "accepted",
+  "max_depth": 7,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Died to lightning after an unidentified potion caused paralysis",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000176/poster.jpg",
+  "previous_run_id": "000175",
+  "previous_source_commit": "ad14c805b9342ea84eafe5b31d9333056dd4e077",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -373,5 +338,42 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000176-paralysis-test-admission",
+      "priority": "high",
+      "summary": "Require executable identification or verified paralysis-safe preparation before admitting unknown room-potion tests.",
+      "evidence": [
+        "Decision 2779, selection line 8158: preparation moves toward dry bank 762.",
+        "Decisions 2780–2781, accepted lines 8162 and 8165: haste and healing tests leave levitation unresolved.",
+        "Decision 2782, selection 8167 and accepted transition 8168: unknown bistre drink advances 27 turns, with paralysis, paralytic gas and lightning death.",
+        "tools/puzzle_supplies.py:138–162,899–967,988–1060: geometric bank admission precedes recovery that needs a later observation."
+      ],
+      "status": "deferred",
+      "reason": "Source and full-log inspection establish the admission gap, but not a safe replacement. The fatal public snapshot has no active gas immunity or available nonconsumptive identification item; no verified preparation transaction covers continuous paralysis. Water, alternate exits or mind vision alone do not prove recovery. Next derive paired approach/activation fixtures and validate an identification or duration-checked gas-immunity prerequisite with fresh arrival, enemy-interruption and recovery checks before implementing it. Preserve mandatory pickup, potion protection and explicit planner exhaustion; a blanket veto or speculative movement is not certified here.",
+      "origin_run": "000176"
+    }
+  ],
+  "review": {
+    "review": "The initiating failure was an unidentified-potion experiment for a levitation room. Decision 2779 (line 8158) staged at dry floor 762. Decisions 2780–2781 tested potions that revealed haste and healing. Decision 2782 (selection 8167, accepted transition 8168) drank unidentified bistre at full health; the clock advanced 27 turns and HP fell from 55 to zero without another selection. Public effects show paralytic gas, repeated paralysis, and an explicit lightning-bolt death message. The attacker is not established. Azure became known as levitation only after death. The selecting chain is rule-preparation through tools/mage_policy.py:1377 to tools/puzzle_supplies.py:899–967. Its bank check verifies nearby terrain and exits, not the ability to act after paralysis. Isolated original-source helper probes admit the recorded bank; they are not reconstructed runtime memory or a replay. No patch is proposed: the missing safety witness is executable identification or verified gas-immunity preparation before testing. The recorded inventory and geometry do not establish either, and a bank veto or speculative relocation alone could replace death with mandatory-discovery exhaustion. Original tests pass (2,053 run, four skipped); no red/green repair claim is made.",
+    "learnings": "An empty visible room, full health and walkable exits do not establish safe unidentified-potion testing: paralysis can consume many turns before the next decision. Separate protection of carried potions from protection of the hero, and never treat post-death potion identities as prior knowledge."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 30,
+    "ending_level": 8,
+    "starving_turns": 133,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "5765bc6462a77c17a3434673bc842e125a7789c0",
+  "started_at": "2026-11-23T06:45:05Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000176/video.mp4"
 }

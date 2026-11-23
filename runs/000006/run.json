@@ -1,46 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000006",
-  "started_at": "2026-11-20T09:08:44Z",
-  "completed_at": "2026-11-20T09:17:07.460871+00:00",
-  "source_commit": "4ec002ce3677c1787affef7cad04e2f96503a444",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "c9505c85465cf135251cfacfee0fe4bdcb2b6b16cba325e7014116e02a3c279d",
-  "outcome": "blocked",
-  "outcome_summary": "Stopped alive on floor 3; automated review hit its request cap",
-  "outcome_reason": "Fallback stopped after 128 accepted waits without observed gameplay progress",
-  "max_depth": 3,
   "actions": 1334,
-  "duration_seconds": 498.297,
+  "code_changed": true,
+  "completed_at": "2026-11-20T09:17:07.460871+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000005",
-  "previous_source_commit": "210d863af4fa331f2ea87b30dbf12fc0b6401617",
-  "improvements": [
-    "Before approaching a red sentry room to test an unknown potion, the bot checks that it can safely drink the potion from the chosen spot, not just reach the reward."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Before committing to puzzle staging, require compatibility with the next action’s existing admission checks. A hypothetical protected reward route does not establish a safe unknown-potion test. Preserve unfinished loot and mandatory progression pickup; never infer protection or collection from movement.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "Operator-authorized review-only disposition. The automated investigation exhausted its 32-request safety cap without producing a completed review. The user explicitly authorized publication without bot policy changes. No automated gameplay conclusions or policy patch are accepted from the incomplete investigation. The original recording, failed investigation, dispatch markers, and request/budget audits are retained; no model request was retried or refunded.",
-    "learnings": "No new gameplay lesson is claimed by this operator disposition. Investigate the failed automated review separately. Continue with the unchanged bot policy and a separately configured audio-recording trial."
-  },
-  "recommendations": [],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000006/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000006/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: blocked",
+  "duration_seconds": 498.297,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -128,15 +98,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 11,
-    "ending_experience": 1,
-    "ending_level": 4,
-    "starving_turns": 12,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -162,6 +123,25 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000006",
+  "improvements": [
+    "Before approaching a red sentry room to test an unknown potion, the bot checks that it can safely drink the potion from the chosen spot, not just reach the reward."
+  ],
+  "incoming_learnings": "Before committing to puzzle staging, require compatibility with the next action’s existing admission checks. A hypothetical protected reward route does not establish a safe unknown-potion test. Preserve unfinished loot and mandatory progression pickup; never infer protection or collection from movement.",
+  "incoming_update_status": "accepted",
+  "max_depth": 3,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "blocked",
+  "outcome_reason": "Fallback stopped after 128 accepted waits without observed gameplay progress",
+  "outcome_summary": "Stopped alive on floor 3; automated review hit its request cap",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000006/poster.jpg",
+  "previous_run_id": "000005",
+  "previous_source_commit": "210d863af4fa331f2ea87b30dbf12fc0b6401617",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -196,5 +176,27 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [],
+  "review": {
+    "review": "Operator-authorized review-only disposition. The automated investigation exhausted its 32-request safety cap without producing a completed review. The user explicitly authorized publication without bot policy changes. No automated gameplay conclusions or policy patch are accepted from the incomplete investigation. The original recording, failed investigation, dispatch markers, and request/budget audits are retained; no model request was retried or refunded.",
+    "learnings": "No new gameplay lesson is claimed by this operator disposition. Investigate the failed automated review separately. Continue with the unchanged bot policy and a separately configured audio-recording trial."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 1,
+    "ending_level": 4,
+    "starving_turns": 12,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "4ec002ce3677c1787affef7cad04e2f96503a444",
+  "started_at": "2026-11-20T09:08:44Z",
+  "supervisor_version": "c9505c85465cf135251cfacfee0fe4bdcb2b6b16cba325e7014116e02a3c279d",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000006/video.mp4"
 }

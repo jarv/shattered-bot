@@ -1,42 +1,104 @@
 {
-  "schema_version": 1,
-  "id": "000153",
-  "started_at": "2026-11-22T23:01:13Z",
-  "completed_at": "2026-11-22T23:03:30.530774+00:00",
-  "source_commit": "60a1aa8eba6cdd8e902b346224888fff2bb93103",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 330,
-  "duration_seconds": 134.307,
+  "code_changed": true,
+  "completed_at": "2026-11-22T23:03:30.530774+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000152",
-  "previous_source_commit": "bbcd9b02a431962370715164f492edd39d819877",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 134.307,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 118,
+        "turns": 324,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 324,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 419
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000153",
   "improvements": [
     "The bot keeps an established doorway hold when one pursuer occupies its single entrance, rather than mistaking that enemy for a second route around it. Other enemies must still have no flank, and separate pressure checks still apply."
   ],
-  "code_changed": true,
   "incoming_learnings": "A pursuer occupying the single doorway slot must not itself count as an alternate flank. Retain established holds only while separate contact, approach-pressure, visibility and hazard checks remain satisfied; do not infer encounter clearance from choke geometry.",
   "incoming_update_status": "accepted",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run ended with a living hero when mandatory potion discovery exhausted its preparation options, not with an observed death. The initiating contradiction was that hungry room preparation rejected even nonconsumptive identification before considering the retained intuition stone. The gas room had been observed earlier; amber was acquired later, and the recorded intuition attempt tested strength and failed, not purity. The terminal report names missing purity while amber and usable intuition remain carried. A reduced public-evidence fixture reproduces the excluded information action without claiming recovered runtime memory. The candidate permits a bounded, stationary purity hypothesis through the existing public intuition menu; it does not assume that hypothesis is correct or authorize drinking, movement, collection or descent. The original regression produced the expected assertion failures; the candidate passes all three new tests and the full 1,987-test suite, with four skips. Historical backlog cases were not revalidated. Changed policy and the new regression are supplied as workspace edits for trusted derivation; files is intentionally empty.",
-    "learnings": "Separate hunger restrictions on unknown drinking from safe information actions. A failed strength hypothesis does not identify a potion or rule out a different declared intuition hypothesis. Keep gas-room rewards mandatory and require actual identity, protection and collection observations before proceeding."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000153/poster.jpg",
+  "previous_run_id": "000152",
+  "previous_source_commit": "bbcd9b02a431962370715164f492edd39d819877",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 118,
+    "gold_complete": true,
+    "turns": 324,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -369,46 +431,11 @@
       "origin_run": "000041"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000153/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000153/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 118,
-        "turns": 324,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 324,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 419
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run ended with a living hero when mandatory potion discovery exhausted its preparation options, not with an observed death. The initiating contradiction was that hungry room preparation rejected even nonconsumptive identification before considering the retained intuition stone. The gas room had been observed earlier; amber was acquired later, and the recorded intuition attempt tested strength and failed, not purity. The terminal report names missing purity while amber and usable intuition remain carried. A reduced public-evidence fixture reproduces the excluded information action without claiming recovered runtime memory. The candidate permits a bounded, stationary purity hypothesis through the existing public intuition menu; it does not assume that hypothesis is correct or authorize drinking, movement, collection or descent. The original regression produced the expected assertion failures; the candidate passes all three new tests and the full 1,987-test suite, with four skips. Historical backlog cases were not revalidated. Changed policy and the new regression are supplied as workspace edits for trusted derivation; files is intentionally empty.",
+    "learnings": "Separate hunger restrictions on unknown drinking from safe information actions. A failed strength hypothesis does not identify a potion or rule out a different declared intuition hypothesis. Keep gas-room rewards mandatory and require actual identity, protection and collection observations before proceeding."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -418,36 +445,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 118,
-    "gold_complete": true,
-    "turns": 324,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "60a1aa8eba6cdd8e902b346224888fff2bb93103",
+  "started_at": "2026-11-22T23:01:13Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000153/video.mp4"
 }

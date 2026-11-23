@@ -1,42 +1,148 @@
 {
-  "schema_version": 1,
-  "id": "000040",
-  "started_at": "2026-11-21T09:37:05Z",
-  "completed_at": "2026-11-21T09:40:52.389601+00:00",
-  "source_commit": "cbd43af9d483cf7c53a6b0f10b5c294f23d12b88",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 2,
   "actions": 577,
-  "duration_seconds": 223.384,
+  "code_changed": true,
+  "completed_at": "2026-11-21T09:40:52.389601+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000039",
-  "previous_source_commit": "f8c8fdd2068ea6ff499f371961a1d6080e35e792",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 223.384,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 90,
+        "turns": 291,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 288,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 993
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 16,
+        "gold_gained": 290,
+        "turns": 286.8909912109375,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 283,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 877
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000040",
   "improvements": [
     "The bot checks whether a special-room entrance can actually be scouted before moving to a potion-testing spot. It also uses that check when revisiting flight rooms, while recognizing doors it has already scouted."
   ],
-  "code_changed": true,
   "incoming_learnings": "A hypothetical protected round trip is insufficient preparation evidence when its entrance cannot be scouted from the proposed bank. Check the same entrance prerequisite during selection and arrival, preserve honest unfinished obligations, and allow other admitted work when preparation cannot proceed.",
   "incoming_update_status": "accepted",
+  "max_depth": 2,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at full health when the planner stopped (decision 577, lines 1619–1620). Doorway withdrawal entered a previously unobserved chilling trap, then retreated through 907 to 906 (decisions 567–570, lines 1588–1603). After combat, a stationary pickup and search advanced time without damage (573–574, lines 1608–1612). The next room-loot tour selected the remaining stone at 907, but escape-reversal protection vetoed that admitted step (575, line 1613). Recovery excluded the reverse edge and loot cells; its accumulated hungry-stall count then exhausted. The final waterskin restored health, not progress (576, lines 1616–1618). Source inspection identifies a narrow bookkeeping contradiction: quiet recovery counted movement and waits but ignored clock-advancing stationary inputs. The proposed correction counts publicly timed accepted inputs under the existing threat and damage release gates; it changes neither waiting limits nor hazard admission. A new synthetic public-evidence-derived regression fails its release assertion on the original policy and passes on the candidate. The full suite passes 1,651 tests with four skips. Original runtime memory was not fully reconstructed; the fixture does not certify a replacement full-run selection, collection, or trap avoidance. Historical backlog remains unresolved.",
-    "learnings": "Quiet observation time can come from picking up an item or searching, not just moving or waiting. Credit it only when accepted public observations show the clock advancing, retain threat and damage checks, and never treat release of route protection as loot collection or permission to cross a hazard."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000040/poster.jpg",
+  "previous_run_id": "000039",
+  "previous_source_commit": "f8c8fdd2068ea6ff499f371961a1d6080e35e792",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 380,
+    "gold_complete": true,
+    "turns": 577.8909912109375,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -192,76 +298,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000040/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000040/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 90,
-        "turns": 291,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 288,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 993
-          },
-          {
-            "kind": "room",
-            "label": "Barricaded area",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 16,
-        "gold_gained": 290,
-        "turns": 286.8909912109375,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 283,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Distant well",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 877
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero remained alive at full health when the planner stopped (decision 577, lines 1619–1620). Doorway withdrawal entered a previously unobserved chilling trap, then retreated through 907 to 906 (decisions 567–570, lines 1588–1603). After combat, a stationary pickup and search advanced time without damage (573–574, lines 1608–1612). The next room-loot tour selected the remaining stone at 907, but escape-reversal protection vetoed that admitted step (575, line 1613). Recovery excluded the reverse edge and loot cells; its accumulated hungry-stall count then exhausted. The final waterskin restored health, not progress (576, lines 1616–1618). Source inspection identifies a narrow bookkeeping contradiction: quiet recovery counted movement and waits but ignored clock-advancing stationary inputs. The proposed correction counts publicly timed accepted inputs under the existing threat and damage release gates; it changes neither waiting limits nor hazard admission. A new synthetic public-evidence-derived regression fails its release assertion on the original policy and passes on the candidate. The full suite passes 1,651 tests with four skips. Original runtime memory was not fully reconstructed; the fixture does not certify a replacement full-run selection, collection, or trap avoidance. Historical backlog remains unresolved.",
+    "learnings": "Quiet observation time can come from picking up an item or searching, not just moving or waiting. Credit it only when accepted public observations show the clock advancing, retain threat and damage checks, and never treat release of route protection as loot collection or permission to cross a hazard."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -271,50 +312,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 3,
-    "gold_collected": 380,
-    "gold_complete": true,
-    "turns": 577.8909912109375,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "cbd43af9d483cf7c53a6b0f10b5c294f23d12b88",
+  "started_at": "2026-11-21T09:37:05Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000040/video.mp4"
 }

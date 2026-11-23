@@ -1,41 +1,221 @@
 {
-  "schema_version": 1,
-  "id": "000175",
-  "started_at": "2026-11-23T06:29:18Z",
-  "completed_at": "2026-11-23T06:37:04.263484+00:00",
-  "source_commit": "ad14c805b9342ea84eafe5b31d9333056dd4e077",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "dead",
-  "outcome_summary": "Died during sustained enemy pursuit",
-  "outcome_reason": "Hero died",
-  "max_depth": 4,
   "actions": 1158,
-  "duration_seconds": 459.733,
+  "code_changed": true,
+  "completed_at": "2026-11-23T06:37:04.263484+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000174",
-  "previous_source_commit": "84a853a4119f57c4dd022ec9bc95024fe8ec9c9f",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "duration_seconds": 459.733,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 312,
+        "turns": 270,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 268,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1091
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 16,
+        "gold_gained": 62,
+        "turns": 375,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 372,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1142
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 26,
+        "gold_gained": 351,
+        "turns": 254,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 260,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 722
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 20,
+        "gold_gained": 117,
+        "turns": 263,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 252,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 956
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 635
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 8,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 5.75,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000175",
   "improvements": [
     "When fleeing a DM-100 toward a door, the bot now checks each other observed enemy separately along the route. Leaving one attacker behind no longer compensates for approaching a different attacker."
   ],
-  "code_changed": true,
   "incoming_learnings": "Do not treat escaping one attacker as permission to approach another along a committed escape route. Recheck opposing observed threats before starting or continuing doorway flight. Rejecting an obstructed route does not establish a safe alternative.",
   "incoming_update_status": "accepted",
+  "max_depth": 4,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The Mage died during sustained pursuit. Decision 1087 (selection line3297) had HP17/40, two observed slimes and one known uncursed staff charge, yet selected another non-choke retreat. Line3296 already recorded 24 accepted retreats and zero interventions; line3643 eventually recorded 91. Source inspection identifies an arbitration defect: preparation yields immediately to multiple closing fronts, while its later bounded pursuit intervention is also restricted to challenge combat pressure. The multifront retreat selector never consults that intervention. Earlier doorway setup was costly: accepted transitions3152 and3160 lost HP17 to14 and18 to13. Later retreat continued losing health. The final accepted transition3640 moves484 to448 and loses HP4 to0; nearby enemies do not establish a specific killer. The proposed focused repair makes the existing bounded intervention reachable before another uncommitted multifront retreat, preserving its charge, exposure, sight-break and hazard restrictions. The new reduced fixture uses public decision1087 geometry and recorded pursuit counts, not recovered runtime memory or an exact historical route reconstruction. Original policy fails two expected assertions; candidate passes all five new tests and the full 2,053-test suite (four skips). No gameplay replay or changed-decision continuation was used. Selection of a shot does not establish a kill or survival.",
-    "learnings": "A bounded pursuit intervention must remain reachable when the multi-enemy retreat controller preempts preparation, including regular mode. Preserve verified sight breaks, emergency rescue priority, known-charge checks and intervention limits. A geometric retreat endpoint is not evidence that pursuit has ended."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Died during sustained enemy pursuit",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000175/poster.jpg",
+  "previous_run_id": "000174",
+  "previous_source_commit": "84a853a4119f57c4dd022ec9bc95024fe8ec9c9f",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 5,
+    "gold_collected": 842,
+    "gold_complete": true,
+    "turns": 1162,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -389,122 +569,11 @@
       "origin_run": "000046"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000175/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000175/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 312,
-        "turns": 270,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 268,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 1091
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 16,
-        "gold_gained": 62,
-        "turns": 375,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 372,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Crystal choice container",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 1142
-          }
-        ]
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 26,
-        "gold_gained": 351,
-        "turns": 254,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 260,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 722
-          }
-        ]
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "experience_gained": 20,
-        "gold_gained": 117,
-        "turns": 263,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 252,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 956
-          },
-          {
-            "kind": "quest",
-            "label": "Sad Ghost",
-            "status": "encountered"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 635
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The Mage died during sustained pursuit. Decision 1087 (selection line3297) had HP17/40, two observed slimes and one known uncursed staff charge, yet selected another non-choke retreat. Line3296 already recorded 24 accepted retreats and zero interventions; line3643 eventually recorded 91. Source inspection identifies an arbitration defect: preparation yields immediately to multiple closing fronts, while its later bounded pursuit intervention is also restricted to challenge combat pressure. The multifront retreat selector never consults that intervention. Earlier doorway setup was costly: accepted transitions3152 and3160 lost HP17 to14 and18 to13. Later retreat continued losing health. The final accepted transition3640 moves484 to448 and loses HP4 to0; nearby enemies do not establish a specific killer. The proposed focused repair makes the existing bounded intervention reachable before another uncommitted multifront retreat, preserving its charge, exposure, sight-break and hazard restrictions. The new reduced fixture uses public decision1087 geometry and recorded pursuit counts, not recovered runtime memory or an exact historical route reconstruction. Original policy fails two expected assertions; candidate passes all five new tests and the full 2,053-test suite (four skips). No gameplay replay or changed-decision continuation was used. Selection of a shot does not establish a kill or survival.",
+    "learnings": "A bounded pursuit intervention must remain reachable when the multi-enemy retreat controller preempts preparation, including regular mode. Preserve verified sight breaks, emergency rescue priority, known-charge checks and intervention limits. A geometric retreat endpoint is not evidence that pursuit has ended."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 11,
@@ -514,78 +583,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 8,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "starving_turns": 5.75,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 5,
-    "gold_collected": 842,
-    "gold_complete": true,
-    "turns": 1162,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 4,
-        "max_level_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 5,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "ad14c805b9342ea84eafe5b31d9333056dd4e077",
+  "started_at": "2026-11-23T06:29:18Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000175/video.mp4"
 }

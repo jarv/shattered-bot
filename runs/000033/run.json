@@ -1,41 +1,170 @@
 {
-  "schema_version": 1,
-  "id": "000033",
-  "started_at": "2026-11-21T07:00:22Z",
-  "completed_at": "2026-11-21T07:07:45.410806+00:00",
-  "source_commit": "337e812d10754bb99af399d9367709ef2ce34e8d",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "17479146b5bf2aa52ebb7cdb14ff8f5474f6de7ba14ab7842a98a8ff090a2702",
-  "outcome": "blocked",
-  "outcome_summary": "Stopped alive after repeated puzzle preparation and fallback waits",
-  "outcome_reason": "Fallback stopped after 128 accepted waits without observed gameplay progress",
-  "max_depth": 3,
   "actions": 1029,
-  "duration_seconds": 438.199,
+  "code_changed": true,
+  "completed_at": "2026-11-21T07:07:45.410806+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000032",
-  "previous_source_commit": "4e45053d8e10cbdf126305a5d33fbf619ebf7f9c",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: blocked",
+  "duration_seconds": 438.199,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 50,
+        "turns": 279,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 280,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 540
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 14,
+        "gold_gained": 207,
+        "turns": 326,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 332,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 648
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 0,
+        "gold_gained": 0,
+        "turns": 414,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 411,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000033",
   "improvements": [
     "The bot now remembers reaching an entrance-scouting position even when loot or danger interrupts its next step. This does not count as finding a shop or collecting its items."
   ],
-  "code_changed": true,
   "incoming_learnings": "Remember visibly reached entrance-scouting positions even when loot or safety interrupts the next preparation step. Keep scouting receipts separate from actual shop visitation and collection, and retain all mandatory progression pickups. Removing this repeated approach does not establish shop discovery or survival.",
   "incoming_update_status": "accepted",
+  "max_depth": 3,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run stopped alive at full health after 128 fallback waits; elapsed turns continued advancing. An initiating preparation defect appears at decisions 654–657 (selection lines 1870, 1873, 1876 and 1879): the bot alternates between a flight-room door and its potion-test bank. Leaving the door closes it normally, but only pool entrances retain scouting receipts, so flight preparation repeatedly demands another opening. The navigation guard rejects this loop at decision 665, line 1903. Later preparation and collection conflicts precede fallback at decision 901; the final accepted wait at line 3031 leaves the hero alive.\n\nComplete source browsing identifies the entrance lifecycle defect. A reduced deterministic fixture, not recovered runtime memory, reproduces the three earlier helper selections and stops at the first changed selection, decision 657. The correction remembers visibly entered flight entrances and permits existing inventory-protection preparation rather than another scouting lap. The new regression fails on original source with two expected assertions and passes all five tests on the candidate. The full candidate suite passes 1606 tests, with four skipped. No existing tests were changed.\n\nThis establishes neither completed inventory protection nor successful potion testing, flight, chest collection or survival. Unknown potions remain unknown; actual protection, hazard checks, trip budgets and mandatory progression pickups remain required. Later collection conflicts and older backlog alternatives remain unresolved. The proposed correction is for the next run, not an improvement present in this recording.",
-    "learnings": "Remember publicly verified flight-entrance scouting after normal door reclosure, separately from collection and protection. Recheck the protected round trip and inventory safety before testing any unknown potion. Selecting preparation does not prove puzzle completion."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "blocked",
+  "outcome_reason": "Fallback stopped after 128 accepted waits without observed gameplay progress",
+  "outcome_summary": "Stopped alive after repeated puzzle preparation and fallback waits",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000033/poster.jpg",
+  "previous_run_id": "000032",
+  "previous_source_commit": "4e45053d8e10cbdf126305a5d33fbf619ebf7f9c",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 257,
+    "gold_complete": true,
+    "turns": 1019,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -146,85 +275,11 @@
       "origin_run": "000033"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000033/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000033/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 50,
-        "turns": 279,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 280,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 540
-          },
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 14,
-        "gold_gained": 207,
-        "turns": 326,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 332,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 648
-          },
-          {
-            "kind": "room",
-            "label": "Sentry area",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 0,
-        "gold_gained": 0,
-        "turns": 414,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 411,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run stopped alive at full health after 128 fallback waits; elapsed turns continued advancing. An initiating preparation defect appears at decisions 654–657 (selection lines 1870, 1873, 1876 and 1879): the bot alternates between a flight-room door and its potion-test bank. Leaving the door closes it normally, but only pool entrances retain scouting receipts, so flight preparation repeatedly demands another opening. The navigation guard rejects this loop at decision 665, line 1903. Later preparation and collection conflicts precede fallback at decision 901; the final accepted wait at line 3031 leaves the hero alive.\n\nComplete source browsing identifies the entrance lifecycle defect. A reduced deterministic fixture, not recovered runtime memory, reproduces the three earlier helper selections and stops at the first changed selection, decision 657. The correction remembers visibly entered flight entrances and permits existing inventory-protection preparation rather than another scouting lap. The new regression fails on original source with two expected assertions and passes all five tests on the candidate. The full candidate suite passes 1606 tests, with four skipped. No existing tests were changed.\n\nThis establishes neither completed inventory protection nor successful potion testing, flight, chest collection or survival. Unknown potions remain unknown; actual protection, hazard checks, trip budgets and mandatory progression pickups remain required. Later collection conflicts and older backlog alternatives remain unresolved. The proposed correction is for the next run, not an improvement present in this recording.",
+    "learnings": "Remember publicly verified flight-entrance scouting after normal door reclosure, separately from collection and protection. Recheck the protected round trip and inventory safety before testing any unknown potion. Selecting preparation does not prove puzzle completion."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -234,64 +289,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 257,
-    "gold_complete": true,
-    "turns": 1019,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "337e812d10754bb99af399d9367709ef2ce34e8d",
+  "started_at": "2026-11-21T07:00:22Z",
+  "supervisor_version": "17479146b5bf2aa52ebb7cdb14ff8f5474f6de7ba14ab7842a98a8ff090a2702",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000033/video.mp4"
 }

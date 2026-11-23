@@ -1,41 +1,125 @@
 {
-  "schema_version": 1,
-  "id": "000052",
-  "started_at": "2026-11-21T13:26:36Z",
-  "completed_at": "2026-11-21T13:30:18.819869+00:00",
-  "source_commit": "74ed81e27410d9faa66e5b9280f113c12c25082e",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "dead",
-  "outcome_summary": "Killed by a gnoll scout after prolonged fighting and retreat",
-  "outcome_reason": "Hero died",
-  "max_depth": 2,
   "actions": 559,
-  "duration_seconds": 218.466,
+  "code_changed": true,
+  "completed_at": "2026-11-21T13:30:18.819869+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000051",
-  "previous_source_commit": "cb7ffda3f0121c3365a36cec4c521a97ece1c2f3",
+  "death_category": "combat",
+  "death_category_evidence": "review summary: Killed by a gnoll scout after prolonged fighting and retreat",
+  "duration_seconds": 218.466,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 180,
+        "turns": 374,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 375,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 423
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 8,
+        "gold_gained": 0,
+        "turns": 174,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 178,
+        "terminal_floor": true,
+        "highlights": []
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 4,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000052",
   "improvements": [
     "Before moving into position for a toxic-gas room, the bot now checks that it can open the entrance from its chosen waiting spot."
   ],
-  "code_changed": true,
   "incoming_learnings": "A protected round-trip budget is insufficient if preparation cannot perform its entrance prerequisite. Check that prerequisite before travelling to the staging square, then reobserve and recheck before opening or drinking. Preserve unresolved rewards and require the actual protection buff before hazard entry. Do not cure this contradiction by eating earlier, increasing waits or suppressing planner exhaustion.",
   "incoming_update_status": "accepted",
+  "max_depth": 2,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero died after prolonged doorway fighting and retreat. The final accepted attack at decision 558 (lines 1729–1730) reduces four HP to zero, with a new message explicitly naming a gnoll scout. An earlier concrete defect occurs at decision 465 (lines 1349–1350): with twelve of twenty-five HP and a usable magic-missile charge, snake combat starts a fresh doorway approach and loses two HP. The next decision aborts that approach under its existing half-health continuation rule and uses magic instead. Source tracing through unit dispatch, snake combat and door-ambush selection establishes that new plans lack the health check already applied to existing plans. A reduced public-evidence fixture reproduces the contradiction without claiming recovered runtime memory. The proposed correction applies that same health floor before starting a new lure; the existing fallback selects a visible, clear staff shot instead. Original-source regression: two expected assertion failures; candidate: four tests pass. The full suite passes 1,685 tests with four skipped. This does not prove a kill, survival, or that all earlier lure decisions were wrong. Post-death potion identity and revealed regrowth charges were not treated as available knowledge. The files array is intentionally empty under the adapter contract; one policy correction and a new regression are present for validation.",
-    "learnings": "A newly started tactical plan must meet the same health prerequisites as its continuation. Do not spend an approach step that the next observation must reject when an already admitted ranged action is available. Preserve hazard checks and mandatory pickup obligations; a selected shot does not establish encounter success."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Killed by a gnoll scout after prolonged fighting and retreat",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000052/poster.jpg",
+  "previous_run_id": "000051",
+  "previous_source_commit": "cb7ffda3f0121c3365a36cec4c521a97ece1c2f3",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 180,
+    "gold_complete": true,
+    "turns": 548,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -222,54 +306,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000052/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000052/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 11,
-        "gold_gained": 180,
-        "turns": 374,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 375,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 423
-          },
-          {
-            "kind": "room",
-            "label": "Crystal choice container",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 8,
-        "gold_gained": 0,
-        "turns": 174,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 178,
-        "terminal_floor": true,
-        "highlights": []
-      }
-    ]
+  "review": {
+    "review": "The hero died after prolonged doorway fighting and retreat. The final accepted attack at decision 558 (lines 1729–1730) reduces four HP to zero, with a new message explicitly naming a gnoll scout. An earlier concrete defect occurs at decision 465 (lines 1349–1350): with twelve of twenty-five HP and a usable magic-missile charge, snake combat starts a fresh doorway approach and loses two HP. The next decision aborts that approach under its existing half-health continuation rule and uses magic instead. Source tracing through unit dispatch, snake combat and door-ambush selection establishes that new plans lack the health check already applied to existing plans. A reduced public-evidence fixture reproduces the contradiction without claiming recovered runtime memory. The proposed correction applies that same health floor before starting a new lure; the existing fallback selects a visible, clear staff shot instead. Original-source regression: two expected assertion failures; candidate: four tests pass. The full suite passes 1,685 tests with four skipped. This does not prove a kill, survival, or that all earlier lure decisions were wrong. Post-death potion identity and revealed regrowth charges were not treated as available knowledge. The files array is intentionally empty under the adapter contract; one policy correction and a new regression are present for validation.",
+    "learnings": "A newly started tactical plan must meet the same health prerequisites as its continuation. Do not spend an approach step that the next observation must reject when an already admitted ranged action is available. Preserve hazard checks and mandatory pickup obligations; a selected shot does not establish encounter success."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -279,50 +320,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 4,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 180,
-    "gold_complete": true,
-    "turns": 548,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "74ed81e27410d9faa66e5b9280f113c12c25082e",
+  "started_at": "2026-11-21T13:26:36Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000052/video.mp4"
 }

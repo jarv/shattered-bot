@@ -1,61 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000167",
-  "started_at": "2026-11-23T02:55:31Z",
-  "completed_at": "2026-11-23T03:13:06.575757+00:00",
-  "source_commit": "52efe9536c0ad96eb39e4a10185070df37aae948",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "dead",
-  "outcome_summary": "Died to a skeleton after losing health during an exposed lure wait",
-  "outcome_reason": "Hero died",
-  "max_depth": 7,
   "actions": 2772,
-  "duration_seconds": 1045.399,
+  "code_changed": true,
+  "completed_at": "2026-11-23T03:13:06.575757+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000166",
-  "previous_source_commit": "04efdcad9d72a87d90e8696133b66e4258521ecf",
-  "improvements": [
-    "The bot can now remotely trigger a revealed shocking trap beneath a required item when the surrounding electrical spread is fully observed and clear of bystanders. It still checks for lingering electricity before retrieving the item and its thrown waterskin."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "A required key can need a separate trap-clearance prerequisite. Distinguish an observed safe remote trigger from permission to enter the resulting electricity, and require fresh disarm, effect-expiry and pickup evidence.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero died to a skeleton, explicitly identified by the full terminal public message at decision 2771, accepted log line 8012. An earlier actionable defect occurred at decision 2751: after stepping behind door 724 to cell 687, the bot waited for a remembered DM-100 while an awake prison guard stood diagonally adjacent. The accepted wait at line 7933 reduced HP from 27 to 19. The immediate-safety doorway controller checked the remembered caster's sight but omitted other observed attackers before its first wait. The proposed narrow correction yields that bank commitment whenever current observed exposure is nonzero; it does not choose or certify a replacement action. A reduced public-geometry regression failed with the expected assertion on original policy and passed after correction. The full suite passed 2033 tests with four skips. The fixture's plan is reconstructed, not recorded memory; an earlier helper reconstruction diverged at decision 2747 and stopped there. No changed-decision continuation or survival claim is made. Pre-death unknown item identities were not inferred from death revelations.",
-    "learnings": "Breaking one caster's sight does not make a waiting square safe from another attacker. Check current contact and ranged exposure before the first lure wait, not only after damage arrives. A conservative veto is not evidence that the downstream action will save the hero."
-  },
-  "recommendations": [
-    {
-      "id": "000167-exposed-doorway-bank-wait",
-      "priority": "high",
-      "summary": "Interrupt committed caster-bank waits when another observed attacker can threaten the hero.",
-      "evidence": [
-        "Decision 2750, selection line 7928 and accepted line 7929: the hero reaches bank 687 and the guard reaches door 724.",
-        "Decision 2751, selection line 7932 and accepted line 7933: the exposed wait reduces health from 27 to 19.",
-        "tools/policy_tree.py:22; tools/policy_nodes.py:93; tools/dm100_escape.py:138-150: immediate-safety bank waiting omitted current attacker exposure.",
-        "New focused regression: original assertion failure, candidate success; full suite passes."
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000167"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000167/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000167/poster.jpg",
+  "death_category": "combat",
+  "death_category_evidence": "review summary: Died to a skeleton after losing health during an exposed lure wait",
+  "duration_seconds": 1045.399,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -271,15 +226,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 12,
-    "ending_experience": 34,
-    "ending_level": 8,
-    "starving_turns": 22,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -329,6 +275,25 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000167",
+  "improvements": [
+    "The bot can now remotely trigger a revealed shocking trap beneath a required item when the surrounding electrical spread is fully observed and clear of bystanders. It still checks for lingering electricity before retrieving the item and its thrown waterskin."
+  ],
+  "incoming_learnings": "A required key can need a separate trap-clearance prerequisite. Distinguish an observed safe remote trigger from permission to enter the resulting electricity, and require fresh disarm, effect-expiry and pickup evidence.",
+  "incoming_update_status": "accepted",
+  "max_depth": 7,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Died to a skeleton after losing health during an exposed lure wait",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000167/poster.jpg",
+  "previous_run_id": "000166",
+  "previous_source_commit": "04efdcad9d72a87d90e8696133b66e4258521ecf",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -395,5 +360,42 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000167-exposed-doorway-bank-wait",
+      "priority": "high",
+      "summary": "Interrupt committed caster-bank waits when another observed attacker can threaten the hero.",
+      "evidence": [
+        "Decision 2750, selection line 7928 and accepted line 7929: the hero reaches bank 687 and the guard reaches door 724.",
+        "Decision 2751, selection line 7932 and accepted line 7933: the exposed wait reduces health from 27 to 19.",
+        "tools/policy_tree.py:22; tools/policy_nodes.py:93; tools/dm100_escape.py:138-150: immediate-safety bank waiting omitted current attacker exposure.",
+        "New focused regression: original assertion failure, candidate success; full suite passes."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000167"
+    }
+  ],
+  "review": {
+    "review": "The hero died to a skeleton, explicitly identified by the full terminal public message at decision 2771, accepted log line 8012. An earlier actionable defect occurred at decision 2751: after stepping behind door 724 to cell 687, the bot waited for a remembered DM-100 while an awake prison guard stood diagonally adjacent. The accepted wait at line 7933 reduced HP from 27 to 19. The immediate-safety doorway controller checked the remembered caster's sight but omitted other observed attackers before its first wait. The proposed narrow correction yields that bank commitment whenever current observed exposure is nonzero; it does not choose or certify a replacement action. A reduced public-geometry regression failed with the expected assertion on original policy and passed after correction. The full suite passed 2033 tests with four skips. The fixture's plan is reconstructed, not recorded memory; an earlier helper reconstruction diverged at decision 2747 and stopped there. No changed-decision continuation or survival claim is made. Pre-death unknown item identities were not inferred from death revelations.",
+    "learnings": "Breaking one caster's sight does not make a waiting square safe from another attacker. Check current contact and ranged exposure before the first lure wait, not only after damage arrives. A conservative veto is not evidence that the downstream action will save the hero."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 34,
+    "ending_level": 8,
+    "starving_turns": 22,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "52efe9536c0ad96eb39e4a10185070df37aae948",
+  "started_at": "2026-11-23T02:55:31Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000167/video.mp4"
 }

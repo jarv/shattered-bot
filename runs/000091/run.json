@@ -1,40 +1,164 @@
 {
-  "schema_version": 1,
-  "id": "000091",
-  "started_at": "2026-11-21T23:58:16Z",
-  "completed_at": "2026-11-22T00:03:52.709396+00:00",
-  "source_commit": "5c3f88cc294d90d08c044fb4d06afaf1083d1a69",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 3,
   "actions": 878,
-  "duration_seconds": 332.066,
+  "code_changed": false,
+  "completed_at": "2026-11-22T00:03:52.709396+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000090",
-  "previous_source_commit": "dd707d375d0da4814ee5d3f03af67a09fb79d5d5",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 332.066,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 9,
+        "gold_gained": 64,
+        "turns": 374,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 368,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 668
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 16,
+        "gold_gained": 144,
+        "turns": 470,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 469,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 0,
+        "gold_gained": 0,
+        "turns": 53,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 35,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1043
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000091",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "A remembered bookshelf is not sufficient evidence of a guaranteed flame supply or a safely executable burn. Separate optional fuel reservation from a genuine retrieval obligation using positive public evidence, and validate preparation against unknown far-side geometry. A bank return alone does not resolve missing room supplies; choosing preparation is not puzzle completion.",
   "incoming_update_status": "review-only",
+  "max_depth": 3,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at full health when the planner exhausted its admitted actions. The initiating progress blocker was a revealed shocking trap in the narrow corridor to an observed closed door. Ordinary pathfinding correctly excluded it, but preparation only supports remotely clearing chilling traps. After an earlier hidden shocking trap caused damage and paralysis, recovery left this corridor and wall searches continued until the hungry eight-search ceiling. That ceiling explains the stopping point, not the original obstruction. Source-pinned offline bookkeeping reconstruction matches all 878 selections and the terminal blocker; it is not recorded runtime memory. A copied-state geometry probe shows that hypothetical disarm would reconnect the door, but does not establish actual discharge, expiry or collection. No patch is submitted because a tested electrical-expiry and reusable-payload recovery contract is not established; the existing expiry waiter handles gas, not electricity. The unchanged policy suite passes 1,833 tests with four skipped; no baseline-red/candidate-green repair is claimed. The recorded source diff is empty. Historical backlog entries are carried unchanged and were not revalidated.",
-    "learnings": "Distinguish a reachable-map search limit from a known trap blocking ordinary progression. A safely positioned remote throw is preparation, not proof of electrical clearance or item recovery. For a shocking trap, contain the full electrical footprint, require fresh expiry evidence and verify reusable-item retrieval before resuming the corridor."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000091/poster.jpg",
+  "previous_run_id": "000090",
+  "previous_source_commit": "dd707d375d0da4814ee5d3f03af67a09fb79d5d5",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 208,
+    "gold_complete": true,
+    "turns": 897,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 1,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -351,80 +475,11 @@
       "origin_run": "000019"
     }
   ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000091/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000091/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 9,
-        "gold_gained": 64,
-        "turns": 374,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 368,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 668
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 16,
-        "gold_gained": 144,
-        "turns": 470,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 469,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Crystal choice container",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 0,
-        "gold_gained": 0,
-        "turns": 53,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 35,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 1043
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero remained alive at full health when the planner exhausted its admitted actions. The initiating progress blocker was a revealed shocking trap in the narrow corridor to an observed closed door. Ordinary pathfinding correctly excluded it, but preparation only supports remotely clearing chilling traps. After an earlier hidden shocking trap caused damage and paralysis, recovery left this corridor and wall searches continued until the hungry eight-search ceiling. That ceiling explains the stopping point, not the original obstruction. Source-pinned offline bookkeeping reconstruction matches all 878 selections and the terminal blocker; it is not recorded runtime memory. A copied-state geometry probe shows that hypothetical disarm would reconnect the door, but does not establish actual discharge, expiry or collection. No patch is submitted because a tested electrical-expiry and reusable-payload recovery contract is not established; the existing expiry waiter handles gas, not electricity. The unchanged policy suite passes 1,833 tests with four skipped; no baseline-red/candidate-green repair is claimed. The recorded source diff is empty. Historical backlog entries are carried unchanged and were not revalidated.",
+    "learnings": "Distinguish a reachable-map search limit from a known trap blocking ordinary progression. A safely positioned remote throw is preparation, not proof of electrical clearance or item recovery. For a shocking trap, contain the full electrical footprint, require fresh expiry evidence and verify reusable-item retrieval before resuming the corridor."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 11,
@@ -434,64 +489,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 6,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 3,
-    "gold_collected": 208,
-    "gold_complete": true,
-    "turns": 897,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 1,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 2,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "5c3f88cc294d90d08c044fb4d06afaf1083d1a69",
+  "started_at": "2026-11-21T23:58:16Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000091/video.mp4"
 }

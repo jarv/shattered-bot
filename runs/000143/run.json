@@ -1,43 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000143",
-  "started_at": "2026-11-22T16:57:49Z",
-  "completed_at": "2026-11-22T17:12:25.768677+00:00",
-  "source_commit": "90979417f718572045f95e29acc893a52edd599c",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "dead",
-  "outcome_reason": "Hero died",
-  "max_depth": 6,
   "actions": 2102,
-  "duration_seconds": 867.933,
+  "code_changed": false,
+  "completed_at": "2026-11-22T17:12:25.768677+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000142",
-  "previous_source_commit": "c28039a41ac318a3a3d87d74eaf6648b08b875e3",
-  "improvements": [],
-  "code_changed": false,
-  "incoming_learnings": "Enhanced thrown weapons can show a last-use loss warning before targeting. Continue only an explicitly selected matching attack, retain its observed target, and keep unknown confirmations fail-closed. Accepting the warning permits possible permanent weapon loss; it is not evidence that a throw or kill occurred.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "Review skipped: provider usage limit. Gameplay and publication continue without a proposed code change.",
-    "learnings": "No review performed; no new learnings claimed."
-  },
-  "recommendations": [],
-  "update_status": "review-skipped",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000143/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000143/poster.jpg",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "duration_seconds": 867.933,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -214,15 +187,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 11,
-    "ending_experience": 22,
-    "ending_level": 6,
-    "starving_turns": 153.66668701171875,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -266,6 +230,22 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000143",
+  "improvements": [],
+  "incoming_learnings": "Enhanced thrown weapons can show a last-use loss warning before targeting. Continue only an explicitly selected matching attack, retain its observed target, and keep unknown confirmations fail-closed. Accepting the warning permits possible permanent weapon loss; it is not evidence that a throw or kill occurred.",
+  "incoming_update_status": "accepted",
+  "max_depth": 6,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000143/poster.jpg",
+  "previous_run_id": "000142",
+  "previous_source_commit": "c28039a41ac318a3a3d87d74eaf6648b08b875e3",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -324,5 +304,27 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [],
+  "review": {
+    "review": "Review skipped: provider usage limit. Gameplay and publication continue without a proposed code change.",
+    "learnings": "No review performed; no new learnings claimed."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 22,
+    "ending_level": 6,
+    "starving_turns": 153.66668701171875,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "90979417f718572045f95e29acc893a52edd599c",
+  "started_at": "2026-11-22T16:57:49Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "review-skipped",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000143/video.mp4"
 }

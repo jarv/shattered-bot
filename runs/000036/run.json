@@ -1,42 +1,104 @@
 {
-  "schema_version": 1,
-  "id": "000036",
-  "started_at": "2026-11-21T08:04:47Z",
-  "completed_at": "2026-11-21T08:06:41.704198+00:00",
-  "source_commit": "ce99f46760dcf4e3b83b26b9856b652bd2af9693",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "e7754df5cce69a2b71b9aef2c9cd58c226e4c953dc0c88d3b9316ff6ccb89ecd",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 300,
-  "duration_seconds": 111.333,
+  "code_changed": true,
+  "completed_at": "2026-11-21T08:06:41.704198+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000035",
-  "previous_source_commit": "46c18a482596276c687d59c1821dac24baa44787",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 111.333,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 293,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 294,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 768
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000036",
   "improvements": [
     "When scouting for a shop near the entrance, the bot now checks remaining nearby doors before exploring deeper branches. It still reveals reachable room edges first within each layer and keeps its existing safety checks and scouting budget."
   ],
-  "code_changed": true,
   "incoming_learnings": "Do not let one checked entrance exit turn shop scouting into a deep floor sweep while another observed entrance branch remains unchecked. Preserve safety admission, mandatory progression pickups, honest visit receipts and the planner-exhaustion outcome; choosing a better ordered approach does not establish shop discovery or puzzle completion.",
   "incoming_update_status": "accepted",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run ended in planner exhaustion, not an observed death; the terminal hero had 25/25 HP. Decision 282 (log line 806) publicly showed an upgrade scroll behind magical fire while an identified frost potion was carried. Decisions 282–284 selected exploration rather than extinguishing. The selecting chain explains this contradiction: Mage preparation yields whenever priority loot remains (tools/mage_policy.py:1134–1138); the priority pickup helper delegates to potion preparation, which skips already-known frost (tools/puzzle_supplies.py:448–467), leaving the existing extinguisher unreachable. At decision 300 (lines 860–861), fire-buffer exclusions still blocked the reward and mandatory pickup correctly prevented descent. This is an arbitration defect, not proof of an impossible room. The proposed repair lets that priority helper call the existing guarded extinguisher for inaccessible permanent progression loot, without overriding active room workflows. A new condensed public-evidence fixture failed two assertions on original source and passes all six tests with the repair; the full suite passes 1620 tests with four skips. This is fixture validation, not reconstructed recorded memory or a gameplay replay. It establishes selection of preparation, not successful extinguishing, collection, or survival.",
-    "learnings": "Mandatory progression loot can require using a known puzzle supply, not identifying another potion. A priority pickup controller must retain access to that guarded preparation instead of excluding it through its own obligation. Preserve observed pickup receipts, hazard buffers, potion identity checks and the planner-exhaustion outcome."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000036/poster.jpg",
+  "previous_run_id": "000035",
+  "previous_source_commit": "46c18a482596276c687d59c1821dac24baa44787",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 293,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -163,46 +225,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000036/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000036/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 0,
-        "turns": 293,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 294,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 768
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run ended in planner exhaustion, not an observed death; the terminal hero had 25/25 HP. Decision 282 (log line 806) publicly showed an upgrade scroll behind magical fire while an identified frost potion was carried. Decisions 282–284 selected exploration rather than extinguishing. The selecting chain explains this contradiction: Mage preparation yields whenever priority loot remains (tools/mage_policy.py:1134–1138); the priority pickup helper delegates to potion preparation, which skips already-known frost (tools/puzzle_supplies.py:448–467), leaving the existing extinguisher unreachable. At decision 300 (lines 860–861), fire-buffer exclusions still blocked the reward and mandatory pickup correctly prevented descent. This is an arbitration defect, not proof of an impossible room. The proposed repair lets that priority helper call the existing guarded extinguisher for inaccessible permanent progression loot, without overriding active room workflows. A new condensed public-evidence fixture failed two assertions on original source and passes all six tests with the repair; the full suite passes 1620 tests with four skips. This is fixture validation, not reconstructed recorded memory or a gameplay replay. It establishes selection of preparation, not successful extinguishing, collection, or survival.",
+    "learnings": "Mandatory progression loot can require using a known puzzle supply, not identifying another potion. A priority pickup controller must retain access to that guarded preparation instead of excluding it through its own obligation. Preserve observed pickup receipts, hazard buffers, potion identity checks and the planner-exhaustion outcome."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -212,36 +239,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 0,
-    "gold_complete": true,
-    "turns": 293,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "ce99f46760dcf4e3b83b26b9856b652bd2af9693",
+  "started_at": "2026-11-21T08:04:47Z",
+  "supervisor_version": "e7754df5cce69a2b71b9aef2c9cd58c226e4c953dc0c88d3b9316ff6ccb89ecd",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000036/video.mp4"
 }

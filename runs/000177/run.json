@@ -1,59 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000177",
-  "started_at": "2026-11-23T07:11:13Z",
-  "completed_at": "2026-11-23T07:30:24.343199+00:00",
-  "source_commit": "52d49c8306afa50b450619deb6d88090dbaf322b",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "dead",
-  "outcome_summary": "Died after guard pulls and a damaging multi-enemy retreat",
-  "outcome_reason": "Hero died",
-  "max_depth": 8,
   "actions": 2865,
-  "duration_seconds": 1140.333,
+  "code_changed": false,
+  "completed_at": "2026-11-23T07:30:24.343199+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000176",
-  "previous_source_commit": "5765bc6462a77c17a3434673bc842e125a7789c0",
-  "improvements": [],
-  "code_changed": false,
-  "incoming_learnings": "An empty visible room, full health and walkable exits do not establish safe unidentified-potion testing: paralysis can consume many turns before the next decision. Separate protection of carried potions from protection of the hero, and never treat post-death potion identities as prior knowledge.",
-  "incoming_update_status": "review-only",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero died after a guard-pull encounter became a damaging multi-enemy retreat. Decision 2849 requested cover at 775 from 808, but the accepted transition ended at 810 with crippled newly observed (lines 8189–8190). Decision 2850 requested 777 but ended at 778, losing four HP over two turns (8193–8194). These displacement and status observations, together with the chain messages and pinned Guard behavior, support guard pulls; they do not identify the final killer. The next two retreat inputs each consumed two turns while crippled. A new doorway setup then led through 776, 809 and 778, reducing HP from 53 to 36 (decisions 2852–2854, lines 8202–8213). Decision 2855 reported no admitted single-attacker retreat. Combat, dew and a known haste potion followed; the final accepted zap transition reduced HP from 6 to 0 (decision 2864, line 8241).\n\nThe initiating policy weakness is that retreat admission models enemy approach slots but not the extra exposure of crippled movement after a pull. In tools/multi_enemy_tactics.py:136–137,195–208, impairment rejection omits cripple, unlike tools/ranged_tactics.py:109–126. The doorway route checks immediate attack counts, not two-turn transit exposure, and remains committed until its separate health budget fails. This establishes a tactical modeling gap, not proof that refusing every impaired retreat would be safer. No patch is supplied: neither an alternative move nor a stationary attack has been validated against the original selecting state. Replacing retreat with an unconditional veto could simply expose the hero to the same attackers. Full-log and source inspection resolved the timing and displacement gaps, but original route memory and a safety-qualified replacement remain unvalidated. No policy-memory reconstruction or changed-decision continuation was performed. No post-death item identity is used.",
-    "learnings": "Guard pulls can displace a requested escape and leave crippled movement consuming two turns. Revalidate the actual landing and transit exposure before committing to another doorway setup; a geometric endpoint alone is not a safe escape."
-  },
-  "recommendations": [
-    {
-      "id": "000177-crippled-retreat-exposure",
-      "priority": "high",
-      "summary": "Validate a cripple-aware retreat reassessment after guard displacement before committing to a doorway setup.",
-      "evidence": [
-        "Decision 2849, lines 8189–8190: requested cover differs from actual landing; cripple appears.",
-        "Decisions 2850–2852, accepted lines 8194, 8198 and 8203: crippled retreat inputs consume two turns.",
-        "Decisions 2852–2855, lines 8202–8218: damaging doorway setup ends without an admitted single-attacker retreat.",
-        "tools/multi_enemy_tactics.py:136–163,190–264; tools/ranged_tactics.py:109–133."
-      ],
-      "status": "deferred",
-      "reason": "The blocker is replacement-action safety, not omitted selector source. Cripple-aware rejection alone can force combat under multiple attackers, and no alternative has been validated on the original selecting state. Next reconstruct public-input bookkeeping through decision 2852, stopping at the first selection divergence, then compare the current route with existing attack and escape options on copies. Derive a regression for two-turn transit exposure and preserve hazard gates, accepted-input accounting and honest pickup receipts. Do not assume either waiting or speculative movement is safe.",
-      "origin_run": "000177"
-    }
-  ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000177/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000177/poster.jpg",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "duration_seconds": 1140.333,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -270,15 +227,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 13,
-    "ending_experience": 33,
-    "ending_level": 9,
-    "starving_turns": 17,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -334,6 +282,23 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000177",
+  "improvements": [],
+  "incoming_learnings": "An empty visible room, full health and walkable exits do not establish safe unidentified-potion testing: paralysis can consume many turns before the next decision. Separate protection of carried potions from protection of the hero, and never treat post-death potion identities as prior knowledge.",
+  "incoming_update_status": "review-only",
+  "max_depth": 8,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Died after guard pulls and a damaging multi-enemy retreat",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000177/poster.jpg",
+  "previous_run_id": "000176",
+  "previous_source_commit": "5765bc6462a77c17a3434673bc842e125a7789c0",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -408,5 +373,42 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000177-crippled-retreat-exposure",
+      "priority": "high",
+      "summary": "Validate a cripple-aware retreat reassessment after guard displacement before committing to a doorway setup.",
+      "evidence": [
+        "Decision 2849, lines 8189–8190: requested cover differs from actual landing; cripple appears.",
+        "Decisions 2850–2852, accepted lines 8194, 8198 and 8203: crippled retreat inputs consume two turns.",
+        "Decisions 2852–2855, lines 8202–8218: damaging doorway setup ends without an admitted single-attacker retreat.",
+        "tools/multi_enemy_tactics.py:136–163,190–264; tools/ranged_tactics.py:109–133."
+      ],
+      "status": "deferred",
+      "reason": "The blocker is replacement-action safety, not omitted selector source. Cripple-aware rejection alone can force combat under multiple attackers, and no alternative has been validated on the original selecting state. Next reconstruct public-input bookkeeping through decision 2852, stopping at the first selection divergence, then compare the current route with existing attack and escape options on copies. Derive a regression for two-turn transit exposure and preserve hazard gates, accepted-input accounting and honest pickup receipts. Do not assume either waiting or speculative movement is safe.",
+      "origin_run": "000177"
+    }
+  ],
+  "review": {
+    "review": "The hero died after a guard-pull encounter became a damaging multi-enemy retreat. Decision 2849 requested cover at 775 from 808, but the accepted transition ended at 810 with crippled newly observed (lines 8189–8190). Decision 2850 requested 777 but ended at 778, losing four HP over two turns (8193–8194). These displacement and status observations, together with the chain messages and pinned Guard behavior, support guard pulls; they do not identify the final killer. The next two retreat inputs each consumed two turns while crippled. A new doorway setup then led through 776, 809 and 778, reducing HP from 53 to 36 (decisions 2852–2854, lines 8202–8213). Decision 2855 reported no admitted single-attacker retreat. Combat, dew and a known haste potion followed; the final accepted zap transition reduced HP from 6 to 0 (decision 2864, line 8241).\n\nThe initiating policy weakness is that retreat admission models enemy approach slots but not the extra exposure of crippled movement after a pull. In tools/multi_enemy_tactics.py:136–137,195–208, impairment rejection omits cripple, unlike tools/ranged_tactics.py:109–126. The doorway route checks immediate attack counts, not two-turn transit exposure, and remains committed until its separate health budget fails. This establishes a tactical modeling gap, not proof that refusing every impaired retreat would be safer. No patch is supplied: neither an alternative move nor a stationary attack has been validated against the original selecting state. Replacing retreat with an unconditional veto could simply expose the hero to the same attackers. Full-log and source inspection resolved the timing and displacement gaps, but original route memory and a safety-qualified replacement remain unvalidated. No policy-memory reconstruction or changed-decision continuation was performed. No post-death item identity is used.",
+    "learnings": "Guard pulls can displace a requested escape and leave crippled movement consuming two turns. Revalidate the actual landing and transit exposure before committing to another doorway setup; a geometric endpoint alone is not a safe escape."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 13,
+    "ending_experience": 33,
+    "ending_level": 9,
+    "starving_turns": 17,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "52d49c8306afa50b450619deb6d88090dbaf322b",
+  "started_at": "2026-11-23T07:11:13Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000177/video.mp4"
 }

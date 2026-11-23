@@ -1,63 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000086",
-  "started_at": "2026-11-21T23:05:09Z",
-  "completed_at": "2026-11-21T23:07:36.070975+00:00",
-  "source_commit": "285daea9d532eaeeb394e534b9c73728f1fcf835",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 2,
   "actions": 403,
-  "duration_seconds": 143.799,
+  "code_changed": true,
+  "completed_at": "2026-11-21T23:07:36.070975+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000085",
-  "previous_source_commit": "052620294e2fd8faf13d404bc74a787b10b55923",
-  "improvements": [
-    "The bot now postpones reading identification scrolls while blinded, then allows another attempt once sight returns without treating blindness as a failed inventory choice."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "A listed item action is not proof that it can execute under current impairments. Check observed blindness before creating identification menu intent, and retain retry eligibility for a fresh sighted observation without erasing genuine failed-inventory exclusions.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run ended in planner exhaustion with the hero alive at full health, not an observed death. Decision 403 (log line 1141) followed three accepted quiet doorway waits; the last wait advanced the clock (line 1139). Earlier escape-reversal failures at decisions 353, 355, 389 and 391 consumed recovery options. Offline reconstruction pinned to the played source and recorded public inputs matched all 403 selected actions, reasons and intents. It showed that the final distant threat memory expired during selection, but escape protection was only released by earlier accepted-action feedback, when that memory still existed. The normal food-pickup route through door 398 was consequently vetoed. Recovery rolled back the fresh observation, excluded that reversal and the exhausted alternate edge, then stopped while hungry. The correction rechecks the existing quiet-release prerequisites after threat expiry, without changing waiting limits, hazard admission, pickup obligations or the terminal label. A new regression failed on the original policy with the expected retained-reversal assertion, then passed on the candidate. The full suite passed 1,828 tests with four skips. An isolated candidate probe on the validated terminal state selected the existing food-route step; this does not establish subsequent collection or survival.",
-    "learnings": "Accepted quiet recovery and fresh threat-memory expiry must be reconciled before route arbitration. Releasing obsolete escape protection is not evidence of an enemy kill or completed loot; retain ordinary movement safety and pickup verification."
-  },
-  "recommendations": [
-    {
-      "id": "000086-expired-threat-escape-release",
-      "priority": "high",
-      "summary": "Release already-quiet escape protection when the final stale threat expires before selection.",
-      "evidence": [
-        "Decisions 353 and 355, log lines 1001–1009: earlier escape-reversal recovery.",
-        "Decisions 389 and 391, log lines 1102–1110: repeated reversal vetoes consume alternate recovery edges.",
-        "Decisions 396–402, log lines 1124–1139: doorway retreat, interception and accepted quiet waits.",
-        "Decision 403, log line 1141: planner exhaustion with a living full-health hero.",
-        "Validated offline terminal-state probe: existing food route selects door 398 after obsolete protection is released."
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000086"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000086/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000086/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 143.799,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -124,15 +78,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 10,
-    "ending_level": 2,
-    "starving_turns": 0,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -152,6 +97,25 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000086",
+  "improvements": [
+    "The bot now postpones reading identification scrolls while blinded, then allows another attempt once sight returns without treating blindness as a failed inventory choice."
+  ],
+  "incoming_learnings": "A listed item action is not proof that it can execute under current impairments. Check observed blindness before creating identification menu intent, and retain retry eligibility for a fresh sighted observation without erasing genuine failed-inventory exclusions.",
+  "incoming_update_status": "accepted",
+  "max_depth": 2,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000086/poster.jpg",
+  "previous_run_id": "000085",
+  "previous_source_commit": "052620294e2fd8faf13d404bc74a787b10b55923",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -178,5 +142,43 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000086-expired-threat-escape-release",
+      "priority": "high",
+      "summary": "Release already-quiet escape protection when the final stale threat expires before selection.",
+      "evidence": [
+        "Decisions 353 and 355, log lines 1001–1009: earlier escape-reversal recovery.",
+        "Decisions 389 and 391, log lines 1102–1110: repeated reversal vetoes consume alternate recovery edges.",
+        "Decisions 396–402, log lines 1124–1139: doorway retreat, interception and accepted quiet waits.",
+        "Decision 403, log line 1141: planner exhaustion with a living full-health hero.",
+        "Validated offline terminal-state probe: existing food route selects door 398 after obsolete protection is released."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000086"
+    }
+  ],
+  "review": {
+    "review": "The run ended in planner exhaustion with the hero alive at full health, not an observed death. Decision 403 (log line 1141) followed three accepted quiet doorway waits; the last wait advanced the clock (line 1139). Earlier escape-reversal failures at decisions 353, 355, 389 and 391 consumed recovery options. Offline reconstruction pinned to the played source and recorded public inputs matched all 403 selected actions, reasons and intents. It showed that the final distant threat memory expired during selection, but escape protection was only released by earlier accepted-action feedback, when that memory still existed. The normal food-pickup route through door 398 was consequently vetoed. Recovery rolled back the fresh observation, excluded that reversal and the exhausted alternate edge, then stopped while hungry. The correction rechecks the existing quiet-release prerequisites after threat expiry, without changing waiting limits, hazard admission, pickup obligations or the terminal label. A new regression failed on the original policy with the expected retained-reversal assertion, then passed on the candidate. The full suite passed 1,828 tests with four skips. An isolated candidate probe on the validated terminal state selected the existing food-route step; this does not establish subsequent collection or survival.",
+    "learnings": "Accepted quiet recovery and fresh threat-memory expiry must be reconciled before route arbitration. Releasing obsolete escape protection is not evidence of an enemy kill or completed loot; retain ordinary movement safety and pickup verification."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 10,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "285daea9d532eaeeb394e534b9c73728f1fcf835",
+  "started_at": "2026-11-21T23:05:09Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000086/video.mp4"
 }

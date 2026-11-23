@@ -1,40 +1,157 @@
 {
-  "schema_version": 1,
-  "id": "000054",
-  "started_at": "2026-11-21T13:46:25Z",
-  "completed_at": "2026-11-21T13:51:31.501076+00:00",
-  "source_commit": "43a6028dcd44194349deedbf8d0ca97099dde32f",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 2,
   "actions": 691,
-  "duration_seconds": 302.533,
+  "code_changed": false,
+  "completed_at": "2026-11-21T13:51:31.501076+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000053",
-  "previous_source_commit": "b7e1187f9f69cf93bd4b8749c9c3ebeef0f52574",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 302.533,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 335,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 336,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 860
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 16,
+        "gold_gained": 123,
+        "turns": 353,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 349,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 566
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 711
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt/choice container",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000054",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "Treat pool preparation feasibility as a high-priority unresolved planner failure. Full health and food do not create a safe potion-test bank. Validate identification or ranged-control preparation against the first observed pool state, including inventory protection, actual protection duration, accepted defeat evidence where relevant, and chest pickup/return. Never infer an unknown potion identity or release a mandatory chest without a collection receipt.",
   "incoming_update_status": "review-only",
+  "max_depth": 2,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run ended in planner exhaustion with the hero alive, not death. Decision 650 entered a publicly ordinary floor cell while approaching a required corridor search; the accepted transition then revealed a hidden confusion gas trap. The hazard controller preempted progress with 40 waits, advancing the clock while gas repeatedly sustained vertigo. Decision 691 exhausted that budget at full health. The initiating preparation gap was walking the search approach without using the carried, publicly known-uncursed prismatic light wand to reveal traps. A reduced public-evidence fixture reproduces the original step and selects a bounded light attempt with the candidate. This is not recovered runtime memory or a replay. Charge and original cooldown remain uncertain, so the correction does not claim a successful cast, trap discovery, completed search, or eventual escape. The regression failed with expected assertions before the fix and passes afterward; the full Python suite passes. The completed recording contains no source changes, so improvements is empty. Historical backlog items remain unresolved.",
-    "learnings": "Before a required narrow-corridor search approach, prefer a bounded known-uncursed prismatic-light scan when the shot is fully observed and safely ends at a solid wall. Reobserve afterward; an attempted cast does not prove charge, trap discovery, search completion or collection. Persistent confusion gas can renew vertigo despite advancing turns. Preserve the terminal planner-failure label and all mandatory pickup and hazard gates."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000054/poster.jpg",
+  "previous_run_id": "000053",
+  "previous_source_commit": "b7e1187f9f69cf93bd4b8749c9c3ebeef0f52574",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 123,
+    "gold_complete": true,
+    "turns": 688,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -228,87 +345,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000054/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000054/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 0,
-        "turns": 335,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 336,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 860
-          },
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 16,
-        "gold_gained": 123,
-        "turns": 353,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 349,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 566
-          },
-          {
-            "kind": "room",
-            "label": "Crystal choice container",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 711
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Crypt/choice container",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run ended in planner exhaustion with the hero alive, not death. Decision 650 entered a publicly ordinary floor cell while approaching a required corridor search; the accepted transition then revealed a hidden confusion gas trap. The hazard controller preempted progress with 40 waits, advancing the clock while gas repeatedly sustained vertigo. Decision 691 exhausted that budget at full health. The initiating preparation gap was walking the search approach without using the carried, publicly known-uncursed prismatic light wand to reveal traps. A reduced public-evidence fixture reproduces the original step and selects a bounded light attempt with the candidate. This is not recovered runtime memory or a replay. Charge and original cooldown remain uncertain, so the correction does not claim a successful cast, trap discovery, completed search, or eventual escape. The regression failed with expected assertions before the fix and passes afterward; the full Python suite passes. The completed recording contains no source changes, so improvements is empty. Historical backlog items remain unresolved.",
+    "learnings": "Before a required narrow-corridor search approach, prefer a bounded known-uncursed prismatic-light scan when the shot is fully observed and safely ends at a solid wall. Reobserve afterward; an attempted cast does not prove charge, trap discovery, search completion or collection. Persistent confusion gas can renew vertigo despite advancing turns. Preserve the terminal planner-failure label and all mandatory pickup and hazard gates."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -318,50 +359,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 3,
-    "gold_collected": 123,
-    "gold_complete": true,
-    "turns": 688,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "43a6028dcd44194349deedbf8d0ca97099dde32f",
+  "started_at": "2026-11-21T13:46:25Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000054/video.mp4"
 }

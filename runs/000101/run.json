@@ -1,63 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000101",
-  "started_at": "2026-11-22T02:36:45Z",
-  "completed_at": "2026-11-22T02:39:03.862775+00:00",
-  "source_commit": "ba9c0079ccee3e3446cd52a71478e1fe3ac8bb6c",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 355,
-  "duration_seconds": 136.333,
+  "code_changed": true,
+  "completed_at": "2026-11-22T02:39:03.862775+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000100",
-  "previous_source_commit": "32359b2d00d774873888613775bb17b6a818fbaf",
-  "improvements": [
-    "The bot now counts time spent attacking toward the lifetime of its retreat commitment, even when health and wand charges stay unchanged. Free targeting and inspections do not shorten that commitment."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Spend the existing escape-protection lifetime on accepted time-consuming combat inputs too. Free targeting and inspections must not age it. Expiry only removes stale route bookkeeping: current hazards, remembered threats, movement admission and mandatory progression pickups still require their normal checks.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The living hero exhausted the planner, not the game clock. Bookshelf 635 first appears at decision 347 (line 1074); shelves 636–638 follow at decision 348 (line 1077). The policy reserves liquid flame for every bookshelf, but its unknown-fire preparation admits barricades, not shelves. Hungry room preparation also declines. The last scroll publicly becomes Remove Curse, not Identify. Decision 354's accepted cancellation advances time; decision 355 (line 1093) terminates because the sole missing supply is flame at 635. Source-pinned offline bookkeeping reconstruction matches all 355 selected actions, reasons, intents and controllers and the exact terminal blocker; this is reconstructed state, not recorded memory. It excludes active retrievals and competing room demands. Ordinary test banks exist, but they do not override supply preservation or establish safe testing and retrieval. No patch is submitted: shelf-back cells 599–602 remain unobserved, and no known identification or reconnaissance resource remains. The game source permits both ordinary library shelves and flame-separated rewards, so dropping reservation or extending unknown-fire use would lack safety evidence. The unchanged source passes 1,849 unit tests, with four skipped; no candidate red/green validation is claimed.",
-    "learnings": "Treat bookshelf-driven supply exhaustion as an obligation/admission mismatch, not a death or a reason to wait longer. Preserve unknown potion identities and mandatory pickups. A safe repair needs positive public evidence distinguishing optional shelf fuel from a real retrieval barrier, or executable nonconsumptive reconnaissance; an ordinary safe test bank alone is insufficient."
-  },
-  "recommendations": [
-    {
-      "id": "000076-terminal-supply-arbitration",
-      "priority": "high",
-      "summary": "Resolve shelf-driven missing-flame arbitration without bypassing safe discovery or retrieval.",
-      "evidence": [
-        "Decision 347, line 1074: bookshelf 635 first appears; decision 348, line 1077: shelves 636–638 appear.",
-        "Decisions 350–354, lines 1083–1092: the unknown scroll becomes Remove Curse; accepted cancellation advances turns 346 to 347.",
-        "Decision 355, line 1093: missing liquid flame at 635 is the only reserved-supply blocker and all preparation prerequisites decline.",
-        "Offline reconstruction matches all 355 selections and terminal exhaustion; copied probes exclude active retrievals and find unobserved shelf backs 599–602.",
-        "tools/puzzle_supplies.py:87–88,585–639; tools/wooden_barrier.py:24–25; tools/descent_potions.py:283–317."
-      ],
-      "status": "deferred",
-      "reason": "Revalidated here. Full source and matching reconstruction resolve the selecting-state gap, but do not establish whether the unseen shelf backs conceal a required retrieval. No known identify, intuition, mapping or clairvoyance resource remains. Removing reservation could consume needed flame; broadening unknown-fire preparation would bypass the tested shelf exclusion without an admitted fire-recovery contract. No patch or new regression is supplied. Next derive the decision-347 shelf-strip fixture with explicitly unknown backs, plus paired observed-wall-back and shelf-separated-reward fixtures. Establish a positive public-evidence distinction while retaining reservation for unknown backs and real retrievals; otherwise establish an executable nonconsumptive reconnaissance plan before changing arbitration. Preserve hazard checks, inventory protection, mandatory pickup and terminal exhaustion.",
-      "origin_run": "000076"
-    }
-  ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000101/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000101/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 136.333,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -85,15 +39,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 1,
-    "ending_level": 2,
-    "starving_turns": 0,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -107,6 +52,25 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000101",
+  "improvements": [
+    "The bot now counts time spent attacking toward the lifetime of its retreat commitment, even when health and wand charges stay unchanged. Free targeting and inspections do not shorten that commitment."
+  ],
+  "incoming_learnings": "Spend the existing escape-protection lifetime on accepted time-consuming combat inputs too. Free targeting and inspections must not age it. Expiry only removes stale route bookkeeping: current hazards, remembered threats, movement admission and mandatory progression pickups still require their normal checks.",
+  "incoming_update_status": "accepted",
+  "max_depth": 1,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000101/poster.jpg",
+  "previous_run_id": "000100",
+  "previous_source_commit": "32359b2d00d774873888613775bb17b6a818fbaf",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -125,5 +89,43 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000076-terminal-supply-arbitration",
+      "priority": "high",
+      "summary": "Resolve shelf-driven missing-flame arbitration without bypassing safe discovery or retrieval.",
+      "evidence": [
+        "Decision 347, line 1074: bookshelf 635 first appears; decision 348, line 1077: shelves 636–638 appear.",
+        "Decisions 350–354, lines 1083–1092: the unknown scroll becomes Remove Curse; accepted cancellation advances turns 346 to 347.",
+        "Decision 355, line 1093: missing liquid flame at 635 is the only reserved-supply blocker and all preparation prerequisites decline.",
+        "Offline reconstruction matches all 355 selections and terminal exhaustion; copied probes exclude active retrievals and find unobserved shelf backs 599–602.",
+        "tools/puzzle_supplies.py:87–88,585–639; tools/wooden_barrier.py:24–25; tools/descent_potions.py:283–317."
+      ],
+      "status": "deferred",
+      "reason": "Revalidated here. Full source and matching reconstruction resolve the selecting-state gap, but do not establish whether the unseen shelf backs conceal a required retrieval. No known identify, intuition, mapping or clairvoyance resource remains. Removing reservation could consume needed flame; broadening unknown-fire preparation would bypass the tested shelf exclusion without an admitted fire-recovery contract. No patch or new regression is supplied. Next derive the decision-347 shelf-strip fixture with explicitly unknown backs, plus paired observed-wall-back and shelf-separated-reward fixtures. Establish a positive public-evidence distinction while retaining reservation for unknown backs and real retrievals; otherwise establish an executable nonconsumptive reconnaissance plan before changing arbitration. Preserve hazard checks, inventory protection, mandatory pickup and terminal exhaustion.",
+      "origin_run": "000076"
+    }
+  ],
+  "review": {
+    "review": "The living hero exhausted the planner, not the game clock. Bookshelf 635 first appears at decision 347 (line 1074); shelves 636–638 follow at decision 348 (line 1077). The policy reserves liquid flame for every bookshelf, but its unknown-fire preparation admits barricades, not shelves. Hungry room preparation also declines. The last scroll publicly becomes Remove Curse, not Identify. Decision 354's accepted cancellation advances time; decision 355 (line 1093) terminates because the sole missing supply is flame at 635. Source-pinned offline bookkeeping reconstruction matches all 355 selected actions, reasons, intents and controllers and the exact terminal blocker; this is reconstructed state, not recorded memory. It excludes active retrievals and competing room demands. Ordinary test banks exist, but they do not override supply preservation or establish safe testing and retrieval. No patch is submitted: shelf-back cells 599–602 remain unobserved, and no known identification or reconnaissance resource remains. The game source permits both ordinary library shelves and flame-separated rewards, so dropping reservation or extending unknown-fire use would lack safety evidence. The unchanged source passes 1,849 unit tests, with four skipped; no candidate red/green validation is claimed.",
+    "learnings": "Treat bookshelf-driven supply exhaustion as an obligation/admission mismatch, not a death or a reason to wait longer. Preserve unknown potion identities and mandatory pickups. A safe repair needs positive public evidence distinguishing optional shelf fuel from a real retrieval barrier, or executable nonconsumptive reconnaissance; an ordinary safe test bank alone is insufficient."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 1,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "ba9c0079ccee3e3446cd52a71478e1fe3ac8bb6c",
+  "started_at": "2026-11-22T02:36:45Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000101/video.mp4"
 }

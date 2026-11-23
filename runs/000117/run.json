@@ -1,63 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000117",
-  "started_at": "2026-11-22T08:33:09Z",
-  "completed_at": "2026-11-22T08:35:09.153458+00:00",
-  "source_commit": "238db851503eda40f6c689be80dded634efe8097",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "1e55d72-review-recovery",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 316,
-  "duration_seconds": 117.333,
+  "code_changed": true,
+  "completed_at": "2026-11-22T08:35:09.153458+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000116",
-  "previous_source_commit": "d06db4ef0e82b64d76c4fd0d41e7211d4291d4c8",
-  "improvements": [
-    "The bot now considers nearby weapons, armor, rings and artifacts worth collecting even when they are not yet wearable. Known cursed items and goods for sale remain excluded from these extra pickups."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "When already starving without safe carried food, buy an observed, affordable ration before optional shop supplies. Raw mystery meat is not safe carried food. Keep existing movement and purchase checks; choosing food does not prove acquisition or survival.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at full health when mandatory potion discovery exhausted the planner. Decision 185 (line 524) first revealed bookshelves 894–897. These generated a liquid-flame reservation. Decisions 188–189 (lines 533–536) used identification on a puzzle candidate; the next observation identified crimson as haste, leaving amber unknown. Decision 315's accepted transition (line 897) advanced time normally. At decision 316 (line 899), the failed-objective report identifies missing liquid flame for shelf 894 as the sole supply blocker, with no active retrieval and all preparation prerequisites declined. This is not an observed death or a stopped game clock.\n\nSource inspection traced exploration through the descent wrapper, room-supply requirements, preparation prerequisites and mandatory-discovery exhaustion. Bookshelves are treated like barricades by the demand classifier, but the pinned game source does not guarantee a flame supply for libraries. Nevertheless, cells behind the recorded shelves remain unobserved; absence of an observed barricade does not establish absence of a shelf-hidden retrieval. Terminal inventory offers no remaining identification or reconnaissance resource. Hungry room testing and the barricade-only unknown-fire preparation rule exclude the existing alternatives.\n\nNo patch is retained. A shelf-only exemption passed a reduced regression and the full suite, but its convenient synthetic bank did not establish safe preparation or supply expendability in the recorded geometry. It was withdrawn rather than presented as a repair. No runtime memory reconstruction or gameplay replay was performed. Source browsing resolved the selecting-chain ambiguity, but not the unknown shelf-back safety constraint. Mandatory progression pickup, hazard checks and terminal exhaustion remain unchanged.",
-    "learnings": "Shelf scenery does not establish a guaranteed flame supply, but unseen shelf backs also do not establish that flame is expendable. Distinguish optional shelves from required retrieval using positive public evidence before changing reservation. Selecting preparation is not successful discovery, clearance or collection."
-  },
-  "recommendations": [
-    {
-      "id": "000076-terminal-supply-arbitration",
-      "priority": "high",
-      "summary": "Resolve the bookshelf-driven missing-flame dead end using positive public geometry or executable nonconsumptive preparation.",
-      "evidence": [
-        "Decision 185, line 524: bookshelves 894–897 first appear.",
-        "Decisions 188–190, lines 533–537: identification yields haste while amber remains unknown.",
-        "Decision 315, accepted line 897: movement advances time at full health.",
-        "Decision 316, line 899: missing liquid flame for shelf 894 is the sole reserved-supply blocker; preparation prerequisites decline.",
-        "tools/puzzle_supplies.py:71–111; tools/descent_potions.py:307–348; tools/wooden_barrier.py:24–25; tools/preparation_prerequisites.py:16–58."
-      ],
-      "status": "deferred",
-      "reason": "The precise unresolved safety blocker is the unobserved shelf backs at 857–860, not missing selector source. Terminal inventory has no nonconsumptive identification or reveal resource. Ignoring the reservation could spend the sole needed flame dose without establishing retrieval feasibility; a synthetic safe-bank test does not resolve this. No patch is retained. Next derive the first-shelf exterior route graph and paired unknown-back, observed-wall-back and shelf-separated-reward fixtures. Validate whether an existing observed, hazard-admitted exterior vantage can reveal the backs without crossing shelves or speculative movement; require accepted observation evidence before removing the obligation. Preserve mandatory pickup and planner exhaustion.",
-      "origin_run": "000076"
-    }
-  ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000117/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000117/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 117.333,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -100,15 +54,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 0,
-    "ending_level": 2,
-    "starving_turns": 0,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -122,6 +67,25 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000117",
+  "improvements": [
+    "The bot now considers nearby weapons, armor, rings and artifacts worth collecting even when they are not yet wearable. Known cursed items and goods for sale remain excluded from these extra pickups."
+  ],
+  "incoming_learnings": "When already starving without safe carried food, buy an observed, affordable ration before optional shop supplies. Raw mystery meat is not safe carried food. Keep existing movement and purchase checks; choosing food does not prove acquisition or survival.",
+  "incoming_update_status": "accepted",
+  "max_depth": 1,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000117/poster.jpg",
+  "previous_run_id": "000116",
+  "previous_source_commit": "d06db4ef0e82b64d76c4fd0d41e7211d4291d4c8",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -140,5 +104,43 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000076-terminal-supply-arbitration",
+      "priority": "high",
+      "summary": "Resolve the bookshelf-driven missing-flame dead end using positive public geometry or executable nonconsumptive preparation.",
+      "evidence": [
+        "Decision 185, line 524: bookshelves 894–897 first appear.",
+        "Decisions 188–190, lines 533–537: identification yields haste while amber remains unknown.",
+        "Decision 315, accepted line 897: movement advances time at full health.",
+        "Decision 316, line 899: missing liquid flame for shelf 894 is the sole reserved-supply blocker; preparation prerequisites decline.",
+        "tools/puzzle_supplies.py:71–111; tools/descent_potions.py:307–348; tools/wooden_barrier.py:24–25; tools/preparation_prerequisites.py:16–58."
+      ],
+      "status": "deferred",
+      "reason": "The precise unresolved safety blocker is the unobserved shelf backs at 857–860, not missing selector source. Terminal inventory has no nonconsumptive identification or reveal resource. Ignoring the reservation could spend the sole needed flame dose without establishing retrieval feasibility; a synthetic safe-bank test does not resolve this. No patch is retained. Next derive the first-shelf exterior route graph and paired unknown-back, observed-wall-back and shelf-separated-reward fixtures. Validate whether an existing observed, hazard-admitted exterior vantage can reveal the backs without crossing shelves or speculative movement; require accepted observation evidence before removing the obligation. Preserve mandatory pickup and planner exhaustion.",
+      "origin_run": "000076"
+    }
+  ],
+  "review": {
+    "review": "The hero remained alive at full health when mandatory potion discovery exhausted the planner. Decision 185 (line 524) first revealed bookshelves 894–897. These generated a liquid-flame reservation. Decisions 188–189 (lines 533–536) used identification on a puzzle candidate; the next observation identified crimson as haste, leaving amber unknown. Decision 315's accepted transition (line 897) advanced time normally. At decision 316 (line 899), the failed-objective report identifies missing liquid flame for shelf 894 as the sole supply blocker, with no active retrieval and all preparation prerequisites declined. This is not an observed death or a stopped game clock.\n\nSource inspection traced exploration through the descent wrapper, room-supply requirements, preparation prerequisites and mandatory-discovery exhaustion. Bookshelves are treated like barricades by the demand classifier, but the pinned game source does not guarantee a flame supply for libraries. Nevertheless, cells behind the recorded shelves remain unobserved; absence of an observed barricade does not establish absence of a shelf-hidden retrieval. Terminal inventory offers no remaining identification or reconnaissance resource. Hungry room testing and the barricade-only unknown-fire preparation rule exclude the existing alternatives.\n\nNo patch is retained. A shelf-only exemption passed a reduced regression and the full suite, but its convenient synthetic bank did not establish safe preparation or supply expendability in the recorded geometry. It was withdrawn rather than presented as a repair. No runtime memory reconstruction or gameplay replay was performed. Source browsing resolved the selecting-chain ambiguity, but not the unknown shelf-back safety constraint. Mandatory progression pickup, hazard checks and terminal exhaustion remain unchanged.",
+    "learnings": "Shelf scenery does not establish a guaranteed flame supply, but unseen shelf backs also do not establish that flame is expendable. Distinguish optional shelves from required retrieval using positive public evidence before changing reservation. Selecting preparation is not successful discovery, clearance or collection."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "238db851503eda40f6c689be80dded634efe8097",
+  "started_at": "2026-11-22T08:33:09Z",
+  "supervisor_version": "1e55d72-review-recovery",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000117/video.mp4"
 }

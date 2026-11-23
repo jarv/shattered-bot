@@ -1,43 +1,100 @@
 {
-  "schema_version": 1,
-  "id": "000060",
-  "started_at": "2026-11-21T15:39:51Z",
-  "completed_at": "2026-11-21T15:43:15.427073+00:00",
-  "source_commit": "6463040c5b3dfd033fb94763e11d429f04ab1e56",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 361,
-  "duration_seconds": 200.399,
+  "code_changed": true,
+  "completed_at": "2026-11-21T15:43:15.427073+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000059",
-  "previous_source_commit": "dd9b8dfb19c6ed3783b6bc56c979f4b9829cdf39",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 200.399,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 48,
+        "turns": 353,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 355,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 362
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000060",
   "improvements": [
     "The bot treats potion discovery as a required step before descending. It uses an available Identify scroll first and reports a planner failure rather than silently skipping an unsafe unfinished test.",
     "Temporary potion effects pause discovery instead of canceling it. The bot resumes after recovery and consumes remaining known strength potions before leaving."
   ],
-  "code_changed": true,
   "incoming_learnings": "A distant sleeping enemy must not globally veto a confusion-gas escape when every possible random landing passes the existing safety checks. Keep active threats and nearby sleepers excluded, count only accepted movement receipts, and reobserve after each single input. Selecting an escape does not establish actual gas exit or loot collection.",
   "incoming_update_status": "accepted",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run ended in planner exhaustion, not death: decision 361 (log line 1147) leaves the Mage alive at 25/25 HP. The initiating loop alternated levitation-room staging with ordinary enemy-sighting exploration (decisions 309–322, lines 976–1015). At decision 328 (line 1034), the hero reached approach 674 beside observed closed entrance 675, but the staging helper returned no action on arrival. Opening the entrance was available through the existing scout helper, yet that helper was only reached after drink-bank admission. The candidate restores this single observation-gathering door action without drinking or crossing a hazard. Offline bookkeeping on the played source matched all 361 recorded selections and the terminal blocker; candidate comparison matched decisions 0–327 and stopped at its first changed selection, decision 328. This is reconstructed policy memory, not recorded runtime memory. Importantly, scouting alone does not solve the room: approach 674 has only one qualifying ordinary escape square, and opening the door does not satisfy the unchanged potion-test escape-terrain rule. Earlier safe banks fail the protected reward-trip budget. Missing levitation supplies then also veto mandatory departure discovery. No unknown potion identity, protection, chest collection, descent, or later survival is established. The new regression fails on the original selector and passes on the candidate; all 1,745 Python tests pass, with four skipped. The patch addresses the excluded entrance scout, not the remaining safe-test feasibility problem.",
-    "learnings": "On reaching a verified levitation-room approach, scout an adjacent observed entrance before requiring a drink-ready bank. Reobserve after that single input. Keep unknown-drink escape checks, inventory protection, actual buff verification, round-trip budgets and mandatory pickup intact; an opened door is not puzzle success."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000060/poster.jpg",
+  "previous_run_id": "000059",
+  "previous_source_commit": "dd9b8dfb19c6ed3783b6bc56c979f4b9829cdf39",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 48,
+    "gold_complete": true,
+    "turns": 353,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -243,41 +300,11 @@
       "origin_run": "000060"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000060/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000060/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 11,
-        "gold_gained": 48,
-        "turns": 353,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 355,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 362
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run ended in planner exhaustion, not death: decision 361 (log line 1147) leaves the Mage alive at 25/25 HP. The initiating loop alternated levitation-room staging with ordinary enemy-sighting exploration (decisions 309–322, lines 976–1015). At decision 328 (line 1034), the hero reached approach 674 beside observed closed entrance 675, but the staging helper returned no action on arrival. Opening the entrance was available through the existing scout helper, yet that helper was only reached after drink-bank admission. The candidate restores this single observation-gathering door action without drinking or crossing a hazard. Offline bookkeeping on the played source matched all 361 recorded selections and the terminal blocker; candidate comparison matched decisions 0–327 and stopped at its first changed selection, decision 328. This is reconstructed policy memory, not recorded runtime memory. Importantly, scouting alone does not solve the room: approach 674 has only one qualifying ordinary escape square, and opening the door does not satisfy the unchanged potion-test escape-terrain rule. Earlier safe banks fail the protected reward-trip budget. Missing levitation supplies then also veto mandatory departure discovery. No unknown potion identity, protection, chest collection, descent, or later survival is established. The new regression fails on the original selector and passes on the candidate; all 1,745 Python tests pass, with four skipped. The patch addresses the excluded entrance scout, not the remaining safe-test feasibility problem.",
+    "learnings": "On reaching a verified levitation-room approach, scout an adjacent observed entrance before requiring a drink-ready bank. Reobserve after that single input. Keep unknown-drink escape checks, inventory protection, actual buff verification, round-trip budgets and mandatory pickup intact; an opened door is not puzzle success."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -287,36 +314,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 48,
-    "gold_complete": true,
-    "turns": 353,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "6463040c5b3dfd033fb94763e11d429f04ab1e56",
+  "started_at": "2026-11-21T15:39:51Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000060/video.mp4"
 }

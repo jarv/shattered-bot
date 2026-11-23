@@ -1,62 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000155",
-  "started_at": "2026-11-22T23:34:05Z",
-  "completed_at": "2026-11-22T23:34:53.846417+00:00",
-  "source_commit": "d0e6cd54f80580d5a31314117e72e70d76ecd1fe",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "dead",
-  "outcome_summary": "Died to an albino rat",
-  "outcome_reason": "Hero died",
-  "max_depth": 1,
   "actions": 112,
-  "duration_seconds": 46.199,
+  "code_changed": true,
+  "completed_at": "2026-11-22T23:34:53.846417+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000154",
-  "previous_source_commit": "fb5151b64ec7521063f9f1586fbc35a804594d89",
-  "improvements": [
-    "After exhausting travel to crab ambush setups, the bot can still break sight at its current doorway when the escape geometry and fresh-entry checks allow it. It does not travel to another setup or assume the ambush succeeded."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Distinguish exhausted lure travel from an immediately verified sight break at the current doorway. Preserve accepted-departure and fresh-entry evidence before attacking; an eligible departure alone does not prove surprise or quest success.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero died to an albino rat, explicitly identified by the complete public death message at accepted decision 111, log line 404. An earlier policy defect appears at decision 29, line 96: the hero abandons an established single-file hold with 19 HP and four staff charges. The approach predictor invents a sidestep by the rat already occupying the gate, then counts the queued rat in that vacated gate as a second attack slot. This makes preparation yield before its existing hold handler. The selected retreat loses three HP at accepted line 97. The pinned game source shows ordinary contact rats attack rather than sidestep. Offline bookkeeping reconstruction matches all selections 0–29, including actions, reasons, intents and controllers. An isolated candidate probe then chooses the existing stationary hold attack and stops without consuming later observations. A focused correction and new five-test regression are supplied in the working tree; the original policy fails the expected slot-count assertion, the candidate passes, and the full suite passes 1,995 tests with four skips. This establishes an early arbitration repair, not that the alternative would kill the rat or prevent death. Later withdrawal exhaustion and the broader non-choke pursuit problem remain distinct.",
-    "learnings": "Do not count a normal-speed rat already attacking from an established choke as simultaneously sidestepping to make room for another attacker. Keep prospective movement and fast-enemy pressure conservative, and require fresh geometry and existing combat admission before retaining a hold."
-  },
-  "recommendations": [
-    {
-      "id": "000155-contact-rat-choke",
-      "priority": "high",
-      "summary": "Preserve an established choke when false contact-rat sidestep pressure would trigger another doorway retreat.",
-      "evidence": [
-        "Decision 27, selection line 89 and accepted line 90: the hero reaches holding square 285 behind door 310.",
-        "Decision 28, lines 94–95: an observed entry strike leaves the hero at the hold with 19 HP.",
-        "Decision 29, lines 96–97: two queued rats trigger retreat to door 286, losing three HP despite verified single-file geometry.",
-        "tools/mage_policy.py:1089–1101,1180; tools/multi_enemy_tactics.py:26–54,84–99; game Mob.Hunting.act:1358–1395.",
-        "Source-pinned offline reconstruction matches decisions 0–29; the copied candidate state selects the existing hold attack without dispatch."
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000155"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000155/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000155/poster.jpg",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "duration_seconds": 46.199,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -89,15 +43,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 5,
-    "ending_level": 1,
-    "starving_turns": 0,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -111,6 +56,25 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000155",
+  "improvements": [
+    "After exhausting travel to crab ambush setups, the bot can still break sight at its current doorway when the escape geometry and fresh-entry checks allow it. It does not travel to another setup or assume the ambush succeeded."
+  ],
+  "incoming_learnings": "Distinguish exhausted lure travel from an immediately verified sight break at the current doorway. Preserve accepted-departure and fresh-entry evidence before attacking; an eligible departure alone does not prove surprise or quest success.",
+  "incoming_update_status": "accepted",
+  "max_depth": 1,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Died to an albino rat",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000155/poster.jpg",
+  "previous_run_id": "000154",
+  "previous_source_commit": "fb5151b64ec7521063f9f1586fbc35a804594d89",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -129,5 +93,43 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000155-contact-rat-choke",
+      "priority": "high",
+      "summary": "Preserve an established choke when false contact-rat sidestep pressure would trigger another doorway retreat.",
+      "evidence": [
+        "Decision 27, selection line 89 and accepted line 90: the hero reaches holding square 285 behind door 310.",
+        "Decision 28, lines 94–95: an observed entry strike leaves the hero at the hold with 19 HP.",
+        "Decision 29, lines 96–97: two queued rats trigger retreat to door 286, losing three HP despite verified single-file geometry.",
+        "tools/mage_policy.py:1089–1101,1180; tools/multi_enemy_tactics.py:26–54,84–99; game Mob.Hunting.act:1358–1395.",
+        "Source-pinned offline reconstruction matches decisions 0–29; the copied candidate state selects the existing hold attack without dispatch."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000155"
+    }
+  ],
+  "review": {
+    "review": "The hero died to an albino rat, explicitly identified by the complete public death message at accepted decision 111, log line 404. An earlier policy defect appears at decision 29, line 96: the hero abandons an established single-file hold with 19 HP and four staff charges. The approach predictor invents a sidestep by the rat already occupying the gate, then counts the queued rat in that vacated gate as a second attack slot. This makes preparation yield before its existing hold handler. The selected retreat loses three HP at accepted line 97. The pinned game source shows ordinary contact rats attack rather than sidestep. Offline bookkeeping reconstruction matches all selections 0–29, including actions, reasons, intents and controllers. An isolated candidate probe then chooses the existing stationary hold attack and stops without consuming later observations. A focused correction and new five-test regression are supplied in the working tree; the original policy fails the expected slot-count assertion, the candidate passes, and the full suite passes 1,995 tests with four skips. This establishes an early arbitration repair, not that the alternative would kill the rat or prevent death. Later withdrawal exhaustion and the broader non-choke pursuit problem remain distinct.",
+    "learnings": "Do not count a normal-speed rat already attacking from an established choke as simultaneously sidestepping to make room for another attacker. Keep prospective movement and fast-enemy pressure conservative, and require fresh geometry and existing combat admission before retaining a hold."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 5,
+    "ending_level": 1,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "d0e6cd54f80580d5a31314117e72e70d76ecd1fe",
+  "started_at": "2026-11-22T23:34:05Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000155/video.mp4"
 }

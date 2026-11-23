@@ -1,40 +1,107 @@
 {
-  "schema_version": 1,
-  "id": "000094",
-  "started_at": "2026-11-22T00:33:57Z",
-  "completed_at": "2026-11-22T00:36:04.080094+00:00",
-  "source_commit": "3bfeb5c5050ec2512b4ef85d05c41088ac17cecb",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 281,
-  "duration_seconds": 123.799,
+  "code_changed": false,
+  "completed_at": "2026-11-22T00:36:04.080094+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000093",
-  "previous_source_commit": "7480748ed360993aa60fdd8faaa35e078ade02a4",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 123.799,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 193,
+        "turns": 273,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 275,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 694
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000094",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "Treat missing-exit searching as an executable, costed task before hunger reserves disappear. A discovered secret is not evidence of an exit, and walking toward a search vantage is not a completed search. Keep mandatory pickup and hazard gates intact; neither extra waits nor guessed potion effects supplies missing progression.",
   "incoming_update_status": "review-only",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remains alive at 25/25 HP when decision 281 exhausts the planner. Chest 1343 was first observed with piranhas at decision 177 (line 511). Intuition publicly identifies the carried silver potion as invisibility in the accepted transition at line 808; identification is therefore no longer the blocker. Source-pinned offline bookkeeping matches all 281 earlier selected actions, reasons and intents, then reproduces the terminal blocker. An isolated copied-state probe finds one reachable origin admitting the existing protected chest-trip planner: door 1097. Reaching it requires 49 route cells, but tools/puzzle_supplies.py:134 excludes routes longer than 41. Its separate 48-step ceiling also excludes arrival after the required 48 moves. Mandatory pickup correctly prevents departure. No patch is submitted: increasing the radius alone leaves arrival and door handling unresolved, and a funded, receipt-backed long-transit replacement has not been validated. Complete source and reconstruction resolve the selecting-state gap, not safe execution. No regression or full-suite success is claimed. The recorded source diff is empty.",
-    "learnings": "Known invisibility does not guarantee executable pool retrieval. Budget travel to the protected-trip origin separately from arrival, door handling and the protected round trip. Preserve fresh hazard checks, actual invisibility verification, mandatory pickup and collection receipts; do not infer success from a hypothetical route."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000094/poster.jpg",
+  "previous_run_id": "000093",
+  "previous_source_commit": "7480748ed360993aa60fdd8faaa35e078ade02a4",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 193,
+    "gold_complete": true,
+    "turns": 273,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -356,51 +423,11 @@
       "origin_run": "000094"
     }
   ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000094/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000094/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 193,
-        "turns": 273,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 275,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 694
-          },
-          {
-            "kind": "room",
-            "label": "Piranha pool landmark",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Piranha pool",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero remains alive at 25/25 HP when decision 281 exhausts the planner. Chest 1343 was first observed with piranhas at decision 177 (line 511). Intuition publicly identifies the carried silver potion as invisibility in the accepted transition at line 808; identification is therefore no longer the blocker. Source-pinned offline bookkeeping matches all 281 earlier selected actions, reasons and intents, then reproduces the terminal blocker. An isolated copied-state probe finds one reachable origin admitting the existing protected chest-trip planner: door 1097. Reaching it requires 49 route cells, but tools/puzzle_supplies.py:134 excludes routes longer than 41. Its separate 48-step ceiling also excludes arrival after the required 48 moves. Mandatory pickup correctly prevents departure. No patch is submitted: increasing the radius alone leaves arrival and door handling unresolved, and a funded, receipt-backed long-transit replacement has not been validated. Complete source and reconstruction resolve the selecting-state gap, not safe execution. No regression or full-suite success is claimed. The recorded source diff is empty.",
+    "learnings": "Known invisibility does not guarantee executable pool retrieval. Budget travel to the protected-trip origin separately from arrival, door handling and the protected round trip. Preserve fresh hazard checks, actual invisibility verification, mandatory pickup and collection receipts; do not infer success from a hypothetical route."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -410,36 +437,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 193,
-    "gold_complete": true,
-    "turns": 273,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "3bfeb5c5050ec2512b4ef85d05c41088ac17cecb",
+  "started_at": "2026-11-22T00:33:57Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000094/video.mp4"
 }

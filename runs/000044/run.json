@@ -1,40 +1,228 @@
 {
-  "schema_version": 1,
-  "id": "000044",
-  "started_at": "2026-11-21T11:02:24Z",
-  "completed_at": "2026-11-21T11:15:45.039135+00:00",
-  "source_commit": "c3f11a7c4b3e347acdd5e045b428e9825e94cee0",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 4,
   "actions": 1726,
-  "duration_seconds": 792.133,
+  "code_changed": false,
+  "completed_at": "2026-11-21T11:15:45.039135+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000043",
-  "previous_source_commit": "a9d06ad4dc4d1b982da7911bd8e3a2c4efa35411",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 792.133,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 67,
+        "turns": 266,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 222,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 536
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 16,
+        "gold_gained": 289,
+        "turns": 359,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 359,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 248
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 34,
+        "gold_gained": 338,
+        "turns": 429,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 451,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 277
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 77,
+        "gold_gained": 369,
+        "turns": 677,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 686,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000044",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "Mandatory pool retrieval needs an executable supply-preparation route, not merely a descent veto. Hunger admission and safe test-bank geometry must be considered together. Do not infer invisibility from potion color or treat a hypothetical protected route as an observed buff.",
   "incoming_update_status": "review-only",
+  "max_depth": 4,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run ended in planner exhaustion with a living, full-health hero, not an observed death. The initiating problem was an unexecutable preparation route for the mandatory piranha chest. At decision 1694 (log line 4839), the hero observed the chest while hungry and carrying unidentified potions. The pool controller delegates to supply preparation, whose hunger gate declines unknown-potion work; pool demand does not qualify for its puzzle meal. This is not resolved by simply adding a meal: a reduced fixture from that public observation found only three budgeted protected-trip origins, doorway 719 and water 675/676, all rejected by existing unknown-drink bank safety. The doorway also fails inventory-protection staging. At decision 1726 (line 4935), the uncollected chest vetoed descent; ordinary rescue offered no admitted action. The preceding accepted transition advanced the clock and retained full health, so this was not a frozen game or death. Complete log inspection and source browsing resolved the selecting chain. Offline reconstruction matched selected actions and reasons through decision 1200 but stopped at scratch serialization; later runtime memory was not reconstructed. The geometry probe used a separate reduced public snapshot, not certified historical memory. No patch or regression is supplied because no safe replacement action has been established under the existing protection and retrieval constraints; the specific next step is a validated remote identification/test-and-stash route, not an increased waiting bound or early general eating. The recorded source diff is empty.",
-    "learnings": "Mandatory pool retrieval needs an executable preparation route. Check hunger admission, safe unknown-drink geometry, inventory protection, entrance readiness and the protected return budget together. A floor-supply expectation does not identify any potion. Preserve the chest obligation and terminal planner-failure label. Other backlog cases were not re-investigated here."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000044/poster.jpg",
+  "previous_run_id": "000043",
+  "previous_source_commit": "a9d06ad4dc4d1b982da7911bd8e3a2c4efa35411",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 7,
+    "gold_collected": 1063,
+    "gold_complete": true,
+    "turns": 1731,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 3,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -204,130 +392,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000044/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000044/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 67,
-        "turns": 266,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 222,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 536
-          },
-          {
-            "kind": "room",
-            "label": "Crystal choice container",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 16,
-        "gold_gained": 289,
-        "turns": 359,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 359,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Piranha pool landmark",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "quest",
-            "label": "Sad Ghost",
-            "status": "encountered"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 248
-          }
-        ]
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 34,
-        "gold_gained": 338,
-        "turns": 429,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 451,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 277
-          }
-        ]
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "experience_gained": 77,
-        "gold_gained": 369,
-        "turns": 677,
-        "experience_complete": false,
-        "gold_complete": false,
-        "turns_complete": false,
-        "accepted_inputs": 686,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Alchemy area",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Piranha pool landmark",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Piranha pool",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run ended in planner exhaustion with a living, full-health hero, not an observed death. The initiating problem was an unexecutable preparation route for the mandatory piranha chest. At decision 1694 (log line 4839), the hero observed the chest while hungry and carrying unidentified potions. The pool controller delegates to supply preparation, whose hunger gate declines unknown-potion work; pool demand does not qualify for its puzzle meal. This is not resolved by simply adding a meal: a reduced fixture from that public observation found only three budgeted protected-trip origins, doorway 719 and water 675/676, all rejected by existing unknown-drink bank safety. The doorway also fails inventory-protection staging. At decision 1726 (line 4935), the uncollected chest vetoed descent; ordinary rescue offered no admitted action. The preceding accepted transition advanced the clock and retained full health, so this was not a frozen game or death. Complete log inspection and source browsing resolved the selecting chain. Offline reconstruction matched selected actions and reasons through decision 1200 but stopped at scratch serialization; later runtime memory was not reconstructed. The geometry probe used a separate reduced public snapshot, not certified historical memory. No patch or regression is supplied because no safe replacement action has been established under the existing protection and retrieval constraints; the specific next step is a validated remote identification/test-and-stash route, not an increased waiting bound or early general eating. The recorded source diff is empty.",
+    "learnings": "Mandatory pool retrieval needs an executable preparation route. Check hunger admission, safe unknown-drink geometry, inventory protection, entrance readiness and the protected return budget together. A floor-supply expectation does not identify any potion. Preserve the chest obligation and terminal planner-failure label. Other backlog cases were not re-investigated here."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 12,
@@ -337,78 +406,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 7,
-    "gold_collected": 1063,
-    "gold_complete": true,
-    "turns": 1731,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 4,
-        "max_level_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "levels_gained": 3,
-        "levels_complete": true,
-        "max_level": 7,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "c3f11a7c4b3e347acdd5e045b428e9825e94cee0",
+  "started_at": "2026-11-21T11:02:24Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000044/video.mp4"
 }

@@ -445,6 +445,39 @@ def known_flight_choices(p,state,neighbors):
 
 
 def prepare_flight_armor(p,state,neighbors):
+    return prepare_journey_armor(p,state,neighbors,
+        lambda staged: known_flight_choices(p,staged,neighbors),
+        'room: equip known strength-safe armor before planning levitation round trip')
+
+
+def prepare_pool_armor(p,state,neighbors):
+    """Preparation only: retain every unknown-test and actual journey gate."""
+    if not getattr(p,'reserve_floor_puzzle_supplies',False) \
+            or 'potion-supplies' in p.deferred_room_controllers \
+            or state.get('status')!='ready' or state.get('modal') \
+            or p.potion_stash or p.room_journey or p.drop_plan or p.trap_payload_return \
+            or not bandolier_protected(p,state) \
+            or sum(d==state['depth'] for d,_ in p.puzzle_drinks)>=MAX_ROOM_POTION_TESTS \
+            or not any(unknown_potion(i) and 'DRINK' in i.get('actions',[])
+                       and (state['depth'],base_name(i)) not in p.puzzle_drinks
+                       for i in state['inventory']):
+        return None
+    def feasible(staged):
+        paths=p.paths(staged)
+        for bank in paths:
+            if len(p.route(paths,bank))>41 or not safe_test_bank(
+                    p,staged,bank,distance,neighbors,allow_dry=True,pool_bank=True):
+                continue
+            probe=dict(staged,hero=dict(staged['hero'],cell=bank))
+            journey=plan_journey(p,probe,[],neighbors,probe_kind='pool',plan_only=True)
+            if journey and entrance_actionable(p,probe,journey):
+                return True
+        return False
+    return prepare_journey_armor(p,state,neighbors,feasible,
+        'room: equip known strength-safe armor before planning piranha-room preparation')
+
+
+def prepare_journey_armor(p,state,neighbors,feasible,reason):
     """Replace uncertain movement gear only for an otherwise verified trip."""
     try:
         from .combat_items import stats, unencumbered
@@ -479,8 +512,8 @@ def prepare_flight_armor(p,state,neighbors):
         inventory=[dict(i,equipped=(i is spare)) if i in worn or i is spare
                    else dict(i) for i in state['inventory']]
         staged=dict(state,inventory=inventory)
-        if unencumbered(staged) and known_flight_choices(p,staged,neighbors):
-            return p.use(spare,'EQUIP','room: equip known strength-safe armor before planning levitation round trip')
+        if unencumbered(staged) and feasible(staged):
+            return p.use(spare,'EQUIP',reason)
     return None
 
 

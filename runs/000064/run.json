@@ -1,42 +1,104 @@
 {
-  "schema_version": 1,
-  "id": "000064",
-  "started_at": "2026-11-21T16:29:12Z",
-  "completed_at": "2026-11-21T16:30:51.633743+00:00",
-  "source_commit": "488c3bfc60e0f68e5e81250d5b0acae1dd74c298",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 249,
-  "duration_seconds": 97.277,
+  "code_changed": true,
+  "completed_at": "2026-11-21T16:30:51.633743+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000063",
-  "previous_source_commit": "1b20d5f0b21b360800c9b8e142055a46371c4fc3",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 97.277,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 9,
+        "gold_gained": 0,
+        "turns": 245,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 243,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 343
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000064",
   "improvements": [
     "The bot now remembers when ordinary exploration actually enters an open special-room doorway. If the door closes again, it keeps that scouting knowledge while still checking supplies, protection and pickup separately."
   ],
-  "code_changed": true,
   "incoming_learnings": "Remember actual visible open-door arrivals even when ordinary exploration performed the scout. A door closing again does not erase the observation. Preserve independent arrival-time potion-test, inventory-protection, actual-buff and pickup checks: choosing preparation is not successful identification or retrieval. Offline reconstruction must stop at its first changed selection.",
   "incoming_update_status": "accepted",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run ended in planner exhaustion with the Mage alive at full health, not in death. Decision 248 (selection line 740, accepted transition 741) leaves open doorway 1170 for 1171; at decision 249 (line 743), that door is closed and nearby water is out of sight. Mandatory strength discovery rejects every current bank. Source-pinned offline bookkeeping matched all 249 earlier selections and the original terminal blocker. At decision 247 (line 737), current position 1135 satisfies the unchanged visible water-escape and potion-stash feasibility checks. The initiating contradiction is that drinking requires current visibility, but the controller has no separate admitted return to reobserve a previously verified bank across an ordinary closed door. The proposed focused correction remembers actual bank feasibility and admits bounded, hazard-checked reobservation only; it does not authorize drinking from memory. The new regression has two expected assertion failures on original source and passes all four tests on the candidate. The full suite passes 1,752 tests with four skips. Candidate reconstruction first changes decision 249 to reopening 1170 and stops there. This establishes a preparation choice, not successful discovery, retrieval, descent or survival. The broader long-route return backlog remains unresolved.",
-    "learnings": "Separate ordinary bank reobservation from unknown-potion drink admission. Remember only actually observed bank and stash feasibility, preserve fresh arrival checks and mandatory progression pickups, and account for accepted door-opening inputs even without displacement. A chosen preparation input is not completion evidence."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000064/poster.jpg",
+  "previous_run_id": "000063",
+  "previous_source_commit": "1b20d5f0b21b360800c9b8e142055a46371c4fc3",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 1,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 245,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 1,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -275,46 +337,11 @@
       "origin_run": "000064"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000064/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000064/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 9,
-        "gold_gained": 0,
-        "turns": 245,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 243,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 343
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run ended in planner exhaustion with the Mage alive at full health, not in death. Decision 248 (selection line 740, accepted transition 741) leaves open doorway 1170 for 1171; at decision 249 (line 743), that door is closed and nearby water is out of sight. Mandatory strength discovery rejects every current bank. Source-pinned offline bookkeeping matched all 249 earlier selections and the original terminal blocker. At decision 247 (line 737), current position 1135 satisfies the unchanged visible water-escape and potion-stash feasibility checks. The initiating contradiction is that drinking requires current visibility, but the controller has no separate admitted return to reobserve a previously verified bank across an ordinary closed door. The proposed focused correction remembers actual bank feasibility and admits bounded, hazard-checked reobservation only; it does not authorize drinking from memory. The new regression has two expected assertion failures on original source and passes all four tests on the candidate. The full suite passes 1,752 tests with four skips. Candidate reconstruction first changes decision 249 to reopening 1170 and stops there. This establishes a preparation choice, not successful discovery, retrieval, descent or survival. The broader long-route return backlog remains unresolved.",
+    "learnings": "Separate ordinary bank reobservation from unknown-potion drink admission. Remember only actually observed bank and stash feasibility, preserve fresh arrival checks and mandatory progression pickups, and account for accepted door-opening inputs even without displacement. A chosen preparation input is not completion evidence."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -324,36 +351,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 1,
-    "gold_collected": 0,
-    "gold_complete": true,
-    "turns": 245,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 1,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "488c3bfc60e0f68e5e81250d5b0acae1dd74c298",
+  "started_at": "2026-11-21T16:29:12Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000064/video.mp4"
 }

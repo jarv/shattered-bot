@@ -1,42 +1,159 @@
 {
-  "schema_version": 1,
-  "id": "000058",
-  "started_at": "2026-11-21T15:15:40Z",
-  "completed_at": "2026-11-21T15:20:42.043109+00:00",
-  "source_commit": "150b4e59330a7407a42fb1d2f99856aeb264f5a6",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "dead",
-  "outcome_summary": "Died after a hidden summoning trap surrounded the hero",
-  "outcome_reason": "Hero died",
-  "max_depth": 2,
   "actions": 763,
-  "duration_seconds": 297.999,
+  "code_changed": true,
+  "completed_at": "2026-11-21T15:20:42.043109+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000057",
-  "previous_source_commit": "9c84b0b9dffefa6b1f4fd7e39e18ccb80aa0797b",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "duration_seconds": 297.999,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 137,
+        "turns": 284,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 286,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 759
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 28,
+        "gold_gained": 280,
+        "turns": 462,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 471,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 980
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 654
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Possible drop-room exit",
+            "status": "reported-hypothesis"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000058",
   "improvements": [
     "The bot now checks confusion and vertigo before its usual actions, with bounded recovery rather than indefinite waiting in gas.",
     "When several awake enemies converge, the bot seeks a nearby usable doorway before optional preparation, while retaining checks on exposure and the safety of the holding position."
   ],
-  "code_changed": true,
   "incoming_learnings": "Keep admitted key pickup priority consistent across ordinary exploration and quiet-room loot collection. A sleeping enemy appearing or disappearing must not make those controllers repeatedly reverse the same route. Preserve hazard admission and honest pickup receipts; removing this contradiction does not establish survival.",
   "incoming_update_status": "accepted",
+  "max_depth": 2,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero died after stepping onto a hidden summoning trap while approaching skeletal remains. Before that step, decision 747 already showed a different, revealed summoning trap immediately beside the approach. The inspection rule required three visible traps and skipped this isolated warning. The accepted transition reports hidden summoning activation; the next observation shows 17 monsters, with all traversable adjacent exits occupied. The later retreat failure was therefore downstream of entering the cluster, not evidence that hazard checks should be weakened. Staff charges and dew were spent before death; the exact fatal attacker is not established. Unknown potion identities and post-death revelations were not used. A reduced public-observation fixture supports a focused bounded-inspection correction; it is not reconstructed original policy memory or proof that the run would survive. The new regression fails as expected on original policy and passes on the candidate. Single-process full discovery was killed without a result; all 149 unittest modules passed when isolated by module. Historical backlog recommendations are retained without revalidation.",
-    "learnings": "A single revealed summoning trap beside a quiet loot approach merits bounded inspection, even without three visible traps. Keep preparation separate from verified discovery and collection. Once a swarm occupies every traversable adjacent exit, do not invent a safe retreat or infer a particular killer."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Died after a hidden summoning trap surrounded the hero",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000058/poster.jpg",
+  "previous_run_id": "000057",
+  "previous_source_commit": "9c84b0b9dffefa6b1f4fd7e39e18ccb80aa0797b",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 417,
+    "gold_complete": true,
+    "turns": 746,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -230,87 +347,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000058/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000058/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 137,
-        "turns": 284,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 286,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 759
-          },
-          {
-            "kind": "room",
-            "label": "Distant well",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 28,
-        "gold_gained": 280,
-        "turns": 462,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 471,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 980
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 654
-          },
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Possible drop-room exit",
-            "status": "reported-hypothesis"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero died after stepping onto a hidden summoning trap while approaching skeletal remains. Before that step, decision 747 already showed a different, revealed summoning trap immediately beside the approach. The inspection rule required three visible traps and skipped this isolated warning. The accepted transition reports hidden summoning activation; the next observation shows 17 monsters, with all traversable adjacent exits occupied. The later retreat failure was therefore downstream of entering the cluster, not evidence that hazard checks should be weakened. Staff charges and dew were spent before death; the exact fatal attacker is not established. Unknown potion identities and post-death revelations were not used. A reduced public-observation fixture supports a focused bounded-inspection correction; it is not reconstructed original policy memory or proof that the run would survive. The new regression fails as expected on original policy and passes on the candidate. Single-process full discovery was killed without a result; all 149 unittest modules passed when isolated by module. Historical backlog recommendations are retained without revalidation.",
+    "learnings": "A single revealed summoning trap beside a quiet loot approach merits bounded inspection, even without three visible traps. Keep preparation separate from verified discovery and collection. Once a swarm occupies every traversable adjacent exit, do not invent a safe retreat or infer a particular killer."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 11,
@@ -320,50 +361,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 3,
-    "gold_collected": 417,
-    "gold_complete": true,
-    "turns": 746,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "150b4e59330a7407a42fb1d2f99856aeb264f5a6",
+  "started_at": "2026-11-21T15:15:40Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000058/video.mp4"
 }

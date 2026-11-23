@@ -1,39 +1,293 @@
 {
-  "schema_version": 1,
-  "id": "000082",
-  "started_at": "2026-11-21T20:39:07Z",
-  "completed_at": "2026-11-21T20:56:57.627689+00:00",
-  "source_commit": "04a770bece5848c7b082d61206a422524a2c94b3",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "dead",
-  "outcome_summary": "Killed by a skeleton after exhausted doorway fighting and retreat",
-  "outcome_reason": "Hero died",
-  "max_depth": 6,
   "actions": 2451,
-  "duration_seconds": 1061.266,
+  "code_changed": false,
+  "completed_at": "2026-11-21T20:56:57.627689+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000081",
-  "previous_source_commit": "3f542818ee8751b4722f979a8ee0d9a653ac4dc9",
+  "death_category": "combat",
+  "death_category_evidence": "review summary: Killed by a skeleton after exhausted doorway fighting and retreat",
+  "duration_seconds": 1061.266,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 136,
+        "turns": 403,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 396,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 910
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 28,
+        "gold_gained": 344,
+        "turns": 582,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 578,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 32,
+        "gold_gained": 469,
+        "turns": 427,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 452,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 538
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 64,
+        "gold_gained": 305,
+        "turns": 605,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 632,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 899
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 87,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 91,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 33,
+        "gold_gained": 0,
+        "turns": 275,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 295,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 22,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 133,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000082",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "Separate an unseen trap's first activation from later visible hazards. A three-charge container approach does not guarantee readiness for chain summons. Investigate fresh-evidence, budgeted attacks on an occupied return doorway before changing boxed-swarm priorities; clearing a target is not yet a verified escape. Retain all hazard, collateral and mandatory collection checks.",
   "incoming_update_status": "review-only",
+  "max_depth": 6,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero died: the final accepted attack takes health from four to zero, and the complete public terminal message explicitly names a skeleton. The initiating combat deterioration is earlier: stepping out of the explored room exposes two skeletons, followed by a doorway hold that repeatedly chooses melee despite six known staff charges. From decisions 2266 through 2271 health falls from 43 to 24. The established-hold selector bypasses the existing undead ranged-first dispatcher. Later ranged attacks exhaust the staff; dew is consumed, further two-skeleton combat leaves 11 HP, and retreat, limited recovery, exploration and starvation precede the final fight. These are observed transitions, not proof that any one earlier choice determined death. A focused candidate restores the already-admitted undead ranged choice within the established hold. The new regression shows the expected original-policy assertion failure and candidate success; all 1,792 suite tests pass with four skips. The fixture explicitly supplies a hold contract rather than claiming recovered original memory. No changed decision was followed with invented observations. The candidate does not establish survival or prevent adjacent bone explosions, and post-death item revelations are not used.",
-    "learnings": "A verified doorway limits approach slots, not incoming damage or bone-explosion risk. Established holds should preserve admitted enemy-specific attack choices. Selecting an earlier ranged attack does not prove a kill, escape, charge sufficiency or survival; keep all hazard and mandatory collection checks."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Killed by a skeleton after exhausted doorway fighting and retreat",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000082/poster.jpg",
+  "previous_run_id": "000081",
+  "previous_source_commit": "3f542818ee8751b4722f979a8ee0d9a653ac4dc9",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 8,
+    "gold_collected": 1254,
+    "gold_complete": true,
+    "turns": 2379,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 8,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -342,168 +596,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000082/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000082/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 136,
-        "turns": 403,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 396,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 910
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 28,
-        "gold_gained": 344,
-        "turns": 582,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 578,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 32,
-        "gold_gained": 469,
-        "turns": 427,
-        "experience_complete": false,
-        "gold_complete": false,
-        "turns_complete": false,
-        "accepted_inputs": 452,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 538
-          },
-          {
-            "kind": "room",
-            "label": "Alchemy area",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "quest",
-            "label": "Sad Ghost",
-            "status": "encountered"
-          },
-          {
-            "kind": "room",
-            "label": "Piranha pool landmark",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "experience_gained": 64,
-        "gold_gained": 305,
-        "turns": 605,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 632,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 899
-          },
-          {
-            "kind": "room",
-            "label": "Crystal choice container",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 5,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 0,
-        "turns": 87,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 91,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "boss",
-            "label": "Goo",
-            "status": "encountered"
-          },
-          {
-            "kind": "boss",
-            "label": "Goo",
-            "status": "reported-defeated"
-          }
-        ]
-      },
-      {
-        "depth": 6,
-        "branch": 0,
-        "experience_gained": 33,
-        "gold_gained": 0,
-        "turns": 275,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 295,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Shop",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero died: the final accepted attack takes health from four to zero, and the complete public terminal message explicitly names a skeleton. The initiating combat deterioration is earlier: stepping out of the explored room exposes two skeletons, followed by a doorway hold that repeatedly chooses melee despite six known staff charges. From decisions 2266 through 2271 health falls from 43 to 24. The established-hold selector bypasses the existing undead ranged-first dispatcher. Later ranged attacks exhaust the staff; dew is consumed, further two-skeleton combat leaves 11 HP, and retreat, limited recovery, exploration and starvation precede the final fight. These are observed transitions, not proof that any one earlier choice determined death. A focused candidate restores the already-admitted undead ranged choice within the established hold. The new regression shows the expected original-policy assertion failure and candidate success; all 1,792 suite tests pass with four skips. The fixture explicitly supplies a hold contract rather than claiming recovered original memory. No changed decision was followed with invented observations. The candidate does not establish survival or prevent adjacent bone explosions, and post-death item revelations are not used.",
+    "learnings": "A verified doorway limits approach slots, not incoming damage or bone-explosion risk. Established holds should preserve admitted enemy-specific attack choices. Selecting an earlier ranged attack does not prove a kill, escape, charge sufficiency or survival; keep all hazard and mandatory collection checks."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 12,
@@ -513,106 +610,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 22,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 5,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 6,
-        "branch": 0,
-        "starving_turns": 133,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 8,
-    "gold_collected": 1254,
-    "gold_complete": true,
-    "turns": 2379,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 2,
-        "levels_complete": true,
-        "max_level": 5,
-        "max_level_complete": true
-      },
-      {
-        "depth": 4,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 6,
-        "max_level_complete": true
-      },
-      {
-        "depth": 5,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 7,
-        "max_level_complete": true
-      },
-      {
-        "depth": 6,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 8,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "04a770bece5848c7b082d61206a422524a2c94b3",
+  "started_at": "2026-11-21T20:39:07Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000082/video.mp4"
 }

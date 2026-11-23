@@ -1,41 +1,170 @@
 {
-  "schema_version": 1,
-  "id": "000134",
-  "started_at": "2026-11-22T14:10:28Z",
-  "completed_at": "2026-11-22T14:18:00.473146+00:00",
-  "source_commit": "edfcf1a768191a9a65ffa6de8281b7fd5b5f04b2",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "1e55d72-review-recovery",
-  "outcome": "dead",
-  "outcome_summary": "Died after fly splitting and doorway combat",
-  "outcome_reason": "Hero died",
-  "max_depth": 3,
   "actions": 1117,
-  "duration_seconds": 447.213,
+  "code_changed": true,
+  "completed_at": "2026-11-22T14:18:00.473146+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000133",
-  "previous_source_commit": "4eee2fba527bcaf7ba748eaa7a8dbe94aaff68c9",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "duration_seconds": 447.213,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 49,
+        "turns": 375,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 380,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 923
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 28,
+        "gold_gained": 494,
+        "turns": 589,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 541,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 726
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 15,
+        "gold_gained": 70,
+        "turns": 177.5,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 190,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000134",
   "improvements": [
     "The bot now finishes its planned approach to observe a piranha room even when the walk takes several moves. It rechecks the route along the way and keeps that scouting trip separate from permission to test a potion or collect the chest."
   ],
-  "code_changed": true,
   "incoming_learnings": "Keep an admitted multi-step preparation observation committed across accepted intermediate moves, while checking its route again on every input. Reaching that observation point is not permission to drink an unknown potion or credit unfinished loot. Next validate inventory protection and the actual protected chest return from fresh observations.",
   "incoming_update_status": "accepted",
+  "max_depth": 3,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero died after fly splitting and prolonged doorway combat, not planner exhaustion. Decisions 1083–1092 spent offensive charges; decision 1093 then used melee, followed by two visible fly fragments. At decision 1094 (selection line 3145), the doorway selector chose the shorter route to door 291, starting within both flies’ current reach. Public geometry also supplies a one-step-longer approach toward door 529 whose first step is outside their current reach. The original selector ranks admitted doors by distance alone. Accepted transitions 3146–3161 confirm the chosen retreat; decision 1095 loses three HP, and decision 1098 cannot verify a holding square as gnolls appear on the other side. Subsequent combat drains health, and decision 1116 (accepted line 3232) ends at zero HP. A crab pursues, but a definite killer is not established. The proposed narrow correction prefers already admitted doorway approaches with at most one current attacker over approaches with multiple current attackers, retaining distance ranking within those classes. A reduced public-input fixture reproduces the original wrong first step; the final regression has the expected original-source assertion failure and passes all four tests on the candidate. The full suite passes 1,942 tests with four skipped. A broader ranking was rejected because it changed established single-contact doorway behavior. This is a selecting-leaf fixture, not recovered original runtime memory: exact whole-policy counterfactual eligibility and survival are not established. No alternative was dispatched, and no changed-policy continuation was synthesized. Route hazards, approach pressure, health, attempt and accepted-input limits, fresh hold verification, mandatory pickup and terminal exhaustion remain unchanged. The proposal addresses the local ranking defect, not every earlier combat contributor.",
-    "learnings": "Among already admitted doorway approaches, avoid a first step beside multiple observed attackers when another route limits current contact to one. Keep shortest-route preference within each contact class, and recheck hazards and the actual holding square. A less-exposed first step does not prove safe arrival or survival."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Died after fly splitting and doorway combat",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000134/poster.jpg",
+  "previous_run_id": "000133",
+  "previous_source_commit": "4eee2fba527bcaf7ba748eaa7a8dbe94aaff68c9",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 4,
+    "gold_collected": 613,
+    "gold_complete": true,
+    "turns": 1141.5,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -358,85 +487,11 @@
       "origin_run": "000041"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000134/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000134/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 11,
-        "gold_gained": 49,
-        "turns": 375,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 380,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 923
-          },
-          {
-            "kind": "room",
-            "label": "Crystal choice container",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 28,
-        "gold_gained": 494,
-        "turns": 589,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 541,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 726
-          }
-        ]
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 15,
-        "gold_gained": 70,
-        "turns": 177.5,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 190,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero died after fly splitting and prolonged doorway combat, not planner exhaustion. Decisions 1083–1092 spent offensive charges; decision 1093 then used melee, followed by two visible fly fragments. At decision 1094 (selection line 3145), the doorway selector chose the shorter route to door 291, starting within both flies’ current reach. Public geometry also supplies a one-step-longer approach toward door 529 whose first step is outside their current reach. The original selector ranks admitted doors by distance alone. Accepted transitions 3146–3161 confirm the chosen retreat; decision 1095 loses three HP, and decision 1098 cannot verify a holding square as gnolls appear on the other side. Subsequent combat drains health, and decision 1116 (accepted line 3232) ends at zero HP. A crab pursues, but a definite killer is not established. The proposed narrow correction prefers already admitted doorway approaches with at most one current attacker over approaches with multiple current attackers, retaining distance ranking within those classes. A reduced public-input fixture reproduces the original wrong first step; the final regression has the expected original-source assertion failure and passes all four tests on the candidate. The full suite passes 1,942 tests with four skipped. A broader ranking was rejected because it changed established single-contact doorway behavior. This is a selecting-leaf fixture, not recovered original runtime memory: exact whole-policy counterfactual eligibility and survival are not established. No alternative was dispatched, and no changed-policy continuation was synthesized. Route hazards, approach pressure, health, attempt and accepted-input limits, fresh hold verification, mandatory pickup and terminal exhaustion remain unchanged. The proposal addresses the local ranking defect, not every earlier combat contributor.",
+    "learnings": "Among already admitted doorway approaches, avoid a first step beside multiple observed attackers when another route limits current contact to one. Keep shortest-route preference within each contact class, and recheck hazards and the actual holding square. A less-exposed first step does not prove safe arrival or survival."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 11,
@@ -446,64 +501,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 4,
-    "gold_collected": 613,
-    "gold_complete": true,
-    "turns": 1141.5,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 4,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "edfcf1a768191a9a65ffa6de8281b7fd5b5f04b2",
+  "started_at": "2026-11-22T14:10:28Z",
+  "supervisor_version": "1e55d72-review-recovery",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000134/video.mp4"
 }

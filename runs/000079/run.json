@@ -1,42 +1,109 @@
 {
-  "schema_version": 1,
-  "id": "000079",
-  "started_at": "2026-11-21T19:55:32Z",
-  "completed_at": "2026-11-21T19:57:27.540391+00:00",
-  "source_commit": "9d382a74e8643f76dacf978d593947b1b8a24d66",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 293,
-  "duration_seconds": 112.799,
+  "code_changed": true,
+  "completed_at": "2026-11-21T19:57:27.540391+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000078",
-  "previous_source_commit": "71876354058d381b62085164a23656c21a3010f0",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 112.799,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 284,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 287,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 579
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000079",
   "improvements": [
     "When unfinished sentry-room exploration blocks potion discovery, the bot can use a known clairvoyance stone from safe ground to reveal missing nearby geometry. It still requires fresh protection and retrieval checks afterward."
   ],
-  "code_changed": true,
   "incoming_learnings": "Before treating incomplete sentry geometry as exhausted preparation, consider a carried known clairvoyance stone from an observed safe square. Mapping must remain information gathering only: reobserve afterward and require all normal protection, inventory and retrieval checks. Never infer potion identities or room completion from the proposed reveal.",
   "incoming_update_status": "accepted",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at full health when the planner stopped. The initiating dead end was gas-room potion preparation, not a sentry: decision 275 (line 817) observed the gas, chest and remains and escaped; decision 276 (line 820) then left without preparation. Offline reconstruction pinned to the played source matches all 293 selected actions, reasons and intents and reproduces decision 293’s terminal blocker (line 871). This is reconstructed bookkeeping, not originally recorded memory. It isolates a missing purity supply, with no active journey, stash, drop or trap-return plan. At decision 276, bank 241 passes the drink-bank and hypothetical chest-return checks, and entrance 239 is already receipted. But its permitted stash corridor contains only 240, 241 and 269, so the singleton jade potion cannot protect the other color remotely; turquoise is also an unprotected two-dose stack. Neither color is identified, and no identification resource remains. At exhaustion there is no currently admitted test bank. Complete source browsing resolves the selecting-state ambiguity but does not certify a safe replacement: drinking could destroy the other potion, and distant general discovery could spend needed protection away from the room. No patch or regression is supplied because an executable inventory-protected identification-and-return contract is not established. Mandatory progression pickup, room reservation, actual protection checks and the stuck-planner terminal remain unchanged. The unchanged Python suite passes 1783 tests with four skips; no baseline-red/candidate-green claim is made.",
-    "learnings": "Distinguish an entrance-scouting failure from an inventory-protection failure. A safe gas-room drink square and budgeted reward trip are insufficient without a remote safe stash or verified protective bag. Do not guess potion colors, waive unfinished rewards, or spend a hypothetical purity effect away from its retrieval plan."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000079/poster.jpg",
+  "previous_run_id": "000078",
+  "previous_source_commit": "71876354058d381b62085164a23656c21a3010f0",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 284,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -315,51 +382,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000079/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000079/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 0,
-        "turns": 284,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 287,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 579
-          },
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Animated statue",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero remained alive at full health when the planner stopped. The initiating dead end was gas-room potion preparation, not a sentry: decision 275 (line 817) observed the gas, chest and remains and escaped; decision 276 (line 820) then left without preparation. Offline reconstruction pinned to the played source matches all 293 selected actions, reasons and intents and reproduces decision 293’s terminal blocker (line 871). This is reconstructed bookkeeping, not originally recorded memory. It isolates a missing purity supply, with no active journey, stash, drop or trap-return plan. At decision 276, bank 241 passes the drink-bank and hypothetical chest-return checks, and entrance 239 is already receipted. But its permitted stash corridor contains only 240, 241 and 269, so the singleton jade potion cannot protect the other color remotely; turquoise is also an unprotected two-dose stack. Neither color is identified, and no identification resource remains. At exhaustion there is no currently admitted test bank. Complete source browsing resolves the selecting-state ambiguity but does not certify a safe replacement: drinking could destroy the other potion, and distant general discovery could spend needed protection away from the room. No patch or regression is supplied because an executable inventory-protected identification-and-return contract is not established. Mandatory progression pickup, room reservation, actual protection checks and the stuck-planner terminal remain unchanged. The unchanged Python suite passes 1783 tests with four skips; no baseline-red/candidate-green claim is made.",
+    "learnings": "Distinguish an entrance-scouting failure from an inventory-protection failure. A safe gas-room drink square and budgeted reward trip are insufficient without a remote safe stash or verified protective bag. Do not guess potion colors, waive unfinished rewards, or spend a hypothetical purity effect away from its retrieval plan."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -369,36 +396,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 0,
-    "gold_complete": true,
-    "turns": 284,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "9d382a74e8643f76dacf978d593947b1b8a24d66",
+  "started_at": "2026-11-21T19:55:32Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000079/video.mp4"
 }

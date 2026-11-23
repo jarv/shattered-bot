@@ -1,63 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000123",
-  "started_at": "2026-11-22T11:08:54Z",
-  "completed_at": "2026-11-22T11:10:52.730366+00:00",
-  "source_commit": "afea1d13519486cf072f82901ec646f30b1eae78",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "1e55d72-review-recovery",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 315,
-  "duration_seconds": 116.266,
+  "code_changed": false,
+  "completed_at": "2026-11-22T11:10:52.730366+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000122",
-  "previous_source_commit": "9d8064c858b38bd62eca16813714eeeacc01c552",
-  "improvements": [],
-  "code_changed": false,
-  "incoming_learnings": "Preserve a freshly verifiable preparation opportunity before exploration leaves the admitted return graph. Bank receipts alone do not guarantee an executable return. Keep mandatory discovery, progression pickup, fresh inventory protection and terminal exhaustion intact.",
-  "incoming_update_status": "review-only",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The Mage remained alive at full health when mandatory strength discovery exhausted the planner (decision 315, log lines 877–878). The initiating conflict was delayed preparation versus legitimate potion collection: decisions 299 and 306 added charcoal and golden, while all 73 reconstructed preparation receipts covered only crimson. Decision 314 then publicly identified crimson as levitation, satisfying the fall-room supply reservation but not strength discovery. Source-pinned offline bookkeeping matched all 315 recorded action/reason/intent selections and reproduced the terminal blocker. All historical banks were reachable through the existing admitted transit graph; incompatible inventory, not disconnected routes, excluded their return actions. No current visible bank passed fresh admission, and no identification or inventory-protection resource remained. No patch is supplied: singleton feasibility does not establish collateral-separated storage and retrieval for three potions. Earlier blind drinking also risks the outstanding levitation reservation. Complete source and reconstruction resolved the selecting-state gap, but not this safety contract. The unchanged Python suite passed 1,910 tests with four skipped; this is not evidence of a repair.",
-    "learnings": "Preparation memory must remain executable after legitimate potion pickups change inventory. Establish a bounded preparation-only return with fresh bank and stash validation before relying on historical feasibility. Preserve reserved room supplies, mandatory pickup, hazard checks and terminal exhaustion; selecting preparation alone would not establish identification or room success."
-  },
-  "recommendations": [
-    {
-      "id": "000123-inventory-aware-discovery-return",
-      "priority": "high",
-      "summary": "Establish an inventory-aware preparation return before mandatory discovery loses every compatible bank receipt.",
-      "evidence": [
-        "Decisions 294–295, log lines 816–820: exploration and collection transit leave the water area carrying crimson alone.",
-        "Decision 299, selection 831 and accepted transition 832: charcoal is collected; existing singleton bank receipts become incompatible.",
-        "Decision 306, selection 852 and accepted transition 853: golden is collected.",
-        "Decisions 313–314, log lines 873–876: the identify scroll reveals crimson as levitation; strength remains unresolved.",
-        "Decision 315, log line 877: discovery exhausts with the Mage alive.",
-        "Offline reconstruction matches all 315 selections; 73 historical banks remain transit-reachable but inventory-incompatible.",
-        "tools/descent_potions.py:85–143,376–417; tools/potion_stash.py:103–134; tools/mage_policy.py:443–497."
-      ],
-      "status": "deferred",
-      "reason": "No safe focused replacement is established. The missing prerequisite is an executable collateral-separated stash and retrieval plan for the new three-potion inventory; singleton receipts cannot certify it. Before identification, an outstanding levitation reservation also prevents simply drinking earlier. Next derive paired decision-295/315 fixtures around bank 849 and its alternatives, including decisions 299/306 inventory changes. Validate bounded preparation-only transit, fresh bank/stash admission, accepted-input accounting and return to unfinished pickup. Require a demonstrated safe stash or an actually observed identification/protection resource before changing arbitration. Do not weaken inventory matching, hazard gates, reservations or mandatory pickup.",
-      "origin_run": "000123"
-    }
-  ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000123/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000123/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 116.266,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -100,15 +54,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 0,
-    "ending_level": 2,
-    "starving_turns": 0,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -122,6 +67,23 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000123",
+  "improvements": [],
+  "incoming_learnings": "Preserve a freshly verifiable preparation opportunity before exploration leaves the admitted return graph. Bank receipts alone do not guarantee an executable return. Keep mandatory discovery, progression pickup, fresh inventory protection and terminal exhaustion intact.",
+  "incoming_update_status": "review-only",
+  "max_depth": 1,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000123/poster.jpg",
+  "previous_run_id": "000122",
+  "previous_source_commit": "9d8064c858b38bd62eca16813714eeeacc01c552",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -140,5 +102,45 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000123-inventory-aware-discovery-return",
+      "priority": "high",
+      "summary": "Establish an inventory-aware preparation return before mandatory discovery loses every compatible bank receipt.",
+      "evidence": [
+        "Decisions 294–295, log lines 816–820: exploration and collection transit leave the water area carrying crimson alone.",
+        "Decision 299, selection 831 and accepted transition 832: charcoal is collected; existing singleton bank receipts become incompatible.",
+        "Decision 306, selection 852 and accepted transition 853: golden is collected.",
+        "Decisions 313–314, log lines 873–876: the identify scroll reveals crimson as levitation; strength remains unresolved.",
+        "Decision 315, log line 877: discovery exhausts with the Mage alive.",
+        "Offline reconstruction matches all 315 selections; 73 historical banks remain transit-reachable but inventory-incompatible.",
+        "tools/descent_potions.py:85–143,376–417; tools/potion_stash.py:103–134; tools/mage_policy.py:443–497."
+      ],
+      "status": "deferred",
+      "reason": "No safe focused replacement is established. The missing prerequisite is an executable collateral-separated stash and retrieval plan for the new three-potion inventory; singleton receipts cannot certify it. Before identification, an outstanding levitation reservation also prevents simply drinking earlier. Next derive paired decision-295/315 fixtures around bank 849 and its alternatives, including decisions 299/306 inventory changes. Validate bounded preparation-only transit, fresh bank/stash admission, accepted-input accounting and return to unfinished pickup. Require a demonstrated safe stash or an actually observed identification/protection resource before changing arbitration. Do not weaken inventory matching, hazard gates, reservations or mandatory pickup.",
+      "origin_run": "000123"
+    }
+  ],
+  "review": {
+    "review": "The Mage remained alive at full health when mandatory strength discovery exhausted the planner (decision 315, log lines 877–878). The initiating conflict was delayed preparation versus legitimate potion collection: decisions 299 and 306 added charcoal and golden, while all 73 reconstructed preparation receipts covered only crimson. Decision 314 then publicly identified crimson as levitation, satisfying the fall-room supply reservation but not strength discovery. Source-pinned offline bookkeeping matched all 315 recorded action/reason/intent selections and reproduced the terminal blocker. All historical banks were reachable through the existing admitted transit graph; incompatible inventory, not disconnected routes, excluded their return actions. No current visible bank passed fresh admission, and no identification or inventory-protection resource remained. No patch is supplied: singleton feasibility does not establish collateral-separated storage and retrieval for three potions. Earlier blind drinking also risks the outstanding levitation reservation. Complete source and reconstruction resolved the selecting-state gap, but not this safety contract. The unchanged Python suite passed 1,910 tests with four skipped; this is not evidence of a repair.",
+    "learnings": "Preparation memory must remain executable after legitimate potion pickups change inventory. Establish a bounded preparation-only return with fresh bank and stash validation before relying on historical feasibility. Preserve reserved room supplies, mandatory pickup, hazard checks and terminal exhaustion; selecting preparation alone would not establish identification or room success."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "afea1d13519486cf072f82901ec646f30b1eae78",
+  "started_at": "2026-11-22T11:08:54Z",
+  "supervisor_version": "1e55d72-review-recovery",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000123/video.mp4"
 }

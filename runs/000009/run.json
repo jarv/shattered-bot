@@ -1,61 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000009",
-  "started_at": "2026-11-20T10:43:47Z",
-  "completed_at": "2026-11-20T10:53:40.525883+00:00",
-  "source_commit": "6484516ea91b36f5da4c264d0444a805fad0f05e",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "3c5880a85d52fddf93a521c67826be879acd77a2a14bc8d77e9bfc363a91a398",
-  "outcome": "dead",
-  "outcome_summary": "Killed by the great crab after repeated blocked attacks",
-  "outcome_reason": "Hero died",
-  "max_depth": 4,
   "actions": 1448,
-  "duration_seconds": 586.799,
+  "code_changed": true,
+  "completed_at": "2026-11-20T10:53:40.525883+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000008",
-  "previous_source_commit": "42c90c4108917a30c1339cec00d711fb67818035",
-  "improvements": [
-    "If a mimic reward cannot be picked up, the bot stops repeating the attempt until its inventory changes. It still remembers that the reward has not been collected."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Every reward-specific selector must honor verified pickup refusal for the current inventory. Keep refused rewards unfinished, reopen collection when inventory changes, and distinguish zero-time rejected pickups from subsequent time-consuming recovery. Yielding selection is not proof of a safe alternative.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The completed run died to the great crab, explicitly identified by terminal public text (log line 4218); the final accepted transition records HP 3 to 0 (4217). The initiating policy defect was shared recovery bypassing dedicated great-crab attack admission. Decision 1325 first declines quest combat but attacks a fly, not the crab. At decision 1329 (3824–3826), the quest controller refuses direct crab combat, yet recovery selects melee on the sole observed awake crab; the accepted action advances time and reports blocking. Repeated blocked attacks consume turns and healing before death. Source tracing reaches tactical_recovery.py target reselection and MagePolicy.attack_kind_allowed, which previously protected only fly splitting. The candidate makes crab admission apply to shared attack scoring while preserving public sleeping/invisible openings and the separate doorway workflow. Six deterministic regression checks pass; the original policy fails three assertions. Full unittest discovery passes 1,433 tests, four skipped, using garbage collection between tests after plain discovery encountered memory termination. No full runtime ledger was reconstructed, and no safe replacement, quest completion or survival improvement is established.",
-    "learnings": "Special-enemy attack admission must survive recovery target reselection. An awake great crab is not an ordinary damage-scoring target, and regenerated wand charges do not prove a usable attack. Preserve separate evidenced surprise setups; declining blocked attacks does not establish a safe alternative or quest success."
-  },
-  "recommendations": [
-    {
-      "id": "000009-crab-shared-attack-admission",
-      "priority": "high",
-      "summary": "Preserve great-crab direct-attack restrictions in shared attack eligibility.",
-      "evidence": [
-        "Decision 1325, log lines 3811–3813: quest refusal followed by an attack on a fly",
-        "Decision 1329, log lines 3824–3826: recovery attacks the awake crab and receives blocking feedback",
-        "Decision 1447, log lines 4216–4218: terminal accepted transition and explicit killer message",
-        "tools/tactical_recovery.py:130–144; tools/mage_policy.py:790; tools/survival_policy.py:599"
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000009"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000009/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000009/poster.jpg",
+  "death_category": "combat",
+  "death_category_evidence": "review summary: Killed by the great crab after repeated blocked attacks",
+  "duration_seconds": 586.799,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -174,15 +129,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 27,
-    "ending_level": 5,
-    "starving_turns": 12,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -214,6 +160,25 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000009",
+  "improvements": [
+    "If a mimic reward cannot be picked up, the bot stops repeating the attempt until its inventory changes. It still remembers that the reward has not been collected."
+  ],
+  "incoming_learnings": "Every reward-specific selector must honor verified pickup refusal for the current inventory. Keep refused rewards unfinished, reopen collection when inventory changes, and distinguish zero-time rejected pickups from subsequent time-consuming recovery. Yielding selection is not proof of a safe alternative.",
+  "incoming_update_status": "accepted",
+  "max_depth": 4,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Killed by the great crab after repeated blocked attacks",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000009/poster.jpg",
+  "previous_run_id": "000008",
+  "previous_source_commit": "42c90c4108917a30c1339cec00d711fb67818035",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -256,5 +221,42 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000009-crab-shared-attack-admission",
+      "priority": "high",
+      "summary": "Preserve great-crab direct-attack restrictions in shared attack eligibility.",
+      "evidence": [
+        "Decision 1325, log lines 3811–3813: quest refusal followed by an attack on a fly",
+        "Decision 1329, log lines 3824–3826: recovery attacks the awake crab and receives blocking feedback",
+        "Decision 1447, log lines 4216–4218: terminal accepted transition and explicit killer message",
+        "tools/tactical_recovery.py:130–144; tools/mage_policy.py:790; tools/survival_policy.py:599"
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000009"
+    }
+  ],
+  "review": {
+    "review": "The completed run died to the great crab, explicitly identified by terminal public text (log line 4218); the final accepted transition records HP 3 to 0 (4217). The initiating policy defect was shared recovery bypassing dedicated great-crab attack admission. Decision 1325 first declines quest combat but attacks a fly, not the crab. At decision 1329 (3824–3826), the quest controller refuses direct crab combat, yet recovery selects melee on the sole observed awake crab; the accepted action advances time and reports blocking. Repeated blocked attacks consume turns and healing before death. Source tracing reaches tactical_recovery.py target reselection and MagePolicy.attack_kind_allowed, which previously protected only fly splitting. The candidate makes crab admission apply to shared attack scoring while preserving public sleeping/invisible openings and the separate doorway workflow. Six deterministic regression checks pass; the original policy fails three assertions. Full unittest discovery passes 1,433 tests, four skipped, using garbage collection between tests after plain discovery encountered memory termination. No full runtime ledger was reconstructed, and no safe replacement, quest completion or survival improvement is established.",
+    "learnings": "Special-enemy attack admission must survive recovery target reselection. An awake great crab is not an ordinary damage-scoring target, and regenerated wand charges do not prove a usable attack. Preserve separate evidenced surprise setups; declining blocked attacks does not establish a safe alternative or quest success."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 27,
+    "ending_level": 5,
+    "starving_turns": 12,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "6484516ea91b36f5da4c264d0444a805fad0f05e",
+  "started_at": "2026-11-20T10:43:47Z",
+  "supervisor_version": "3c5880a85d52fddf93a521c67826be879acd77a2a14bc8d77e9bfc363a91a398",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000009/video.mp4"
 }

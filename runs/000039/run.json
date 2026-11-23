@@ -1,66 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000039",
-  "started_at": "2026-11-21T09:16:59Z",
-  "completed_at": "2026-11-21T09:25:16.645156+00:00",
-  "source_commit": "f8c8fdd2068ea6ff499f371961a1d6080e35e792",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 2,
   "actions": 926,
-  "duration_seconds": 491.406,
+  "code_changed": true,
+  "completed_at": "2026-11-21T09:25:16.645156+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000038",
-  "previous_source_commit": "6caa07b56b54c0fbc8a2b537c46608901d6bf804",
-  "improvements": [
-    "The bot now tests unidentified potions for strength before an otherwise permitted departure, rather than during ordinary exploration. It preserves supplies needed for recognized puzzle rooms and checks the effects of each drink.",
-    "When identifying a potion stored in a bag, the bot opens that bag instead of spending Identify on a lower-priority item already visible in the backpack."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "A projected single-attacker destination is not an achieved contact break. Investigate control before melee contact and the cost of waking sleeping ranged enemies. Preserve explosion avoidance, observed hazard checks, resource receipts and mandatory progression pickups; unknown potion identities are not escape resources.",
-  "incoming_update_status": "review-only",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero stopped alive at full health because the planner exhausted recovery, not because of an observed death. The initiating contradiction was potion-room staging: decision 710 moved toward bank 390, but decision 714 declined preparation there and resumed exploration; decision 715 immediately sent the hero back. Offline bookkeeping reconstructed from the played source and recorded public inputs matched every selected action and reason through decision 715. A local probe found that the hypothetical flight route from bank 390 crossed an unscouted closed door at 503, too far away for the entrance-opening helper to act. Bank selection accepted that route although arrival could neither open the entrance nor drink. Repetition displaced exploration and descent until navigation guards and hungry recovery were exhausted at decision 926. The proposed correction applies the existing entrance prerequisite before selecting a test bank or flight revisit. It does not cross a hazard, infer potion identity, grant collection credit, weaken progression pickups, or remove the terminal failure. The new regression has two expected assertion failures on original source and passes on the candidate; the full suite passes 1,648 tests with four skips. An isolated candidate probe first changes decision 709 to a public identification attempt; no subsequent gameplay was simulated. This establishes removal of the reproduced staging contradiction, not puzzle completion or eventual survival.",
-    "learnings": "A hypothetical protected round trip is insufficient preparation evidence when its entrance cannot be scouted from the proposed bank. Check the same entrance prerequisite during selection and arrival, preserve honest unfinished obligations, and allow other admitted work when preparation cannot proceed."
-  },
-  "recommendations": [
-    {
-      "id": "000039-remote-flight-entrance",
-      "priority": "high",
-      "summary": "Reject potion-test banks and flight revisits whose unscouted entrance cannot be opened from that bank.",
-      "evidence": [
-        "Decision 710, log line 2111",
-        "Decision 714, log line 2120",
-        "Decision 715, log line 2123",
-        "Decision 740, log line 2208",
-        "Decision 925, log lines 2793–2794",
-        "Decision 926, log line 2796",
-        "tools/puzzle_supplies.py:265–300, 377–410, 580–591"
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000039"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000039/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000039/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 491.406,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -138,15 +89,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 11,
-    "ending_experience": 7,
-    "ending_level": 3,
-    "starving_turns": 3,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -166,6 +108,26 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000039",
+  "improvements": [
+    "The bot now tests unidentified potions for strength before an otherwise permitted departure, rather than during ordinary exploration. It preserves supplies needed for recognized puzzle rooms and checks the effects of each drink.",
+    "When identifying a potion stored in a bag, the bot opens that bag instead of spending Identify on a lower-priority item already visible in the backpack."
+  ],
+  "incoming_learnings": "A projected single-attacker destination is not an achieved contact break. Investigate control before melee contact and the cost of waking sleeping ranged enemies. Preserve explosion avoidance, observed hazard checks, resource receipts and mandatory progression pickups; unknown potion identities are not escape resources.",
+  "incoming_update_status": "review-only",
+  "max_depth": 2,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000039/poster.jpg",
+  "previous_run_id": "000038",
+  "previous_source_commit": "6caa07b56b54c0fbc8a2b537c46608901d6bf804",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -192,5 +154,45 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000039-remote-flight-entrance",
+      "priority": "high",
+      "summary": "Reject potion-test banks and flight revisits whose unscouted entrance cannot be opened from that bank.",
+      "evidence": [
+        "Decision 710, log line 2111",
+        "Decision 714, log line 2120",
+        "Decision 715, log line 2123",
+        "Decision 740, log line 2208",
+        "Decision 925, log lines 2793–2794",
+        "Decision 926, log line 2796",
+        "tools/puzzle_supplies.py:265–300, 377–410, 580–591"
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000039"
+    }
+  ],
+  "review": {
+    "review": "The hero stopped alive at full health because the planner exhausted recovery, not because of an observed death. The initiating contradiction was potion-room staging: decision 710 moved toward bank 390, but decision 714 declined preparation there and resumed exploration; decision 715 immediately sent the hero back. Offline bookkeeping reconstructed from the played source and recorded public inputs matched every selected action and reason through decision 715. A local probe found that the hypothetical flight route from bank 390 crossed an unscouted closed door at 503, too far away for the entrance-opening helper to act. Bank selection accepted that route although arrival could neither open the entrance nor drink. Repetition displaced exploration and descent until navigation guards and hungry recovery were exhausted at decision 926. The proposed correction applies the existing entrance prerequisite before selecting a test bank or flight revisit. It does not cross a hazard, infer potion identity, grant collection credit, weaken progression pickups, or remove the terminal failure. The new regression has two expected assertion failures on original source and passes on the candidate; the full suite passes 1,648 tests with four skips. An isolated candidate probe first changes decision 709 to a public identification attempt; no subsequent gameplay was simulated. This establishes removal of the reproduced staging contradiction, not puzzle completion or eventual survival.",
+    "learnings": "A hypothetical protected round trip is insufficient preparation evidence when its entrance cannot be scouted from the proposed bank. Check the same entrance prerequisite during selection and arrival, preserve honest unfinished obligations, and allow other admitted work when preparation cannot proceed."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 7,
+    "ending_level": 3,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "f8c8fdd2068ea6ff499f371961a1d6080e35e792",
+  "started_at": "2026-11-21T09:16:59Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000039/video.mp4"
 }

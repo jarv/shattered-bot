@@ -1,42 +1,177 @@
 {
-  "schema_version": 1,
-  "id": "000112",
-  "started_at": "2026-11-22T04:44:40Z",
-  "completed_at": "2026-11-22T04:50:33.698179+00:00",
-  "source_commit": "990b95176c7ee16df48225ebde60f8c964586941",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 2,
   "actions": 940,
-  "duration_seconds": 348.599,
+  "code_changed": true,
+  "completed_at": "2026-11-22T04:50:33.698179+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000111",
-  "previous_source_commit": "2870c37f20873cac65ecabaf9094e0a791bf1e1c",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 348.599,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 339,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 340,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 509
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 24,
+        "gold_gained": 329,
+        "turns": 601,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 585,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1159
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1238
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 838
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 764
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 520
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt/choice container",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000112",
   "improvements": [
     "The bot now remembers nearby, visibly verified potion-testing spots even when it does not stand on them. Returning still requires a safe route, compatible carried potions and fresh safety checks on arrival."
   ],
-  "code_changed": true,
   "incoming_learnings": "Remember publicly verified preparation opportunities even when the hero passes beside them rather than standing on them. A return receipt must retain exact inventory compatibility, admitted transit and fresh arrival checks; it must never substitute for actual potion protection, identification or mandatory pickup receipts.",
   "incoming_update_status": "accepted",
+  "max_depth": 2,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The living hero exhausted mandatory potion discovery at full health; this was a terminal bot failure, not death. The initiating preparation chain includes an unsafe bookshelf flame throw, subsequent escape without verified shelf clearance, and later discovery of an unfinished gas chest. At exhaustion, remembered shelves reserve missing liquid flame and the chest reserves purity. The complete source and offline reconstruction match all 940 selected actions, reasons, intents and controllers, then reproduce the terminal blocker. Copied-state probes show nine hypothetical gas-trip origins, but no currently visible admitted testing bank; removing hunger does not produce preparation. These probes establish exclusions, not safe testing or puzzle success. No potion identity was inferred from color and no unfinished pickup was credited. No policy patch or new regression is supplied: safe actual-impact ignition/clearance and a funded, freshly verified gas-bank/stash return remain unestablished. The recommendations identify concrete next contracts rather than increasing waiting limits or restoring death waits. Historical backlog entries are carried without revalidation.",
-    "learnings": "Distinguish the requested throw target from the actual impact cell when preparing fire barriers. For gas-room discovery, separate safe observation travel from permission to drink: reobserve the bank and inventory-protection route, establish the preparation budget, and verify actual chest pickup afterward. Hunger and stale visibility are independent prerequisites."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000112/poster.jpg",
+  "previous_run_id": "000111",
+  "previous_source_commit": "2870c37f20873cac65ecabaf9094e0a791bf1e1c",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 329,
+    "gold_complete": true,
+    "turns": 940,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -362,105 +497,11 @@
       "origin_run": "000112"
     }
   ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000112/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000112/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 0,
-        "turns": 339,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 340,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 509
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 24,
-        "gold_gained": 329,
-        "turns": 601,
-        "experience_complete": false,
-        "gold_complete": false,
-        "turns_complete": false,
-        "accepted_inputs": 585,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 1159
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 1238
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 838
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 764
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 520
-          },
-          {
-            "kind": "room",
-            "label": "Alchemy area",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Crypt container",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Crypt/choice container",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The living hero exhausted mandatory potion discovery at full health; this was a terminal bot failure, not death. The initiating preparation chain includes an unsafe bookshelf flame throw, subsequent escape without verified shelf clearance, and later discovery of an unfinished gas chest. At exhaustion, remembered shelves reserve missing liquid flame and the chest reserves purity. The complete source and offline reconstruction match all 940 selected actions, reasons, intents and controllers, then reproduce the terminal blocker. Copied-state probes show nine hypothetical gas-trip origins, but no currently visible admitted testing bank; removing hunger does not produce preparation. These probes establish exclusions, not safe testing or puzzle success. No potion identity was inferred from color and no unfinished pickup was credited. No policy patch or new regression is supplied: safe actual-impact ignition/clearance and a funded, freshly verified gas-bank/stash return remain unestablished. The recommendations identify concrete next contracts rather than increasing waiting limits or restoring death waits. Historical backlog entries are carried without revalidation.",
+    "learnings": "Distinguish the requested throw target from the actual impact cell when preparing fire barriers. For gas-room discovery, separate safe observation travel from permission to drink: reobserve the bank and inventory-protection route, establish the preparation budget, and verify actual chest pickup afterward. Hunger and stale visibility are independent prerequisites."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -470,50 +511,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 6,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 3,
-    "gold_collected": 329,
-    "gold_complete": true,
-    "turns": 940,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "990b95176c7ee16df48225ebde60f8c964586941",
+  "started_at": "2026-11-22T04:44:40Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000112/video.mp4"
 }

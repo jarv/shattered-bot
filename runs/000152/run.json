@@ -1,41 +1,93 @@
 {
-  "schema_version": 1,
-  "id": "000152",
-  "started_at": "2026-11-22T22:55:04Z",
-  "completed_at": "2026-11-22T22:55:36.853739+00:00",
-  "source_commit": "bbcd9b02a431962370715164f492edd39d819877",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "dead",
-  "outcome_summary": "Killed by a marsupial rat after abandoning an established doorway hold",
-  "outcome_reason": "Hero died",
-  "max_depth": 1,
   "actions": 47,
-  "duration_seconds": 30.187,
+  "code_changed": true,
+  "completed_at": "2026-11-22T22:55:36.853739+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000151",
-  "previous_source_commit": "66f762c63be08211e6025f9b230143b79a4fd163",
+  "death_category": "combat",
+  "death_category_evidence": "review summary: Killed by a marsupial rat after abandoning an established doorway hold",
+  "duration_seconds": 30.187,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 5,
+        "gold_gained": 0,
+        "turns": 35,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 41,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 303
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000152",
   "improvements": [
     "The bot can return for the ghost's reward while retaining an earlier escape plan, provided the return route does not reverse any protected retreat edge. Threat, health and route-hazard checks still apply."
   ],
-  "code_changed": true,
   "incoming_learnings": "A retained retreat commitment should protect its directed escape edges, not exclude unrelated guarded routes to a mandatory reward. Keep the reward pending until public collection evidence arrives, and revalidate every subsequent observation.",
   "incoming_update_status": "accepted",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero died to a marsupial rat, confirmed by the terminal public message at log line 175. The initiating policy error occurred earlier: decision 22 established a verified holding square behind door 419, but decision 23 abandoned it when a rat occupied the doorway. The single-file check incorrectly began a flank search inside the gate it otherwise excluded, so the entry occupant invalidated the intended choke. This triggered another retreat toward door 540, whose holding geometry failed at decision 26. Later room retreats and exhausted staff charges preceded the death. Source-pinned offline reconstruction matched the original selections through decision 23; candidate reconstruction matched decisions 0–22 and stopped at the first changed choice, an entry strike at decision 23. A focused policy correction and new regression are supplied through the changed files; the regression fails on the original source and passes on the candidate. The full Python suite passes 1984 tests with four skipped. This establishes corrected choke recognition and an admitted attack choice, not survival or eventual progression.",
-    "learnings": "A pursuer occupying the single doorway slot must not itself count as an alternate flank. Retain established holds only while separate contact, approach-pressure, visibility and hazard checks remain satisfied; do not infer encounter clearance from choke geometry."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Killed by a marsupial rat after abandoning an established doorway hold",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000152/poster.jpg",
+  "previous_run_id": "000151",
+  "previous_source_commit": "66f762c63be08211e6025f9b230143b79a4fd163",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 1,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 35,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 1,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -66,36 +118,11 @@
       "origin_run": "000089"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000152/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000152/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 5,
-        "gold_gained": 0,
-        "turns": 35,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 41,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 303
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero died to a marsupial rat, confirmed by the terminal public message at log line 175. The initiating policy error occurred earlier: decision 22 established a verified holding square behind door 419, but decision 23 abandoned it when a rat occupied the doorway. The single-file check incorrectly began a flank search inside the gate it otherwise excluded, so the entry occupant invalidated the intended choke. This triggered another retreat toward door 540, whose holding geometry failed at decision 26. Later room retreats and exhausted staff charges preceded the death. Source-pinned offline reconstruction matched the original selections through decision 23; candidate reconstruction matched decisions 0–22 and stopped at the first changed choice, an entry strike at decision 23. A focused policy correction and new regression are supplied through the changed files; the regression fails on the original source and passes on the candidate. The full Python suite passes 1984 tests with four skipped. This establishes corrected choke recognition and an admitted attack choice, not survival or eventual progression.",
+    "learnings": "A pursuer occupying the single doorway slot must not itself count as an alternate flank. Retain established holds only while separate contact, approach-pressure, visibility and hazard checks remain satisfied; do not infer encounter clearance from choke geometry."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -105,36 +132,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 1,
-    "gold_collected": 0,
-    "gold_complete": true,
-    "turns": 35,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 1,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "bbcd9b02a431962370715164f492edd39d819877",
+  "started_at": "2026-11-22T22:55:04Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000152/video.mp4"
 }

@@ -1,41 +1,98 @@
 {
-  "schema_version": 1,
-  "id": "000089",
-  "started_at": "2026-11-21T23:46:40Z",
-  "completed_at": "2026-11-21T23:47:24.606779+00:00",
-  "source_commit": "b92a8cff1415462b9f81a09550afd5fabcee5e80",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "dead",
-  "outcome_summary": "Died under rat pressure",
-  "outcome_reason": "Hero died",
-  "max_depth": 1,
   "actions": 96,
-  "duration_seconds": 41.733,
+  "code_changed": true,
+  "completed_at": "2026-11-21T23:47:24.606779+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000088",
-  "previous_source_commit": "e2318db50464f7deaeb3b97dd874f4a8a4576787",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "duration_seconds": 41.733,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 4,
+        "gold_gained": 0,
+        "turns": 84,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 90,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1207
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000089",
   "improvements": [
     "At low health, the bot no longer approaches a remembered necromancer if the next step would keep it beside an awake enemy. It can still investigate remembered casters through contact-free steps."
   ],
-  "code_changed": true,
   "incoming_learnings": "A remembered support caster is an observation clue, not a visible combat opportunity. At low health, its pursuit must not override spacing from an awake summon. A contact-free immediate step does not guarantee survival against future movement or unseen threats.",
   "incoming_update_status": "accepted",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero died under rat pressure, not from planner exhaustion. Three awake rats first forced a doorway retreat at decision 68. At decision 69 the next doorward step had two observed attackers and was correctly excluded; four subsequent non-choke retreats led east until no admitted retreat remained at decision 73. Renewed doorward movement then lost six HP, further rats joined combat, and staff charges and stored dew were exhausted. The final accepted melee transition at decision 95 reduced health from one to zero; no public message names the killer. Magenta was only revealed as purity after death. Source-pinned offline reconstruction matches all 96 selected inputs and resolves the original controller-state ambiguity, but does not establish a safe replacement. The concrete blocker is a missing bounded retreat/intervention plan: returning doorward violates the contact gate, nominal onward exits do not ensure continued spacing, and earlier shooting lacks a validated resource/loss-and-follow-up budget. No patch or new regression is supplied; 37 relevant existing tests pass. Historical backlog items were not re-investigated.",
-    "learnings": "A currently low-pressure retreat endpoint is not a verified choke or a sustainable escape. Validate the next intervention and freshly admitted onward spacing before altering multi-enemy priorities. Opening a door or choosing preparation does not establish successful escape; unknown potions and post-death identities cannot certify a rescue."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Died under rat pressure",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000089/poster.jpg",
+  "previous_run_id": "000088",
+  "previous_source_commit": "e2318db50464f7deaeb3b97dd874f4a8a4576787",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 1,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 84,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 1,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -347,41 +404,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000089/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000089/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 4,
-        "gold_gained": 0,
-        "turns": 84,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 90,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 1207
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero died under rat pressure, not from planner exhaustion. Three awake rats first forced a doorway retreat at decision 68. At decision 69 the next doorward step had two observed attackers and was correctly excluded; four subsequent non-choke retreats led east until no admitted retreat remained at decision 73. Renewed doorward movement then lost six HP, further rats joined combat, and staff charges and stored dew were exhausted. The final accepted melee transition at decision 95 reduced health from one to zero; no public message names the killer. Magenta was only revealed as purity after death. Source-pinned offline reconstruction matches all 96 selected inputs and resolves the original controller-state ambiguity, but does not establish a safe replacement. The concrete blocker is a missing bounded retreat/intervention plan: returning doorward violates the contact gate, nominal onward exits do not ensure continued spacing, and earlier shooting lacks a validated resource/loss-and-follow-up budget. No patch or new regression is supplied; 37 relevant existing tests pass. Historical backlog items were not re-investigated.",
+    "learnings": "A currently low-pressure retreat endpoint is not a verified choke or a sustainable escape. Validate the next intervention and freshly admitted onward spacing before altering multi-enemy priorities. Opening a door or choosing preparation does not establish successful escape; unknown potions and post-death identities cannot certify a rescue."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -391,36 +418,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 1,
-    "gold_collected": 0,
-    "gold_complete": true,
-    "turns": 84,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 1,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "b92a8cff1415462b9f81a09550afd5fabcee5e80",
+  "started_at": "2026-11-21T23:46:40Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000089/video.mp4"
 }

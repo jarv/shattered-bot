@@ -1,39 +1,167 @@
 {
-  "schema_version": 1,
-  "id": "000103",
-  "started_at": "2026-11-22T02:51:55Z",
-  "completed_at": "2026-11-22T02:57:25.316242+00:00",
-  "source_commit": "0d34c637a8979b1034236091effabceeb3e63785",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "blocked",
-  "outcome_summary": "Blocked by repeated upgrade-scroll reading while blinded",
-  "outcome_reason": "No-progress menu loop: prepare: upgrade allocation: reliable early-game staff damage and charge cap",
-  "max_depth": 3,
   "actions": 859,
-  "duration_seconds": 324.999,
+  "code_changed": false,
+  "completed_at": "2026-11-22T02:57:25.316242+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000102",
-  "previous_source_commit": "45e77fca6c8731d7e3d4146652f55c938d64f5b8",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: blocked",
+  "duration_seconds": 324.999,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 121,
+        "turns": 313,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 316,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 385
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 29,
+        "gold_gained": 237,
+        "turns": 442,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 456,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 7,
+        "gold_gained": 0,
+        "turns": 60,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 81,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Possible drop-room exit",
+            "status": "reported-hypothesis"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000103",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "Treat mandatory pool retrieval and unknown-supply preparation as a joint feasibility problem. A remembered ordinary test bank is not a funded pool plan. Preserve unidentified colors, actual protection checks and pickup receipts; neither an extra meal nor longer waiting fixes the demonstrated bank mismatch.",
   "incoming_update_status": "review-only",
+  "max_depth": 3,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at 34/35 HP; this was a blocked menu loop, not a death or planner-exhaustion outcome. A shuriken throw revealed a previously unknown dazzling curse and applied blindness (decision 839, transition line 2416). After collecting an upgrade scroll (845, line 2434), preparation repeatedly tried to read it despite the observed blindness. The first refusal at decision 846 left the clock at 815; decisions 847–858 repeated the same impossible action. The upgrade branch checked the advertised READ action but lacked the blindness gate already used for identification. The menu-loop guard correctly terminated the failure. The candidate only defers upgrade allocation and its menu intent while blinded, preserving sighted allocation, known-strength preparation, combat priority, hazard checks, mandatory pickup and terminal guards. A reduced deterministic fixture produced the expected assertion failure on original source and passes after the fix; all 1,853 suite tests pass with four skips. An isolated probe using decision 846 public inputs also reproduces the original leaf action and candidate deferral. No full-run memory reconstruction or changed-decision continuation was performed; future progress and eventual upgrade success remain unproven.",
-    "learnings": "An advertised item action is not proof it can execute under current status effects. Defer upgrade-scroll intent during observed blindness and reassess from a fresh observation; do not extend the loop bound or spend turns through an invented recovery plan."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "blocked",
+  "outcome_reason": "No-progress menu loop: prepare: upgrade allocation: reliable early-game staff damage and charge cap",
+  "outcome_summary": "Blocked by repeated upgrade-scroll reading while blinded",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000103/poster.jpg",
+  "previous_run_id": "000102",
+  "previous_source_commit": "45e77fca6c8731d7e3d4146652f55c938d64f5b8",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 4,
+    "gold_collected": 358,
+    "gold_complete": true,
+    "turns": 815,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -356,84 +484,11 @@
       "origin_run": "000030"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000103/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000103/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 121,
-        "turns": 313,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 316,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 385
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 29,
-        "gold_gained": 237,
-        "turns": 442,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 456,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Distant well",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 7,
-        "gold_gained": 0,
-        "turns": 60,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 81,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Possible drop-room exit",
-            "status": "reported-hypothesis"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero remained alive at 34/35 HP; this was a blocked menu loop, not a death or planner-exhaustion outcome. A shuriken throw revealed a previously unknown dazzling curse and applied blindness (decision 839, transition line 2416). After collecting an upgrade scroll (845, line 2434), preparation repeatedly tried to read it despite the observed blindness. The first refusal at decision 846 left the clock at 815; decisions 847–858 repeated the same impossible action. The upgrade branch checked the advertised READ action but lacked the blindness gate already used for identification. The menu-loop guard correctly terminated the failure. The candidate only defers upgrade allocation and its menu intent while blinded, preserving sighted allocation, known-strength preparation, combat priority, hazard checks, mandatory pickup and terminal guards. A reduced deterministic fixture produced the expected assertion failure on original source and passes after the fix; all 1,853 suite tests pass with four skips. An isolated probe using decision 846 public inputs also reproduces the original leaf action and candidate deferral. No full-run memory reconstruction or changed-decision continuation was performed; future progress and eventual upgrade success remain unproven.",
+    "learnings": "An advertised item action is not proof it can execute under current status effects. Defer upgrade-scroll intent during observed blindness and reassess from a fresh observation; do not extend the loop bound or spend turns through an invented recovery plan."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 11,
@@ -443,64 +498,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 4,
-    "gold_collected": 358,
-    "gold_complete": true,
-    "turns": 815,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 4,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "0d34c637a8979b1034236091effabceeb3e63785",
+  "started_at": "2026-11-22T02:51:55Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000103/video.mp4"
 }

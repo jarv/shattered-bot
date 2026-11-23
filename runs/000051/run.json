@@ -1,42 +1,99 @@
 {
-  "schema_version": 1,
-  "id": "000051",
-  "started_at": "2026-11-21T13:17:40Z",
-  "completed_at": "2026-11-21T13:20:33.184578+00:00",
-  "source_commit": "cb7ffda3f0121c3365a36cec4c521a97ece1c2f3",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 302,
-  "duration_seconds": 170.399,
+  "code_changed": true,
+  "completed_at": "2026-11-21T13:20:33.184578+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000050",
-  "previous_source_commit": "1d45ad3d1d19731ce0959e844e11496d4d9d2442",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 170.399,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 3,
+        "gold_gained": 147,
+        "turns": 296,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 296,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 329
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000051",
   "improvements": [
     "The bot can now shatter an identified potion of purity on itself to extinguish burning when safe water is unavailable. It still prefers its existing frost rescue and does not guess unknown potions or treat drinking purity as extinguishing fire."
   ],
-  "code_changed": true,
   "incoming_learnings": "An identified potion of purity can extinguish Burning when shattered on the hero, even when fire blocks every safe water route. Do not substitute drinking, guess an unknown potion’s identity, or claim rescue or room completion before observing the result.",
   "incoming_update_status": "accepted",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The living hero exhausted the planner at full health, not through an observed death. The initiating contradiction was gas-room preparation: decision 132 moved from 192 to bank 166; decision 133 then abandoned preparation and explored back to 192; decision 134 repeated the detour (selection lines 373, 376 and 379). Bank selection checked the protected trip budget but not whether the closed entrance could actually be opened from that bank. The arrival helper therefore declined. Repeated reversals exhausted frontier and door goals 660 and 718, followed by recovery waits that advanced the clock until hunger triggered the terminal failure at decision 302, line 897. Original-source offline bookkeeping reconstruction matched all actions and reasons through decision 133; this is reconstructed memory, not recorded runtime state. An isolated copy probe selected safe approach cell 139 when bank admission also required the existing entrance prerequisite. The proposed correction applies that prerequisite before choosing a gas staging bank, retaining route, hazard, protection-duration and pickup requirements. The new six-case regression failed three assertions on the original selector and passes on the candidate. This establishes executable staging selection, not successful potion use, chest collection, escape, or completion of the run. Only the focused policy change and new regression are proposed; the empty files field is intentional because the trusted adapter collects changed files.",
-    "learnings": "A protected round-trip budget is insufficient if preparation cannot perform its entrance prerequisite. Check that prerequisite before travelling to the staging square, then reobserve and recheck before opening or drinking. Preserve unresolved rewards and require the actual protection buff before hazard entry. Do not cure this contradiction by eating earlier, increasing waits or suppressing planner exhaustion."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000051/poster.jpg",
+  "previous_run_id": "000050",
+  "previous_source_commit": "1d45ad3d1d19731ce0959e844e11496d4d9d2442",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 1,
+    "gold_collected": 147,
+    "gold_complete": true,
+    "turns": 296,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 1,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -225,41 +282,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000051/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000051/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 3,
-        "gold_gained": 147,
-        "turns": 296,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 296,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 329
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The living hero exhausted the planner at full health, not through an observed death. The initiating contradiction was gas-room preparation: decision 132 moved from 192 to bank 166; decision 133 then abandoned preparation and explored back to 192; decision 134 repeated the detour (selection lines 373, 376 and 379). Bank selection checked the protected trip budget but not whether the closed entrance could actually be opened from that bank. The arrival helper therefore declined. Repeated reversals exhausted frontier and door goals 660 and 718, followed by recovery waits that advanced the clock until hunger triggered the terminal failure at decision 302, line 897. Original-source offline bookkeeping reconstruction matched all actions and reasons through decision 133; this is reconstructed memory, not recorded runtime state. An isolated copy probe selected safe approach cell 139 when bank admission also required the existing entrance prerequisite. The proposed correction applies that prerequisite before choosing a gas staging bank, retaining route, hazard, protection-duration and pickup requirements. The new six-case regression failed three assertions on the original selector and passes on the candidate. This establishes executable staging selection, not successful potion use, chest collection, escape, or completion of the run. Only the focused policy change and new regression are proposed; the empty files field is intentional because the trusted adapter collects changed files.",
+    "learnings": "A protected round-trip budget is insufficient if preparation cannot perform its entrance prerequisite. Check that prerequisite before travelling to the staging square, then reobserve and recheck before opening or drinking. Preserve unresolved rewards and require the actual protection buff before hazard entry. Do not cure this contradiction by eating earlier, increasing waits or suppressing planner exhaustion."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -269,36 +296,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 1,
-    "gold_collected": 147,
-    "gold_complete": true,
-    "turns": 296,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 1,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "cb7ffda3f0121c3365a36cec4c521a97ece1c2f3",
+  "started_at": "2026-11-21T13:17:40Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000051/video.mp4"
 }

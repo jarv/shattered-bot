@@ -1,61 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000166",
-  "started_at": "2026-11-23T02:35:57Z",
-  "completed_at": "2026-11-23T02:47:03.625093+00:00",
-  "source_commit": "04efdcad9d72a87d90e8696133b66e4258521ecf",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 3,
   "actions": 1116,
-  "duration_seconds": 659.131,
+  "code_changed": true,
+  "completed_at": "2026-11-23T02:47:03.625093+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000165",
-  "previous_source_commit": "e5b2d0a4e55cc01b22c9fc2afd2e4c2a09240177",
-  "improvements": [
-    "After collecting a piranha-room reward, the bot no longer reserves another invisibility potion for those same fish. It still treats their water as dangerous."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Separate persistent hazards from completed reward obligations. An accepted pool-reward pickup can release its supply reservation without making the fish or their water safe. Revalidate preparation and potion protection on arrival; choosing a return route is not successful identification.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The planner stopped with the hero alive at full health. A mandatory golden key became publicly revealed on a shocking trap at decision 967 (log line 2841). Walking onto it was correctly excluded, but the priority pickup controller had no electrical-clearance action, while mandatory loot suppressed ordinary preparation. Later potion preparation produced invisibility, not the hypothesized levitation. Decisions 1112–1115 recovered the stashed potions; decision 1116 explicitly diagnosed the remaining trapped key before planner exhaustion (lines 3298–3300). The candidate adds a narrowly guarded remote container throw for mandatory loot on revealed shocking plates, accounting for connected-water conduction, and preserves observed-disarm recovery and pickup verification. A public-evidence fixture fails on the original selector and passes on the candidate. The full suite passes 2030 tests with four skipped. This establishes action selection and safety exclusions, not successful key collection or subsequent survival.",
-    "learnings": "A required key can need a separate trap-clearance prerequisite. Distinguish an observed safe remote trigger from permission to enter the resulting electricity, and require fresh disarm, effect-expiry and pickup evidence."
-  },
-  "recommendations": [
-    {
-      "id": "000166-shocking-key-clearance",
-      "priority": "high",
-      "summary": "Admit guarded remote shocking-trap clearance for mandatory progression loot before repeating potion preparation.",
-      "evidence": [
-        "Decision 967, log line 2841: the key's shocking trap becomes public.",
-        "Decision 1114, log line 3292: observed remote throwing position and available waterskin.",
-        "Decision 1116, log lines 3298–3300: trapped matching key blocks descent and exhausts the planner."
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000166"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000166/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000166/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 659.131,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -165,15 +121,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 12,
-    "ending_experience": 14,
-    "ending_level": 4,
-    "starving_turns": 6,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -199,6 +146,25 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000166",
+  "improvements": [
+    "After collecting a piranha-room reward, the bot no longer reserves another invisibility potion for those same fish. It still treats their water as dangerous."
+  ],
+  "incoming_learnings": "Separate persistent hazards from completed reward obligations. An accepted pool-reward pickup can release its supply reservation without making the fish or their water safe. Revalidate preparation and potion protection on arrival; choosing a return route is not successful identification.",
+  "incoming_update_status": "accepted",
+  "max_depth": 3,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000166/poster.jpg",
+  "previous_run_id": "000165",
+  "previous_source_commit": "e5b2d0a4e55cc01b22c9fc2afd2e4c2a09240177",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -233,5 +199,41 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000166-shocking-key-clearance",
+      "priority": "high",
+      "summary": "Admit guarded remote shocking-trap clearance for mandatory progression loot before repeating potion preparation.",
+      "evidence": [
+        "Decision 967, log line 2841: the key's shocking trap becomes public.",
+        "Decision 1114, log line 3292: observed remote throwing position and available waterskin.",
+        "Decision 1116, log lines 3298–3300: trapped matching key blocks descent and exhausts the planner."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000166"
+    }
+  ],
+  "review": {
+    "review": "The planner stopped with the hero alive at full health. A mandatory golden key became publicly revealed on a shocking trap at decision 967 (log line 2841). Walking onto it was correctly excluded, but the priority pickup controller had no electrical-clearance action, while mandatory loot suppressed ordinary preparation. Later potion preparation produced invisibility, not the hypothesized levitation. Decisions 1112–1115 recovered the stashed potions; decision 1116 explicitly diagnosed the remaining trapped key before planner exhaustion (lines 3298–3300). The candidate adds a narrowly guarded remote container throw for mandatory loot on revealed shocking plates, accounting for connected-water conduction, and preserves observed-disarm recovery and pickup verification. A public-evidence fixture fails on the original selector and passes on the candidate. The full suite passes 2030 tests with four skipped. This establishes action selection and safety exclusions, not successful key collection or subsequent survival.",
+    "learnings": "A required key can need a separate trap-clearance prerequisite. Distinguish an observed safe remote trigger from permission to enter the resulting electricity, and require fresh disarm, effect-expiry and pickup evidence."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 14,
+    "ending_level": 4,
+    "starving_turns": 6,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "04efdcad9d72a87d90e8696133b66e4258521ecf",
+  "started_at": "2026-11-23T02:35:57Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000166/video.mp4"
 }

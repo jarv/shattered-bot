@@ -1,61 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000008",
-  "started_at": "2026-11-20T10:00:08Z",
-  "completed_at": "2026-11-20T10:33:13.244938+00:00",
-  "source_commit": "42c90c4108917a30c1339cec00d711fb67818035",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "1f75e99e1fd6ee143cf50d05e92d43be8c062bc291a8e4565519c52821a4c73c",
-  "outcome": "dead",
-  "outcome_summary": "Died during the Tengu encounter after an earlier refused-loot retry stall",
-  "outcome_reason": "Hero died",
-  "max_depth": 10,
   "actions": 4467,
-  "duration_seconds": 1968.599,
+  "code_changed": true,
+  "completed_at": "2026-11-20T10:33:13.244938+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000007",
-  "previous_source_commit": "32bc2515322697a9dab89125578625739f675040",
-  "improvements": [
-    "When several enemies are chasing it, the bot stops planning new doorway hideouts once it has used up its allowed attempts to lose pursuit."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Honor exhausted pursuit budgets across every controller that starts an unverified doorway setup. Reaching a door without an observed holding square is not successful cover. Preserve honest unfinished-loot accounting and do not treat an offline alternative as proven safe.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run died during the Tengu encounter; the accepted final targeting transition at decision 4466 (log 12818) changes HP 3→0. The empty death reason does not identify the killer. An earlier initiating selector defect is directly supported: decisions 3185–3187 (logs 8962–8972) receive fresh full-pack refusals for the corrupting whip, with unchanged inventory. Ordinary loot bookkeeping defers that pickup, but rule-preparation's mimic controller immediately retries it at decision 3188 (8974–8976). Repeated retries trigger navigation recovery, then waterskin consumption at decision 3203 and 90 advancing fallback waits at decisions 3204–3293. Source browsing resolves the missing controller chain: tools/mage_policy.py:1131 calls tools/mimic_hunt.py, whose reward branch ignored the inventory-context deferral honored by tools/room_loot.py. A focused candidate repair makes that branch honor the same deferral without completing the obligation or choosing replacement movement. The reduced public-evidence fixture is not reconstructed runtime memory or a gameplay replay. Original-source comparison fails the expected assertions; the candidate passes all four new tests and the full 1,427-test suite, with four skips. This establishes the selector correction, not successful cleanup, collection, or prevention of death.",
-    "learnings": "Every reward-specific selector must honor verified pickup refusal for the current inventory. Keep refused rewards unfinished, reopen collection when inventory changes, and distinguish zero-time rejected pickups from subsequent time-consuming recovery. Yielding selection is not proof of a safe alternative."
-  },
-  "recommendations": [
-    {
-      "id": "000008-refused-mimic-reward",
-      "priority": "high",
-      "summary": "Honor inventory-context pickup deferral in the mimic reward selector.",
-      "evidence": [
-        "Decisions 3185–3187, logs 8962–8972: fresh full-pack refusals and unchanged inventory.",
-        "Decision 3188, logs 8974–8976: mimic reward selector retries the deferred pickup.",
-        "Decisions 3191–3203, logs 8987–9032: recovery oscillations and fallback dew consumption.",
-        "Decisions 3204–3294, logs 9034–9304: advancing fallback waits end with starvation and a meal."
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000008"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000008/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000008/poster.jpg",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "duration_seconds": 1968.599,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -331,15 +286,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 14,
-    "ending_experience": 60,
-    "ending_level": 12,
-    "starving_turns": 363.249755859375,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -407,6 +353,25 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000008",
+  "improvements": [
+    "When several enemies are chasing it, the bot stops planning new doorway hideouts once it has used up its allowed attempts to lose pursuit."
+  ],
+  "incoming_learnings": "Honor exhausted pursuit budgets across every controller that starts an unverified doorway setup. Reaching a door without an observed holding square is not successful cover. Preserve honest unfinished-loot accounting and do not treat an offline alternative as proven safe.",
+  "incoming_update_status": "accepted",
+  "max_depth": 10,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Died during the Tengu encounter after an earlier refused-loot retry stall",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000008/poster.jpg",
+  "previous_run_id": "000007",
+  "previous_source_commit": "32bc2515322697a9dab89125578625739f675040",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -497,5 +462,42 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000008-refused-mimic-reward",
+      "priority": "high",
+      "summary": "Honor inventory-context pickup deferral in the mimic reward selector.",
+      "evidence": [
+        "Decisions 3185–3187, logs 8962–8972: fresh full-pack refusals and unchanged inventory.",
+        "Decision 3188, logs 8974–8976: mimic reward selector retries the deferred pickup.",
+        "Decisions 3191–3203, logs 8987–9032: recovery oscillations and fallback dew consumption.",
+        "Decisions 3204–3294, logs 9034–9304: advancing fallback waits end with starvation and a meal."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000008"
+    }
+  ],
+  "review": {
+    "review": "The run died during the Tengu encounter; the accepted final targeting transition at decision 4466 (log 12818) changes HP 3→0. The empty death reason does not identify the killer. An earlier initiating selector defect is directly supported: decisions 3185–3187 (logs 8962–8972) receive fresh full-pack refusals for the corrupting whip, with unchanged inventory. Ordinary loot bookkeeping defers that pickup, but rule-preparation's mimic controller immediately retries it at decision 3188 (8974–8976). Repeated retries trigger navigation recovery, then waterskin consumption at decision 3203 and 90 advancing fallback waits at decisions 3204–3293. Source browsing resolves the missing controller chain: tools/mage_policy.py:1131 calls tools/mimic_hunt.py, whose reward branch ignored the inventory-context deferral honored by tools/room_loot.py. A focused candidate repair makes that branch honor the same deferral without completing the obligation or choosing replacement movement. The reduced public-evidence fixture is not reconstructed runtime memory or a gameplay replay. Original-source comparison fails the expected assertions; the candidate passes all four new tests and the full 1,427-test suite, with four skips. This establishes the selector correction, not successful cleanup, collection, or prevention of death.",
+    "learnings": "Every reward-specific selector must honor verified pickup refusal for the current inventory. Keep refused rewards unfinished, reopen collection when inventory changes, and distinguish zero-time rejected pickups from subsequent time-consuming recovery. Yielding selection is not proof of a safe alternative."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 14,
+    "ending_experience": 60,
+    "ending_level": 12,
+    "starving_turns": 363.249755859375,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "42c90c4108917a30c1339cec00d711fb67818035",
+  "started_at": "2026-11-20T10:00:08Z",
+  "supervisor_version": "1f75e99e1fd6ee143cf50d05e92d43be8c062bc291a8e4565519c52821a4c73c",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000008/video.mp4"
 }

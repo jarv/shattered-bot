@@ -1,64 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000108",
-  "started_at": "2026-11-22T03:45:59Z",
-  "completed_at": "2026-11-22T03:58:37.158227+00:00",
-  "source_commit": "c90ab0fceb10cc998d0966ed9f791cbdafde00a3",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 4,
   "actions": 1472,
-  "duration_seconds": 750.133,
+  "code_changed": true,
+  "completed_at": "2026-11-22T03:58:37.158227+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000107",
-  "previous_source_commit": "3c1f589fdb3106f31c9c9cb5a8a3829d667375c5",
-  "improvements": [
-    "The bot can use a known scouting stone or mapping scroll to investigate unseen space behind reachable bookshelves, even when ordinary paths show no unexplored edges. Scouting does not count as opening the room or collecting its rewards."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Unknown space behind sight-blocking shelves can justify stationary known reconnaissance even when ordinary movement frontiers are exhausted. Keep flame reservation and mandatory collection unresolved until fresh public observations support further action.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at 40/40 HP when the planner stopped. Decision 1464 selected a doorway retreat toward door 782; its accepted move closed door 914 behind the hero and hid the enemies. The retreat selector then discarded its plan because fewer than two enemies were visible, while escape protection correctly rejected exploration back through the same door. Decisions 1465–1468 alternated recovery and exploration instead of continuing the observed retreat route. A healing potion was consumed before the same contradiction ended in planner exhaustion at decision 1472. A local source-pinned reconstruction matched the original selecting helper at decision 1464, then confirmed cancellation on the recorded next input; this is not a reconstruction of all original runtime memory. The focused correction preserves an accepted retreat through temporary occlusion using recent sightings only as movement constraints, with fresh visible-step checks and existing hazard, health, pressure and input budgets intact. The new regression fails on the original policy and passes on the candidate; the full suite passes 1,865 tests with four skipped. No alternative gameplay was dispatched, and neither reaching the destination nor survival is established.",
-    "learnings": "Losing sight of pursuing enemies behind a closing door is not clearance evidence. Preserve an accepted retreat when its next observed step remains admissible, rather than letting exploration immediately reverse it. Continue to require fresh safety checks and real collection evidence."
-  },
-  "recommendations": [
-    {
-      "id": "000108-occluded-door-retreat",
-      "priority": "high",
-      "summary": "Preserve an accepted doorway retreat through temporary enemy occlusion instead of restarting exploration into its protected escape edge.",
-      "evidence": [
-        "Decision 1464, selection line 4203: retreat objective 782 and route through 913, 912 and 869 are recorded.",
-        "Decision 1464, accepted transition line 4204: movement reaches 913 without HP loss; the next observation shows door 914 closed and no visible enemies.",
-        "Decisions 1465 and 1467, lines 4208–4218: escape-reversal vetoes lead to repeated generic recovery onto 912.",
-        "Decision 1469, accepted transition line 4225: healing changes 38 HP to 40 without resolving the route.",
-        "Decision 1472, line 4234: hungry no-progress exhaustion terminates the living planner.",
-        "tools/multi_enemy_tactics.py:97–178; tools/mage_policy.py:416–422; tools/tactical_recovery.py:100–165."
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000108"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000108/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000108/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 750.133,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -183,15 +136,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 12,
-    "ending_experience": 23,
-    "ending_level": 5,
-    "starving_turns": 3,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -223,6 +167,25 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000108",
+  "improvements": [
+    "The bot can use a known scouting stone or mapping scroll to investigate unseen space behind reachable bookshelves, even when ordinary paths show no unexplored edges. Scouting does not count as opening the room or collecting its rewards."
+  ],
+  "incoming_learnings": "Unknown space behind sight-blocking shelves can justify stationary known reconnaissance even when ordinary movement frontiers are exhausted. Keep flame reservation and mandatory collection unresolved until fresh public observations support further action.",
+  "incoming_update_status": "accepted",
+  "max_depth": 4,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000108/poster.jpg",
+  "previous_run_id": "000107",
+  "previous_source_commit": "3c1f589fdb3106f31c9c9cb5a8a3829d667375c5",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -265,5 +228,44 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000108-occluded-door-retreat",
+      "priority": "high",
+      "summary": "Preserve an accepted doorway retreat through temporary enemy occlusion instead of restarting exploration into its protected escape edge.",
+      "evidence": [
+        "Decision 1464, selection line 4203: retreat objective 782 and route through 913, 912 and 869 are recorded.",
+        "Decision 1464, accepted transition line 4204: movement reaches 913 without HP loss; the next observation shows door 914 closed and no visible enemies.",
+        "Decisions 1465 and 1467, lines 4208–4218: escape-reversal vetoes lead to repeated generic recovery onto 912.",
+        "Decision 1469, accepted transition line 4225: healing changes 38 HP to 40 without resolving the route.",
+        "Decision 1472, line 4234: hungry no-progress exhaustion terminates the living planner.",
+        "tools/multi_enemy_tactics.py:97–178; tools/mage_policy.py:416–422; tools/tactical_recovery.py:100–165."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000108"
+    }
+  ],
+  "review": {
+    "review": "The hero remained alive at 40/40 HP when the planner stopped. Decision 1464 selected a doorway retreat toward door 782; its accepted move closed door 914 behind the hero and hid the enemies. The retreat selector then discarded its plan because fewer than two enemies were visible, while escape protection correctly rejected exploration back through the same door. Decisions 1465–1468 alternated recovery and exploration instead of continuing the observed retreat route. A healing potion was consumed before the same contradiction ended in planner exhaustion at decision 1472. A local source-pinned reconstruction matched the original selecting helper at decision 1464, then confirmed cancellation on the recorded next input; this is not a reconstruction of all original runtime memory. The focused correction preserves an accepted retreat through temporary occlusion using recent sightings only as movement constraints, with fresh visible-step checks and existing hazard, health, pressure and input budgets intact. The new regression fails on the original policy and passes on the candidate; the full suite passes 1,865 tests with four skipped. No alternative gameplay was dispatched, and neither reaching the destination nor survival is established.",
+    "learnings": "Losing sight of pursuing enemies behind a closing door is not clearance evidence. Preserve an accepted retreat when its next observed step remains admissible, rather than letting exploration immediately reverse it. Continue to require fresh safety checks and real collection evidence."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 23,
+    "ending_level": 5,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "c90ab0fceb10cc998d0966ed9f791cbdafde00a3",
+  "started_at": "2026-11-22T03:45:59Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000108/video.mp4"
 }

@@ -1,60 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000141",
-  "started_at": "2026-11-22T15:50:50Z",
-  "completed_at": "2026-11-22T16:15:14.722192+00:00",
-  "source_commit": "d3334a5880e79fe63e1556f3496939e6ce7fec1e",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "8433c6c-equipment",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 9,
   "actions": 3683,
-  "duration_seconds": 1451.01,
+  "code_changed": false,
+  "completed_at": "2026-11-22T16:15:14.722192+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000140",
-  "previous_source_commit": "67eff0d05b460d4283bbcc30300d891255d6caf0",
-  "improvements": [],
-  "code_changed": false,
-  "incoming_learnings": "Exploration and mandatory discovery must share a preparation reservation: a remembered safe bank is insufficient once exploration disconnects every admitted return. Preserve unknown identities, potion protection, fresh arrival checks and all unfinished pickup obligations; do not solve this by allowing grass or restoring idle waits.",
-  "incoming_update_status": "review-only",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at 56/75 HP when the planner exhausted its options. Decisions 3681-3682 selected and fired an identified, noncursed magic-missile staff at the only observed actor, a DM-100. The accepted transition at log line 10575 consumed one charge and advanced one turn: level 11 with 56/60 XP became level 12 with 2/65 XP, exactly six earned XP. Arcane Vision was already learned, yet no DM-100 remained in the subsequent public observation. The old receipt required adjacency, unchanged level and complete neighborhood visibility, so it missed this ranged level-up kill. Remembered lightning exposure then blocked preparation, pickup, recovery and exploration at decision 3683 (line 10576). Source inspection supports a focused new receipt using consumed charge, a clear observed projectile ray, Arcane Vision tracking and exact XP rollover; disappearance alone remains insufficient. A reduced public-evidence regression failed two assertions on original source and passed on the candidate. All 1,961 Python tests passed, with four skipped. Only targeting/receipt bookkeeping was reconstructed; original full runtime memory and individual rejected door routes were not recovered. The correction does not certify a replacement movement or future success. Policy and new regression changes are supplied through the trusted change adapter; files is intentionally empty.",
-    "learnings": "A ranged magic-missile kill can cross a hero level boundary without fresh defeat text. Retire only the matching lightning memory when charge consumption, an observed clear ray, Arcane Vision and exact six-XP rollover jointly confirm the kill. Preserve ambiguity checks, unfinished pickups and terminal exhaustion rather than manufacturing waits."
-  },
-  "recommendations": [
-    {
-      "id": "000141-arcane-missile-levelup-receipt",
-      "priority": "high",
-      "summary": "Recognize the evidenced Arcane Vision magic-missile level-up kill before stale lightning memory blocks progress.",
-      "evidence": [
-        "Decision 3681, log lines 10572-10573: known staff selected with Arcane Vision already learned.",
-        "Decision 3682, log lines 10574-10575: targeted zap consumes a charge and earns exactly six XP across a level-up.",
-        "Decision 3683, log line 10576: no DM-100 observed, but remembered lightning exposure causes planner exhaustion.",
-        "tools/combat_observation.py:39-81; tools/policy_nodes.py:93-115"
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000141"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000141/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000141/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 1451.01,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -330,15 +287,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 14,
-    "ending_experience": 2,
-    "ending_level": 12,
-    "starving_turns": 42,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -400,6 +348,23 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000141",
+  "improvements": [],
+  "incoming_learnings": "Exploration and mandatory discovery must share a preparation reservation: a remembered safe bank is insufficient once exploration disconnects every admitted return. Preserve unknown identities, potion protection, fresh arrival checks and all unfinished pickup obligations; do not solve this by allowing grass or restoring idle waits.",
+  "incoming_update_status": "review-only",
+  "max_depth": 9,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000141/poster.jpg",
+  "previous_run_id": "000140",
+  "previous_source_commit": "67eff0d05b460d4283bbcc30300d891255d6caf0",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -482,5 +447,42 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000141-arcane-missile-levelup-receipt",
+      "priority": "high",
+      "summary": "Recognize the evidenced Arcane Vision magic-missile level-up kill before stale lightning memory blocks progress.",
+      "evidence": [
+        "Decision 3681, log lines 10572-10573: known staff selected with Arcane Vision already learned.",
+        "Decision 3682, log lines 10574-10575: targeted zap consumes a charge and earns exactly six XP across a level-up.",
+        "Decision 3683, log line 10576: no DM-100 observed, but remembered lightning exposure causes planner exhaustion.",
+        "tools/combat_observation.py:39-81; tools/policy_nodes.py:93-115"
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000141"
+    }
+  ],
+  "review": {
+    "review": "The hero remained alive at 56/75 HP when the planner exhausted its options. Decisions 3681-3682 selected and fired an identified, noncursed magic-missile staff at the only observed actor, a DM-100. The accepted transition at log line 10575 consumed one charge and advanced one turn: level 11 with 56/60 XP became level 12 with 2/65 XP, exactly six earned XP. Arcane Vision was already learned, yet no DM-100 remained in the subsequent public observation. The old receipt required adjacency, unchanged level and complete neighborhood visibility, so it missed this ranged level-up kill. Remembered lightning exposure then blocked preparation, pickup, recovery and exploration at decision 3683 (line 10576). Source inspection supports a focused new receipt using consumed charge, a clear observed projectile ray, Arcane Vision tracking and exact XP rollover; disappearance alone remains insufficient. A reduced public-evidence regression failed two assertions on original source and passed on the candidate. All 1,961 Python tests passed, with four skipped. Only targeting/receipt bookkeeping was reconstructed; original full runtime memory and individual rejected door routes were not recovered. The correction does not certify a replacement movement or future success. Policy and new regression changes are supplied through the trusted change adapter; files is intentionally empty.",
+    "learnings": "A ranged magic-missile kill can cross a hero level boundary without fresh defeat text. Retire only the matching lightning memory when charge consumption, an observed clear ray, Arcane Vision and exact six-XP rollover jointly confirm the kill. Preserve ambiguity checks, unfinished pickups and terminal exhaustion rather than manufacturing waits."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 14,
+    "ending_experience": 2,
+    "ending_level": 12,
+    "starving_turns": 42,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "d3334a5880e79fe63e1556f3496939e6ce7fec1e",
+  "started_at": "2026-11-22T15:50:50Z",
+  "supervisor_version": "8433c6c-equipment",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000141/video.mp4"
 }

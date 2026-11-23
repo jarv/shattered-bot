@@ -1,60 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000149",
-  "started_at": "2026-11-22T21:48:48Z",
-  "completed_at": "2026-11-22T22:00:26.800111+00:00",
-  "source_commit": "a03452776a0d1d81eb2cd1760357122c02220639",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "dead",
-  "outcome_summary": "Killed by a sewer crab after prolonged mixed-enemy pressure",
-  "outcome_reason": "Hero died",
-  "max_depth": 4,
   "actions": 1650,
-  "duration_seconds": 691.866,
+  "code_changed": false,
+  "completed_at": "2026-11-22T22:00:26.800111+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000148",
-  "previous_source_commit": "0a4a111db0f124b90514eafe4cf3de53b7a493f1",
-  "improvements": [],
-  "code_changed": false,
-  "incoming_learnings": "No review performed; no new learnings claimed.",
-  "incoming_update_status": "review-skipped",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The full terminal observation at log line 4962 explicitly identifies a sewer crab as the killer; accepted decision 1649 (line 4959) lowers HP from 1 to 0. Earlier, a concrete avoidable attrition defect occurs in doorway combat: decision 1456 successfully surprise-strikes a wraith, but decisions 1457–1466 (lines 4322–4345) repeatedly use ordinary melee against the next evasive wraith despite 4–5 staff charges. Repeated dodges and unchanged wraith counts accompany HP falling from 36 to 19. The early rule-preparation controller calls the established-hold selector before the dedicated wraith controller; its ordinary damage scoring overlooks evasion. A focused correction now prefers an already-admitted magic attack against a wraith in that established hold, while preserving the initial surprise attempt, existing fallback and safety checks. A reduced public-evidence fixture fails with two expected assertions on original source and passes all six tests after correction. All 1,970 Python tests pass, with four skipped. Local reconstructed preparation state matches the recorded selections at decisions 1456 and 1457 on original source; the candidate first differs at 1457, where investigation stops without subsequent simulated observations. This is not a full-run reconstruction or evidence that the later fly pressure, retreat failures or death would be prevented. Four potion colors remain unidentified before death; the subsequently revealed healing potion was not known emergency healing.",
-    "learnings": "An established doorway limits approach lanes but does not remove wraith evasion after the first surprise strike. Preserve admitted magic priority there instead of comparing nominal melee damage alone. Do not treat post-death potion identities as resources the living bot knew how to use."
-  },
-  "recommendations": [
-    {
-      "id": "000149-doorway-wraith-magic",
-      "priority": "high",
-      "summary": "Preserve admitted magic priority against evasive wraiths after an established doorway surprise strike.",
-      "evidence": [
-        "Decision 1455, accepted line 4316 and movement receipt 4317: the hero retreats from door 1268 to holding square 1267.",
-        "Decision 1456, lines 4320–4321: the initial surprise strike defeats one wraith without spending a staff charge.",
-        "Decisions 1457–1466, lines 4322–4345: ten established-hold melee attempts retain 4–5 charges while HP falls from 36 to 19 and three wraiths remain.",
-        "Decisions 1467–1472, lines 4347–4358: subsequent zaps are followed by observed wraith defeats.",
-        "Selecting chain: tools/policy_tree.py:26; tools/mage_policy.py:1180–1182; tools/doorway_tactics.py:111–122; tools/survival_policy.py:618–688."
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000149"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000149/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000149/poster.jpg",
+  "death_category": "combat",
+  "death_category_evidence": "review summary: Killed by a sewer crab after prolonged mixed-enemy pressure",
+  "duration_seconds": 691.866,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -188,15 +144,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 12,
-    "ending_experience": 22,
-    "ending_level": 5,
-    "starving_turns": 9,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -228,6 +175,23 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000149",
+  "improvements": [],
+  "incoming_learnings": "No review performed; no new learnings claimed.",
+  "incoming_update_status": "review-skipped",
+  "max_depth": 4,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Killed by a sewer crab after prolonged mixed-enemy pressure",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000149/poster.jpg",
+  "previous_run_id": "000148",
+  "previous_source_commit": "0a4a111db0f124b90514eafe4cf3de53b7a493f1",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -270,5 +234,43 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000149-doorway-wraith-magic",
+      "priority": "high",
+      "summary": "Preserve admitted magic priority against evasive wraiths after an established doorway surprise strike.",
+      "evidence": [
+        "Decision 1455, accepted line 4316 and movement receipt 4317: the hero retreats from door 1268 to holding square 1267.",
+        "Decision 1456, lines 4320–4321: the initial surprise strike defeats one wraith without spending a staff charge.",
+        "Decisions 1457–1466, lines 4322–4345: ten established-hold melee attempts retain 4–5 charges while HP falls from 36 to 19 and three wraiths remain.",
+        "Decisions 1467–1472, lines 4347–4358: subsequent zaps are followed by observed wraith defeats.",
+        "Selecting chain: tools/policy_tree.py:26; tools/mage_policy.py:1180–1182; tools/doorway_tactics.py:111–122; tools/survival_policy.py:618–688."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000149"
+    }
+  ],
+  "review": {
+    "review": "The full terminal observation at log line 4962 explicitly identifies a sewer crab as the killer; accepted decision 1649 (line 4959) lowers HP from 1 to 0. Earlier, a concrete avoidable attrition defect occurs in doorway combat: decision 1456 successfully surprise-strikes a wraith, but decisions 1457–1466 (lines 4322–4345) repeatedly use ordinary melee against the next evasive wraith despite 4–5 staff charges. Repeated dodges and unchanged wraith counts accompany HP falling from 36 to 19. The early rule-preparation controller calls the established-hold selector before the dedicated wraith controller; its ordinary damage scoring overlooks evasion. A focused correction now prefers an already-admitted magic attack against a wraith in that established hold, while preserving the initial surprise attempt, existing fallback and safety checks. A reduced public-evidence fixture fails with two expected assertions on original source and passes all six tests after correction. All 1,970 Python tests pass, with four skipped. Local reconstructed preparation state matches the recorded selections at decisions 1456 and 1457 on original source; the candidate first differs at 1457, where investigation stops without subsequent simulated observations. This is not a full-run reconstruction or evidence that the later fly pressure, retreat failures or death would be prevented. Four potion colors remain unidentified before death; the subsequently revealed healing potion was not known emergency healing.",
+    "learnings": "An established doorway limits approach lanes but does not remove wraith evasion after the first surprise strike. Preserve admitted magic priority there instead of comparing nominal melee damage alone. Do not treat post-death potion identities as resources the living bot knew how to use."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 22,
+    "ending_level": 5,
+    "starving_turns": 9,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "a03452776a0d1d81eb2cd1760357122c02220639",
+  "started_at": "2026-11-22T21:48:48Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000149/video.mp4"
 }

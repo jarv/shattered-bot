@@ -2224,5 +2224,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000180"
+  },
+  {
+    "id": "000181-pool-armor-preparation",
+    "priority": "high",
+    "summary": "Consider a verified carried armor replacement before pool preparation declines on uncertain movement equipment.",
+    "evidence": [
+      "Decision 2443, selection 6930 and acceptance 6931: arrival at pool entrance 1843.",
+      "Decision 2444, log 6933: full health, no hunger, unknown potions, removable unidentified leather and identified uncursed cloth; pool preparation declines.",
+      "Decision 2444, acceptance 6934, and decision 2445, 6936–6937: leave the unresolved pool.",
+      "Decision 2529, log 7139: mandatory uncollected chest ends the living planner.",
+      "Original-source offline reconstruction matches decisions 0–2528 and the terminal blocker; an isolated copied-state candidate probe selects cloth EQUIP at decision 2444 without dispatch.",
+      "tools/combat_items.py:39–45; tools/room_tactics.py:200–209; tools/piranha_tactics.py:36–61; tools/puzzle_supplies.py:447–517."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000181"
   }
 ]

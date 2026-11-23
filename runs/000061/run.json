@@ -1,42 +1,104 @@
 {
-  "schema_version": 1,
-  "id": "000061",
-  "started_at": "2026-11-21T15:54:14Z",
-  "completed_at": "2026-11-21T15:55:49.036933+00:00",
-  "source_commit": "5d95b02f72920e69a9efb38b07123ce9bcd60271",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 239,
-  "duration_seconds": 91.733,
+  "code_changed": true,
+  "completed_at": "2026-11-21T15:55:49.036933+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000060",
-  "previous_source_commit": "6463040c5b3dfd033fb94763e11d429f04ab1e56",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 91.733,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 46,
+        "turns": 234,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 233,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 766
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt/choice container",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000061",
   "improvements": [
     "When the bot reaches a levitation-room approach, it now tries opening an adjacent observed entrance before looking for a safe potion-testing spot. It still rechecks safety afterward and does not treat an opened door as a completed room."
   ],
-  "code_changed": true,
   "incoming_learnings": "On reaching a verified levitation-room approach, scout an adjacent observed entrance before requiring a drink-ready bank. Reobserve after that single input. Keep unknown-drink escape checks, inventory protection, actual buff verification, round-trip budgets and mandatory pickup intact; an opened door is not puzzle success.",
   "incoming_update_status": "accepted",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run ended with a living, ready hero at full health, not an observed death. Decision 238 (selection line 669, accepted transition line 670) equipped the ring and advanced the clock from 233 to 234. Decision 239 (line 671) exhausted the planner because mandatory pre-descent strength discovery found no admitted water or water-escape test bank. The initiating problem is the mismatch between discovery starting only after departure is admitted and its inability to return to previously observed water after exploration and keyed-room collection. Decisions 214–219 (lines 597–612) traversed water approaches; decisions 233–237 (lines 654–667) completed the later room approach and ring pickup. Source-pinned offline bookkeeping matched all 239 recorded selected actions, reasons and intents, then reproduced the terminal blocker; this is reconstruction, not recorded memory. The terminal reconstruction has no threats, unexplained damage, stash or recognized-room supply requirement. The complete public inventory contains one unknown magenta potion and no identification scroll or protective potion bag. Its identity remains unknown. All reachable water is outside current visibility; nearest water has a route length of 18, exceeding the existing 13-cell admission limit. A remembered water bank at 288 requires 19 cells, including closed doors and grass excluded by discovery transit rules. The six currently admitted dry banks have no adjacent water. Relevant source: tools/mage_policy.py:414–468, tools/descent_potions.py:49–74,95–187, tools/puzzle_supplies.py:97–121, tools/potion_stash.py:59–70 and tools/until_death.py:13–28. No patch or new regression is supplied: merely extending distance would leave visibility and transit blockers; relaxing them would not establish safe unknown-drink preparation. A separate bounded return-and-reobserve phase with verified door handling and arrival safety is not yet validated. Complete source browsing and reconstruction resolve missing controller-state evidence, but not that replacement safety contract. The unchanged full Python suite passed 1745 tests with four skipped; no baseline-red/candidate-green claim is made. The remaining crystal chest is not credited as collected.",
-    "learnings": "Keep mandatory strength discovery and progression pickup, but investigate a separate bounded return to a previously observed water-bank approach after departure is admitted. Validate ordinary transit, door-opening receipts, hunger cost and arrival reobservation before allowing the existing unknown-drink checks to run. Do not infer potion identity, waive unfinished loot, weaken hazard checks or restore idle-until-death behavior. Finding a remembered bank does not establish safe travel or successful discovery."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000061/poster.jpg",
+  "previous_run_id": "000060",
+  "previous_source_commit": "6463040c5b3dfd033fb94763e11d429f04ab1e56",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 46,
+    "gold_complete": true,
+    "turns": 234,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -244,46 +306,11 @@
       "origin_run": "000061"
     }
   ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000061/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000061/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 46,
-        "turns": 234,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 233,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 766
-          },
-          {
-            "kind": "room",
-            "label": "Crystal choice container",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Crypt/choice container",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run ended with a living, ready hero at full health, not an observed death. Decision 238 (selection line 669, accepted transition line 670) equipped the ring and advanced the clock from 233 to 234. Decision 239 (line 671) exhausted the planner because mandatory pre-descent strength discovery found no admitted water or water-escape test bank. The initiating problem is the mismatch between discovery starting only after departure is admitted and its inability to return to previously observed water after exploration and keyed-room collection. Decisions 214–219 (lines 597–612) traversed water approaches; decisions 233–237 (lines 654–667) completed the later room approach and ring pickup. Source-pinned offline bookkeeping matched all 239 recorded selected actions, reasons and intents, then reproduced the terminal blocker; this is reconstruction, not recorded memory. The terminal reconstruction has no threats, unexplained damage, stash or recognized-room supply requirement. The complete public inventory contains one unknown magenta potion and no identification scroll or protective potion bag. Its identity remains unknown. All reachable water is outside current visibility; nearest water has a route length of 18, exceeding the existing 13-cell admission limit. A remembered water bank at 288 requires 19 cells, including closed doors and grass excluded by discovery transit rules. The six currently admitted dry banks have no adjacent water. Relevant source: tools/mage_policy.py:414–468, tools/descent_potions.py:49–74,95–187, tools/puzzle_supplies.py:97–121, tools/potion_stash.py:59–70 and tools/until_death.py:13–28. No patch or new regression is supplied: merely extending distance would leave visibility and transit blockers; relaxing them would not establish safe unknown-drink preparation. A separate bounded return-and-reobserve phase with verified door handling and arrival safety is not yet validated. Complete source browsing and reconstruction resolve missing controller-state evidence, but not that replacement safety contract. The unchanged full Python suite passed 1745 tests with four skipped; no baseline-red/candidate-green claim is made. The remaining crystal chest is not credited as collected.",
+    "learnings": "Keep mandatory strength discovery and progression pickup, but investigate a separate bounded return to a previously observed water-bank approach after departure is admitted. Validate ordinary transit, door-opening receipts, hunger cost and arrival reobservation before allowing the existing unknown-drink checks to run. Do not infer potion identity, waive unfinished loot, weaken hazard checks or restore idle-until-death behavior. Finding a remembered bank does not establish safe travel or successful discovery."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -293,36 +320,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 46,
-    "gold_complete": true,
-    "turns": 234,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "5d95b02f72920e69a9efb38b07123ce9bcd60271",
+  "started_at": "2026-11-21T15:54:14Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000061/video.mp4"
 }

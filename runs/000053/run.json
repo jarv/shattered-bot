@@ -1,42 +1,147 @@
 {
-  "schema_version": 1,
-  "id": "000053",
-  "started_at": "2026-11-21T13:36:22Z",
-  "completed_at": "2026-11-21T13:39:59.720670+00:00",
-  "source_commit": "b7e1187f9f69cf93bd4b8749c9c3ebeef0f52574",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 2,
   "actions": 530,
-  "duration_seconds": 213.93,
+  "code_changed": true,
+  "completed_at": "2026-11-21T13:39:59.720670+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000052",
-  "previous_source_commit": "74ed81e27410d9faa66e5b9280f113c12c25082e",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 213.93,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 90,
+        "turns": 263,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 263,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 783
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 15,
+        "gold_gained": 96,
+        "turns": 275,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 261,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000053",
   "improvements": [
     "The bot no longer starts a fresh doorway lure below half health when its enemy-specific tactics are enabled. This matches the health requirement for continuing the lure."
   ],
-  "code_changed": true,
   "incoming_learnings": "A newly started tactical plan must meet the same health prerequisites as its continuation. Do not spend an approach step that the next observation must reject when an already admitted ranged action is available. Preserve hazard checks and mandatory pickup obligations; a selected shot does not establish encounter success.",
   "incoming_update_status": "accepted",
+  "max_depth": 2,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The living hero exhausted the planner, not the game clock. Decision 475 (line 1344) first observes the piranha chest while at full health without hunger, carrying an unknown magenta potion but no identification supply. Pool preparation requires a dry unknown-potion test bank and a budgeted protected chest trip from that bank; none of the nine reachable hypothetical trip origins satisfies the test-bank or dry-approach gates. Exploration therefore continues without resolving the obligation. Decision 529 advances the clock to turn 538 at 30/30 HP; decision 530 (lines 1498–1499) cannot descend with the chest pending and has no admitted rescue. Offline policy-state reconstruction, not originally recorded memory, matched all 530 selected actions, reasons and intents plus the terminal blocker against this exact source and the recorded public inputs. Copied-state probes resolve the runtime gap but establish no safe replacement. The earlier identify scroll identified strength before the pool was observed; reserving it with hindsight is not a demonstrated fix. No policy patch or new regression is supplied because there is no validated identification/preparation-and-retrieval combination. Existing safety gates and mandatory collection remain intact. The unchanged-source suite passes 1,685 tests with four skipped; no red/green repair claim is made.",
-    "learnings": "Treat pool preparation feasibility as a high-priority unresolved planner failure. Full health and food do not create a safe potion-test bank. Validate identification or ranged-control preparation against the first observed pool state, including inventory protection, actual protection duration, accepted defeat evidence where relevant, and chest pickup/return. Never infer an unknown potion identity or release a mandatory chest without a collection receipt."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000053/poster.jpg",
+  "previous_run_id": "000052",
+  "previous_source_commit": "74ed81e27410d9faa66e5b9280f113c12c25082e",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 186,
+    "gold_complete": true,
+    "turns": 538,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -215,75 +320,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000053/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000053/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 11,
-        "gold_gained": 90,
-        "turns": 263,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 263,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 783
-          },
-          {
-            "kind": "room",
-            "label": "Crystal choice container",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 15,
-        "gold_gained": 96,
-        "turns": 275,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 261,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Piranha pool landmark",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Piranha pool",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The living hero exhausted the planner, not the game clock. Decision 475 (line 1344) first observes the piranha chest while at full health without hunger, carrying an unknown magenta potion but no identification supply. Pool preparation requires a dry unknown-potion test bank and a budgeted protected chest trip from that bank; none of the nine reachable hypothetical trip origins satisfies the test-bank or dry-approach gates. Exploration therefore continues without resolving the obligation. Decision 529 advances the clock to turn 538 at 30/30 HP; decision 530 (lines 1498–1499) cannot descend with the chest pending and has no admitted rescue. Offline policy-state reconstruction, not originally recorded memory, matched all 530 selected actions, reasons and intents plus the terminal blocker against this exact source and the recorded public inputs. Copied-state probes resolve the runtime gap but establish no safe replacement. The earlier identify scroll identified strength before the pool was observed; reserving it with hindsight is not a demonstrated fix. No policy patch or new regression is supplied because there is no validated identification/preparation-and-retrieval combination. Existing safety gates and mandatory collection remain intact. The unchanged-source suite passes 1,685 tests with four skipped; no red/green repair claim is made.",
+    "learnings": "Treat pool preparation feasibility as a high-priority unresolved planner failure. Full health and food do not create a safe potion-test bank. Validate identification or ranged-control preparation against the first observed pool state, including inventory protection, actual protection duration, accepted defeat evidence where relevant, and chest pickup/return. Never infer an unknown potion identity or release a mandatory chest without a collection receipt."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 11,
@@ -293,50 +334,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 3,
-    "gold_collected": 186,
-    "gold_complete": true,
-    "turns": 538,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "b7e1187f9f69cf93bd4b8749c9c3ebeef0f52574",
+  "started_at": "2026-11-21T13:36:22Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000053/video.mp4"
 }

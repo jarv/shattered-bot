@@ -1,64 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000136",
-  "started_at": "2026-11-22T14:32:51Z",
-  "completed_at": "2026-11-22T14:34:40.504023+00:00",
-  "source_commit": "edb1d8b72c44373fdca7b9c439ff8c64f67a3f6c",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "927d6e6-canonical-review",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 277,
-  "duration_seconds": 106.799,
+  "code_changed": true,
+  "completed_at": "2026-11-22T14:34:40.504023+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000135",
-  "previous_source_commit": "77638d068c294cace849fdde39b80dbe54bf80b4",
-  "improvements": [
-    "The bot now saves its last known liquid-flame potion while ordinary unexplored branches remain, instead of spending it on optional bookshelves. It also reserves that dose for any barricade it has already seen."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Keep the last identified liquid-flame potion for a possible barricade until ordinary branch discovery is finished. Optional bookshelves do not prove that the dose is surplus. Preserve existing collateral, protection, pickup and discovery requirements; never assume an unidentified potion replaces the spent supply.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The Mage stopped alive on floor 1 at full health after 276 elapsed turns. This was planner exhaustion, not a death. Decision 276 collected golden potion (selection line 774; accepted transition line 775), adding it to amber and identified liquid flame. Decision 277, line 777, then exhausted mandatory strength discovery. Source-pinned offline bookkeeping reconstruction matches all 277 preceding selections and the exact terminal blocker; it is reconstructed state, not recorded memory. Nine remembered preparation banks were certified for amber plus liquid flame only. The added potion invalidated every exact-inventory return receipt in tools/descent_potions.py:102-107. No locally visible water or known reconnaissance resource admitted an alternative. Mandatory pickup was not itself a mistake. Isolated copied-state probes find historical three-color storage feasibility around bank 104 and an otherwise admitted 54-step return corridor, but only after hypothetical inventory or receipt substitution. Those probes do not certify a current return-and-storage transaction. Source browsing resolves the packet's selecting-state gap, but no safe replacement is established. No policy patch or new regression is submitted; exact inventory matching, collateral checks, mandatory pickup and terminal exhaustion remain unchanged. The unchanged full suite passed 1,946 tests with four skipped; no baseline-red/candidate-green result is claimed.",
-    "learnings": "Treat inventory-changing pickup as a preparation-planning dependency. Previously feasible banks need an independently validated, inventory-aware reobservation transaction, followed by fresh bank and remote-storage admission. Historical geometry must not become permission to drink, and unknown potion colors must remain unknown."
-  },
-  "recommendations": [
-    {
-      "id": "000123-inventory-aware-discovery-return",
-      "priority": "high",
-      "summary": "Establish inventory-aware preparation return after potion pickup invalidates discovery-bank receipts.",
-      "evidence": [
-        "Decision 222, selection line 620 and accepted line 621: amber pickup at 104.",
-        "Decision 223, line 623: amber and identified liquid flame share the inventory near witnessed preparation banks.",
-        "Decision 276, selection line 774 and accepted line 775: golden pickup changes the potion inventory.",
-        "Decision 277, line 777: both preparation prerequisites decline and mandatory discovery exhausts at full health.",
-        "Offline reconstruction matches decisions 0-276 and the terminal blocker; nine historical receipts cover only amber plus liquid flame.",
-        "tools/descent_potions.py:30-107,376-417; tools/potion_stash.py:103-133."
-      ],
-      "status": "deferred",
-      "reason": "Revalidated, but not patched. Historical projected three-color feasibility around bank 104 resolves part of the storage uncertainty; it does not provide a current inventory-aware preparation witness, fresh arrival admission or verified storage transaction. Simply substituting the new inventory into an old receipt bypasses a safety gate. Next derive paired decision-223/277 fixtures for bank 104, storage 228 and the recorded 54-step corridor, then validate bounded preparation-only return with accepted movement receipts and fresh bank/stash checks before drops or drinking. Preserve exact ordinary receipts, collateral protection, unknown identities, mandatory pickup and terminal exhaustion.",
-      "origin_run": "000123"
-    }
-  ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000136/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000136/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 106.799,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -106,15 +59,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 0,
-    "ending_level": 2,
-    "starving_turns": 0,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -128,6 +72,25 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000136",
+  "improvements": [
+    "The bot now saves its last known liquid-flame potion while ordinary unexplored branches remain, instead of spending it on optional bookshelves. It also reserves that dose for any barricade it has already seen."
+  ],
+  "incoming_learnings": "Keep the last identified liquid-flame potion for a possible barricade until ordinary branch discovery is finished. Optional bookshelves do not prove that the dose is surplus. Preserve existing collateral, protection, pickup and discovery requirements; never assume an unidentified potion replaces the spent supply.",
+  "incoming_update_status": "accepted",
+  "max_depth": 1,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000136/poster.jpg",
+  "previous_run_id": "000135",
+  "previous_source_commit": "77638d068c294cace849fdde39b80dbe54bf80b4",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -146,5 +109,44 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000123-inventory-aware-discovery-return",
+      "priority": "high",
+      "summary": "Establish inventory-aware preparation return after potion pickup invalidates discovery-bank receipts.",
+      "evidence": [
+        "Decision 222, selection line 620 and accepted line 621: amber pickup at 104.",
+        "Decision 223, line 623: amber and identified liquid flame share the inventory near witnessed preparation banks.",
+        "Decision 276, selection line 774 and accepted line 775: golden pickup changes the potion inventory.",
+        "Decision 277, line 777: both preparation prerequisites decline and mandatory discovery exhausts at full health.",
+        "Offline reconstruction matches decisions 0-276 and the terminal blocker; nine historical receipts cover only amber plus liquid flame.",
+        "tools/descent_potions.py:30-107,376-417; tools/potion_stash.py:103-133."
+      ],
+      "status": "deferred",
+      "reason": "Revalidated, but not patched. Historical projected three-color feasibility around bank 104 resolves part of the storage uncertainty; it does not provide a current inventory-aware preparation witness, fresh arrival admission or verified storage transaction. Simply substituting the new inventory into an old receipt bypasses a safety gate. Next derive paired decision-223/277 fixtures for bank 104, storage 228 and the recorded 54-step corridor, then validate bounded preparation-only return with accepted movement receipts and fresh bank/stash checks before drops or drinking. Preserve exact ordinary receipts, collateral protection, unknown identities, mandatory pickup and terminal exhaustion.",
+      "origin_run": "000123"
+    }
+  ],
+  "review": {
+    "review": "The Mage stopped alive on floor 1 at full health after 276 elapsed turns. This was planner exhaustion, not a death. Decision 276 collected golden potion (selection line 774; accepted transition line 775), adding it to amber and identified liquid flame. Decision 277, line 777, then exhausted mandatory strength discovery. Source-pinned offline bookkeeping reconstruction matches all 277 preceding selections and the exact terminal blocker; it is reconstructed state, not recorded memory. Nine remembered preparation banks were certified for amber plus liquid flame only. The added potion invalidated every exact-inventory return receipt in tools/descent_potions.py:102-107. No locally visible water or known reconnaissance resource admitted an alternative. Mandatory pickup was not itself a mistake. Isolated copied-state probes find historical three-color storage feasibility around bank 104 and an otherwise admitted 54-step return corridor, but only after hypothetical inventory or receipt substitution. Those probes do not certify a current return-and-storage transaction. Source browsing resolves the packet's selecting-state gap, but no safe replacement is established. No policy patch or new regression is submitted; exact inventory matching, collateral checks, mandatory pickup and terminal exhaustion remain unchanged. The unchanged full suite passed 1,946 tests with four skipped; no baseline-red/candidate-green result is claimed.",
+    "learnings": "Treat inventory-changing pickup as a preparation-planning dependency. Previously feasible banks need an independently validated, inventory-aware reobservation transaction, followed by fresh bank and remote-storage admission. Historical geometry must not become permission to drink, and unknown potion colors must remain unknown."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "edb1d8b72c44373fdca7b9c439ff8c64f67a3f6c",
+  "started_at": "2026-11-22T14:32:51Z",
+  "supervisor_version": "927d6e6-canonical-review",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000136/video.mp4"
 }

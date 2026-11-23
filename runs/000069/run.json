@@ -1,40 +1,185 @@
 {
-  "schema_version": 1,
-  "id": "000069",
-  "started_at": "2026-11-21T17:47:05Z",
-  "completed_at": "2026-11-21T17:57:27.712733+00:00",
-  "source_commit": "9935fbcf5c5ad1dabd038bcdbdc5a89d04375525",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 3,
   "actions": 1224,
-  "duration_seconds": 616.584,
+  "code_changed": false,
+  "completed_at": "2026-11-21T17:57:27.712733+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000068",
-  "previous_source_commit": "235891e0853019eb88af073b2f354dcec7567768",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 616.584,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 351,
+        "turns": 373,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 368,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 337
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 97,
+        "turns": 327,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 325,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 452
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 34,
+        "gold_gained": 445,
+        "turns": 521,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 525,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1284
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Possible drop-room exit",
+            "status": "reported-hypothesis"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000069",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "Diagnose progression blockers from their actual target list, not the generic message. A collected upgrade does not resolve a separate matching-key obligation. Observing piranhas does not guarantee an invisibility supply; a failed potion hypothesis cannot provide protection. Preserve the key requirement while establishing a bounded, observation-backed retrieval or ranged-clearance plan.",
   "incoming_update_status": "review-only",
+  "max_depth": 3,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero was alive at planner exhaustion, with 35/35 HP. The initiating policy contradiction was supplyless flight-room staging: decision 993 (line 2892) diverted the hero toward approach 1569 even though the complete public inventory contained food and known healing, but neither an unknown potion nor known levitation. Decisions 994–1002 (lines 2895–2920) alternated that approach with the usable keyed-room route; decision 1003 then triggered navigation-loop recovery. The priority target was a ration on trap terrain at 1863, not an uncollected upgrade. Later, the same staging behavior competed with exploration, followed by systematic-route exhaustion at decision 1208 and terminal recovery exhaustion at decision 1224 (line 3588). The last accepted transition, decision 1223 (line 3586), still advanced time and left the hero at full health. Source tracing finds that the hungry scout in tools/puzzle_supplies.py bypassed normal potion-candidate selection. The proposed focused correction makes that scout yield unless a drinkable matching supply or an untried unknown potion remains within the existing test budget. A new deterministic selector regression failed on original source and passes with the correction; the full suite passed 1,764 tests with four skips. This is a synthetic public-evidence fixture, not recovered runtime memory or a gameplay replay. It establishes removal of this diversion while preserving a separately admitted keyed route and outstanding progression loot, not eventual room retrieval or run completion. The played source comparison is empty, so no recorded improvements are attributed. Policy and regression edits are supplied separately; files is intentionally empty for adapter-derived changes.",
-    "learnings": "Preparation travel needs an executable resource purpose. Food and a hypothetical protected route do not constitute a flight supply. When no drinkable candidate remains, yield to already admitted floor work without declaring protected loot collected, guessing potion identities, weakening hazards, or removing planner exhaustion."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000069/poster.jpg",
+  "previous_run_id": "000068",
+  "previous_source_commit": "235891e0853019eb88af073b2f354dcec7567768",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 4,
+    "gold_collected": 893,
+    "gold_complete": true,
+    "turns": 1221,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -279,101 +424,11 @@
       "origin_run": "000069"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000069/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000069/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 351,
-        "turns": 373,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 368,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 337
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 11,
-        "gold_gained": 97,
-        "turns": 327,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 325,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Distant well",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 452
-          },
-          {
-            "kind": "quest",
-            "label": "Sad Ghost",
-            "status": "encountered"
-          }
-        ]
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "experience_gained": 34,
-        "gold_gained": 445,
-        "turns": 521,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 525,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 1284
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Possible drop-room exit",
-            "status": "reported-hypothesis"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero was alive at planner exhaustion, with 35/35 HP. The initiating policy contradiction was supplyless flight-room staging: decision 993 (line 2892) diverted the hero toward approach 1569 even though the complete public inventory contained food and known healing, but neither an unknown potion nor known levitation. Decisions 994–1002 (lines 2895–2920) alternated that approach with the usable keyed-room route; decision 1003 then triggered navigation-loop recovery. The priority target was a ration on trap terrain at 1863, not an uncollected upgrade. Later, the same staging behavior competed with exploration, followed by systematic-route exhaustion at decision 1208 and terminal recovery exhaustion at decision 1224 (line 3588). The last accepted transition, decision 1223 (line 3586), still advanced time and left the hero at full health. Source tracing finds that the hungry scout in tools/puzzle_supplies.py bypassed normal potion-candidate selection. The proposed focused correction makes that scout yield unless a drinkable matching supply or an untried unknown potion remains within the existing test budget. A new deterministic selector regression failed on original source and passes with the correction; the full suite passed 1,764 tests with four skips. This is a synthetic public-evidence fixture, not recovered runtime memory or a gameplay replay. It establishes removal of this diversion while preserving a separately admitted keyed route and outstanding progression loot, not eventual room retrieval or run completion. The played source comparison is empty, so no recorded improvements are attributed. Policy and regression edits are supplied separately; files is intentionally empty for adapter-derived changes.",
+    "learnings": "Preparation travel needs an executable resource purpose. Food and a hypothetical protected route do not constitute a flight supply. When no drinkable candidate remains, yield to already admitted floor work without declaring protected loot collected, guessing potion identities, weakening hazards, or removing planner exhaustion."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 12,
@@ -383,64 +438,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 3,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "starving_turns": 6,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 4,
-    "gold_collected": 893,
-    "gold_complete": true,
-    "turns": 1221,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 0,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 3,
-        "branch": 0,
-        "levels_gained": 2,
-        "levels_complete": true,
-        "max_level": 4,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "9935fbcf5c5ad1dabd038bcdbdc5a89d04375525",
+  "started_at": "2026-11-21T17:47:05Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000069/video.mp4"
 }

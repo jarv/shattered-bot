@@ -1,59 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000026",
-  "started_at": "2026-11-20T19:33:32Z",
-  "completed_at": "2026-11-20T19:42:29.351528+00:00",
-  "source_commit": "7573fe56fd37fe529bea2fa3fa8483b59bfc09cf",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "b6c86f5f5d24b28005d8611ec04e6fe79f6d9e53501448791b99376cd2e21e54",
-  "outcome": "blocked",
-  "outcome_summary": "Blocked with an unfinished piranha chest; fallback waits made no further progress",
-  "outcome_reason": "Fallback stopped after 128 accepted waits without observed gameplay progress",
-  "max_depth": 3,
   "actions": 1206,
-  "duration_seconds": 531.73,
+  "code_changed": false,
+  "completed_at": "2026-11-20T19:42:29.351528+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000025",
-  "previous_source_commit": "ca4452863e8f9e149bacf86256f677a53adf3588",
-  "improvements": [],
-  "code_changed": false,
-  "incoming_learnings": "A quiet starting square does not make unknown-scroll discovery safe: displacement can expose a nearly depleted Mage to fresh enemies. Evaluate bounded discovery readiness and preparation using public resources, without assuming potion identities or certifying survival from a larger charge reserve alone.",
-  "incoming_update_status": "review-only",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run was blocked, not killed. Decision 1044 (log lines 3087–3089) first rejected descent because the observed piranha chest at cell 683 still lacked a collection receipt, then accepted a fallback wait. Subsequent waits advanced the game clock; the final accepted transition (decision 1205, line 3571) reached turn 1183 with 35/35 HP. The initiating conflict was an unfinished mandatory pool objective with no admitted preparation action, rather than a frozen game clock. The supply selector rejects hungry potion testing, while its bounded puzzle-meal branch covers other room types but not pools. However, eating alone is not an evidenced repair: after the recorded starvation meal and healing at decisions 1076–1077, fallback waiting resumed. Source examination and independent public-map fixtures also found no currently admitted unknown-potion test bank paired with a protected chest trip. Budgeted approaches include water or surroundings excluded by the existing unknown-drink rules. No potion identity, collection, or safe replacement is inferred. Offline bookkeeping reconstruction matched all 1206 recorded selections, including action, reason, intent and controller. Isolated copies at decisions 928, 984, 1000, 1044 and 1078 still declined preparation when hunger was removed. This is reconstructed bookkeeping, not recorded runtime memory; no altered decision was dispatched or followed with invented observations. No policy patch or regression is proposed: extending meals or movement without an admissible preparation route would be speculative, and removing the descent guard would abandon the mandatory pickup.",
-    "learnings": "Before funding pool preparation with food, establish a public, admissible identification or unknown-potion test plan, including inventory protection and a budgeted chest return trip. A meal is not proof that testing or retrieval becomes possible. Keep the chest pending until collection is verified."
-  },
-  "recommendations": [
-    {
-      "id": "000026-pool-preparation-feasibility",
-      "priority": "medium",
-      "summary": "Resolve pool preparation feasibility before adding food spending or additional staging movement.",
-      "evidence": [
-        "Decision 806, log line 2413: observed chest and piranhas.",
-        "Decision 1000, log line 2957: pool supplies declined while hungry.",
-        "Decision 1044, log lines 3087–3089: mandatory chest blocks descent; fallback waits begin.",
-        "Decisions 1076–1078, log lines 3183–3189: eating and healing do not restore progress."
-      ],
-      "status": "deferred",
-      "reason": "No safe focused replacement is established. The public geometry admits protected chest trips from some approaches, but not an unknown-drink bank satisfying the existing dry-surroundings gates; no carried known invisibility or safe identification supply is recorded at the block. A repair needs evidence of an admissible identification/test-and-inventory-protection route, or additional public observations establishing one. Merely adding a pool meal would not resolve the recorded post-meal failure, and speculative movement or weakened hazard checks is not justified.",
-      "origin_run": "000026"
-    }
-  ],
-  "update_status": "review-only",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000026/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000026/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: blocked",
+  "duration_seconds": 531.73,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -146,15 +103,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 11,
-    "ending_experience": 11,
-    "ending_level": 4,
-    "starving_turns": 9,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -180,6 +128,23 @@
       }
     ]
   },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000026",
+  "improvements": [],
+  "incoming_learnings": "A quiet starting square does not make unknown-scroll discovery safe: displacement can expose a nearly depleted Mage to fresh enemies. Evaluate bounded discovery readiness and preparation using public resources, without assuming potion identities or certifying survival from a larger charge reserve alone.",
+  "incoming_update_status": "review-only",
+  "max_depth": 3,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "blocked",
+  "outcome_reason": "Fallback stopped after 128 accepted waits without observed gameplay progress",
+  "outcome_summary": "Blocked with an unfinished piranha chest; fallback waits made no further progress",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000026/poster.jpg",
+  "previous_run_id": "000025",
+  "previous_source_commit": "ca4452863e8f9e149bacf86256f677a53adf3588",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -214,5 +179,42 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000026-pool-preparation-feasibility",
+      "priority": "medium",
+      "summary": "Resolve pool preparation feasibility before adding food spending or additional staging movement.",
+      "evidence": [
+        "Decision 806, log line 2413: observed chest and piranhas.",
+        "Decision 1000, log line 2957: pool supplies declined while hungry.",
+        "Decision 1044, log lines 3087–3089: mandatory chest blocks descent; fallback waits begin.",
+        "Decisions 1076–1078, log lines 3183–3189: eating and healing do not restore progress."
+      ],
+      "status": "deferred",
+      "reason": "No safe focused replacement is established. The public geometry admits protected chest trips from some approaches, but not an unknown-drink bank satisfying the existing dry-surroundings gates; no carried known invisibility or safe identification supply is recorded at the block. A repair needs evidence of an admissible identification/test-and-inventory-protection route, or additional public observations establishing one. Merely adding a pool meal would not resolve the recorded post-meal failure, and speculative movement or weakened hazard checks is not justified.",
+      "origin_run": "000026"
+    }
+  ],
+  "review": {
+    "review": "The run was blocked, not killed. Decision 1044 (log lines 3087–3089) first rejected descent because the observed piranha chest at cell 683 still lacked a collection receipt, then accepted a fallback wait. Subsequent waits advanced the game clock; the final accepted transition (decision 1205, line 3571) reached turn 1183 with 35/35 HP. The initiating conflict was an unfinished mandatory pool objective with no admitted preparation action, rather than a frozen game clock. The supply selector rejects hungry potion testing, while its bounded puzzle-meal branch covers other room types but not pools. However, eating alone is not an evidenced repair: after the recorded starvation meal and healing at decisions 1076–1077, fallback waiting resumed. Source examination and independent public-map fixtures also found no currently admitted unknown-potion test bank paired with a protected chest trip. Budgeted approaches include water or surroundings excluded by the existing unknown-drink rules. No potion identity, collection, or safe replacement is inferred. Offline bookkeeping reconstruction matched all 1206 recorded selections, including action, reason, intent and controller. Isolated copies at decisions 928, 984, 1000, 1044 and 1078 still declined preparation when hunger was removed. This is reconstructed bookkeeping, not recorded runtime memory; no altered decision was dispatched or followed with invented observations. No policy patch or regression is proposed: extending meals or movement without an admissible preparation route would be speculative, and removing the descent guard would abandon the mandatory pickup.",
+    "learnings": "Before funding pool preparation with food, establish a public, admissible identification or unknown-potion test plan, including inventory protection and a budgeted chest return trip. A meal is not proof that testing or retrieval becomes possible. Keep the chest pending until collection is verified."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 11,
+    "ending_level": 4,
+    "starving_turns": 9,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "7573fe56fd37fe529bea2fa3fa8483b59bfc09cf",
+  "started_at": "2026-11-20T19:33:32Z",
+  "supervisor_version": "b6c86f5f5d24b28005d8611ec04e6fe79f6d9e53501448791b99376cd2e21e54",
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000026/video.mp4"
 }

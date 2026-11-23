@@ -1,63 +1,17 @@
 {
-  "schema_version": 1,
-  "id": "000162",
-  "started_at": "2026-11-23T00:52:50Z",
-  "completed_at": "2026-11-23T00:58:25.548582+00:00",
-  "source_commit": "62de05aa8f44db289577ae3d9c75a349dc2cc377",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 2,
   "actions": 814,
-  "duration_seconds": 331.533,
+  "code_changed": true,
+  "completed_at": "2026-11-23T00:58:25.548582+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000161",
-  "previous_source_commit": "82da440ee9f545eeb63765de265f57857a97014a",
-  "improvements": [
-    "The bot now remembers safe potion-preparation ground even before finding its first potion. Before returning with newly collected potions, it checks whether the carried inventory can be protected and still requires fresh checks on arrival."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Remember safe preparation ground even before finding the first potion, but replan protection for the actual carried inventory and reobserve on arrival. An admitted return is not proof that the subsequent storage transaction will succeed.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at full health when mandatory potion discovery exhausted the planner (decision 814, log 2268). The initiating contradiction was a return-route rule that excluded plain grass: decisions 810–812, logs 2257–2264, had just traversed water 362, water 329, grass 364 and floor 365. Offline bookkeeping reconstructed from the exact played source and public observations matches all 814 preceding selected actions and the terminal blocker; this is reconstructed state, not recorded memory. Every remembered bank was disconnected in the restricted return graph despite ordinary reachability. The proposed narrow correction admits plain observed grass only for preparation-return transit, retaining all hazard, visibility, inventory-protection, hunger and arrival gates. A copied validated terminal-state probe selects a return step to 364 without dispatch. The new regression fails by the expected assertion on original policy and passes on the candidate; the full suite passes 2020 tests with four skips. This establishes a preparation choice, not successful arrival, storage, drinking or progression.",
-    "learnings": "Distinguish ordinary travel terrain from unknown-potion test terrain. Plain grass can connect a witnessed preparation area without becoming an admitted drinking site. Reobserve and validate storage on arrival; do not credit discovery or collection from a planned return."
-  },
-  "recommendations": [
-    {
-      "id": "000162-grass-bank-transit",
-      "priority": "high",
-      "summary": "Allow hazard-checked plain-grass transit when returning to witnessed potion preparation ground.",
-      "evidence": [
-        "Decision 810, logs 2257–2258: the hero leaves water bank 362 for water 329.",
-        "Decisions 811–812, logs 2260–2264: accepted ordinary travel crosses plain grass 364 to floor 365.",
-        "Decision 814, log 2268: protected potion discovery and its return prerequisite exhaust with the hero at 30/30 HP.",
-        "tools/descent_potions.py:107–136: the return graph and route validator exclude plain grass.",
-        "Validated original-state reconstruction and an isolated candidate probe select return step 364 without authorizing a drink."
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000162"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000162/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000162/poster.jpg",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 331.533,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -109,15 +63,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 10,
-    "ending_experience": 6,
-    "ending_level": 3,
-    "starving_turns": 3,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -137,6 +82,25 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000162",
+  "improvements": [
+    "The bot now remembers safe potion-preparation ground even before finding its first potion. Before returning with newly collected potions, it checks whether the carried inventory can be protected and still requires fresh checks on arrival."
+  ],
+  "incoming_learnings": "Remember safe preparation ground even before finding the first potion, but replan protection for the actual carried inventory and reobserve on arrival. An admitted return is not proof that the subsequent storage transaction will succeed.",
+  "incoming_update_status": "accepted",
+  "max_depth": 2,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000162/poster.jpg",
+  "previous_run_id": "000161",
+  "previous_source_commit": "82da440ee9f545eeb63765de265f57857a97014a",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -163,5 +127,43 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000162-grass-bank-transit",
+      "priority": "high",
+      "summary": "Allow hazard-checked plain-grass transit when returning to witnessed potion preparation ground.",
+      "evidence": [
+        "Decision 810, logs 2257–2258: the hero leaves water bank 362 for water 329.",
+        "Decisions 811–812, logs 2260–2264: accepted ordinary travel crosses plain grass 364 to floor 365.",
+        "Decision 814, log 2268: protected potion discovery and its return prerequisite exhaust with the hero at 30/30 HP.",
+        "tools/descent_potions.py:107–136: the return graph and route validator exclude plain grass.",
+        "Validated original-state reconstruction and an isolated candidate probe select return step 364 without authorizing a drink."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000162"
+    }
+  ],
+  "review": {
+    "review": "The hero remained alive at full health when mandatory potion discovery exhausted the planner (decision 814, log 2268). The initiating contradiction was a return-route rule that excluded plain grass: decisions 810–812, logs 2257–2264, had just traversed water 362, water 329, grass 364 and floor 365. Offline bookkeeping reconstructed from the exact played source and public observations matches all 814 preceding selected actions and the terminal blocker; this is reconstructed state, not recorded memory. Every remembered bank was disconnected in the restricted return graph despite ordinary reachability. The proposed narrow correction admits plain observed grass only for preparation-return transit, retaining all hazard, visibility, inventory-protection, hunger and arrival gates. A copied validated terminal-state probe selects a return step to 364 without dispatch. The new regression fails by the expected assertion on original policy and passes on the candidate; the full suite passes 2020 tests with four skips. This establishes a preparation choice, not successful arrival, storage, drinking or progression.",
+    "learnings": "Distinguish ordinary travel terrain from unknown-potion test terrain. Plain grass can connect a witnessed preparation area without becoming an admitted drinking site. Reobserve and validate storage on arrival; do not credit discovery or collection from a planned return."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 6,
+    "ending_level": 3,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "62de05aa8f44db289577ae3d9c75a349dc2cc377",
+  "started_at": "2026-11-23T00:52:50Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000162/video.mp4"
 }

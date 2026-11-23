@@ -1,62 +1,16 @@
 {
-  "schema_version": 1,
-  "id": "000171",
-  "started_at": "2026-11-23T04:41:30Z",
-  "completed_at": "2026-11-23T05:06:27.449315+00:00",
-  "source_commit": "8219a47f75cb83e79df91ded422476853b55bd7f",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
-  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
-  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
-  "supervisor_version": "quota-skip-20261122",
-  "outcome": "dead",
-  "outcome_summary": "Died after prolonged caster and skeleton pressure",
-  "outcome_reason": "Hero died",
-  "max_depth": 9,
   "actions": 3556,
-  "duration_seconds": 1484.849,
+  "code_changed": true,
+  "completed_at": "2026-11-23T05:06:27.449315+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000170",
-  "previous_source_commit": "2af43a5e869d2499d3a0decd7a720f7172a89c31",
-  "improvements": [
-    "Before fleeing to a known doorway, the bot now checks that the far side offers a usable step out of the DM-100's firing line. It still permits scouting when that side has not been observed."
-  ],
-  "code_changed": true,
-  "incoming_learnings": "Before committing caster flight to a known doorway, verify that its observed far side can support the required cover step. A reachable door is not itself a refuge. Unknown banks still require scouting and fresh arrival checks; available charges alone do not prove a clear shot.",
-  "incoming_update_status": "accepted",
-  "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero died after prolonged caster and skeleton pressure. Decision 3555's accepted transition (log line 10376) reduces HP from five to zero during a wand attack; the exact damage source is not established. An earlier selecting defect is supported: decisions 3486, 3490 and 3492 approach a visible necromancer while below half health, keeping contact with its skeleton. At 3490, the approach loses health and is immediately reversed by retreat at 3491, before being repeated at 3492. The necromancer helper vetoed wounded contact approaches only for remembered casters, not visible ones. Independent public-observation helper probes reproduce these original choices; they are not recovered whole-run memory. A focused correction extends the existing veto to visible-caster approaches while retaining immediate admitted caster attacks and existing withdrawal checks. The new regression fails on the original policy and passes on the candidate; the full suite passes 2,041 tests with four skipped. This establishes a local selection repair, not survival, a confirmed killer, or a successful counterfactual escape. Changed files are supplied through the trusted adapter.",
-    "learnings": "Seeing a support caster does not justify wounded movement beside its minion. Keep immediate admitted caster attacks available, but prefer existing contact-free withdrawal over exposed approach steps. A spacing choice alone does not prove lasting safety."
-  },
-  "recommendations": [
-    {
-      "id": "000171-visible-necro-contact",
-      "priority": "high",
-      "summary": "Apply the wounded contact-approach veto to visible necromancers as well as remembered sightings.",
-      "evidence": [
-        "Decision 3486, selection line 10167 and accepted line 10168: wounded bypass remains beside the supported skeleton.",
-        "Decision 3490, lines 10179-10180: approach from 556 to 557 lowers HP from 21 to 20.",
-        "Decision 3491, lines 10182-10183: retreat reverses that step and HP falls to 17.",
-        "Decision 3492, lines 10188-10189: the same wounded approach is selected again.",
-        "tools/necromancer_tactics.py:98-158; tools/unit_strategies.py:68-70,87-119."
-      ],
-      "status": "implemented",
-      "reason": "Patch passed isolated validation and was accepted.",
-      "origin_run": "000171"
-    }
-  ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000171/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000171/poster.jpg",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "duration_seconds": 1484.849,
   "floor_metrics": {
     "schema_version": 1,
     "source": "public-accepted-transitions-v1",
@@ -303,15 +257,6 @@
       }
     ]
   },
-  "run_stats": {
-    "schema_version": 1,
-    "ending_strength": 12,
-    "ending_experience": 31,
-    "ending_level": 11,
-    "starving_turns": 104,
-    "starving_turns_complete": true,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
-  },
   "floor_starvation_metrics": {
     "schema_version": 1,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff",
@@ -373,6 +318,25 @@
       }
     ]
   },
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "id": "000171",
+  "improvements": [
+    "Before fleeing to a known doorway, the bot now checks that the far side offers a usable step out of the DM-100's firing line. It still permits scouting when that side has not been observed."
+  ],
+  "incoming_learnings": "Before committing caster flight to a known doorway, verify that its observed far side can support the required cover step. A reachable door is not itself a refuge. Unknown banks still require scouting and fresh arrival checks; available charges alone do not prove a clear shot.",
+  "incoming_update_status": "accepted",
+  "max_depth": 9,
+  "model": "gpt-6.1-sol",
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "dead",
+  "outcome_reason": "Hero died",
+  "outcome_summary": "Died after prolonged caster and skeleton pressure",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000171/poster.jpg",
+  "previous_run_id": "000170",
+  "previous_source_commit": "2af43a5e869d2499d3a0decd7a720f7172a89c31",
   "progression_metrics": {
     "schema_version": 1,
     "source": "public-observed-progression-v1",
@@ -455,5 +419,43 @@
         "max_level_complete": true
       }
     ]
-  }
+  },
+  "recommendations": [
+    {
+      "id": "000171-visible-necro-contact",
+      "priority": "high",
+      "summary": "Apply the wounded contact-approach veto to visible necromancers as well as remembered sightings.",
+      "evidence": [
+        "Decision 3486, selection line 10167 and accepted line 10168: wounded bypass remains beside the supported skeleton.",
+        "Decision 3490, lines 10179-10180: approach from 556 to 557 lowers HP from 21 to 20.",
+        "Decision 3491, lines 10182-10183: retreat reverses that step and HP falls to 17.",
+        "Decision 3492, lines 10188-10189: the same wounded approach is selected again.",
+        "tools/necromancer_tactics.py:98-158; tools/unit_strategies.py:68-70,87-119."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000171"
+    }
+  ],
+  "review": {
+    "review": "The hero died after prolonged caster and skeleton pressure. Decision 3555's accepted transition (log line 10376) reduces HP from five to zero during a wand attack; the exact damage source is not established. An earlier selecting defect is supported: decisions 3486, 3490 and 3492 approach a visible necromancer while below half health, keeping contact with its skeleton. At 3490, the approach loses health and is immediately reversed by retreat at 3491, before being repeated at 3492. The necromancer helper vetoed wounded contact approaches only for remembered casters, not visible ones. Independent public-observation helper probes reproduce these original choices; they are not recovered whole-run memory. A focused correction extends the existing veto to visible-caster approaches while retaining immediate admitted caster attacks and existing withdrawal checks. The new regression fails on the original policy and passes on the candidate; the full suite passes 2,041 tests with four skipped. This establishes a local selection repair, not survival, a confirmed killer, or a successful counterfactual escape. Changed files are supplied through the trusted adapter.",
+    "learnings": "Seeing a support caster does not justify wounded movement beside its minion. Keep immediate admitted caster attacks available, but prefer existing contact-free withdrawal over exposed approach steps. A spacing choice alone does not prove lasting safety."
+  },
+  "review_commit": "",
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 31,
+    "ending_level": 11,
+    "starving_turns": 104,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "8219a47f75cb83e79df91ded422476853b55bd7f",
+  "started_at": "2026-11-23T04:41:30Z",
+  "supervisor_version": "quota-skip-20261122",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000171/video.mp4"
 }

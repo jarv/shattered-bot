@@ -1,40 +1,102 @@
 {
-  "schema_version": 1,
-  "id": "000047",
-  "started_at": "2026-11-21T12:05:02Z",
-  "completed_at": "2026-11-21T12:06:50.915163+00:00",
-  "source_commit": "68c3ce819e5c4ce19f0c3cc485caa27eac73c3eb",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 287,
-  "duration_seconds": 106.372,
+  "code_changed": false,
+  "completed_at": "2026-11-21T12:06:50.915163+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000046",
-  "previous_source_commit": "c9b492aff789cea71be295d0cce3ebeab7c639fb",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 106.372,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 61,
+        "turns": 275,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 281,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 277
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000047",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "Distinguish a matching key blocked by piranha reach from a mandatory pool chest. A lone observed piranha is not proof of a guaranteed invisibility supply. Full health and a puzzle meal are preparation only, not evidence of an executable pickup. Preserve the key obligation and terminal stuck label while establishing a verified ranged-control or identification-and-return plan.",
   "incoming_update_status": "review-only",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero was alive at 25/25 HP when the planner exhausted its options. The final upgrade/strength warning actually refers to a matching iron key at 1004, blocked by remembered eternal fire, not the upgrade scroll already collected at decision 100 (lines 260–261). The initial potion test increased strength without clearing the fire (decision 167, lines 456–457). Known frost was subsequently identified by decision 230 (line 627), but preparation yielded to the mandatory key while the priority selector restricted its existing known-frost helper to upgrade/strength targets. At decision 250 (line 687), the hero passed a bounded safe approach opportunity without selecting that preparation. Lines 798–800 confirm the unresolved key obligation and terminal planner failure. The proposed focused correction admits the same guarded frost helper for matching keys without relaxing hazards or inventing collection. A reduced public-geometry fixture, not recovered runtime memory, fails two assertions on original policy and passes all four tests on the candidate. The full suite passes 1,663 tests with four skips. This establishes preparation selection only, not extinguishing, key retrieval, or successful progression. Existing backlog entries are retained; their distinct problems are not claimed fixed.",
-    "learnings": "Treat observed matching keys consistently with permanent progression pickups when known frost preparation is available. Keep the fire buffer and pickup obligation until public observations verify clearance and collection. An admitted approach is preparation, not puzzle success; do not substitute meals, guessed potion effects, or idle waits."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000047/poster.jpg",
+  "previous_run_id": "000046",
+  "previous_source_commit": "c9b492aff789cea71be295d0cce3ebeab7c639fb",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 61,
+    "gold_complete": true,
+    "turns": 275,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -222,46 +284,11 @@
       "origin_run": "000018"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000047/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000047/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 61,
-        "turns": 275,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 281,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 277
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero was alive at 25/25 HP when the planner exhausted its options. The final upgrade/strength warning actually refers to a matching iron key at 1004, blocked by remembered eternal fire, not the upgrade scroll already collected at decision 100 (lines 260–261). The initial potion test increased strength without clearing the fire (decision 167, lines 456–457). Known frost was subsequently identified by decision 230 (line 627), but preparation yielded to the mandatory key while the priority selector restricted its existing known-frost helper to upgrade/strength targets. At decision 250 (line 687), the hero passed a bounded safe approach opportunity without selecting that preparation. Lines 798–800 confirm the unresolved key obligation and terminal planner failure. The proposed focused correction admits the same guarded frost helper for matching keys without relaxing hazards or inventing collection. A reduced public-geometry fixture, not recovered runtime memory, fails two assertions on original policy and passes all four tests on the candidate. The full suite passes 1,663 tests with four skips. This establishes preparation selection only, not extinguishing, key retrieval, or successful progression. Existing backlog entries are retained; their distinct problems are not claimed fixed.",
+    "learnings": "Treat observed matching keys consistently with permanent progression pickups when known frost preparation is available. Keep the fire buffer and pickup obligation until public observations verify clearance and collection. An admitted approach is preparation, not puzzle success; do not substitute meals, guessed potion effects, or idle waits."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 11,
@@ -271,36 +298,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 61,
-    "gold_complete": true,
-    "turns": 275,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "68c3ce819e5c4ce19f0c3cc485caa27eac73c3eb",
+  "started_at": "2026-11-21T12:05:02Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000047/video.mp4"
 }

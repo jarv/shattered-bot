@@ -1,42 +1,147 @@
 {
-  "schema_version": 1,
-  "id": "000115",
-  "started_at": "2026-11-22T05:38:36Z",
-  "completed_at": "2026-11-22T05:45:00.521565+00:00",
-  "source_commit": "83e1da67fa7ba68ffc7bcc813dcdc6641b870730",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "c7ba022-review-history",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 2,
   "actions": 902,
-  "duration_seconds": 379.133,
+  "code_changed": true,
+  "completed_at": "2026-11-22T05:45:00.521565+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000114",
-  "previous_source_commit": "f4582ac7c81cdfd008f9f2f55c2592fa9aa347cf",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 379.133,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 190,
+        "turns": 232,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 232,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 184
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 23,
+        "gold_gained": 66,
+        "turns": 607,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 608,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Possible drop-room exit",
+            "status": "reported-hypothesis"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000115",
   "improvements": [
     "The bot now checks nearby entrance-side doors before scouting farther outward through a large shop entrance area. Nearby unexplored spaces still take priority."
   ],
-  "code_changed": true,
   "incoming_learnings": "An entrance search can drift indefinitely through adjacent frontiers even while entrance-side doors remain unchecked. Order admitted work relative to the entrance as well as the current hero, without claiming a shop visit or waiving unfinished pickup.",
   "incoming_update_status": "accepted",
+  "max_depth": 2,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run ended in planner exhaustion with a living hero at full health, not death (decision 902, lines 2558–2559). Identified invisibility was still carried, but the piranha chest remained unresolved. An initiating selector contradiction repeatedly attracted the hero to bank 1267, then declined preparation there: decision 602 reaches it, decision 611 leaves, and decision 612 returns. The approach test counts the entrance door as a retreat while the drink-bank test does not; the surrounding tiles were already visible. Decision 624 explicitly reports the resulting navigation loop. A reduced public-evidence fixture reproduces the local conflict, not complete runtime memory. The proposed conservative filter prevents this futile return without weakening any arrival gate. Original-source regression has the expected assertion failure; candidate regression passes, and all 1,877 suite tests pass with four skipped. This does not prove chest retrieval or eliminate the terminal planning failure: a safe known-invisibility arrival/return contract remains unestablished. The existing related recommendation records that concrete blocker and next validation step.",
-    "learnings": "A fully observed approach that fails its arrival checks must not keep attracting travel after exploration leaves it. Preserve the unresolved chest and terminal failure label; validate a separately budgeted known-invisibility door and return plan before permitting a replacement."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000115/poster.jpg",
+  "previous_run_id": "000114",
+  "previous_source_commit": "f4582ac7c81cdfd008f9f2f55c2592fa9aa347cf",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 256,
+    "gold_complete": true,
+    "turns": 839,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -351,75 +456,11 @@
       "origin_run": "000041"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000115/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000115/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 190,
-        "turns": 232,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 232,
-        "terminal_floor": false,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 184
-          },
-          {
-            "kind": "room",
-            "label": "Distant well",
-            "status": "observed-landmark"
-          }
-        ]
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "experience_gained": 23,
-        "gold_gained": 66,
-        "turns": 607,
-        "experience_complete": false,
-        "gold_complete": false,
-        "turns_complete": false,
-        "accepted_inputs": 608,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "room",
-            "label": "Piranha pool landmark",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Crystal door",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Piranha pool",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Possible drop-room exit",
-            "status": "reported-hypothesis"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run ended in planner exhaustion with a living hero at full health, not death (decision 902, lines 2558–2559). Identified invisibility was still carried, but the piranha chest remained unresolved. An initiating selector contradiction repeatedly attracted the hero to bank 1267, then declined preparation there: decision 602 reaches it, decision 611 leaves, and decision 612 returns. The approach test counts the entrance door as a retreat while the drink-bank test does not; the surrounding tiles were already visible. Decision 624 explicitly reports the resulting navigation loop. A reduced public-evidence fixture reproduces the local conflict, not complete runtime memory. The proposed conservative filter prevents this futile return without weakening any arrival gate. Original-source regression has the expected assertion failure; candidate regression passes, and all 1,877 suite tests pass with four skipped. This does not prove chest retrieval or eliminate the terminal planning failure: a safe known-invisibility arrival/return contract remains unestablished. The existing related recommendation records that concrete blocker and next validation step.",
+    "learnings": "A fully observed approach that fails its arrival checks must not keep attracting travel after exploration leaves it. Preserve the unresolved chest and terminal failure label; validate a separately budgeted known-invisibility door and return plan before permitting a replacement."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 11,
@@ -429,50 +470,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "starving_turns": 6,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 3,
-    "gold_collected": 256,
-    "gold_complete": true,
-    "turns": 839,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      },
-      {
-        "depth": 2,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 3,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "83e1da67fa7ba68ffc7bcc813dcdc6641b870730",
+  "started_at": "2026-11-22T05:38:36Z",
+  "supervisor_version": "c7ba022-review-history",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000115/video.mp4"
 }

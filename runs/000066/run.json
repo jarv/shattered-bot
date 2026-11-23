@@ -1,40 +1,102 @@
 {
-  "schema_version": 1,
-  "id": "000066",
-  "started_at": "2026-11-21T16:45:23Z",
-  "completed_at": "2026-11-21T16:47:14.581369+00:00",
-  "source_commit": "e8ba42bb06f53f7ad3295257174aee95ee09e50d",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 294,
-  "duration_seconds": 108.876,
+  "code_changed": false,
+  "completed_at": "2026-11-21T16:47:14.581369+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000065",
-  "previous_source_commit": "fa7bca776cfe237b66709ce7411eb800fbc3e8a7",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 108.876,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 64,
+        "turns": 287,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 288,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 926
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000066",
   "improvements": [],
-  "code_changed": false,
   "incoming_learnings": "Separate long ordinary return-to-reobserve travel from drink admission. A bank receipt for one carried potion does not establish protection after another color is collected. Require fresh arrival visibility, inventory-protection feasibility, hazard barriers, hunger budgeting and accepted-input accounting; never treat route existence or a preparation choice as completion.",
   "incoming_update_status": "review-only",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The run ended in planner exhaustion, not observed death: the hero was at full health. The upgrade scroll was behind observed magical fire. Guarded frost preparation incorrectly found no potion stash because ordinary shortest paths used a closed-door shortcut; it rejected that route without finding the existing floor-only alternative between two admitted banks. With preparation excluded, departure correctly refused the unfinished mandatory pickup. Offline reconstruction on the played source matches every earlier selected action, reason and intent and the terminal blocker. The proposed correction searches within unchanged stash safety constraints and uses those routes for preparation travel. The candidate first differs at the terminal input by selecting guarded staging; reconstruction stops there without dispatch or invented subsequent observations. The new regression fails as expected on original source and passes with the correction; the full Python suite passes. Historical backlog entries are retained, not newly validated.",
-    "learnings": "Apply route restrictions during search, not only after choosing an unrestricted shortest path. A rejected shortcut does not prove that no admissible route exists. Keep preparation feasibility separate from accepted drops, potion effects, fire clearance and mandatory pickup receipts."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000066/poster.jpg",
+  "previous_run_id": "000065",
+  "previous_source_commit": "fa7bca776cfe237b66709ce7411eb800fbc3e8a7",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 64,
+    "gold_complete": true,
+    "turns": 287,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -274,46 +336,11 @@
       "origin_run": "000066"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000066/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000066/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 10,
-        "gold_gained": 64,
-        "turns": 287,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 288,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 926
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The run ended in planner exhaustion, not observed death: the hero was at full health. The upgrade scroll was behind observed magical fire. Guarded frost preparation incorrectly found no potion stash because ordinary shortest paths used a closed-door shortcut; it rejected that route without finding the existing floor-only alternative between two admitted banks. With preparation excluded, departure correctly refused the unfinished mandatory pickup. Offline reconstruction on the played source matches every earlier selected action, reason and intent and the terminal blocker. The proposed correction searches within unchanged stash safety constraints and uses those routes for preparation travel. The candidate first differs at the terminal input by selecting guarded staging; reconstruction stops there without dispatch or invented subsequent observations. The new regression fails as expected on original source and passes with the correction; the full Python suite passes. Historical backlog entries are retained, not newly validated.",
+    "learnings": "Apply route restrictions during search, not only after choosing an unrestricted shortest path. A rejected shortcut does not prove that no admissible route exists. Keep preparation feasibility separate from accepted drops, potion effects, fire clearance and mandatory pickup receipts."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -323,36 +350,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 64,
-    "gold_complete": true,
-    "turns": 287,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "e8ba42bb06f53f7ad3295257174aee95ee09e50d",
+  "started_at": "2026-11-21T16:45:23Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000066/video.mp4"
 }

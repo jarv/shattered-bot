@@ -1,42 +1,114 @@
 {
-  "schema_version": 1,
-  "id": "000087",
-  "started_at": "2026-11-21T23:14:13Z",
-  "completed_at": "2026-11-21T23:16:38.683976+00:00",
-  "source_commit": "e7c986774d1ec8415db4d8333fe0c7765be613de",
-  "review_commit": "",
-  "next_source_commit": "",
-  "notes_url": "",
-  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
-  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
-  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
-  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
-  "outcome": "stuck-planner",
-  "outcome_summary": "stuck planner (bot unable to proceed)",
-  "outcome_reason": "stuck planner (bot unable to proceed)",
-  "death_reason": "stuck planner (bot unable to proceed)",
-  "max_depth": 1,
   "actions": 341,
-  "duration_seconds": 141.866,
+  "code_changed": true,
+  "completed_at": "2026-11-21T23:16:38.683976+00:00",
   "configuration": {
     "hero": "Mage",
     "requested_challenges": [],
     "review_engine": "opencode",
     "verified_challenges": []
   },
-  "previous_run_id": "000086",
-  "previous_source_commit": "285daea9d532eaeeb394e534b9c73728f1fcf835",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "duration_seconds": 141.866,
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 55,
+        "turns": 337.82611083984375,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 335,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 410
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt/choice container",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "game_build": "2f7b8780b93bf3121fe76e3bff17e440ee3d53bf17437817c212a9b738403137",
+  "game_checksum": "37318b436092e920ae2413a081737ab6c4d5e9351adc69963a2c4017c48f39af",
+  "game_source": "dc6687b3f47358fdd18df0a859737eae4f63100a",
+  "id": "000087",
   "improvements": [
     "After enough quiet recovery, the bot now releases its old escape route when the last remembered threat expires, provided there are no fresh danger signs or damage. It still checks ordinary movement safety."
   ],
-  "code_changed": true,
   "incoming_learnings": "Accepted quiet recovery and fresh threat-memory expiry must be reconciled before route arbitration. Releasing obsolete escape protection is not evidence of an enemy kill or completed loot; retain ordinary movement safety and pickup verification.",
   "incoming_update_status": "accepted",
+  "max_depth": 1,
   "model": "gpt-6.1-sol",
-  "service_tier": "fast",
-  "review": {
-    "review": "The hero remained alive at full health when the planner exhausted its options; this was not an observed death. An observed upgrade scroll remained beyond remembered magical fire. The required-pickup rule correctly prevented descent, but preparation could only refresh the barrier from a nearby observation vantage. Source-pinned offline reconstruction from the complete public log matches all 341 selected actions, reasons and intents before reproducing the terminal blocker. At that point valid observation approaches require 17–20 route cells, outside the local refresh envelope; no refresh attempts or potion tests had occurred. The earlier puzzle-backed meal did not resolve this travel contradiction. The proposed correction adds bounded, revalidated travel over known safe ground to an observation vantage while preserving all potion-test, hazard, inventory-protection and mandatory-pickup checks. The new regression fails on original policy and passes with the correction; the full suite passes 1,830 tests with four skips. These are offline policy checks, not evidence that the room can be solved or the scroll collected.",
-    "learnings": "Distinguish a nearby observation refresh from a bounded return journey after other floor work. Preparing a fresh view does not prove a safe potion test, extinguished fire, or collected progression loot."
+  "next_source_commit": "",
+  "notes_url": "",
+  "outcome": "stuck-planner",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000087/poster.jpg",
+  "previous_run_id": "000086",
+  "previous_source_commit": "285daea9d532eaeeb394e534b9c73728f1fcf835",
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 55,
+    "gold_complete": true,
+    "turns": 337.82611083984375,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
   },
   "recommendations": [
     {
@@ -208,56 +280,11 @@
       "origin_run": "000043"
     }
   ],
-  "update_status": "accepted",
-  "video": "https://media.shattered.jarv.org/bot-v1/runs/000087/video.mp4",
-  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000087/poster.jpg",
-  "floor_metrics": {
-    "schema_version": 1,
-    "source": "public-accepted-transitions-v1",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "experience_gained": 11,
-        "gold_gained": 55,
-        "turns": 337.82611083984375,
-        "experience_complete": true,
-        "gold_complete": true,
-        "turns_complete": true,
-        "accepted_inputs": 335,
-        "terminal_floor": true,
-        "highlights": [
-          {
-            "kind": "hidden",
-            "label": "Hidden doorway",
-            "status": "reported-discovery",
-            "cell": 410
-          },
-          {
-            "kind": "room",
-            "label": "Crystal choice container",
-            "status": "observed-landmark"
-          },
-          {
-            "kind": "room",
-            "label": "Chasm/trap area",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Gas/fire hazard",
-            "status": "reported-unresolved"
-          },
-          {
-            "kind": "room",
-            "label": "Crypt/choice container",
-            "status": "reported-unresolved"
-          }
-        ]
-      }
-    ]
+  "review": {
+    "review": "The hero remained alive at full health when the planner exhausted its options; this was not an observed death. An observed upgrade scroll remained beyond remembered magical fire. The required-pickup rule correctly prevented descent, but preparation could only refresh the barrier from a nearby observation vantage. Source-pinned offline reconstruction from the complete public log matches all 341 selected actions, reasons and intents before reproducing the terminal blocker. At that point valid observation approaches require 17–20 route cells, outside the local refresh envelope; no refresh attempts or potion tests had occurred. The earlier puzzle-backed meal did not resolve this travel contradiction. The proposed correction adds bounded, revalidated travel over known safe ground to an observation vantage while preserving all potion-test, hazard, inventory-protection and mandatory-pickup checks. The new regression fails on original policy and passes with the correction; the full suite passes 1,830 tests with four skips. These are offline policy checks, not evidence that the room can be solved or the scroll collected.",
+    "learnings": "Distinguish a nearby observation refresh from a bounded return journey after other floor work. Preparing a fresh view does not prove a safe potion test, extinguished fire, or collected progression loot."
   },
+  "review_commit": "",
   "run_stats": {
     "schema_version": 1,
     "ending_strength": 10,
@@ -267,36 +294,11 @@
     "starving_turns_complete": true,
     "source": "public-observations; game-turn intervals attributed to starting hunger buff"
   },
-  "floor_starvation_metrics": {
-    "schema_version": 1,
-    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
-    "log_complete": true,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "starving_turns": 0,
-        "starving_turns_complete": true
-      }
-    ]
-  },
-  "progression_metrics": {
-    "schema_version": 1,
-    "source": "public-observed-progression-v1",
-    "log_complete": true,
-    "max_level": 2,
-    "gold_collected": 55,
-    "gold_complete": true,
-    "turns": 337.82611083984375,
-    "floors": [
-      {
-        "depth": 1,
-        "branch": 0,
-        "levels_gained": 1,
-        "levels_complete": true,
-        "max_level": 2,
-        "max_level_complete": true
-      }
-    ]
-  }
+  "schema_version": 1,
+  "service_tier": "fast",
+  "source_commit": "e7c986774d1ec8415db4d8333fe0c7765be613de",
+  "started_at": "2026-11-21T23:14:13Z",
+  "supervisor_version": "ccafad80f7fa085ad87a8cd38085ac322ff7d8f1d6df9975ef454ff3865e1af4",
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000087/video.mp4"
 }
