@@ -100,6 +100,35 @@ def choose(p,state,enemies):
             p.dm100_failed_doors.add(plan['door'])
         p.ranged_plan=None
         report(reason)
+    # The hero may already be on the useful threshold. Searching only for
+    # other doors can send it across a lightning room instead of closing the
+    # door with one observed step. This is preparation for cover, not proof
+    # that the door has closed: the existing bank controller rechecks arrival.
+    if not p.ranged_plan and p.tiles.get(pos,{}).get('terrain')==6 \
+            and pos not in p.loot and pos not in occupied \
+            and pos not in p.dm100_failed_doors and sees(p,state,source,pos):
+        closed=sight_tiles(p,state);closed[pos]={'terrain':5}
+        casters=[e for e in enemies if e['name'].lower()=='dm-100']
+        sources={source,*(e['cell'] for e in casters)}
+        banks=[]
+        for bank in neighbors(pos,width,height):
+            if not clean(p,state,bank,occupied) or not p.tiles[bank].get('visible') \
+                    or not p.tiles[bank].get('observed') \
+                    or p.tiles[bank]['terrain'] in {5,6}:continue
+            if any(line_clear(c,bank,width,closed) or projectile_line_clear(c,bank,width,closed)
+                   for c in sources):continue
+            if exposure(p,state,others,bank,distance,line_clear)['exposure'] \
+                    >exposure(p,state,others,pos,distance,line_clear)['exposure']:continue
+            banks.append(bank)
+        if banks:
+            bank=min(banks,key=lambda c:(p.visits[c],c))
+            p.ranged_plan={'name':'dm-100','mode':'door-flight','stage':'bank','door':pos,'goal':bank,
+                           'approach':pos,'steps':0,'waits':0,'depth':state['depth'],
+                           'branch':state.get('branch',0),'last_seen':source,'hp':state['hero']['hp'],
+                           'armed':False}
+            report('step off current observed threshold; verify closure on arrival',[pos,bank])
+            return p.cell(bank,'DM-100: step off current doorway to break lightning sight',
+                          intent=Intent.RETREAT)
     if plan:
         if target:plan['last_seen']=source
         plan['steps']+=1

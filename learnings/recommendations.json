@@ -2001,5 +2001,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000162"
+  },
+  {
+    "id": "000163-current-doorway-cover",
+    "priority": "high",
+    "summary": "Use verified adjacent cover at the current doorway before committing to a distant exposed doorway route.",
+    "evidence": [
+      "Decision 3528, selection line 10231: hero on open door 643 selects step 598 toward remembered door 335.",
+      "Decision 3528 public map: adjacent banks 644 and 688 are visible and observed; provisional closure screens both observed casters.",
+      "Decisions 3528–3533, accepted lines 10232–10252: six retreat moves reduce health from 31 to zero.",
+      "tools/dm100_escape.py: original door search excludes the current threshold; the new deterministic regression reproduces the resulting selection."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000163"
   }
 ]
