@@ -1179,13 +1179,17 @@
   {
     "id": "000089-multi-rat-retreat-feasibility",
     "priority": "high",
-    "summary": "Establish a bounded intervention or verified refuge before repeated non-choke retreats sustain enemy pursuit.",
+    "summary": "Validate a bounded fresh-entry interception before abandoning a newly established hold for another doorway.",
     "evidence": [
-      "This recording's accepted pursuit bookkeeping reaches twenty retreat moves at log line 147.",
-      "The focused decision-23 correction addresses a verified-hold recognition defect, not general non-choke intervention feasibility."
+      "Decision 365, accepted log line 1060: frontier movement activates a hidden alarm trap.",
+      "Decision 376, selected line 1096 and accepted line 1097: the hero reaches holding square 664 behind door 705.",
+      "Decision 377, line 1101: another doorway commitment begins despite one immediate approach slot in the isolated public-input probe.",
+      "Decision 382, lines 1126–1127: door 669 has no verified hold, and another retreat starts.",
+      "Decisions 384–396: admitted retreat options disappear, magic is exhausted, and the final accepted attack ends in death.",
+      "tools/mage_policy.py:1126–1131; tools/multi_enemy_tactics.py:68–110,147–151; tools/doorway_tactics.py:42–68."
     ],
     "status": "deferred",
-    "reason": "Historical backlog, not revalidated in this recording. Prior disposition: The broader historical case is not revalidated here. This recording supplies no changed-policy post-intervention observations or validated non-choke damage-and-refuge contract. Next derive the historical paired intervention and escape fixtures with accepted charge, pursuit and damage bookkeeping before changing those admissions; do not extrapolate survival from this choke correction.",
+    "reason": "No safe replacement is established. The public map has a genuine bypass from the queued rat around door 705 to the holding bank, so removing global choke admission could permit eventual flanking. The existing stationary entry attack is selectable in an isolated probe, but its bounded damage, flank-arrival and continuation contract is unvalidated. Source-pinned reconstruction matches selections 0–126; the recorded decision-127 tactical recovery and subsequent selecting memory remain unresolved. Next validate that recovery through decision 376, derive paired arrival/hold fixtures, and prove a single fresh-entry interception with refusal tests for short bypasses, actual flanks, ranged or accelerated enemies, unknown perimeter, low HP and stale holds. Do not infer later observations after a changed choice or weaken hazard and pickup checks.",
     "origin_run": "000089"
   },
   {
