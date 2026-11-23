@@ -2302,5 +2302,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000185"
+  },
+  {
+    "id": "000186-hungry-frost-information",
+    "priority": "high",
+    "summary": "Allow guarded frost intuition while hungry before declaring mandatory pickup planning exhausted.",
+    "evidence": [
+      "D362, log line 1041",
+      "D371-375, log lines 1066-1075",
+      "D391-392, log lines 1121-1124",
+      "D624, log line 1815",
+      "D688-689, log lines 1998-2003"
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000186"
   }
 ]

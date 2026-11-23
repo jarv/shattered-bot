@@ -732,10 +732,10 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
             staged=revisit_flight_room(p,state,demand,distance)
             if staged:return staged
     # Hunger forbids unknown-drink experiments below, not a stationary
-    # nonconsumptive hypothesis using a carried intuition stone. In particular,
-    # a missing purity reservation must not deadlock mandatory discovery while
-    # this existing information action is still available. A failed strength
-    # guess is not a failed purity guess, nor evidence of either identity.
+    # non-drinking hypothesis using a carried intuition stone. In particular,
+    # a missing purity or frost supply must not deadlock required preparation
+    # while this existing information action is still available. A failed guess
+    # for another color/type is not evidence of the current candidate's identity.
     tile = p.tiles.get(hero["cell"], {})
     if getattr(p, 'reserve_floor_puzzle_supplies', False) and 'hungry' in buffs \
             and hero["hp"] >= .95 * hero["max_hp"] \
@@ -752,7 +752,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
                       if base_name(i) == "stone of intuition" and "USE" in i.get("actions", [])
                       and p.item_action_allowed(i, "USE")), None)
         for demand in pending:
-            if not stone or demand.kind != "gas" or any(
+            if not stone or demand.kind not in {"gas", "frost"} or any(
                     base_name(i) == demand.potion for i in state["inventory"]):
                 continue
             candidate = next((i for i in state["inventory"] if unknown_potion(i)
