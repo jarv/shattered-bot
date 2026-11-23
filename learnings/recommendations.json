@@ -2503,5 +2503,22 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000199"
+  },
+  {
+    "id": "000200-hunger-discovery-handoff",
+    "priority": "high",
+    "summary": "Establish executable, hunger-funded preparation before mandatory potion discovery becomes impossible.",
+    "evidence": [
+      "Decision 1025, selected line 2884 and accepted line 2885: magenta potion is collected with a limited hunger reserve and no known exit.",
+      "Decisions 1026–1029, lines 2887–2894: the stone of intuition is consumed, and its strength hypothesis is publicly rejected.",
+      "Decision 1100, accepted line 3083: starvation begins before the downstairs is observed.",
+      "Decision 1121, accepted line 3149; decision 1122, line 3151: crimson potion is collected while already starving.",
+      "Decision 1136, accepted line 3194: arrival at 621 reveals downstairs 619.",
+      "Decision 1137, lines 3196–3198: mandatory discovery exhausts at 33/35 HP without an accepted recovery input.",
+      "tools/mage_policy.py:495–500,1260–1265,1295–1297; tools/descent_potions.py:272–345; tools/exploration_budget.py:94–134."
+    ],
+    "status": "deferred",
+    "reason": "No safe focused patch is established. The terminal inventory has no food, identify scroll, remaining intuition stone or known strength dose. Healing does not remove starvation; waiting cannot resolve it. Ordinary discovery intentionally starts only after an admitted descent, but this floor's exit is first observed after starvation. Earlier arbitrary drinking would change that contract without validating room-supply reservations, fresh bank admission, inventory protection, effect recovery and a hunger-funded continuation. Next derive paired pre-starvation decision-1030 and first-crimson-pickup fixtures, establish an executable preparation or known-food transaction on validated copies, and add an accepted-input-funded prerequisite with refusal tests before changing scheduling. Preserve mandatory pickup, unknown identities, hazard checks and terminal exhaustion; do not simply allow starving tests or abandon the floor. Complete the source-pinned offline reconstruction beyond decision 1025 first; the current attempts ended on scratch serialization and computation limits, not a demonstrated policy divergence.",
+    "origin_run": "000200"
   }
 ]
