@@ -2078,17 +2078,16 @@
   {
     "id": "000169-summoning-supply-deadlock",
     "priority": "high",
-    "summary": "Resolve the summoning-chamber supply and retrieval contradiction with a verified protected transaction.",
+    "summary": "Establish a verified summoning-room preparation and retrieval transaction before reserving unknown potions indefinitely.",
     "evidence": [
-      "Decision 694, accepted log line 2022: arrival at doorway 1164.",
-      "Decision 695, log lines 2024–2025: trap 1165 and remains 1234 are public; a puzzle meal is consumed.",
-      "Decision 696, line 2026: no verified flight reward round trip despite restored satiety.",
-      "Decisions 861–862, lines 2486–2489: identification reveals toxic gas.",
-      "Decision 863, lines 2490–2491: missing levitation exhausts the planner with the hero alive.",
-      "tools/puzzle_supplies.py:97–100,915–926; tools/room_tactics.py:302–312; tools/special_rooms.py:103–107; tools/mage_policy.py:407–415; tools/descent_potions.py:350–384."
+      "Decision 672, accepted log line 1934: arrival at doorway 591.",
+      "Decision 673, log lines 1936–1937: summoning trap 552 and remains 513 are observed; the puzzle meal advances the clock without resolving preparation.",
+      "Decision 674, log line 1938: missing levitation exhausts potion discovery with the hero at 30/30 HP.",
+      "Source-pinned offline reconstruction matches selections 0–673 and reproduces the terminal blocker.",
+      "tools/puzzle_supplies.py:97–100,915–926; tools/room_tactics.py:277–278; tools/mage_policy.py:403–415; tools/summoning_tactics.py:90–107."
     ],
     "status": "deferred",
-    "reason": "Source browsing and matching offline reconstruction resolve the selecting-state gap, but no safe replacement is certified. The exact blocker is the missing inventory-protected unknown-potion preparation and summoning-room retrieval/abort contract: flight planning cannot cross quarantined ordinary floor, and the final movement guard independently refuses entry. Equipped gear does not meet the existing exterior-choke crowd-readiness gate. Next derive paired doorway-1164 and terminal fixtures, prove a fresh test bank and stash return, then validate actual-buff traversal, remains-interaction contingencies, interruption handling and pickup receipts before changing admission. Do not guess identities, weaken quarantine, waive mandatory progression pickup or restore death waits. No policy or test patch is proposed.",
+    "reason": "Revalidated in this recording, but no safe focused patch is established. The concrete blockers are excluded skeletal-remains interaction and an independent summoning-entry prohibition, not missing selector source or hunger. An endpoint-only diagnostic admits a hypothetical 591–552–513 flight route, but does not validate carried-potion protection, actual-buff entry, remains-triggered contingencies or an interruption-safe return. Next derive paired decision-673/674 fixtures around that route, prove fresh bank and stash admission, then implement and test a bounded transaction with accepted movement, effect, interaction and pickup receipts. Include refusal cases for absent protection, enemy interruption, expired duration and failed collection. Do not merely admit the endpoint, weaken quarantine, waive progression pickup or restore death waits.",
     "origin_run": "000169"
   },
   {
