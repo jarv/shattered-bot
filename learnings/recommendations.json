@@ -2045,5 +2045,18 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000165"
+  },
+  {
+    "id": "000166-shocking-key-clearance",
+    "priority": "high",
+    "summary": "Admit guarded remote shocking-trap clearance for mandatory progression loot before repeating potion preparation.",
+    "evidence": [
+      "Decision 967, log line 2841: the key's shocking trap becomes public.",
+      "Decision 1114, log line 3292: observed remote throwing position and available waterskin.",
+      "Decision 1116, log lines 3298–3300: trapped matching key blocks descent and exhausts the planner."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000166"
   }
 ]

@@ -105,6 +105,52 @@ def diagnostics(p,state,enemies=(),paths=None):
     return report
 
 
+def clear_shocking_resource(p,state,resources,paths):
+    """Press only a required, revealed plate with a fully bounded electrical footprint."""
+    try:
+        from .environment_tactics import payload
+    except ImportError:
+        from environment_tactics import payload
+    if any(getattr(p,key,None) for key in ('trap_payload_return','puzzle_probe','potion_stash','room_journey')):return None
+    item=payload(state)
+    # Keep the existing reusable-container retrieval obligation; no expendable
+    # projectile effects or replacement supply are assumed here.
+    if not item or base_name(item) not in {'waterskin','dew vial','dew pouch'}:return None
+    width,height=state['map']['width'],state['map']['height']
+    pos=state['hero']['cell']
+    for cell in sorted(resources):
+        name=base_name(resources[cell].get('top_item',resources[cell]))
+        if name not in NAMES and not name.endswith(' key'):continue
+        tile=p.tiles.get(cell,{})
+        if cell in paths or (state['depth'],cell) in p.trap_attempts \
+                or tile.get('terrain')!=18 or tile.get('trap','').lower()!='shocking trap' \
+                or not tile.get('visible') or not p.shot_clear(state,cell):continue
+        # ShockingTrap seeds the non-solid 3x3; Electricity then spreads
+        # recursively through cardinally connected water, not just radius one.
+        area={c for c in {cell,*neighbors(cell,width,height)}
+              if p.tiles.get(c,{}).get('terrain')!=4}
+        queue=list(area);valid=True
+        for c in queue:
+            t=p.tiles.get(c,{})
+            if not t.get('visible') or t.get('effects') or t.get('plant') \
+                    or (c!=cell and t.get('trap') and t.get('terrain')!=19):
+                valid=False;break
+            for n in neighbors(c,width,height):
+                if distance(c,n,width)!=1 or (c%width!=n%width and c//width!=n//width):continue
+                boundary=p.tiles.get(n,{})
+                if not boundary.get('visible'):
+                    valid=False;break
+                if boundary.get('terrain')==29 and n not in area:
+                    area.add(n);queue.append(n)
+            if not valid:break
+        if not valid or pos in area or any(o['cell'] in area and not o.get('top_item')
+                                         for o in state.get('objects',[])):continue
+        p.trap_attempts.add((state['depth'],cell))
+        p.trap_payload_return={'cell':cell,'name':base_name(item),'depth':state['depth'],'steps':0}
+        return p.use(item,'THROW','trap: remotely clear revealed shocking plate under required resource; reobserve electricity before retrieval',target=cell)
+    return None
+
+
 def choose(p,state,enemies):
     resources=targets(p)
     if resources and hasattr(p,'planner'):
@@ -113,6 +159,12 @@ def choose(p,state,enemies):
     buffs=' '.join(b['name'].lower() for b in state['hero'].get('buffs',[]))
     if any(b in buffs for b in ('burn','poison','bleed','paral','root','vertigo','blind')):return None
     if not resources:return None
+    if getattr(p,'trap_payload_return',None):
+        try:
+            from .environment_tactics import recover_trap_payload
+        except ImportError:
+            from environment_tactics import recover_trap_payload
+        return recover_trap_payload(p,state,enemies)
     paths=p.paths(state);choices=[]
     for cell,obj in resources.items():
         if cell not in paths or p.failed_moves[cell] or cell in p.blocked:continue
@@ -122,6 +174,8 @@ def choose(p,state,enemies):
                for c in route[1:]):continue
         choices.append((len(route),cell))
     if not choices:
+        clearance=clear_shocking_resource(p,state,resources,paths)
+        if clearance:return clearance
         # Preparation yields to this priority leaf. If pickup is not admitted,
         # allow the existing guarded puzzle-supply controller to make progress.
         try:
