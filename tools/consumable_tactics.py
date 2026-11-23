@@ -220,13 +220,16 @@ def discovery_menu(p, state):
         items = sorted((i for i in state["inventory"] if i.get("known_cursed") or i.get("equipped")),
                        key=lambda i: (bool(i.get('known_cursed') and i.get('equipped') and accessory_kind(i)),
                                       bool(i.get('known_cursed') and i.get('equipped')),
-                                      i.get("known_cursed", False), i.get("equipped", False)), reverse=True)
+                                      i.get("known_cursed", False),
+                                      i["name"].lower().startswith("wand of "),
+                                      i.get("equipped", False)), reverse=True)
     else:
         items = []  # In particular, do not blindly transmute valuable equipment.
     # Preserve preferred consumables across bag navigation rather than consuming
     # Identify on lower-ranked equipment while the target is in another bag.
     preferred_consumable = bool(items and (unknown_potion(items[0]) or unknown_scroll(items[0])))
-    for item in items[:1] if preferred_consumable else items:
+    preferred_curse = bool("cleanse an item" in texts and items and items[0].get("known_cursed"))
+    for item in items[:1] if preferred_consumable or preferred_curse else items:
         button = next((b for b in buttons if b["label"].lower() == item["name"].lower()), None)
         if button:
             p.menu_plan = None

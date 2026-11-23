@@ -151,13 +151,28 @@ def corruption(c):
 
 
 def cleanse(c):
-    if any(i.get("equipped") and known_cursed(i) for i in c.inventory):
+    equipped = any(i.get("equipped") and known_cursed(i) for i in c.inventory)
+    p = c.policy
+    tile = p.tiles.get(c.pos, {})
+    # Wands do not need equipping to be useful. Restore a publicly proven
+    # cursed spare during quiet preparation, never by spending a combat turn
+    # or treating the read/menu selection as evidence of successful cleansing.
+    spare = not equipped and not c.enemies and not getattr(p, "recent_threats", {}) \
+        and not getattr(p, "unseen_damage_turns", 0) and not c.danger \
+        and c.state.get("status") == "ready" and not c.state.get("modal") \
+        and tile.get("visible") and tile.get("observed") \
+        and not tile.get("effects") and not tile.get("trap") and not tile.get("plant") \
+        and not any(b in c.buffs for b in ("blind", "burn", "poison", "bleed", "ooze", "paral", "vertigo")) \
+        and any(i["name"].lower().startswith("wand of ") and i.get("curse_known")
+                and known_cursed(i) and "ZAP" in i.get("actions", []) for i in c.inventory)
+    if equipped or spare:
         scroll = next((i for i in c.inventory if "scroll of remove curse" in i["name"].lower()
                        and "READ" in i.get("actions", [])), None)
         if scroll:
             c.policy.menu_plan = "discover-scroll"
             c.policy.consumable_menu_bags = set()
-            return c.policy.use(scroll, "READ", "survival: cleanse cursed equipped item first")
+            return c.policy.use(scroll, "READ", "survival: cleanse cursed equipped item first" if equipped
+                                else "prepare: cleanse known cursed spare wand")
 
 
 def invisible_escape(c):

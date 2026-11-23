@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "id": "000158",
+  "started_at": "2026-11-23T00:07:23Z",
+  "completed_at": "2026-11-23T00:15:14.248047+00:00",
+  "source_commit": "ae207fa94dbfc168b5a6e05e2be3a38ca2588bf1",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "quota-skip-20261122",
+  "outcome": "dead",
+  "outcome_summary": "Killed by a gnoll scout after prolonged fly pressure",
+  "outcome_reason": "Hero died",
+  "max_depth": 3,
+  "actions": 1231,
+  "duration_seconds": 465.533,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000157",
+  "previous_source_commit": "85a644da0bd1ea0a1da6f1741bf091fb033668d6",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "A preparation bank admitted from a departure observation may become unusable after door closure or loss of storage visibility. Validate departure effects and an executable protected-storage transaction before committing transit. Keep unknown identities, hazard checks, mandatory pickup and explicit planner exhaustion intact.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The full recording confirms death: decision 1230, accepted log line 3737, explicitly identifies a gnoll scout as the killer. Earlier fly exchanges depleted health while magic was exhausted. A concrete preparation omission precedes that fallback: decision 867, accepted line 2478, publicly reveals a cursed disintegration wand. Decisions 878 and 888 (lines 2502 and 2532) retain that spare and an identified remove-curse scroll during quiet observations, but the equipped-only cleanse selector ignores the wand. Decision 1126 (line 3297) still carries both while the staff is empty and physical fly fallback begins. The focused correction permits conservative quiet spare-wand cleansing and preserves its menu target across bags, without claiming cleansing or charges before public confirmation. The new five-test regression has three expected assertion failures against original selectors and passes on the candidate; the full suite passes 2,005 tests with four skips. Fixtures are public-evidence reductions and independent UI contracts, not reconstructed original runtime memory or a changed-policy replay. This establishes a preparation defect, not that repairing it would prevent death. Historical backlog cases were not revalidated.",
+    "learnings": "A wand need not be equipped to justify cleansing. Prepare a publicly known cursed spare during a quiet, freshly observed opportunity, preserve worn-curse priority, and keep its target through bag navigation. Do not infer successful cleansing, charge capacity or survival from choosing preparation."
+  },
+  "recommendations": [
+    {
+      "id": "000158-cursed-spare-wand-preparation",
+      "priority": "high",
+      "summary": "Cleanse a publicly known cursed spare wand during safe preparation instead of leaving the resource unusable.",
+      "evidence": [
+        "Decision 867, accepted log line 2478: the disintegration wand is publicly revealed cursed.",
+        "Decisions 878 and 888, selection lines 2502 and 2532: the known cursed spare and identified remove-curse scroll remain carried during quiet observations.",
+        "Decision 1126, selection line 3297: empty staff, cursed spare and unused cleanse scroll accompany physical fly fallback.",
+        "tools/policy_tree.py:34; tools/policy_nodes.py:153-175; tools/consumable_tactics.py:215-245."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000158"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000158/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000158/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 53,
+        "turns": 272,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 278,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 329
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 22,
+        "gold_gained": 547,
+        "turns": 554,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 521,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 30,
+        "gold_gained": 254,
+        "turns": 409,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 426,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 17,
+    "ending_level": 4,
+    "starving_turns": 6,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 4,
+    "gold_collected": 854,
+    "gold_complete": true,
+    "turns": 1235,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
