@@ -2134,5 +2134,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000172"
+  },
+  {
+    "id": "000174-cross-threat-door-flight",
+    "priority": "high",
+    "summary": "Prevent existing pursuer contact from funding new attacker contact along DM-100 door-flight routes.",
+    "evidence": [
+      "Decision 3753, selection line 10789 and accepted line 10790: newly observed skeleton blocks the previous door; retreat reaches 646.",
+      "Decision 3754, selection line 10794: door-425 route approaches observed skeleton 424 while aggregate exposure remains equal to starting guard contact.",
+      "Decision 3754, accepted line 10795, and decision 3755, lines 10798-10800: movement reaches 613, flight becomes unreachable, and combat replaces retreat.",
+      "Decision 3766, accepted line 10836: HP falls from 10 to zero; the public death message names a skeleton.",
+      "tools/dm100_escape.py:86-94; new four-test regression reproduces original rejection failures and passes with the per-attacker route check."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000174"
   }
 ]

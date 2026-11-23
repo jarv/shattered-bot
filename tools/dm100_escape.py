@@ -84,9 +84,13 @@ def choose(p,state,enemies):
     others=[e for e in active if e['name'].lower()!='dm-100']
     paths=p.paths(state,occupied)
     def route_ok(route):
+        # Leaving one pursuer's reach cannot pay for entering a different
+        # observed attacker's reach farther along the committed corridor.
+        # Recheck per enemy on both new and continuing door flights.
         return all(clean(p,state,c,occupied) and
-                   exposure(p,state,others,c,distance,line_clear)['exposure']
-                   <=exposure(p,state,others,pos,distance,line_clear)['exposure']
+                   all(exposure(p,state,[e],c,distance,line_clear)['exposure']
+                       <=exposure(p,state,[e],pos,distance,line_clear)['exposure']
+                       for e in others)
                    for c in route[1:])
     def report(status,route=()):
         current=p.ranged_plan or {}
