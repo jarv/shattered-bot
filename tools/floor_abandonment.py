@@ -210,7 +210,11 @@ class FloorAbandonment:
                 and incident.get("last_distance", 64) < incident["best_distance"]:
             incident["best_distance"] = incident["last_distance"]
             incident["stalled_actions"] = 0
-        else:
+        elif getattr(decision, "floor_abandonment", None) == incident["id"]:
+            # Survival arbitration (including its target-selection inputs)
+            # did not attempt this route. Count a failed recovery step only
+            # against the navigation stall limit. All accepted inputs still
+            # spend the unchanged total episode budget above.
             incident["stalled_actions"] += 1
 
     def rejected(self):

@@ -1314,13 +1314,14 @@
     "priority": "high",
     "summary": "Establish an executable preparation and retrieval transaction for the earlier unresolved piranha chest.",
     "evidence": [
-      "Decision 1531, line 4513: the original incident reports an uncollected piranha-room chest at 1086.",
-      "Decision 1531 public inventory: magenta, ivory and silver potions remain unidentified; no known invisibility or nonconsumptive identification item is carried.",
-      "Decision 1578, accepted line 4722: fallback changes floors without collection credit.",
-      "tools/puzzle_supplies.py:prepare_supplies; tools/room_tactics.py:plan_journey; tools/mage_policy.py:descent handling."
+      "D2995-D2997: pool arrival, healing-only rescue and first planner incident, log lines 8751-8759",
+      "D2997: chest 283 explicitly deferred without collection credit",
+      "tools/piranha_tactics.py: choose",
+      "tools/puzzle_supplies.py: prepare_supplies",
+      "tools/mage_policy.py: unfinished pool descent gate"
     ],
     "status": "deferred",
-    "reason": "Unaddressed by the single arrival-bookkeeping correction. The concrete safety gap is a protected identification-and-chest-return transaction: unidentified colors do not establish invisibility, and the incident supplies no admitted trial bank with carried-potion collateral protection and a duration-funded return. Next derive paired first-pool and incident fixtures from the public terrain and selecting bookkeeping, then validate fresh bank/stash admission, actual protection duration, interruption recovery and accepted chest pickup. Do not guess potion effects, waive the chest or treat fallback descent as collection.",
+    "reason": "Source inspection resolved the controller chain, but the recorded snapshot has neither known invisibility nor an identification resource, and hunger excludes unknown-drink testing. Raw blandfruit is not admitted food. No safe initiating repair is established without bypassing those constraints. Next, evaluate the recorded arrival geometry on a detached snapshot with explicit hunger funding, inventory protection, entrance and reward-return prerequisite results; admit preparation only if that complete transaction is evidenced.",
     "origin_run": "000102"
   },
   {
@@ -2535,5 +2536,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000202"
+  },
+  {
+    "id": "000203-recovery-combat-accounting",
+    "priority": "high",
+    "summary": "Do not classify survival combat and targeting inputs as failed floor-recovery navigation.",
+    "evidence": [
+      "D2997-D3000: accepted recovery movement, log lines 8760, 8766, 8772 and 8778",
+      "D3001-D3008: combat and targeting receipts, log lines 8782-8805",
+      "D3008-D3009: eight stalled inputs and terminal planner failure, log lines 8806-8808",
+      "tools/floor_abandonment.py: next and observe"
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000203"
   }
 ]
