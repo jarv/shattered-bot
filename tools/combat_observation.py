@@ -196,34 +196,53 @@ def dm100_arcane_disintegration_receipt(before,after,pending):
     A public Magic Charge level supplies a minimum range even when the wand's
     own level is unknown. Do not generalize this to curses, other wands, or
     mere disappearance: the existing missile neighborhood proof stays intact.
+    An identified, non-degraded staff at contact instead proves execution by
+    spending a visible charge; it needs no Magic Charge boost to reach its foe.
     """
     import re
     if pending["name"].lower()!="dm-100" or pending["source"][0]!="magic":
         return False
     item=next((i for i in before.get("inventory",[])
                if i["name"]==pending["source"][1]),None)
-    if not item or item["name"].lower()!="wand of disintegration" \
-            or not item.get("curse_known") or item.get("known_cursed"):
+    if not item or not item.get("curse_known") or item.get("known_cursed"):
         return False
     hero=before["hero"]
     if hero.get("hero_class")!="mage" or not any(
             t.get("name")=="arcane vision" and t.get("points",0)>0
             for t in hero.get("talents",[])):
         return False
-    charge=next((b.get("description","") for b in hero.get("buffs",[])
-                 if b.get("name")=="magic charge"),"")
-    boost=re.search(r"Your wands are boosted to: \+(\d+)\.",charge)
-    turns=re.search(r"Turns of magic charge remaining: (\d+)\.",charge)
-    # Consumption of a non-expiring boost distinguishes an executed zap from
-    # an empty-wand selection while some unrelated actor grants experience.
-    if not boost or not turns or int(turns[1])<=1 or any(
-            b.get("name")=="magic charge" for b in after["hero"].get("buffs",[])):
-        return False
     try:
         from .policy_geometry import distance
     except ImportError:
         from policy_geometry import distance
-    if distance(hero["cell"],pending["cell"],before["map"]["width"])>6+2*int(boost[1]):
+    adjacent_staff = (item.get("identified")
+        and re.fullmatch(r"staff of disintegration \+\d+",item["name"].lower())
+        and isinstance(item.get("visible_upgrade"),int) and item["visible_upgrade"]>=0
+        and distance(hero["cell"],pending["cell"],before["map"]["width"])==1
+        and not any("degrad" in b.get("name","").lower() for b in hero.get("buffs",[])))
+    if adjacent_staff:
+        # The identified staff's imbued wand shares its level. At contact it
+        # cannot fall short; Arcane Vision tracks a struck survivor through fog.
+        # Charge consumption, not XP alone, proves this zap actually executed.
+        used=next((i for i in after.get("inventory",[])
+                   if i.get("id")==item.get("id") and i["name"]==item["name"]),None)
+        bc=re.fullmatch(r"(\d+)/(\d+)",item.get("status",""))
+        ac=re.fullmatch(r"(\d+)/(\d+)",used.get("status","")) if used else None
+        if not bc or not ac or int(bc[1])-int(ac[1])!=1 or bc[2]!=ac[2]:
+            return False
+    elif item["name"].lower()=="wand of disintegration":
+        charge=next((b.get("description","") for b in hero.get("buffs",[])
+                      if b.get("name")=="magic charge"),"")
+        boost=re.search(r"Your wands are boosted to: \+(\d+)\.",charge)
+        turns=re.search(r"Turns of magic charge remaining: (\d+)\.",charge)
+        # Consumption of a non-expiring boost proves execution for the
+        # original unidentified-wand receipt, whose charges may be hidden.
+        if not boost or not turns or int(turns[1])<=1 or any(
+                b.get("name")=="magic charge" for b in after["hero"].get("buffs",[])):
+            return False
+        if distance(hero["cell"],pending["cell"],before["map"]["width"])>6+2*int(boost[1]):
+            return False
+    else:
         return False
     actors=[o for o in before.get("objects",[]) if not o.get("top_item")]
     if len(actors)!=1 or actors[0].get("cell")!=pending["cell"] \

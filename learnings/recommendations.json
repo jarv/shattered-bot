@@ -3208,5 +3208,19 @@
     "status": "deferred",
     "reason": "At the terminal observation there is no reachable known exit, no food or known healing potion, starvation is active, the four-search allowance is spent, and the talisman has only 19% charge. The recorded map does not certify an additional safe progress route. Extending bounds, speculative movement or guessed potion effects would not repair this safely. Next derive paired floor-entry and first-search fixtures and validate an earlier hunger-funded missing-exit observation transaction under existing hazard admission; the caster correction alone does not prove one exists.",
     "origin_run": "000248"
+  },
+  {
+    "id": "000249-staff-caster-retirement",
+    "priority": "high",
+    "summary": "Retire the matching remembered caster after a conservatively verified adjacent disintegration-staff kill.",
+    "evidence": [
+      "Decisions 3470–3471, log lines 9931–9934: identified uncursed staff, one consumed charge, six XP, one turn, Arcane Vision and no remaining actor.",
+      "Decision 3472, log lines 9935–9936: loot movement leaves the former caster square at range.",
+      "Decisions 3473–3474, log lines 9938–9943: stale lightning-lane blocker, healing and terminal planner exhaustion with the hero alive.",
+      "tools/combat_observation.py:192–245; tools/policy_nodes.py:93–119; tools/dm100_escape.py:15–46."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000249"
   }
 ]
