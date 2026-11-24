@@ -482,7 +482,13 @@ def revisit_flight_room(p,state,demand,distance):
         journey=plan_journey(p,staged,[],neighbors,probe_kind=kind,plan_only=True)
         if not journey or not entrance_actionable(p,staged,journey):continue
         around={cell,*neighbors(cell,width,state['map']['height'])}
-        if any(c not in p.tiles or p.tiles[c]['terrain'] not in {0,1,3,4,5,6,9,11,12,14,18,19,20,29}
+        # Flight has a separate chasm/door test-bank envelope. Gas does not:
+        # returning to a chasm-adjacent bank can never pass safe_test_bank,
+        # even after fresh observation. Keep gas reobservation compatible
+        # with that unchanged terrain gate; visibility is still checked later.
+        allowed=({0,1,3,4,5,6,9,11,12,14,18,19,20,29} if kind=='flight'
+                 else {1,3,4,6,9,11,12,14,19,20,29})
+        if any(c not in p.tiles or p.tiles[c]['terrain'] not in allowed
                or p.tiles[c].get('plant') or p.tiles[c].get('effects')
                or c in p.loot for c in around):continue
         if p.tiles[cell].get('trap') or sum(p.walkable(n) for n in neighbors(cell,width,state['map']['height']))<2:continue

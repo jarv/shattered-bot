@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "id": "000267",
+  "started_at": "2026-11-24T15:55:49Z",
+  "completed_at": "2026-11-24T15:57:59.895548+00:00",
+  "source_commit": "0e7ad4a7c0cf14c0607c0cd6f04c0eca057ba2e3",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "51bdb688a8fed22859aa80c5a30a841418fb3c1d6da0f7e728dd727d4914879c",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "game_checksum": "c8e8e4f806fb59aa4240b962b06352f2849b6d7f4a5e78285f74ca7afc951a68",
+  "supervisor_version": "b2e9456-live-buffs",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 226,
+  "duration_seconds": 126.856,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000266",
+  "previous_source_commit": "b6979632b752dc9e8d46a33282b3af84cb068422",
+  "improvements": [
+    "The bot now stops setting up new doorway lures as soon as accepted retreat injuries exhaust its safety budget, rather than waiting for the next movement review."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Accepted injury must retire exhausted lure setups immediately, rather than waiting for the periodic movement review. Canceling and restarting a doorway plan must not erase the encounter’s accumulated health loss. Verified escapes remain eligible; retirement is not proof of safety or survival.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended in planner exhaustion with the hero alive at full health, not an observed death. After discovering gas and escaping, the bot repeatedly returned to an approach beside a chasm that its own potion-testing rules could never accept. These reversals exhausted exploration targets; unfinished gas-room preparation then correctly prevented descent. D192–195, log lines 542–553, establish the initiating sequence; D223–226, lines 641–654, show recovery and terminal failure. Source inspection traced the mismatch to the shared flight/gas approach envelope in tools/puzzle_supplies.py. Offline reconstruction matched every original action and reason through D195. The proposed correction tightens only gas staging geometry, preserving flight handling and all testing, storage, protection, return and mandatory-pickup checks. On a copy of that validated state, preparation instead selects an existing observed route toward a compatible western bank. The new regression fails on the original helper and passes on the candidate; the full suite passes 2463 tests with four skipped. This establishes an admitted reobservation choice, not successful potion testing, reward collection or survival.",
+    "learnings": "A protected reward route is not enough to choose a potion-testing approach. Gas staging must also match the actual test-bank terrain requirements before preferring a remembered location. Reobservation remains preparation only: fresh visibility, inventory protection, actual potion effects and pickup receipts must still be verified."
+  },
+  "recommendations": [
+    {
+      "id": "000267-gas-approach-envelope",
+      "priority": "high",
+      "summary": "Reject structurally incompatible gas-testing approaches before they repeatedly reverse useful exploration.",
+      "evidence": [
+        "D192–195, log lines 542–553: gas discovery, escape and return to the chasm-adjacent approach.",
+        "D223–226, log lines 641–654: navigation recovery followed by mandatory-preparation planner exhaustion.",
+        "tools/puzzle_supplies.py:183–211,457–514: gas test-bank terrain differs from the shared reobservation envelope.",
+        "Offline reconstruction matched D0–195; an isolated candidate preparation probe selects the observed route toward bank 938."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000267"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000267/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000267/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 159,
+        "turns": 218,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 220,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 364
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 159,
+    "gold_complete": true,
+    "turns": 218,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
