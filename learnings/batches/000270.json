@@ -159,6 +159,30 @@
           "action_to": 937
         }
       ]
+    },
+    {
+      "id": "000276",
+      "outcome": "stuck-planner",
+      "observations": [
+        {
+          "signature": "8555d0da008d7fff",
+          "kind": "planner-stop:mandatory-preparation-unresolved",
+          "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+          "depth": 1,
+          "cell": 337,
+          "action_from": 245,
+          "action_to": 268
+        },
+        {
+          "signature": "bc7e2639d2768035",
+          "kind": "planner-incident",
+          "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+          "depth": 1,
+          "cell": 337,
+          "action_from": 245,
+          "action_to": 269
+        }
+      ]
     }
   ],
   "symptom_groups": [
@@ -167,9 +191,20 @@
       "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
       "run_ids": [
         "000273",
-        "000274"
+        "000274",
+        "000276"
       ],
-      "run_count": 2
+      "run_count": 3
+    },
+    {
+      "signature": "bc7e2639d2768035",
+      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+      "run_ids": [
+        "000273",
+        "000274",
+        "000276"
+      ],
+      "run_count": 3
     },
     {
       "signature": "978b37be6c47758c",
@@ -177,15 +212,6 @@
       "run_ids": [
         "000270",
         "000272"
-      ],
-      "run_count": 2
-    },
-    {
-      "signature": "bc7e2639d2768035",
-      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
-      "run_ids": [
-        "000273",
-        "000274"
       ],
       "run_count": 2
     },
@@ -247,6 +273,6 @@
     }
   ],
   "outcomes": {
-    "stuck-planner": 6
+    "stuck-planner": 7
   }
 }
