@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "run_id": "000285",
+  "source_commit": "e91ce6d12602b39e6217e5a819bd87e1925fba3c",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "timeout",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000285/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000285/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 11553,
+      "depth": 5,
+      "cell": 713,
+      "type": "cell",
+      "target_cell": 672,
+      "intent": "retreat"
+    },
+    {
+      "index": 11554,
+      "depth": 5,
+      "cell": 672,
+      "type": "cell",
+      "target_cell": 631,
+      "intent": "retreat"
+    },
+    {
+      "index": 11555,
+      "depth": 5,
+      "cell": 631,
+      "type": "cell",
+      "target_cell": 630,
+      "intent": "retreat"
+    },
+    {
+      "index": 11556,
+      "depth": 5,
+      "cell": 630,
+      "type": "cell",
+      "target_cell": 629,
+      "intent": "retreat"
+    },
+    {
+      "index": 11557,
+      "depth": 5,
+      "cell": 629,
+      "type": "cell",
+      "target_cell": 628,
+      "intent": "retreat"
+    },
+    {
+      "index": 11558,
+      "depth": 5,
+      "cell": 628,
+      "type": "cell",
+      "target_cell": 667,
+      "intent": "retreat"
+    },
+    {
+      "index": 11559,
+      "depth": 5,
+      "cell": 667,
+      "type": "cell",
+      "target_cell": 707,
+      "intent": "retreat"
+    },
+    {
+      "index": 11560,
+      "depth": 5,
+      "cell": 707,
+      "type": "cell",
+      "target_cell": 747,
+      "intent": "retreat"
+    },
+    {
+      "index": 11561,
+      "depth": 5,
+      "cell": 747,
+      "type": "cell",
+      "target_cell": 786,
+      "intent": "retreat"
+    },
+    {
+      "index": 11562,
+      "depth": 5,
+      "cell": 786,
+      "type": "cell",
+      "target_cell": 827,
+      "intent": "retreat"
+    },
+    {
+      "index": 11563,
+      "depth": 5,
+      "cell": 827,
+      "type": "cell",
+      "target_cell": 868,
+      "intent": "retreat"
+    },
+    {
+      "index": 11564,
+      "depth": 5,
+      "cell": 868,
+      "type": "cell",
+      "target_cell": 909,
+      "intent": "retreat"
+    },
+    {
+      "index": 11565,
+      "depth": 5,
+      "cell": 909,
+      "type": "cell",
+      "target_cell": 910,
+      "intent": "retreat"
+    },
+    {
+      "index": 11566,
+      "depth": 5,
+      "cell": 910,
+      "type": "cell",
+      "target_cell": 871,
+      "intent": "retreat"
+    },
+    {
+      "index": 11567,
+      "depth": 5,
+      "cell": 871,
+      "type": "cell",
+      "target_cell": 872,
+      "intent": "retreat"
+    },
+    {
+      "index": 11568,
+      "depth": 5,
+      "cell": 872,
+      "type": "cell",
+      "target_cell": 873,
+      "intent": "retreat"
+    },
+    {
+      "index": 11569,
+      "depth": 5,
+      "cell": 873,
+      "type": "cell",
+      "target_cell": 874,
+      "intent": "retreat"
+    },
+    {
+      "index": 11570,
+      "depth": 5,
+      "cell": 874,
+      "type": "cell",
+      "target_cell": 875,
+      "intent": "retreat"
+    },
+    {
+      "index": 11571,
+      "depth": 5,
+      "cell": 875,
+      "type": "cell",
+      "target_cell": 836,
+      "intent": "retreat"
+    },
+    {
+      "index": 11572,
+      "depth": 5,
+      "cell": 836,
+      "type": "cell",
+      "target_cell": 796,
+      "intent": "retreat"
+    },
+    {
+      "index": 11573,
+      "depth": 5,
+      "cell": 796,
+      "type": "cell",
+      "target_cell": 755,
+      "intent": "retreat"
+    },
+    {
+      "index": 11574,
+      "depth": 5,
+      "cell": 755,
+      "type": "cell",
+      "target_cell": 714,
+      "intent": "retreat"
+    },
+    {
+      "index": 11575,
+      "depth": 5,
+      "cell": 714,
+      "type": "cell",
+      "target_cell": 673,
+      "intent": "retreat"
+    },
+    {
+      "index": 11576,
+      "depth": 5,
+      "cell": 673,
+      "type": "cell",
+      "target_cell": 632,
+      "intent": "retreat"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "250220af32f8ff99",
+      "kind": "outcome:timeout",
+      "reason": "",
+      "action_from": 11553,
+      "action_to": 11576
+    }
+  ],
+  "prior_review_attempt": false
+}
