@@ -68,9 +68,38 @@ def nearby_flight_reward(p, cell, reward, width, height, distance):
     return False
 
 
+def aquarium_ground_rewards(p, state, paths):
+    """Recognition only: dry-ring loot need not fly past a nearby trap.
+
+    Ordinary paths deliberately exclude fish melee banks. Extend that graph
+    only for classification, over a positively recognized aquarium's observed,
+    trap-free dry ring. This neither admits movement nor credits collection.
+    Unknown/trapped approaches and actual chasm rewards remain unresolved.
+    """
+    try:
+        from .policy_geometry import neighbors
+    except ImportError:
+        from policy_geometry import neighbors
+    width, height = state["map"]["width"], state["map"]["height"]
+    ring = {n for h in getattr(p, "piranha_habitats", {}).values()
+            if h["profile"] == "aquarium"
+            for c in h["water"] for n in neighbors(c, width, height)
+            if p.tiles.get(n, {}).get("observed")
+            and p.tiles[n].get("terrain") in {1, 3, 14, 20}
+            and not any(p.tiles[n].get(k) for k in ("trap", "plant", "effects"))}
+    seen, queue = set(paths), deque(paths)
+    while queue:
+        for n in neighbors(queue.popleft(), width, height):
+            if n in ring and n not in seen:
+                seen.add(n)
+                queue.append(n)
+    return ring & seen
+
+
 def demands(p, state, distance, *, include_deferred=False):
     width = state["map"]["width"]
     paths = p.paths(state)
+    dry_aquarium_rewards = aquarium_ground_rewards(p, state, paths)
     found = []
     for cell, actor in p.room_actors.items():
         name = actor["name"].lower()
@@ -100,7 +129,7 @@ def demands(p, state, distance, *, include_deferred=False):
             found.append(Demand("flame", "potion of liquid flame", cell))
         elif cell not in paths and tile["terrain"] in {0,18} and any(
                 nearby_flight_reward(p, cell, c, width, state["map"]["height"], distance)
-                for c in p.loot if c not in paths):
+                for c in p.loot if c not in paths and c not in dry_aquarium_rewards):
             found.append(Demand("flight", "potion of levitation", cell))
         elif "cloud of toxic gas" in effects and cell not in paths and any(
                 distance(cell, c, width) <= 3 for c in p.loot if c not in paths):

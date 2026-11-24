@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "id": "000239",
+  "started_at": "2026-11-24T04:54:26Z",
+  "completed_at": "2026-11-24T04:59:46.006872+00:00",
+  "source_commit": "e9d784dc4f4f533bb45cc404d3dfa400c294d518",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 780,
+  "duration_seconds": 315.585,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000238",
+  "previous_source_commit": "edccd2966b32f338219665ad84c0c659916ccbf8",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "An unresolved pool objective needs an executable preparation transaction, not merely a descent veto. Remote awareness visibility and missing chest objects must not be treated as collection evidence. Preserve unknown-potion, storage, habitat and protection-funded return checks.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health when mandatory potion preparation exhausted (decision 780, log lines 2258–2259). The initiating contradiction was a false flight reservation: a revealed confusion trap at 543 was associated with gold at 512, although an observed trap-free dry approach exists around aquarium 545. Fish-bank exclusion, not that trap, made the gold unreachable. Decision 692 spent a puzzle-backed meal; decision 693 reported no protected flight round trip. The separate pool chest had already yielded a sword. Offline reconstruction matched all 780 original actions and reasons and reproduced the terminal blocker. The proposed correction excludes positively observed ground-connected aquarium-ring rewards from this flight inference without admitting movement or crediting collection. Four new regression tests fail as expected on original policy and pass on the candidate; the full suite passes 2,264 tests with four skipped. An isolated terminal probe selects bank reobservation, not drinking or descent. This does not establish eventual identification, collection or survival.",
+    "learnings": "Distinguish fish-blocked aquarium banks from rewards that actually require flight. Known dry connectivity can disprove a flight prerequisite without making the bank safe. Keep aquarium loot unfinished, preserve mandatory pickups and require fresh preparation and protection checks before execution."
+  },
+  "recommendations": [
+    {
+      "id": "000239-aquarium-trap-reservation",
+      "priority": "high",
+      "summary": "Prevent nearby traps from creating false flight prerequisites for ground-connected aquarium-bank loot.",
+      "evidence": [
+        "Decision 574, log line 1698: confusion gas trap 543 is publicly revealed near aquarium gold 512.",
+        "Decision 692, log line 2034: a puzzle-backed meal is selected.",
+        "Decision 693, log line 2036: flight preparation reports no verified protected reward round trip.",
+        "Decision 780, log lines 2258–2259: mandatory preparation exhausts with the hero alive and no accepted recovery action.",
+        "Original-source offline reconstruction matches all 780 selected actions and reasons; the terminal demand is levitation for trap 543.",
+        "tools/puzzle_supplies.py:71–102,130–133; tools/special_rooms.py:74–90; tools/descent_potions.py:350–393."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000239"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000239/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000239/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 13,
+        "gold_gained": 75,
+        "turns": 383,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 340,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 585
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 19,
+        "gold_gained": 177,
+        "turns": 433.33599853515625,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 434,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 344
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 7,
+    "ending_level": 3,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 252,
+    "gold_complete": true,
+    "turns": 816.3359985351562,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
