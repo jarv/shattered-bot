@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "id": "000256",
+  "started_at": "2026-11-24T11:46:17Z",
+  "completed_at": "2026-11-24T11:48:52.010044+00:00",
+  "source_commit": "432b1fdfbc15de027877262fcb1f3dacd7c26239",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "090ccf4-conflict-traversal",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "navigation-stalled",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 421,
+  "duration_seconds": 151.951,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000255",
+  "previous_source_commit": "33d6374564f7e77792eff17c24a1cfced1481b05",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Treat a protected reward route and an observation approach as separate from executable potion preparation. Before returning repeatedly, establish a jointly feasible test bank, isolated storage route and fresh-arrival handoff. Preserve mandatory pickup, unknown identities, hazard checks and explicit planner exhaustion.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended in planner exhaustion with the hero alive at full health, not an observed death. At decision 365 (logs 1016–1017), potion preparation selected a return toward remembered bank 272 through doorway 218. Decision 366 (logs 1020–1021) abandoned that journey for nearby water 217; decision 367 returned through the doorway again. Changing visibility made the reactive choices alternate, eventually triggering navigation-loop recovery and the terminal stop at decision 421 (logs 1225–1227). Offline reconstruction matched the original selections through decision 366; the candidate first differs there and was not advanced using later observations. The proposed correction retains the admitted observation journey while rechecking its existing safety and resource gates. A new regression fails on original source and passes on the candidate; the full suite passes 2,417 tests with four skipped. This establishes continued preparation selection, not successful identification, collection, descent or improved survival.",
+    "learnings": "Keep an admitted preparation-area return committed across doorway observations. Recheck each movement and require fresh bank and inventory-protection admission on arrival; remembered feasibility never authorizes drinking or collection credit."
+  },
+  "recommendations": [
+    {
+      "id": "000256-discovery-return-commitment",
+      "priority": "high",
+      "summary": "Preserve an admitted potion-preparation return instead of reversing toward briefly visible water.",
+      "evidence": [
+        "Decision 365, logs 1016–1017: return toward bank 272 enters doorway 218.",
+        "Decision 366, logs 1020–1021: fresh water preference reverses to 217.",
+        "Decision 367, logs 1023–1024: preparation returns through the doorway again.",
+        "Decision 375, log 1051: navigation-loop detection.",
+        "Decision 421, logs 1225–1227: planner exhaustion with a living hero.",
+        "tools/descent_potions.py:92–157,306–496; tools/mage_policy.py:1298–1304."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000256"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000256/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000256/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 11,
+        "gold_gained": 137,
+        "turns": 414.25,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 415,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 705
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 1,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 137,
+    "gold_complete": true,
+    "turns": 414.25,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
