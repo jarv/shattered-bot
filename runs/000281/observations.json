@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "run_id": "000281",
+  "source_commit": "5883513afcd03aa8679c4103c812546c10953c0a",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000281/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000281/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 4795,
+      "depth": 10,
+      "cell": 777,
+      "type": "cell",
+      "target_cell": 940
+    },
+    {
+      "index": 4796,
+      "depth": 10,
+      "cell": 777,
+      "type": "item"
+    },
+    {
+      "index": 4797,
+      "depth": 10,
+      "cell": 777,
+      "type": "cell",
+      "target_cell": 940
+    },
+    {
+      "index": 4798,
+      "depth": 10,
+      "cell": 777,
+      "type": "item"
+    },
+    {
+      "index": 4799,
+      "depth": 10,
+      "cell": 777,
+      "type": "cell",
+      "target_cell": 973
+    },
+    {
+      "index": 4800,
+      "depth": 10,
+      "cell": 777,
+      "type": "item"
+    },
+    {
+      "index": 4801,
+      "depth": 10,
+      "cell": 777,
+      "type": "cell",
+      "target_cell": 973
+    },
+    {
+      "index": 4802,
+      "depth": 10,
+      "cell": 777,
+      "type": "item"
+    },
+    {
+      "index": 4803,
+      "depth": 10,
+      "cell": 777,
+      "type": "cell",
+      "target_cell": 781
+    },
+    {
+      "index": 4804,
+      "depth": 10,
+      "cell": 777,
+      "type": "item"
+    },
+    {
+      "index": 4805,
+      "depth": 10,
+      "cell": 777,
+      "type": "cell",
+      "target_cell": 781
+    },
+    {
+      "index": 4806,
+      "depth": 10,
+      "cell": 777,
+      "type": "item"
+    },
+    {
+      "index": 4807,
+      "depth": 10,
+      "cell": 777,
+      "type": "cell",
+      "target_cell": 970
+    },
+    {
+      "index": 4808,
+      "depth": 10,
+      "cell": 777,
+      "type": "cell",
+      "target_cell": 746,
+      "intent": "boss"
+    },
+    {
+      "index": 4809,
+      "depth": 10,
+      "cell": 746,
+      "type": "cell",
+      "target_cell": 777,
+      "intent": "loot"
+    },
+    {
+      "index": 4810,
+      "depth": 10,
+      "cell": 777,
+      "type": "cell",
+      "target_cell": 808,
+      "intent": "loot"
+    },
+    {
+      "index": 4811,
+      "depth": 10,
+      "cell": 808,
+      "type": "cell",
+      "target_cell": 839,
+      "intent": "loot"
+    },
+    {
+      "index": 4812,
+      "depth": 10,
+      "cell": 839,
+      "type": "cell",
+      "target_cell": 871,
+      "intent": "loot"
+    },
+    {
+      "index": 4813,
+      "depth": 10,
+      "cell": 871,
+      "type": "cell",
+      "target_cell": 904,
+      "intent": "loot"
+    },
+    {
+      "index": 4814,
+      "depth": 10,
+      "cell": 904,
+      "type": "cell",
+      "target_cell": 937,
+      "intent": "loot"
+    },
+    {
+      "index": 4815,
+      "depth": 10,
+      "cell": 937,
+      "type": "cell",
+      "target_cell": 970,
+      "intent": "loot"
+    },
+    {
+      "index": 4816,
+      "depth": 10,
+      "cell": 970,
+      "type": "item"
+    },
+    {
+      "index": 4817,
+      "depth": 10,
+      "cell": 326,
+      "type": "item"
+    },
+    {
+      "index": 4818,
+      "depth": 10,
+      "cell": 326,
+      "type": "cell",
+      "target_cell": 391
+    }
+  ],
+  "observations": [
+    {
+      "signature": "f2b2cd6fdfd23a9f",
+      "kind": "planner-stop:unclassified",
+      "reason": "Exploration exhausted without a reachable exit: {\"known_cells\": 260, \"unvisited_reachable\": [358, 359, 390, 392, 423, 424, 327, 328, 454, 455, 456, 394, 427, 459, 396, 428, 460, 491, 332, 333, 365, 397, 429, 461, 523, 524, 334, 366, 398, 430, 462, 555, 556, 525, 557, 202, 203, 586, 588, 589, 526, 558, 170, 171, 552, 621, 622, 137, 139, 519, 551, 583, 615, 652, 653, 654, 105, 106, 107, 550, 582, 614, 646, 647, 648, 778, 779, 776, 809, 810, 811, 780, 812, 775, 807, 840, 841, 842, 843, 844, 781, 813, 845, 872,",
+      "depth": 10,
+      "cell": 391,
+      "action_from": 4795,
+      "action_to": 4818
+    },
+    {
+      "signature": "3a54a961355abfc3",
+      "kind": "planner-incident",
+      "reason": "Exploration exhausted without a reachable exit: {\"known_cells\": 260, \"unvisited_reachable\": [358, 359, 390, 392, 423, 424, 327, 328, 454, 455, 456, 394, 427, 459, 396, 428, 460, 491, 332, 333, 365, 397, 429, 461, 523, 524, 334, 366, 398, 430, 462, 555, 556, 525, 557, 202, 203, 586, 588, 589, 526, 558, 170, 171, 552, 621, 622, 137, 139, 519, 551, 583, 615, 652, 653, 654, 105, 106, 107, 550, 582, 614, 646, 647, 648, 778, 779, 776, 809, 810, 811, 780, 812, 775, 807, 840, 841, 842, 843, 844, 781, 813, 845, 872,",
+      "depth": 10,
+      "cell": 391,
+      "action_from": 4795,
+      "action_to": 4819
+    }
+  ],
+  "prior_review_attempt": false
+}
