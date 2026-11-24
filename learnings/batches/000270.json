@@ -135,6 +135,30 @@
           "action_to": 223
         }
       ]
+    },
+    {
+      "id": "000275",
+      "outcome": "stuck-planner",
+      "observations": [
+        {
+          "signature": "18b2de5b3c8e02c9",
+          "kind": "planner-stop:immediate-safety-emergency",
+          "reason": "Vertigo/confusion exposure: no admissible recovery or all-direction-safe escape within budget",
+          "depth": 3,
+          "cell": 268,
+          "action_from": 913,
+          "action_to": 936
+        },
+        {
+          "signature": "b11bc8b6e59860dd",
+          "kind": "planner-incident",
+          "reason": "Vertigo/confusion exposure: no admissible recovery or all-direction-safe escape within budget",
+          "depth": 3,
+          "cell": 268,
+          "action_from": 913,
+          "action_to": 937
+        }
+      ]
     }
   ],
   "symptom_groups": [
@@ -164,6 +188,14 @@
         "000274"
       ],
       "run_count": 2
+    },
+    {
+      "signature": "18b2de5b3c8e02c9",
+      "reason": "Vertigo/confusion exposure: no admissible recovery or all-direction-safe escape within budget",
+      "run_ids": [
+        "000275"
+      ],
+      "run_count": 1
     },
     {
       "signature": "1c143173d483cb1c",
@@ -204,9 +236,17 @@
         "000272"
       ],
       "run_count": 1
+    },
+    {
+      "signature": "b11bc8b6e59860dd",
+      "reason": "Vertigo/confusion exposure: no admissible recovery or all-direction-safe escape within budget",
+      "run_ids": [
+        "000275"
+      ],
+      "run_count": 1
     }
   ],
   "outcomes": {
-    "stuck-planner": 5
+    "stuck-planner": 6
   }
 }

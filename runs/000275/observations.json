@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "run_id": "000275",
+  "source_commit": "6bae50023c50e6e947da72c3079ea61b66be33f2",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "batch": {
+    "id": "000270",
+    "index": 6,
+    "size": 10,
+    "source_commit": "6bae50023c50e6e947da72c3079ea61b66be33f2",
+    "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa"
+  },
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000275/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000275/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 913,
+      "depth": 2,
+      "cell": 1222,
+      "type": "cell",
+      "target_cell": 1180,
+      "intent": "explore"
+    },
+    {
+      "index": 914,
+      "depth": 2,
+      "cell": 1180,
+      "type": "cell",
+      "target_cell": 1138,
+      "intent": "explore"
+    },
+    {
+      "index": 915,
+      "depth": 2,
+      "cell": 1138,
+      "type": "cell",
+      "target_cell": 1098,
+      "intent": "explore"
+    },
+    {
+      "index": 916,
+      "depth": 2,
+      "cell": 1098,
+      "type": "cell",
+      "target_cell": 1057,
+      "intent": "explore"
+    },
+    {
+      "index": 917,
+      "depth": 2,
+      "cell": 1057,
+      "type": "cell",
+      "target_cell": 1016,
+      "intent": "explore"
+    },
+    {
+      "index": 918,
+      "depth": 2,
+      "cell": 1016,
+      "type": "cell",
+      "target_cell": 1057,
+      "intent": "descend"
+    },
+    {
+      "index": 919,
+      "depth": 2,
+      "cell": 1057,
+      "type": "cell",
+      "target_cell": 1098,
+      "intent": "descend"
+    },
+    {
+      "index": 920,
+      "depth": 2,
+      "cell": 1098,
+      "type": "cell",
+      "target_cell": 1140,
+      "intent": "descend"
+    },
+    {
+      "index": 921,
+      "depth": 2,
+      "cell": 1140,
+      "type": "cell",
+      "target_cell": 1182,
+      "intent": "descend"
+    },
+    {
+      "index": 922,
+      "depth": 3,
+      "cell": 234,
+      "type": "cell",
+      "target_cell": 235,
+      "intent": "loot"
+    },
+    {
+      "index": 923,
+      "depth": 3,
+      "cell": 235,
+      "type": "cell",
+      "target_cell": 270,
+      "intent": "loot"
+    },
+    {
+      "index": 924,
+      "depth": 3,
+      "cell": 270,
+      "type": "cell",
+      "target_cell": 306,
+      "intent": "loot"
+    },
+    {
+      "index": 925,
+      "depth": 3,
+      "cell": 306,
+      "type": "cell",
+      "target_cell": 341,
+      "intent": "loot"
+    },
+    {
+      "index": 926,
+      "depth": 3,
+      "cell": 341,
+      "type": "cell",
+      "target_cell": 376,
+      "intent": "loot"
+    },
+    {
+      "index": 927,
+      "depth": 3,
+      "cell": 376,
+      "type": "cell",
+      "target_cell": 411,
+      "intent": "loot"
+    },
+    {
+      "index": 928,
+      "depth": 3,
+      "cell": 411,
+      "type": "cell",
+      "target_cell": 446,
+      "intent": "loot"
+    },
+    {
+      "index": 929,
+      "depth": 3,
+      "cell": 446,
+      "type": "wait"
+    },
+    {
+      "index": 930,
+      "depth": 3,
+      "cell": 446,
+      "type": "cell",
+      "target_cell": 411,
+      "intent": "retreat"
+    },
+    {
+      "index": 931,
+      "depth": 3,
+      "cell": 411,
+      "type": "cell",
+      "target_cell": 376,
+      "intent": "retreat"
+    },
+    {
+      "index": 932,
+      "depth": 3,
+      "cell": 376,
+      "type": "cell",
+      "target_cell": 341,
+      "intent": "retreat"
+    },
+    {
+      "index": 933,
+      "depth": 3,
+      "cell": 341,
+      "type": "cell",
+      "target_cell": 306,
+      "intent": "retreat"
+    },
+    {
+      "index": 934,
+      "depth": 3,
+      "cell": 306,
+      "type": "cell",
+      "target_cell": 270,
+      "intent": "retreat"
+    },
+    {
+      "index": 935,
+      "depth": 3,
+      "cell": 270,
+      "type": "cell",
+      "target_cell": 304,
+      "intent": "retreat"
+    },
+    {
+      "index": 936,
+      "depth": 3,
+      "cell": 304,
+      "type": "cell",
+      "target_cell": 268,
+      "intent": "retreat"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "18b2de5b3c8e02c9",
+      "kind": "planner-stop:immediate-safety-emergency",
+      "reason": "Vertigo/confusion exposure: no admissible recovery or all-direction-safe escape within budget",
+      "depth": 3,
+      "cell": 268,
+      "action_from": 913,
+      "action_to": 936
+    },
+    {
+      "signature": "b11bc8b6e59860dd",
+      "kind": "planner-incident",
+      "reason": "Vertigo/confusion exposure: no admissible recovery or all-direction-safe escape within budget",
+      "depth": 3,
+      "cell": 268,
+      "action_from": 913,
+      "action_to": 937
+    }
+  ],
+  "prior_review_attempt": false
+}
