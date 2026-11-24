@@ -183,6 +183,28 @@
           "action_to": 269
         }
       ]
+    },
+    {
+      "id": "000277",
+      "outcome": "dead",
+      "observations": [
+        {
+          "signature": "7b8a6e3739ab70be",
+          "kind": "observed-death:unknown/missing",
+          "reason": "Hero died; cause not established by the recording summary",
+          "action_from": 3950,
+          "action_to": 3973
+        },
+        {
+          "signature": "978b37be6c47758c",
+          "kind": "planner-incident",
+          "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+          "depth": 2,
+          "cell": 1017,
+          "action_from": 742,
+          "action_to": 766
+        }
+      ]
     }
   ],
   "symptom_groups": [
@@ -197,6 +219,16 @@
       "run_count": 3
     },
     {
+      "signature": "978b37be6c47758c",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "run_ids": [
+        "000270",
+        "000272",
+        "000277"
+      ],
+      "run_count": 3
+    },
+    {
       "signature": "bc7e2639d2768035",
       "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
       "run_ids": [
@@ -205,15 +237,6 @@
         "000276"
       ],
       "run_count": 3
-    },
-    {
-      "signature": "978b37be6c47758c",
-      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
-      "run_ids": [
-        "000270",
-        "000272"
-      ],
-      "run_count": 2
     },
     {
       "signature": "18b2de5b3c8e02c9",
@@ -264,6 +287,14 @@
       "run_count": 1
     },
     {
+      "signature": "7b8a6e3739ab70be",
+      "reason": "Hero died; cause not established by the recording summary",
+      "run_ids": [
+        "000277"
+      ],
+      "run_count": 1
+    },
+    {
       "signature": "b11bc8b6e59860dd",
       "reason": "Vertigo/confusion exposure: no admissible recovery or all-direction-safe escape within budget",
       "run_ids": [
@@ -273,6 +304,7 @@
     }
   ],
   "outcomes": {
+    "dead": 1,
     "stuck-planner": 7
   }
 }

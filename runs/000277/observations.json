@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "run_id": "000277",
+  "source_commit": "6bae50023c50e6e947da72c3079ea61b66be33f2",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "batch": {
+    "id": "000270",
+    "index": 8,
+    "size": 10,
+    "source_commit": "6bae50023c50e6e947da72c3079ea61b66be33f2",
+    "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa"
+  },
+  "outcome": "dead",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000277/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000277/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 3950,
+      "depth": 8,
+      "cell": 982,
+      "type": "cell",
+      "target_cell": 983,
+      "intent": "retreat"
+    },
+    {
+      "index": 3951,
+      "depth": 8,
+      "cell": 983,
+      "type": "cell",
+      "target_cell": 1020
+    },
+    {
+      "index": 3952,
+      "depth": 8,
+      "cell": 983,
+      "type": "cell",
+      "target_cell": 1020
+    },
+    {
+      "index": 3953,
+      "depth": 8,
+      "cell": 983,
+      "type": "cell",
+      "target_cell": 1020
+    },
+    {
+      "index": 3954,
+      "depth": 8,
+      "cell": 983,
+      "type": "cell",
+      "target_cell": 1020
+    },
+    {
+      "index": 3955,
+      "depth": 8,
+      "cell": 1020,
+      "type": "cell",
+      "target_cell": 1057
+    },
+    {
+      "index": 3956,
+      "depth": 8,
+      "cell": 1057,
+      "type": "cell",
+      "target_cell": 1020
+    },
+    {
+      "index": 3957,
+      "depth": 8,
+      "cell": 1020,
+      "type": "cell",
+      "target_cell": 1057,
+      "intent": "loot"
+    },
+    {
+      "index": 3958,
+      "depth": 8,
+      "cell": 1057,
+      "type": "cell",
+      "target_cell": 1095,
+      "intent": "loot"
+    },
+    {
+      "index": 3959,
+      "depth": 8,
+      "cell": 1095,
+      "type": "cell",
+      "target_cell": 1096,
+      "intent": "loot"
+    },
+    {
+      "index": 3960,
+      "depth": 8,
+      "cell": 1096,
+      "type": "cell",
+      "target_cell": 1134,
+      "intent": "loot"
+    },
+    {
+      "index": 3961,
+      "depth": 8,
+      "cell": 1134,
+      "type": "cell",
+      "target_cell": 1170,
+      "intent": "loot"
+    },
+    {
+      "index": 3962,
+      "depth": 8,
+      "cell": 1170,
+      "type": "cell",
+      "target_cell": 1206,
+      "intent": "loot"
+    },
+    {
+      "index": 3963,
+      "depth": 8,
+      "cell": 1206,
+      "type": "cell",
+      "target_cell": 1207,
+      "intent": "retreat"
+    },
+    {
+      "index": 3964,
+      "depth": 8,
+      "cell": 1207,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 3965,
+      "depth": 8,
+      "cell": 1207,
+      "type": "cell",
+      "target_cell": 1171,
+      "intent": "retreat"
+    },
+    {
+      "index": 3966,
+      "depth": 8,
+      "cell": 1171,
+      "type": "cell",
+      "target_cell": 1170,
+      "intent": "loot"
+    },
+    {
+      "index": 3967,
+      "depth": 8,
+      "cell": 1170,
+      "type": "cell",
+      "target_cell": 1206,
+      "intent": "loot"
+    },
+    {
+      "index": 3968,
+      "depth": 8,
+      "cell": 1206,
+      "type": "cell",
+      "target_cell": 1170,
+      "intent": "retreat"
+    },
+    {
+      "index": 3969,
+      "depth": 8,
+      "cell": 1170,
+      "type": "cell",
+      "target_cell": 1207,
+      "intent": "retreat"
+    },
+    {
+      "index": 3970,
+      "depth": 8,
+      "cell": 1207,
+      "type": "item"
+    },
+    {
+      "index": 3971,
+      "depth": 8,
+      "cell": 1207,
+      "type": "cell",
+      "target_cell": 1206
+    },
+    {
+      "index": 3972,
+      "depth": 8,
+      "cell": 1207,
+      "type": "cell",
+      "target_cell": 1206
+    },
+    {
+      "index": 3973,
+      "depth": 8,
+      "cell": 1207,
+      "type": "cell",
+      "target_cell": 1206
+    }
+  ],
+  "observations": [
+    {
+      "signature": "7b8a6e3739ab70be",
+      "kind": "observed-death:unknown/missing",
+      "reason": "Hero died; cause not established by the recording summary",
+      "action_from": 3950,
+      "action_to": 3973
+    },
+    {
+      "signature": "978b37be6c47758c",
+      "kind": "planner-incident",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "depth": 2,
+      "cell": 1017,
+      "action_from": 742,
+      "action_to": 766
+    }
+  ],
+  "prior_review_attempt": false
+}
