@@ -30,6 +30,30 @@
           "action_to": 735
         }
       ]
+    },
+    {
+      "id": "000271",
+      "outcome": "stuck-planner",
+      "observations": [
+        {
+          "signature": "1e58c5f038b73daa",
+          "kind": "planner-stop:immediate-safety-emergency",
+          "reason": "Fly pressure: no bounded attack or reduced-pressure retreat; do not silently recharge under adjacent attacks",
+          "depth": 4,
+          "cell": 1634,
+          "action_from": 1604,
+          "action_to": 1627
+        },
+        {
+          "signature": "215266fb40b34db7",
+          "kind": "planner-incident",
+          "reason": "Fly pressure: no bounded attack or reduced-pressure retreat; do not silently recharge under adjacent attacks",
+          "depth": 4,
+          "cell": 1634,
+          "action_from": 1604,
+          "action_to": 1628
+        }
+      ]
     }
   ],
   "symptom_groups": [
@@ -38,6 +62,22 @@
       "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
       "run_ids": [
         "000270"
+      ],
+      "run_count": 1
+    },
+    {
+      "signature": "1e58c5f038b73daa",
+      "reason": "Fly pressure: no bounded attack or reduced-pressure retreat; do not silently recharge under adjacent attacks",
+      "run_ids": [
+        "000271"
+      ],
+      "run_count": 1
+    },
+    {
+      "signature": "215266fb40b34db7",
+      "reason": "Fly pressure: no bounded attack or reduced-pressure retreat; do not silently recharge under adjacent attacks",
+      "run_ids": [
+        "000271"
       ],
       "run_count": 1
     },
@@ -51,6 +91,6 @@
     }
   ],
   "outcomes": {
-    "stuck-planner": 1
+    "stuck-planner": 2
   }
 }

@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "run_id": "000271",
+  "source_commit": "6bae50023c50e6e947da72c3079ea61b66be33f2",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "batch": {
+    "id": "000270",
+    "index": 2,
+    "size": 10,
+    "source_commit": "6bae50023c50e6e947da72c3079ea61b66be33f2",
+    "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa"
+  },
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000271/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000271/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 1604,
+      "depth": 4,
+      "cell": 1666,
+      "type": "cell",
+      "target_cell": 1631
+    },
+    {
+      "index": 1605,
+      "depth": 4,
+      "cell": 1666,
+      "type": "cell",
+      "target_cell": 1631
+    },
+    {
+      "index": 1606,
+      "depth": 4,
+      "cell": 1666,
+      "type": "cell",
+      "target_cell": 1631
+    },
+    {
+      "index": 1607,
+      "depth": 4,
+      "cell": 1666,
+      "type": "cell",
+      "target_cell": 1631
+    },
+    {
+      "index": 1608,
+      "depth": 4,
+      "cell": 1666,
+      "type": "cell",
+      "target_cell": 1631
+    },
+    {
+      "index": 1609,
+      "depth": 4,
+      "cell": 1666,
+      "type": "cell",
+      "target_cell": 1631
+    },
+    {
+      "index": 1610,
+      "depth": 4,
+      "cell": 1666,
+      "type": "cell",
+      "target_cell": 1631
+    },
+    {
+      "index": 1611,
+      "depth": 4,
+      "cell": 1666,
+      "type": "cell",
+      "target_cell": 1631
+    },
+    {
+      "index": 1612,
+      "depth": 4,
+      "cell": 1666,
+      "type": "cell",
+      "target_cell": 1667
+    },
+    {
+      "index": 1613,
+      "depth": 4,
+      "cell": 1666,
+      "type": "cell",
+      "target_cell": 1631
+    },
+    {
+      "index": 1614,
+      "depth": 4,
+      "cell": 1666,
+      "type": "cell",
+      "target_cell": 1631
+    },
+    {
+      "index": 1615,
+      "depth": 4,
+      "cell": 1666,
+      "type": "cell",
+      "target_cell": 1631
+    },
+    {
+      "index": 1616,
+      "depth": 4,
+      "cell": 1666,
+      "type": "cell",
+      "target_cell": 1631,
+      "intent": "retreat"
+    },
+    {
+      "index": 1617,
+      "depth": 4,
+      "cell": 1631,
+      "type": "cell",
+      "target_cell": 1667
+    },
+    {
+      "index": 1618,
+      "depth": 4,
+      "cell": 1631,
+      "type": "cell",
+      "target_cell": 1668,
+      "intent": "retreat"
+    },
+    {
+      "index": 1619,
+      "depth": 4,
+      "cell": 1668,
+      "type": "cell",
+      "target_cell": 1633,
+      "intent": "retreat"
+    },
+    {
+      "index": 1620,
+      "depth": 4,
+      "cell": 1633,
+      "type": "cell",
+      "target_cell": 1634,
+      "intent": "retreat"
+    },
+    {
+      "index": 1621,
+      "depth": 4,
+      "cell": 1634,
+      "type": "item"
+    },
+    {
+      "index": 1622,
+      "depth": 4,
+      "cell": 1634,
+      "type": "cell",
+      "target_cell": 1633
+    },
+    {
+      "index": 1623,
+      "depth": 4,
+      "cell": 1634,
+      "type": "cell",
+      "target_cell": 1669
+    },
+    {
+      "index": 1624,
+      "depth": 4,
+      "cell": 1634,
+      "type": "cell",
+      "target_cell": 1669
+    },
+    {
+      "index": 1625,
+      "depth": 4,
+      "cell": 1634,
+      "type": "cell",
+      "target_cell": 1669
+    },
+    {
+      "index": 1626,
+      "depth": 4,
+      "cell": 1634,
+      "type": "cell",
+      "target_cell": 1633
+    },
+    {
+      "index": 1627,
+      "depth": 4,
+      "cell": 1634,
+      "type": "item"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "1e58c5f038b73daa",
+      "kind": "planner-stop:immediate-safety-emergency",
+      "reason": "Fly pressure: no bounded attack or reduced-pressure retreat; do not silently recharge under adjacent attacks",
+      "depth": 4,
+      "cell": 1634,
+      "action_from": 1604,
+      "action_to": 1627
+    },
+    {
+      "signature": "215266fb40b34db7",
+      "kind": "planner-incident",
+      "reason": "Fly pressure: no bounded attack or reduced-pressure retreat; do not silently recharge under adjacent attacks",
+      "depth": 4,
+      "cell": 1634,
+      "action_from": 1604,
+      "action_to": 1628
+    }
+  ],
+  "prior_review_attempt": false
+}
