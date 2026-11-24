@@ -1318,14 +1318,14 @@
     "priority": "high",
     "summary": "Establish executable identification and protected retrieval when the pool's only admitted trip origin is a doorway.",
     "evidence": [
-      "Decision 174, selected line 503 and accepted line 504: entrance 898 reached.",
-      "Decision 175, selected line 506 and accepted line 507: piranhas and Chest 963 observed, followed by withdrawal.",
-      "Decision 218, lines 635–637: unfinished pool blocks descent; mandatory discovery prevents abandonment.",
-      "Source-pinned offline reconstruction matches selections 0–217; detached arrival and terminal probes admit only trip origin 898.",
-      "tools/piranha_tactics.py:35–66; tools/puzzle_supplies.py:142–191,285–324,969–1029; tools/room_tactics.py:234–355; tools/mage_policy.py:456–457; tools/floor_abandonment.py:47–48."
+      "Decision 72, lines 198–199: doorway observation reveals piranhas and Chest 1368, followed by withdrawal.",
+      "Decisions 245–253, lines 681–697: two failed intuition hypotheses leave the potion colors unidentified.",
+      "Decision 266, lines 736–738: unfinished pool blocks departure; no abandonment action is accepted.",
+      "Source-pinned reconstruction matches selections 0–265; detached arrival and terminal probes admit only hypothetical trip origin 1016, rejected by both preparation gates.",
+      "tools/piranha_tactics.py:35–79; tools/puzzle_supplies.py:142–191,285–324,969–1029; tools/room_tactics.py:234–355; tools/mage_policy.py:456–458; tools/floor_abandonment.py:47–48."
     ],
     "status": "deferred",
-    "reason": "Historical backlog; not revalidated in this recording. Revalidated with complete source and matching reconstruction, but no safe focused replacement is established. Door 898 admits the seven-step hypothetical chest route but fails unknown-test and staging admission; exterior water does not admit the protected return. No nonconsumptive identification resource is carried. Next derive paired arrival/terminal doorway fixtures and validate effect containment, door reclosure, inventory protection, accepted recovery and actual-buff-funded return before changing selection. Simply allowing doors, drinking remotely, increasing limits or waiving the chest would bypass unresolved safety constraints. The existing aquarium clearance proof also requires visibility of the complete water island, absent here.",
+    "reason": "Revalidated in this recording, but not safely repaired. Doorway 1016 admits the seven-step hypothetical chest route while failing both test-bank and staging admission; ordinary exterior origins do not admit that trip. Terminal inventory has no nonconsumptive identification resource. The blocker is an unverified doorway preparation transaction, not missing selecting source or unreconstructed approach counters. Next derive paired arrival/terminal fixtures and validate unknown-effect containment, potion storage and retrieval, fresh arrival, door reclosure, interruption recovery and actual-invisibility-funded return before changing selection. Simply allowing doors, drinking remotely, guessing a color or waiving the chest would bypass unresolved safety constraints. No replacement is certified.",
     "origin_run": "000102"
   },
   {
