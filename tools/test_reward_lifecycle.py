@@ -71,6 +71,15 @@ class RewardLifecycleTests(unittest.TestCase):
         observe_collected(p, before, action, after)
         self.assertEqual({40}, work.receipts)
 
+    def test_observation_tracks_exposure_before_a_higher_priority_preemption(self):
+        from tools.protected_rewards import observe
+        state, p = gas_room()
+        p.room_journey = Journey("gas", [38, 39, 40], state["depth"])
+        state["hero"].update(cell=40, buffs=[
+            {"name": "purification barrier", "description": "Turns remaining: 18."}])
+        observe(p, state)
+        self.assertEqual(ReturnPhase.EXPOSED, p.room_journey.lifecycle.phase)
+
 
 if __name__ == "__main__":
     unittest.main()

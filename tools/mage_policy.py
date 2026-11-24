@@ -675,7 +675,7 @@ class MagePolicy(SurvivalPolicy):
             from .protected_rewards import observe as observe_protected_rewards
         except ImportError:
             from protected_rewards import observe as observe_protected_rewards
-        observe_protected_rewards(self)
+        observe_protected_rewards(self,state)
         try:
             from .puzzle_supplies import observe_pool_entrance
         except ImportError:

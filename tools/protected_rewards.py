@@ -408,7 +408,7 @@ def bind_test_storage(p,state,trip,candidate,distance,neighbors,safe_bank):
     return True
 
 
-def observe(p):
+def observe(p,state=None):
     trip=p.room_journey
     if isinstance(trip,(RewardTrip,)) or hasattr(trip,'lifecycle'):
         try:
@@ -416,4 +416,8 @@ def observe(p):
         except ImportError:
             from reward_lifecycle import lifecycle
         work=lifecycle(p,trip)
-        work.receipts.update(work.goals&p.loot_collection_receipts)
+        if state is not None:
+            work.observe(state,remaining(state,PROTECTION[trip.kind][1]))
+        if state is None or (work.depth,work.branch)==(
+                state['depth'],state.get('branch',0)):
+            work.receipts.update(work.goals&p.loot_collection_receipts)

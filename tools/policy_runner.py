@@ -400,6 +400,8 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
         if hasattr(policy,"physical_ledger"):
             result["physical_obligations"]=policy.physical_ledger.records()
             result["resource_claims"]=policy.physical_ledger.claim_records()
+        if getattr(policy,"reward_lifecycles",None):
+            result["protected_work"]=[work.record() for work in policy.reward_lifecycles]
         if hasattr(policy,"evidence_reducer"):
             result["threat_retirements"]=list(policy.evidence_reducer.retirements)
         itinerary=getattr(getattr(policy,"room_journey",None),"itinerary",None)
