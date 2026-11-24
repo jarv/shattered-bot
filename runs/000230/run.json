@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "id": "000230",
+  "started_at": "2026-11-24T01:26:32Z",
+  "completed_at": "2026-11-24T01:29:56.750918+00:00",
+  "source_commit": "b81fe866a8f670ac9e74e775dcd8561527620f1e",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 529,
+  "duration_seconds": 201.399,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000229",
+  "previous_source_commit": "5aaac404f5164e73f6a8dd74846cf7182e93f576",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Recognizing a pool and reserving its floor potion does not establish executable preparation. Check hunger funding, fresh testing ground, inventory protection and the complete reward return together. A generated floor supply does not identify a carried color. Blink or healing fallback may advance the clock without resolving the initiating obligation.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at 21/26 HP when mandatory potion discovery exhausted. Earlier combat left the hero badly wounded; decisions 379–426 spent all 48 natural-healing inputs, reaching only 11/25 HP before exploration resumed. Decision 528's accepted transition advanced time without healing; decision 529 then failed discovery's unchanged 85% health requirement. The terminal inventory held three rations but no known healing, usable dew, healing seed or identify scroll. Source-pinned offline bookkeeping reconstruction matched all 529 earlier selected actions and reasons and reproduced the terminal failure. An isolated full-health probe selected frost preparation, but did not establish any executable way to obtain that health or collect the fire-blocked supplies. No patch is proposed: increasing the exhausted allowance, weakening health checks or treating unknown potions as healing would not be a supported safe correction. The empty recorded source diff supports no improvement claims.",
+    "learnings": "Budgeted combat recovery can finish long before mandatory discovery becomes actionable. Food availability is not proof of executable health recovery, and selecting preparation at hypothetical full health is not proof of room success. Preserve mandatory pickups, unknown-potion safety and explicit planner exhaustion."
+  },
+  "recommendations": [
+    {
+      "id": "000098-discovery-health-prerequisite",
+      "priority": "high",
+      "summary": "Establish executable recovery before mandatory discovery exhausts after the floor healing allowance is spent.",
+      "evidence": [
+        "Decision 375, log line 1116: surplus meal selected at 6/25 HP after combat.",
+        "Decisions 379–426, log lines 1125–1220: 48 natural-healing inputs advance time but reach only 11/25 HP.",
+        "Decision 427, log line 1221: exploration resumes with all 48 recovery waits spent.",
+        "Decision 528, accepted transition line 1521: movement advances time and leaves health at 21/26.",
+        "Decision 529, log lines 1523–1524: mandatory discovery exhausts on health; recovery accepts no actions.",
+        "tools/recovery_economy.py:8–19; tools/policy_nodes.py:561–598; tools/mage_policy.py:728–786; tools/descent_potions.py:272–330.",
+        "Offline reconstruction matches selections 0–528 and reproduces the terminal health blocker."
+      ],
+      "status": "deferred",
+      "reason": "Revalidated here, but no safe focused repair is established. Reconstruction resolves the selecting-state gap: the 48 waits were genuinely spent. The terminal inventory lacks known healing or non-drinking identification, and the observed intuition stone is uncollected beyond the fire barrier. Hypothetical full health admits staging, not health acquisition. Next derive paired post-combat decision-375 and terminal decision-529 fixtures and validate a receipt-scoped recovery itinerary within the existing allowance, or acquisition of a reachable known healing/identification supply. Withholding earlier recovery also needs encounter-exposure validation. Do not merely enlarge/reset the allowance, lower health thresholds, guess healing effects or waive mandatory collection.",
+      "origin_run": "000098"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000230/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000230/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 50,
+        "turns": 258,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 275,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 764
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 14,
+        "gold_gained": 131,
+        "turns": 243.66668701171875,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 248,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 739
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 14,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 181,
+    "gold_complete": true,
+    "turns": 501.66668701171875,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
