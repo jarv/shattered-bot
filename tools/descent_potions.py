@@ -99,6 +99,9 @@ def revisit_bank(p, state, paths):
     # Keep compatibility with a single receipt. Every historical alternative
     # passes exactly the same current inventory, transit and hunger admission.
     receipts = list(reversed(history)) if history and history[-1] == receipt else [receipt]
+    committed = p.descent_potion_plan.get("return_receipt")
+    if committed and committed[2] != state["hero"]["cell"]:
+        receipts = [committed] + [r for r in receipts if r != committed]
     for candidate in receipts:
         decision = revisit_receipt(p, state, paths, candidate)
         if decision:
@@ -149,6 +152,7 @@ def revisit_receipt(p, state, paths, receipt):
                         paths, intent=Intent.REPOSITION)
     if decision:
         decision.descent_bank_return = True
+        p.descent_potion_plan["return_receipt"] = receipt
         mark(p, state, decision, "discovery-transit", bank, route)
         publish(p, "potion-discovery", Result(Status.READY, "reobserve preparation area after admitted transit",
                 prerequisites=[dict(objective="fresh-bank-and-stash-admission", target=bank,
@@ -421,6 +425,18 @@ def advance(p, state):
         return None
     paths = p.paths(state)
     pos, width, height = hero["cell"], state["map"]["width"], state["map"]["height"]
+    # Keep an admitted observation journey across reactive selections. Opening
+    # its doorway can briefly expose another water bank whose own arrival is
+    # unusable; diverting there abandons the original prerequisite and loops.
+    # Re-admit every step, including visibility, hazards, hunger and bounds.
+    committed = plan.get("return_receipt")
+    if committed:
+        if committed[2] != pos:
+            returning = revisit_bank(p, state, paths)
+            if returning:
+                return returning
+        plan.pop("return_receipt", None)
+        # Arrival is not permission to drink: fresh choices below still apply.
     choices = []
     for item in candidates:
         if plan["candidate"] and base_name(item) != plan["candidate"]:

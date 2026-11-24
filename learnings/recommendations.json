@@ -3295,5 +3295,21 @@
     "status": "deferred",
     "reason": "No safe useful replacement is supported yet. The priority leaf omits summoning delegation, but the existing controller would still reject cloth armor, the staff's readiness score, current buffs and three observed doors. Repairing delegation alone would not fix this recording. Build a reduced mandatory-key fixture preserving those exclusions, then implement a bounded activation/containment/return plan using publicly known supplies before adding a positive preparation-selection regression. Do not weaken hazard admission, guess potion effects or waive the key.",
     "origin_run": "000254"
+  },
+  {
+    "id": "000256-discovery-return-commitment",
+    "priority": "high",
+    "summary": "Preserve an admitted potion-preparation return instead of reversing toward briefly visible water.",
+    "evidence": [
+      "Decision 365, logs 1016–1017: return toward bank 272 enters doorway 218.",
+      "Decision 366, logs 1020–1021: fresh water preference reverses to 217.",
+      "Decision 367, logs 1023–1024: preparation returns through the doorway again.",
+      "Decision 375, log 1051: navigation-loop detection.",
+      "Decision 421, logs 1225–1227: planner exhaustion with a living hero.",
+      "tools/descent_potions.py:92–157,306–496; tools/mage_policy.py:1298–1304."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000256"
   }
 ]
