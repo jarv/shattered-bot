@@ -15,7 +15,7 @@ try:
     from .consumable_tactics import base_name, unknown_potion
     from .alchemy_tactics import approach_alchemy, alchemy_menu
     from .artifact_tactics import use_artifact
-    from .mage_tactics import shield_battery, prepare_mage, mage_menu, warp_escape, ally_warp
+    from .mage_tactics import shield_battery, prepare_mage, prepare_mask, mage_menu, warp_escape, ally_warp
     from .challenge_combat import ChallengeCombat, champion, magic_factor, enemy_line, exposure, reach
     from .environment_tactics import trigger_trap, use_bomb, observe_bombs
     from .hidden_doors import seek_corridor_end
@@ -47,7 +47,7 @@ except ImportError:
     from consumable_tactics import base_name, unknown_potion
     from alchemy_tactics import approach_alchemy, alchemy_menu
     from artifact_tactics import use_artifact
-    from mage_tactics import shield_battery, prepare_mage, mage_menu, warp_escape, ally_warp
+    from mage_tactics import shield_battery, prepare_mage, prepare_mask, mage_menu, warp_escape, ally_warp
     from challenge_combat import ChallengeCombat, champion, magic_factor, enemy_line, exposure, reach
     from environment_tactics import trigger_trap, use_bomb, observe_bombs
     from hidden_doors import seek_corridor_end
@@ -1310,6 +1310,9 @@ class MagePolicy(SurvivalPolicy):
         returned=recover_trap_payload(self,state,enemies)
         if returned:
             return returned
+        progression=prepare_mask(self,state,enemies)
+        if progression:
+            return progression
         try:
             from .garden_tactics import choose as garden
             from .environment_tactics import clear_blocking_trap

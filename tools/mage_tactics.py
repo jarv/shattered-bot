@@ -8,8 +8,49 @@ except ImportError:
     from combat_items import magic_score
 
 
+def prepare_mask(p, state, enemies):
+    """Owned progression, not optional crafting; keep safety/return admission."""
+    try:
+        from .survival_policy import is_hostile
+    except ImportError:
+        from survival_policy import is_hostile
+    hero=state.get("hero",{})
+    pos=hero.get("cell")
+    tile=p.tiles.get(pos,{})
+    if state.get("scene")!="GameScene" or state.get("status")!="ready" or state.get("modal") \
+            or enemies or any(is_hostile(o) for o in state.get("objects",[])) \
+            or p.recent_threats or p.unseen_damage_turns or state.get("danger_cells") \
+            or state.get("boss_health_text") or hero.get("hp",0)<max(3,.3*hero.get("max_hp",0)):
+        return None  # Preserve the quiet-state emergency-healing threshold.
+    if any(getattr(p,name,None) for name in (
+            "mage_plan","room_journey","puzzle_probe","potion_stash","trap_payload_return",
+            "drop_plan","escape_commitment","ranged_plan","ambush_plan","doorway_hold",
+            "well_cleanse_plan","food_freeze_plan")):
+        return None
+    buffs=" ".join(b["name"].lower() for b in hero.get("buffs",[]))
+    if any(name in buffs for name in (
+            "burn","poison","bleed","ooze","paral","vertigo","root","blind","chill",
+            "frozen","drowsy","sleep","levitat","invisib","cloaked")):
+        return None
+    if not tile.get("visible") or not tile.get("observed",tile.get("visible",False)) \
+            or tile.get("terrain") not in {1,2,3,6,7,8,9,11,14,15,19,20,22,29,30} \
+            or any(tile.get(k) for k in ("effects","trap","plant")) \
+            or pos in p.room_blocked or not p.escape_step_allowed(state,pos):
+        return None
+    if hero.get("subclass","").lower() in {"warlock","battlemage"}:
+        return None
+    item=next((i for i in state.get("inventory",[]) if base_name(i)=="tengu's mask"
+               and "WEAR" in i.get("actions",[]) and p.item_action_allowed(i,"WEAR")),None)
+    if item:
+        p.mage_plan={"kind":"choice","choice":"warlock","stage":"select","steps":0}
+        return p.use(item,"WEAR","mage: choose warlock before optional exploration or descent")
+
+
 def prepare_mage(p, state):
     """Explicit subclass/armor choices and preservation-confirmed staff imbues."""
+    mask=prepare_mask(p,state,[])
+    if mask:
+        return mask
     inventory = state["inventory"]
     armor = next((i for i in inventory if i.get("equipped") and "ABILITY" in i.get("actions", [])), None)
     anchor = (state["depth"], state.get("branch", 0), state["hero"]["cell"])
@@ -27,7 +68,7 @@ def prepare_mage(p, state):
             p.warp_setup_floor = state["depth"]
             p.mage_plan = {"kind": "warp", "stage": "clear" if p.warp_anchor else "await_set", "anchor": anchor, "steps": 0}
             return p.use(armor, "ABILITY", "mage: establish verified same-floor warp return plan", target=anchor[2])
-    for name, choice in (("tengu's mask", "warlock"), ("dwarf king's crown", "warp beacon")):
+    for name, choice in (("dwarf king's crown", "warp beacon"),):
         item = next((i for i in inventory if base_name(i) == name and "WEAR" in i.get("actions", [])), None)
         if item:
             p.mage_plan = {"kind": "choice", "choice": choice, "stage": "select", "steps": 0}
