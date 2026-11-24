@@ -3080,5 +3080,19 @@
     "status": "deferred",
     "reason": "No safe replacement is certified. Source browsing resolves the selecting-source gap, but the generic alternative clicks an actively burning closed door, and a clear square beyond another flame does not establish survivable ongoing burning. The known levitation splash instead introduces renewing confusion exposure without an admitted low-health continuation. Next derive paired departure/ignition fixtures and prove either an input-aware, damage-funded fire-retirement route or a stationary splash-and-gas-retirement transaction with interruption and fresh-observation checks. Then require a new original-red/candidate-green regression. Do not merely reorder the controllers, extend waits, relax fire or confusion checks, guess potion identities, or abandon mandatory progression.",
     "origin_run": "000241"
+  },
+  {
+    "id": "000242-prismatic-dm100-receipt",
+    "priority": "high",
+    "summary": "Retire a matching DM-100 lightning memory after a verified tracked prismatic kill, even without a health bar.",
+    "evidence": [
+      "Decisions 3180–3181, log lines 8973–8976: observed caster, known uncursed staff and accepted targeted zap.",
+      "Decision 3182, log lines 8977–8978: one charge spent, six experience gained, caster absent, living hero and terminal lightning-lane blockage.",
+      "tools/combat_observation.py:70–80,128–189,288–301; tools/policy_nodes.py:92–120; tools/dm100_escape.py:15–44.",
+      "New deterministic regression: original policy fails two assertions; candidate passes all three tests and the full unittest suite."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000242"
   }
 ]

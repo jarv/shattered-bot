@@ -70,7 +70,12 @@ def fraction(enemy):
 def capture(state,enemy,key):
     before=fraction(enemy)
     tile=next((t for t in state["map"]["cells"] if t["cell"]==enemy["cell"]),{})
-    if before is None or key is None or tile.get("effects"):
+    # A newly encountered caster need not have a health bar yet. Keep only
+    # receipt bookkeeping for a prismatic zap; never invent a damage fraction.
+    receipt_only = (before is None and key is not None and key[0]=="magic"
+                    and "of prismatic light" in key[1].lower()
+                    and enemy["name"].lower()=="dm-100")
+    if (before is None and not receipt_only) or key is None or tile.get("effects"):
         return None
     return {"cell":enemy["cell"],"name":enemy["name"],"context":context(state,enemy),"source":key,"before":before}
 
@@ -121,9 +126,11 @@ def dm100_missile_receipt(before,after,pending):
 
 
 def dm100_arcane_missile_levelup_receipt(before,after,pending):
-    """One consumed, clear-ray missile with Arcane Vision and six XP.
+    """One consumed, clear-ray missile or prismatic zap with tracking and six XP.
 
     Tracking rules out a struck survivor hiding beyond the old neighborhood.
+    Both known, uncursed bolts hit only their collision target and apply
+    Arcane Vision before damage. Prismatic map revelation is not extra damage.
     Accept either unchanged level or one rollover, with public XP thresholds.
     Keep the older adjacent/no-level-up receipt unchanged.
     """
@@ -154,7 +161,9 @@ def dm100_arcane_missile_levelup_receipt(before,after,pending):
     item=next((i for i in before.get("inventory",[])
                if i["name"]==pending["source"][1]),None)
     if not item or not item.get("identified") or not item.get("curse_known") \
-            or item.get("known_cursed") or "of magic missile" not in item["name"].lower():
+            or item.get("known_cursed") or not any(
+                "of "+kind in item["name"].lower()
+                for kind in ("magic missile","prismatic light")):
         return False
     used=next((i for i in after.get("inventory",[])
                if i.get("id")==item.get("id") and i["name"]==item["name"]),None)
@@ -288,6 +297,8 @@ def observe_accepted_attack(p,before,decision,after):
         p.dm100_threat=None
         if p.ranged_plan and p.ranged_plan.get("name")=="dm-100":
             p.ranged_plan=None
+    if pending["before"] is None:
+        return  # Receipt-only capture cannot provide a damage measurement.
     defeated=any("you defeated" in t.lower() and pending["name"].lower() in t.lower()
                  for t in after.get("ui",{}).get("texts",[]) if t not in before_texts)
     key=(pending["context"],pending["source"])
