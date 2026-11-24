@@ -3441,5 +3441,20 @@
     "status": "deferred",
     "reason": "Full source resolved the selecting-chain gap, but a blanket fast-pursuit veto is unsafe as a replacement: its local fixture passes while six existing assertions fail, including required spacing at 3 HP being replaced by an adjacent summon attack. No original mutable counters or enemy action phase were recovered, and no alternative survival transaction was proved. Next derive a movement-aware ranking, rather than a zero-exposure veto, against the paired D3442 corridor and existing low-health memory/visible-caster spacing fixtures. Require a positive admitted continuation in both before retaining a patch; preserve explosion checks and bounded exhaustion.",
     "origin_run": "000264"
+  },
+  {
+    "id": "000265-hungry-pool-identification",
+    "priority": "high",
+    "summary": "Allow conservatively admitted stationary intuition for missing pool supplies while hungry.",
+    "evidence": [
+      "D956–958, log lines 2853–2857: bistre intuition selection cancels; invisibility is publicly offered.",
+      "D962–964, log lines 2868–2872: magenta intuition selection also cancels without identification.",
+      "D1319, log line 3906: chest 718 and three piranhas first appear while hungry at 40/40 HP.",
+      "D1369, log lines 4061–4063: both unknown potions and usable intuition remain; unfinished pool ends planning with zero accepted recovery actions.",
+      "tools/puzzle_supplies.py:845–878 excludes pool from hungry information preparation before the general hunger veto; tools/mage_policy.py:474–475 preserves the unfinished chest obligation."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000265"
   }
 ]

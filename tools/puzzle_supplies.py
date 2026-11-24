@@ -843,7 +843,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
             if staged:return staged
     # Hunger forbids unknown-drink experiments below, not a stationary
     # non-drinking hypothesis using a carried intuition stone. In particular,
-    # a missing purity or frost supply must not deadlock required preparation
+    # a missing purity, frost or pool supply must not deadlock preparation
     # while this existing information action is still available. A failed guess
     # for another color/type is not evidence of the current candidate's identity.
     tile = p.tiles.get(hero["cell"], {})
@@ -862,7 +862,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
                       if base_name(i) == "stone of intuition" and "USE" in i.get("actions", [])
                       and p.item_action_allowed(i, "USE")), None)
         for demand in pending:
-            if not stone or demand.kind not in {"gas", "frost"} or any(
+            if not stone or demand.kind not in {"gas", "frost", "pool"} or any(
                     base_name(i) == demand.potion for i in state["inventory"]):
                 continue
             candidate = next((i for i in state["inventory"] if unknown_potion(i)
