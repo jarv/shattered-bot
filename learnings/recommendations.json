@@ -2831,5 +2831,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000224"
+  },
+  {
+    "id": "000225-invisible-caster-priority",
+    "priority": "high",
+    "summary": "Prevent the early DM-100 escape selector from bypassing low-health invisibility withdrawal.",
+    "evidence": [
+      "Decision 3040, accepted log line 8615: invisibility is established at 17/60 HP.",
+      "Decision 3044, log lines 8632–8633: early caster escape selects ZAP while invisible.",
+      "Decision 3045, accepted log line 8635: targeting the caster removes invisibility.",
+      "Decisions 3047–3048, accepted log lines 8640 and 8643: staff depletion, HP loss, then lethal retreat.",
+      "tools/policy_tree.py:15–36; tools/policy_nodes.py:93–120; tools/dm100_escape.py:69–77; tools/combat_positioning.py:23–54."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000225"
   }
 ]

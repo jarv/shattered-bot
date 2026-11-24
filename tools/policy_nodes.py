@@ -92,6 +92,10 @@ def harmful_effect(c):
 
 def dm100_door_escape(c):
     if c.boss or not getattr(c.policy,'unit_strategies_enabled',False):return None
+    # This early leaf can attack adjacent casters as well as move. Do not
+    # preempt the shared low-HP invisibility withdrawal with an attack or lure.
+    # Healing and the existing bounded withdrawal retain their normal order.
+    if c.hp<.5 and any(b in c.buffs for b in ('invisib','cloaked')):return None
     try:
         from .dm100_escape import choose,exposed_memory
         from .ranged_tactics import choose as ranged
