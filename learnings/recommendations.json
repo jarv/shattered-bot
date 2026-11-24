@@ -3166,5 +3166,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000246"
+  },
+  {
+    "id": "000247-spent-supply-frontier",
+    "priority": "high",
+    "summary": "Prevent one exhausted room supply from preempting unfinished ordinary floor observation.",
+    "evidence": [
+      "Decisions 469–470, log lines 1342–1346: confirmed liquid-flame consumption for another use.",
+      "Decision 632, log lines 1838–1839: missing-supply discovery blocker precedes a puzzle meal.",
+      "Decision 655, log lines 1898–1899: early exhausted-supply departure selected with remaining frontiers and doors; missing flight preparation blocks discovery.",
+      "tools/policy_tree.py:43,74; tools/room_supplies.py:291–315; tools/descent_potions.py:272–300,350–389."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000247"
   }
 ]
