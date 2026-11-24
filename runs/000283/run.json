@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "id": "000283",
+  "started_at": "2026-11-24T20:54:39Z",
+  "completed_at": "2026-11-24T20:59:27.480279+00:00",
+  "source_commit": "79a18c70c228721604c63101de432fb4ddad070e",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "51bdb688a8fed22859aa80c5a30a841418fb3c1d6da0f7e728dd727d4914879c",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "game_checksum": "c8e8e4f806fb59aa4240b962b06352f2849b6d7f4a5e78285f74ca7afc951a68",
+  "supervisor_version": "028ae3a-per-run",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 296,
+  "duration_seconds": 285.066,
+  "configuration": {
+    "auto_improve": false,
+    "hero": "Mage",
+    "prior_review_attempt": false,
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000282",
+  "previous_source_commit": "440c3d3f15dd49567008c218a4f7a4008ee5f491",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "No new learnings claimed. See deterministic observations for manual analysis.",
+  "incoming_update_status": "not-reviewed",
+  "model": "",
+  "review": {
+    "review": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+    "learnings": "No new learnings claimed. See deterministic observations for manual analysis."
+  },
+  "recommendations": [],
+  "update_status": "not-reviewed",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000283/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000283/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 216,
+        "turns": 289,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 290,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 238
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 216,
+    "gold_complete": true,
+    "turns": 289,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
