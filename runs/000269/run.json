@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "id": "000269",
+  "started_at": "2026-11-24T16:43:22Z",
+  "completed_at": "2026-11-24T16:55:04.299575+00:00",
+  "source_commit": "764a93f3e9ece175422fe9346e155a91a32f08ae",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "51bdb688a8fed22859aa80c5a30a841418fb3c1d6da0f7e728dd727d4914879c",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "game_checksum": "c8e8e4f806fb59aa4240b962b06352f2849b6d7f4a5e78285f74ca7afc951a68",
+  "supervisor_version": "b2e9456-live-buffs",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 815,
+  "duration_seconds": 694.266,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000268",
+  "previous_source_commit": "b4104c6216a75ea508cd1ad21259e07f38f9a33f",
+  "improvements": [
+    "The bot now recognizes a tracked frost-wand kill of a DM-100 from a spent charge and observed experience gain, even without a defeat message. Chilled targets are supported, but frozen targets still require other evidence.",
+    "After actually reaching a gas-room scouting approach, the bot remembers that visit instead of repeatedly turning back from other floor work. Returning there still does not authorize potion testing or claim the reward was collected."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "A tracked frost kill can award XP without a rendered defeat message. Validate the consumed charge, clear ray, one-turn six-XP receipt and absence of a tracked survivor before retiring only that matching threat. Chilled targets remain hittable; frozen targets do not establish this receipt. Retirement must not grant loot or floor-clear credit.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended with a living hero at 23/30 HP, not an observed death. D815 (log lines 2375–2377) reports mandatory potion-discovery exhaustion: unknown drinking requires 85% health, while the natural-recovery allowance was already spent. Earlier combat attrition and bounded recovery explain the shortfall; the final accepted movement still advanced the clock. Emergency healing only activates at much lower peaceful health, leaving an observed 11/20 waterskin unused. Source inspection resolved the selecting-chain gap. A reduced public-evidence fixture and a separate fresh-policy terminal-snapshot probe admit existing bank staging at full health, but neither recovers original mutable memory. The proposed correction funds this specific prerequisite with sufficient known dew only when a detached preview admits a continuation. It preserves unknown-drink safety, inventory protection, mandatory pickups, emergency healing supplies and terminal exhaustion. The new regression fails with two expected assertions on original policy and passes after the change; the full suite passes 2,474 tests with four skips. No game execution or changed-decision continuation was performed. Preparation selection does not establish successful healing, discovery or survival.",
+    "learnings": "Mandatory discovery needs an explicit health prerequisite, not just a health veto after natural recovery runs out. Known displayed dew can fund that prerequisite without guessing potion identities, but actual healing and every subsequent testing or retrieval step still require fresh public observations."
+  },
+  "recommendations": [
+    {
+      "id": "000269-discovery-dew-preparation",
+      "priority": "high",
+      "summary": "Provision admitted mandatory discovery with sufficient known dew before declaring health-preparation exhaustion.",
+      "evidence": [
+        "D775–780, logs 2255–2282: combat retreat reduces health from 30 to 21.",
+        "D791–795 and D807–812, logs 2318–2368: bounded natural healing leaves 23/30 HP.",
+        "D815, logs 2375–2377: mandatory discovery stops despite an observed waterskin at 11/20.",
+        "tools/policy_nodes.py:135–146; original tools/descent_potions.py:278–336: low emergency-healing threshold and mandatory unknown-drink health veto."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000269"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000269/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000269/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 325,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 331,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 926
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 25,
+        "gold_gained": 333,
+        "turns": 476,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 478,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 665
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 612
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 10,
+    "ending_level": 3,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 333,
+    "gold_complete": true,
+    "turns": 801,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

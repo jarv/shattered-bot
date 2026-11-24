@@ -3498,5 +3498,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000268"
+  },
+  {
+    "id": "000269-discovery-dew-preparation",
+    "priority": "high",
+    "summary": "Provision admitted mandatory discovery with sufficient known dew before declaring health-preparation exhaustion.",
+    "evidence": [
+      "D775–780, logs 2255–2282: combat retreat reduces health from 30 to 21.",
+      "D791–795 and D807–812, logs 2318–2368: bounded natural healing leaves 23/30 HP.",
+      "D815, logs 2375–2377: mandatory discovery stops despite an observed waterskin at 11/20.",
+      "tools/policy_nodes.py:135–146; original tools/descent_potions.py:278–336: low emergency-healing threshold and mandatory unknown-drink health veto."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000269"
   }
 ]

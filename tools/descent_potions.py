@@ -205,6 +205,56 @@ def pause(p, reason):
     publish(p, "potion-discovery", Result(Status.PAUSED, reason))
 
 
+def prepare_discovery_health(p, state):
+    """Quote existing discovery on a detached full-health plan before spending dew.
+
+    This is preparation, not a healing or potion-consumption receipt. The next
+    real observation must still pass every ordinary discovery admission.
+    """
+    import math
+    import re
+    try:
+        from .hunger_budget import admits
+    except ImportError:
+        from hunger_budget import admits
+    plan = p.descent_potion_plan
+    hero = state["hero"]
+    buffs = " ".join(b["name"].lower() for b in hero.get("buffs", []))
+    if plan.get("dew_preparation_attempted") or p.pharmacophobia \
+            or any((p.potion_stash, p.room_journey, p.drop_plan, p.trap_payload_return)) \
+            or hero["hp"] <= 0 or hero["hp"] >= .85 * hero["max_hp"] \
+            or any(t in buffs for t in ("hungry", "starving", "burn", "poison", "bleed",
+                "ooze", "vertigo", "paral", "root", "frozen", "chill", "drowsy",
+                "sleep", "blind", "levitat", "magic immun", "invisib")) \
+            or any(base_name(i) == "vial of blood" for i in state["inventory"]):
+        return None
+    pos = hero["cell"]
+    tile = p.tiles.get(pos, {})
+    if not tile.get("visible") or not tile.get("observed") \
+            or tile.get("terrain") not in {1, 3, 9, 11, 19, 20, 29} \
+            or any(tile.get(k) for k in ("effects", "plant", "trap")) \
+            or pos in p.navigation_barriers(state, Intent.RECOVER):
+        return None
+    # A displayed full-heal quantity is required; never treat DRINK alone as
+    # proof of contents or spend the emergency healing potion for this task.
+    needed = math.ceil((hero["max_hp"] - hero["hp"]) / (.05 * hero["max_hp"]))
+    water = next((i for i in state["inventory"] if base_name(i) == "waterskin"
+                  and i.get("identified") and "DRINK" in i.get("actions", [])
+                  and re.fullmatch(r"\d+/20", i.get("status", ""))
+                  and needed <= int(i["status"].split("/")[0]) <= 20
+                  and p.item_action_allowed(i, "DRINK")), None)
+    if not water or not admits(p, state, 31 + 4 * len(potions(state))):
+        return None
+    preview = copy.deepcopy(p)
+    staged = dict(state, hero=dict(hero, hp=hero["max_hp"]))
+    continuation = advance(preview, staged)
+    if not continuation or continuation.action == {"type": "wait"}:
+        return None
+    plan["dew_preparation_attempted"] = True
+    return p.use(water, "DRINK", "prepare: use known dew to fund admitted pre-descent potion discovery",
+                 intent=Intent.RECOVER)
+
+
 def wait_effect(p, state):
     plan = p.descent_potion_plan
     tile = p.tiles.get(state["hero"]["cell"], {})
@@ -333,7 +383,7 @@ def advance(p, state):
             t in buffs for t in ("starving", "burn", "poison", "bleed", "ooze", "vertigo",
                                 "paral", "root", "frozen", "chill", "drowsy", "sleep")):
         pause(p, "Health or impairment does not admit a safe unknown drink")
-        return None
+        return prepare_discovery_health(p, state)
     if any(t in buffs for t in ("blind", "levitat", "magic immun")):
         pause(p, "Temporary potion effect; resume discovery after it expires")
         return wait_effect(p, state)
