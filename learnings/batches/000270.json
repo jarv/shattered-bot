@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "batch_id": "000270",
+  "source_commit": "6bae50023c50e6e947da72c3079ea61b66be33f2",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "batch_size": 10,
+  "ready_for_manual_analysis": false,
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "runs": [
+    {
+      "id": "000270",
+      "outcome": "stuck-planner",
+      "observations": [
+        {
+          "signature": "1c143173d483cb1c",
+          "kind": "planner-stop:optional-work-exhausted",
+          "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+          "depth": 2,
+          "cell": 371,
+          "action_from": 711,
+          "action_to": 734
+        },
+        {
+          "signature": "978b37be6c47758c",
+          "kind": "planner-incident",
+          "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+          "depth": 2,
+          "cell": 371,
+          "action_from": 711,
+          "action_to": 735
+        }
+      ]
+    }
+  ],
+  "symptom_groups": [
+    {
+      "signature": "1c143173d483cb1c",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "run_ids": [
+        "000270"
+      ],
+      "run_count": 1
+    },
+    {
+      "signature": "978b37be6c47758c",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "run_ids": [
+        "000270"
+      ],
+      "run_count": 1
+    }
+  ],
+  "outcomes": {
+    "stuck-planner": 1
+  }
+}

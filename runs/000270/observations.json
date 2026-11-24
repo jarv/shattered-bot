@@ -1,0 +1,224 @@
+{
+  "schema_version": 1,
+  "run_id": "000270",
+  "source_commit": "6bae50023c50e6e947da72c3079ea61b66be33f2",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "batch": {
+    "id": "000270",
+    "index": 1,
+    "size": 10,
+    "source_commit": "6bae50023c50e6e947da72c3079ea61b66be33f2",
+    "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa"
+  },
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000270/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000270/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 711,
+      "depth": 2,
+      "cell": 615,
+      "type": "cell",
+      "target_cell": 568,
+      "intent": "explore"
+    },
+    {
+      "index": 712,
+      "depth": 2,
+      "cell": 568,
+      "type": "cell",
+      "target_cell": 521,
+      "intent": "explore"
+    },
+    {
+      "index": 713,
+      "depth": 2,
+      "cell": 521,
+      "type": "cell",
+      "target_cell": 474,
+      "intent": "explore"
+    },
+    {
+      "index": 714,
+      "depth": 2,
+      "cell": 474,
+      "type": "cell",
+      "target_cell": 427,
+      "intent": "explore"
+    },
+    {
+      "index": 715,
+      "depth": 2,
+      "cell": 427,
+      "type": "cell",
+      "target_cell": 428,
+      "intent": "explore"
+    },
+    {
+      "index": 716,
+      "depth": 2,
+      "cell": 428,
+      "type": "cell",
+      "target_cell": 428,
+      "intent": "loot"
+    },
+    {
+      "index": 717,
+      "depth": 2,
+      "cell": 428,
+      "type": "cell",
+      "target_cell": 427,
+      "intent": "explore"
+    },
+    {
+      "index": 718,
+      "depth": 2,
+      "cell": 427,
+      "type": "cell",
+      "target_cell": 426,
+      "intent": "explore"
+    },
+    {
+      "index": 719,
+      "depth": 2,
+      "cell": 426,
+      "type": "cell",
+      "target_cell": 425,
+      "intent": "explore"
+    },
+    {
+      "index": 720,
+      "depth": 2,
+      "cell": 425,
+      "type": "cell",
+      "target_cell": 424,
+      "intent": "explore"
+    },
+    {
+      "index": 721,
+      "depth": 2,
+      "cell": 424,
+      "type": "cell",
+      "target_cell": 375,
+      "intent": "explore"
+    },
+    {
+      "index": 722,
+      "depth": 2,
+      "cell": 375,
+      "type": "cell",
+      "target_cell": 326,
+      "intent": "explore"
+    },
+    {
+      "index": 723,
+      "depth": 2,
+      "cell": 326,
+      "type": "cell",
+      "target_cell": 325,
+      "intent": "explore"
+    },
+    {
+      "index": 724,
+      "depth": 2,
+      "cell": 325,
+      "type": "cell",
+      "target_cell": 324,
+      "intent": "explore"
+    },
+    {
+      "index": 725,
+      "depth": 2,
+      "cell": 324,
+      "type": "cell",
+      "target_cell": 371,
+      "intent": "explore"
+    },
+    {
+      "index": 726,
+      "depth": 2,
+      "cell": 371,
+      "type": "cell",
+      "target_cell": 322,
+      "intent": "retreat"
+    },
+    {
+      "index": 727,
+      "depth": 2,
+      "cell": 322,
+      "type": "wait"
+    },
+    {
+      "index": 728,
+      "depth": 2,
+      "cell": 322,
+      "type": "wait"
+    },
+    {
+      "index": 729,
+      "depth": 2,
+      "cell": 322,
+      "type": "wait"
+    },
+    {
+      "index": 730,
+      "depth": 2,
+      "cell": 322,
+      "type": "cell",
+      "target_cell": 371
+    },
+    {
+      "index": 731,
+      "depth": 2,
+      "cell": 322,
+      "type": "cell",
+      "target_cell": 323,
+      "intent": "retreat"
+    },
+    {
+      "index": 732,
+      "depth": 2,
+      "cell": 323,
+      "type": "cell",
+      "target_cell": 371,
+      "intent": "loot"
+    },
+    {
+      "index": 733,
+      "depth": 2,
+      "cell": 371,
+      "type": "cell",
+      "target_cell": 371,
+      "intent": "loot"
+    },
+    {
+      "index": 734,
+      "depth": 2,
+      "cell": 371,
+      "type": "item"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "1c143173d483cb1c",
+      "kind": "planner-stop:optional-work-exhausted",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "depth": 2,
+      "cell": 371,
+      "action_from": 711,
+      "action_to": 734
+    },
+    {
+      "signature": "978b37be6c47758c",
+      "kind": "planner-incident",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "depth": 2,
+      "cell": 371,
+      "action_from": 711,
+      "action_to": 735
+    }
+  ],
+  "prior_review_attempt": true
+}
