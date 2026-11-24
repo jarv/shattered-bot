@@ -3,7 +3,7 @@ try:
     from .policy_geometry import distance,neighbors,line_clear
     from .policy_decision import Intent
     from .incoming_damage import priority
-    from .challenge_combat import exposure,reach
+    from .challenge_combat import exposure,reach,champion
     from .necromancer_tactics import choose_necromancer,NecromancerStalemate
     from .ghost_quest import quest_combat
     from .mimic_hunt import crystal_mimic
@@ -16,7 +16,7 @@ except ImportError:
     from policy_geometry import distance,neighbors,line_clear
     from policy_decision import Intent
     from incoming_damage import priority
-    from challenge_combat import exposure,reach
+    from challenge_combat import exposure,reach,champion
     from necromancer_tactics import choose_necromancer,NecromancerStalemate
     from ghost_quest import quest_combat
     from mimic_hunt import crystal_mimic
@@ -151,6 +151,25 @@ def choose(p,state,enemies):
     if stone:return stone
     withdrawal=p.challenge_withdrawal(state,enemies)
     if withdrawal:return withdrawal
+    # Species urgency must not force ordinary fly melee while an ordinary
+    # contact foe offers an admitted non-splitting strike. Keep escape, magic,
+    # environmental control and withdrawal ahead of this empty-staff fallback.
+    # Do not promote protected species, champions, sleepers or remote targets.
+    if profile.strategy=='fly-swarm' and distance(pos,target['cell'],width)==1 \
+            and not p.charged_magic(state) and state.get('status')=='ready' \
+            and not state.get('modal') and not state.get('danger_cells'):
+        contacts=sorted((e for e in active if book.profile(e).strategy=='melee'
+                         and not book.profile(e).protected and not champion(e)
+                         and distance(pos,e['cell'],width)==1),key=lambda e:e['cell'])
+        for contact in contacts:
+            attack=p.best_attack(state,contact,allowed_kinds={'melee'})
+            if attack:
+                p.planner.report['unit_target']=contact['cell']
+                selection.update(name=contact['name'],cell=contact['cell'],
+                    strategy=book.profile(contact).strategy,movement=book.profile(contact).movement,
+                    status='admitted ordinary contact strike before empty-staff fly melee')
+                attack.reason='combat: strike ordinary contact foe instead of splitting adjacent fly'
+                return attack
     selection['status']='shared combat fallback for selected unit profile'
     return None
 

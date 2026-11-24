@@ -2933,5 +2933,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000232"
+  },
+  {
+    "id": "000233-mixed-contact-fly-splitting",
+    "priority": "high",
+    "summary": "Prefer an admitted ordinary contact strike over empty-staff fly melee in mixed contact after higher-priority options decline.",
+    "evidence": [
+      "Decision 764, selected log line 2183 and accepted line 2184: fly melee despite adjacent gnoll and staff 0/5.",
+      "Decision 766, selected line 2189 and accepted line 2190: another visible fly appears while gnoll and crab remain in contact.",
+      "Decision 944, selected line 2758 and accepted line 2759: fly melee adds another swarm; HP falls from 10 to 6 with rat and gnoll adjacent.",
+      "tools/unit_strategies.py:97–119; tools/policy_nodes.py:467–469; tools/fly_tactics.py:40–68.",
+      "New public-reduction regression: original assertion fails; candidate passes seven tests; full suite passes 2,246 tests with four skips."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000233"
   }
 ]
