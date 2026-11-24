@@ -54,9 +54,51 @@
           "action_to": 1628
         }
       ]
+    },
+    {
+      "id": "000272",
+      "outcome": "stuck-planner",
+      "observations": [
+        {
+          "signature": "4654ed805988ef34",
+          "kind": "planner-stop:navigation-stalled",
+          "reason": "Floor-abandonment recovery exhausted: fresh route/visibility/hunger/safety check failed",
+          "depth": 8,
+          "cell": 303,
+          "action_from": 3492,
+          "action_to": 3515
+        },
+        {
+          "signature": "978b37be6c47758c",
+          "kind": "planner-incident",
+          "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+          "depth": 8,
+          "cell": 631,
+          "action_from": 3445,
+          "action_to": 3469
+        },
+        {
+          "signature": "790cf0434e60cf5b",
+          "kind": "planner-incident",
+          "reason": "Floor-abandonment recovery exhausted: fresh route/visibility/hunger/safety check failed",
+          "depth": 8,
+          "cell": 303,
+          "action_from": 3492,
+          "action_to": 3516
+        }
+      ]
     }
   ],
   "symptom_groups": [
+    {
+      "signature": "978b37be6c47758c",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "run_ids": [
+        "000270",
+        "000272"
+      ],
+      "run_count": 2
+    },
     {
       "signature": "1c143173d483cb1c",
       "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
@@ -82,15 +124,23 @@
       "run_count": 1
     },
     {
-      "signature": "978b37be6c47758c",
-      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "signature": "4654ed805988ef34",
+      "reason": "Floor-abandonment recovery exhausted: fresh route/visibility/hunger/safety check failed",
       "run_ids": [
-        "000270"
+        "000272"
+      ],
+      "run_count": 1
+    },
+    {
+      "signature": "790cf0434e60cf5b",
+      "reason": "Floor-abandonment recovery exhausted: fresh route/visibility/hunger/safety check failed",
+      "run_ids": [
+        "000272"
       ],
       "run_count": 1
     }
   ],
   "outcomes": {
-    "stuck-planner": 2
+    "stuck-planner": 3
   }
 }
