@@ -3251,5 +3251,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000251"
+  },
+  {
+    "id": "000252-resolved-crystal-flight",
+    "priority": "high",
+    "summary": "Exclude receipted crystal alternatives from flight-demand recognition so they cannot block mandatory potion discovery.",
+    "evidence": [
+      "Decision 279, log lines 781–782: last crystal key spent on chest 1039.",
+      "Decision 280, log line 784: opened ring chest, no key, other crystal chest still closed.",
+      "Decision 284, log lines 793–795: false missing-flight prerequisite and mandatory-preparation planner exhaustion.",
+      "tools/keyed_rooms.py:78–93; tools/puzzle_supplies.py:137–141; tools/descent_potions.py:350–392.",
+      "Offline reconstruction matches decisions 0–283; isolated candidate terminal selection admits existing bank reobservation."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000252"
   }
 ]

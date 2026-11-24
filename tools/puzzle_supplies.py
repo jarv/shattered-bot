@@ -136,6 +136,9 @@ def demands(p, state, distance, *, include_deferred=False):
             found.append(Demand("frost", "potion of frost", cell))
         elif tile["terrain"] in {13,27}:
             found.append(Demand("flame", "potion of liquid flame", cell))
+        # A receipted one-key crystal alternative remains uncollected loot,
+        # but cannot justify flight preparation. A newly found key clears
+        # this exclusion through the existing keyed-room observer.
         elif cell not in paths and tile["terrain"] in {0,18} and any(
                 nearby_flight_reward(p, cell, c, width, state["map"]["height"], distance)
                 for c in rewards if c not in paths and c not in dry_aquarium_rewards):
