@@ -4,7 +4,7 @@
   "source_commit": "6bae50023c50e6e947da72c3079ea61b66be33f2",
   "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
   "batch_size": 10,
-  "ready_for_manual_analysis": false,
+  "ready_for_manual_analysis": true,
   "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
   "runs": [
     {
@@ -229,6 +229,19 @@
           "action_to": 342
         }
       ]
+    },
+    {
+      "id": "000279",
+      "outcome": "dead",
+      "observations": [
+        {
+          "signature": "7b8a6e3739ab70be",
+          "kind": "observed-death:unknown/missing",
+          "reason": "Hero died; cause not established by the recording summary",
+          "action_from": 1259,
+          "action_to": 1282
+        }
+      ]
     }
   ],
   "symptom_groups": [
@@ -263,6 +276,15 @@
         "000277"
       ],
       "run_count": 3
+    },
+    {
+      "signature": "7b8a6e3739ab70be",
+      "reason": "Hero died; cause not established by the recording summary",
+      "run_ids": [
+        "000277",
+        "000279"
+      ],
+      "run_count": 2
     },
     {
       "signature": "18b2de5b3c8e02c9",
@@ -313,14 +335,6 @@
       "run_count": 1
     },
     {
-      "signature": "7b8a6e3739ab70be",
-      "reason": "Hero died; cause not established by the recording summary",
-      "run_ids": [
-        "000277"
-      ],
-      "run_count": 1
-    },
-    {
       "signature": "b11bc8b6e59860dd",
       "reason": "Vertigo/confusion exposure: no admissible recovery or all-direction-safe escape within budget",
       "run_ids": [
@@ -330,7 +344,7 @@
     }
   ],
   "outcomes": {
-    "dead": 1,
+    "dead": 2,
     "stuck-planner": 8
   }
 }

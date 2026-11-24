@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "run_id": "000279",
+  "source_commit": "6bae50023c50e6e947da72c3079ea61b66be33f2",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "batch": {
+    "id": "000270",
+    "index": 10,
+    "size": 10,
+    "source_commit": "6bae50023c50e6e947da72c3079ea61b66be33f2",
+    "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa"
+  },
+  "outcome": "dead",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000279/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000279/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 1259,
+      "depth": 4,
+      "cell": 1300,
+      "type": "cell",
+      "target_cell": 1266,
+      "intent": "retreat"
+    },
+    {
+      "index": 1260,
+      "depth": 4,
+      "cell": 1266,
+      "type": "cell",
+      "target_cell": 1231,
+      "intent": "retreat"
+    },
+    {
+      "index": 1261,
+      "depth": 4,
+      "cell": 1231,
+      "type": "cell",
+      "target_cell": 1266,
+      "intent": "retreat"
+    },
+    {
+      "index": 1262,
+      "depth": 4,
+      "cell": 1266,
+      "type": "cell",
+      "target_cell": 1302,
+      "intent": "retreat"
+    },
+    {
+      "index": 1263,
+      "depth": 4,
+      "cell": 1302,
+      "type": "cell",
+      "target_cell": 1268,
+      "intent": "retreat"
+    },
+    {
+      "index": 1264,
+      "depth": 4,
+      "cell": 1268,
+      "type": "cell",
+      "target_cell": 1234,
+      "intent": "retreat"
+    },
+    {
+      "index": 1265,
+      "depth": 4,
+      "cell": 1234,
+      "type": "cell",
+      "target_cell": 1199,
+      "intent": "retreat"
+    },
+    {
+      "index": 1266,
+      "depth": 4,
+      "cell": 1199,
+      "type": "cell",
+      "target_cell": 1164,
+      "intent": "retreat"
+    },
+    {
+      "index": 1267,
+      "depth": 4,
+      "cell": 1164,
+      "type": "cell",
+      "target_cell": 1128,
+      "intent": "retreat"
+    },
+    {
+      "index": 1268,
+      "depth": 4,
+      "cell": 1128,
+      "type": "cell",
+      "target_cell": 1092,
+      "intent": "retreat"
+    },
+    {
+      "index": 1269,
+      "depth": 4,
+      "cell": 1092,
+      "type": "cell",
+      "target_cell": 1058,
+      "intent": "retreat"
+    },
+    {
+      "index": 1270,
+      "depth": 4,
+      "cell": 1058,
+      "type": "cell",
+      "target_cell": 1094,
+      "intent": "retreat"
+    },
+    {
+      "index": 1271,
+      "depth": 4,
+      "cell": 1094,
+      "type": "cell",
+      "target_cell": 1058,
+      "intent": "retreat"
+    },
+    {
+      "index": 1272,
+      "depth": 4,
+      "cell": 1058,
+      "type": "cell",
+      "target_cell": 1057,
+      "intent": "retreat"
+    },
+    {
+      "index": 1273,
+      "depth": 4,
+      "cell": 1057,
+      "type": "cell",
+      "target_cell": 1058,
+      "intent": "retreat"
+    },
+    {
+      "index": 1274,
+      "depth": 4,
+      "cell": 1058,
+      "type": "cell",
+      "target_cell": 1059,
+      "intent": "retreat"
+    },
+    {
+      "index": 1275,
+      "depth": 4,
+      "cell": 1059,
+      "type": "item"
+    },
+    {
+      "index": 1276,
+      "depth": 4,
+      "cell": 1059,
+      "type": "cell",
+      "target_cell": 1056
+    },
+    {
+      "index": 1277,
+      "depth": 4,
+      "cell": 1059,
+      "type": "item"
+    },
+    {
+      "index": 1278,
+      "depth": 4,
+      "cell": 1059,
+      "type": "cell",
+      "target_cell": 1093
+    },
+    {
+      "index": 1279,
+      "depth": 4,
+      "cell": 1059,
+      "type": "item"
+    },
+    {
+      "index": 1280,
+      "depth": 4,
+      "cell": 1059,
+      "type": "cell",
+      "target_cell": 1094
+    },
+    {
+      "index": 1281,
+      "depth": 4,
+      "cell": 1059,
+      "type": "item"
+    },
+    {
+      "index": 1282,
+      "depth": 4,
+      "cell": 1059,
+      "type": "cell",
+      "target_cell": 1094
+    }
+  ],
+  "observations": [
+    {
+      "signature": "7b8a6e3739ab70be",
+      "kind": "observed-death:unknown/missing",
+      "reason": "Hero died; cause not established by the recording summary",
+      "action_from": 1259,
+      "action_to": 1282
+    }
+  ],
+  "prior_review_attempt": false
+}
