@@ -2778,14 +2778,15 @@
     "priority": "high",
     "summary": "Establish jointly executable gas-test staging and remote potion storage before mandatory discovery exhausts.",
     "evidence": [
-      "Decision 671, log lines 1919–1920: exploration enters doorway 1150.",
-      "Decision 672, log lines 1922–1923: gas is observed and the full-health hero retreats to 1187.",
-      "Decision 673, log lines 1925–1926: missing purity reservation exhausts mandatory discovery without an accepted preparation action.",
-      "tools/descent_potions.py:350–392; tools/puzzle_supplies.py:743–806,968–1012; tools/potion_stash.py:95–133.",
-      "Validated offline reconstruction matches decisions 0–672; isolated terminal probes find bank 1186 safe but without admitted storage, even without hunger."
+      "Decision 189, log line 538: gas and protected-room rewards become public at doorway 673; escape returns toward clear ground.",
+      "Decisions 194–198, log lines 553–567: gas approach returns alternate with reverse exploration.",
+      "Decisions 199 and 207: route-stall recoveries do not repair potion preparation.",
+      "Decision 209, log lines 602–604: mandatory preparation exhausts with the hero at 25/25 HP and no accepted descent.",
+      "Source-pinned offline reconstruction matches decisions 0–208; isolated decision-195 probes find geometric banks 588 and 646 but no admitted remote potion storage.",
+      "tools/puzzle_supplies.py:457–509,1021–1069; tools/potion_stash.py:101–155; tools/protected_rewards.py:350–409."
     ],
     "status": "deferred",
-    "reason": "Complete source and offline reconstruction resolved the selecting-state uncertainty, but no helper jointly certifies test-bank safety and remote protection of the actual three-color inventory. The only admitted bank has no storage candidate in the required distance interval of its door-excluding transit corridor. A gas meal alone still leaves preparation blocked; relaxing geometry, collateral checks or unknown-drink safety is unsupported. Next build a paired public-observation fixture from decisions 672/673 and prove departure-aware storage across a known ordinary door, including fresh arrival, bounded return and collection receipts. Only then add the executable gas-preparation handoff with an original-red/candidate-green regression. Preserve terminal exhaustion and mandatory pickup.",
+    "reason": "Revalidated here. Complete source and reconstruction resolve the selecting-state gap, but storage transit remains confined to an eight-cell pocket with no distance-three drop site. Doorway 559 is excluded even when open. No existing transaction proves exterior storage across its reclosure while preserving fresh visibility, frost and flame isolation, and interruption-safe retrieval. Merely admitting doors or changing approach preference is not certified safe. Next derive paired decision-194/195 fixtures around bank 588 and threshold 559, prove a bounded storage-first itinerary with accepted arrival, drop and pickup receipts, then add an original-red/candidate-green regression. Preserve terminal exhaustion and mandatory progression pickup.",
     "origin_run": "000220"
   },
   {
