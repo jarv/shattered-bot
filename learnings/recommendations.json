@@ -3280,5 +3280,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000253"
+  },
+  {
+    "id": "000254-summoning-key-prerequisite",
+    "priority": "high",
+    "summary": "Plan safe summoning-room prerequisites for mandatory keys instead of reaching an unrelated descent veto.",
+    "evidence": [
+      "D1518, log line 4407: golden key observed during combat",
+      "D1521, log line 4416: summoning trap revealed in the key's room",
+      "D1842, log lines 5355–5358: key route blocked; healing does not resolve it",
+      "D1843, log lines 5359–5361: mandatory-preparation failure; recovery declined"
+    ],
+    "status": "deferred",
+    "reason": "No safe useful replacement is supported yet. The priority leaf omits summoning delegation, but the existing controller would still reject cloth armor, the staff's readiness score, current buffs and three observed doors. Repairing delegation alone would not fix this recording. Build a reduced mandatory-key fixture preserving those exclusions, then implement a bounded activation/containment/return plan using publicly known supplies before adding a positive preparation-selection regression. Do not weaken hazard admission, guess potion effects or waive the key.",
+    "origin_run": "000254"
   }
 ]
