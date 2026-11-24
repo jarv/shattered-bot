@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "id": "000266",
+  "started_at": "2026-11-24T15:41:23Z",
+  "completed_at": "2026-11-24T15:48:38.611048+00:00",
+  "source_commit": "b6979632b752dc9e8d46a33282b3af84cb068422",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "51bdb688a8fed22859aa80c5a30a841418fb3c1d6da0f7e728dd727d4914879c",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "game_checksum": "c8e8e4f806fb59aa4240b962b06352f2849b6d7f4a5e78285f74ca7afc951a68",
+  "supervisor_version": "b2e9456-live-buffs",
+  "outcome": "dead",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "blocker_kind": "execution-failure",
+  "outcome_summary": "Died during retreat from a mimic and sewer crabs",
+  "outcome_reason": "Hero died",
+  "max_depth": 3,
+  "actions": 963,
+  "duration_seconds": 430.296,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000265",
+  "previous_source_commit": "3cb0a97deff8a08b164533d1d4dedb6031e55ad5",
+  "improvements": [
+    "The bot can now pause for fresh observations when brief roots prevent movement, but only at full health with no observed threats or nearby hazards. These pauses are bounded and do not count as collecting items.",
+    "The bot can now use a carried stone of intuition to investigate a missing pool-room potion while hungry. Failed guesses about other potions do not automatically exclude this attempt."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Hungry pool preparation should retain safely admitted intuition hypotheses even when earlier generic guesses canceled. Identification attempts must remain bounded and public-menu verified; they do not establish potion identity, protection, a safe return route or collection.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero died during retreat with a mimic and sewer crabs observed; the recording does not identify an unambiguous killer. The episode began with the suspicious-container test at decisions 929–930, followed by mimic kiting. At decision 935, the newly observed crab and mimic triggered a doorway retreat; its accepted first step lost 12 of 30 HP (log lines 2731–2735). Decision 936 canceled that route for excessive injury, then immediately restarted it with a lower health baseline (2736–2737). The pursuit injury limit was already exceeded, but tools/pursuit_budget.py:142–155 delayed its enforcement until the next four-move review. The proposed correction checks that existing injury limit immediately, without changing movement, hazard, collection or terminal safeguards. A reduced public-input regression validates the preceding selected step and reconstructs accepted feedback, not the full runtime memory. It fails on original policy and passes after correction; the full suite passes 2,461 tests with four skips. This establishes timely retirement of new unverified lures, not prevention of the first injury, a different next movement, successful collection or survival. Post-death item revelations were not treated as pre-death knowledge. There were no recorded planner incidents.",
+    "learnings": "Accepted injury must retire exhausted lure setups immediately, rather than waiting for the periodic movement review. Canceling and restarting a doorway plan must not erase the encounter’s accumulated health loss. Verified escapes remain eligible; retirement is not proof of safety or survival."
+  },
+  "recommendations": [
+    {
+      "id": "000266-immediate-pursuit-injury-review",
+      "priority": "high",
+      "summary": "Enforce the existing accepted-injury budget before another doorway setup can reset its health baseline.",
+      "evidence": [
+        "Decision 935, log lines 2731–2735: doorway retreat loses 12 HP and records the fifth accepted retreat.",
+        "Decision 936, log lines 2736–2737: excessive-loss cancellation is followed by a new setup toward the same door.",
+        "tools/mage_policy.py:1172–1185; tools/pursuit_budget.py:142–155; tools/multi_enemy_tactics.py:135–166,234–277."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000266"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000266/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000266/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 145,
+        "turns": 323,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 324,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 757
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 26,
+        "gold_gained": 219,
+        "turns": 472,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 480,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "objective-completed-dialogue"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 9,
+        "gold_gained": 0,
+        "turns": 145.5,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 153,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 0,
+    "ending_level": 4,
+    "starving_turns": 6,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 4,
+    "gold_collected": 364,
+    "gold_complete": true,
+    "turns": 940.5,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

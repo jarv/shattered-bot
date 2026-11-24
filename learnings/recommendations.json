@@ -3456,5 +3456,18 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000265"
+  },
+  {
+    "id": "000266-immediate-pursuit-injury-review",
+    "priority": "high",
+    "summary": "Enforce the existing accepted-injury budget before another doorway setup can reset its health baseline.",
+    "evidence": [
+      "Decision 935, log lines 2731–2735: doorway retreat loses 12 HP and records the fifth accepted retreat.",
+      "Decision 936, log lines 2736–2737: excessive-loss cancellation is followed by a new setup toward the same door.",
+      "tools/mage_policy.py:1172–1185; tools/pursuit_budget.py:142–155; tools/multi_enemy_tactics.py:135–166,234–277."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000266"
   }
 ]

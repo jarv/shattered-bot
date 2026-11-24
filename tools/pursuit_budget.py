@@ -141,10 +141,14 @@ def reassess(p,state,enemies):
 
 def review_outcome(p,state):
     """Outcome review continues even after the two attack interventions are spent."""
-    if p.pursuit_retreat_moves-p.pursuit_reassessed_move<4:return
-    p.pursuit_reassessed_move=p.pursuit_retreat_moves
     outcome=p.pursuit_outcome or {}
-    exhausted=p.pursuit_retreat_moves>=12 or outcome.get('hp_loss',0)>=max(3,.2*state['hero']['max_hp'])
+    injury_exhausted=outcome.get('hp_loss',0)>=max(3,.2*state['hero']['max_hp'])
+    # Periodic move review must not delay the accepted-injury safety budget.
+    # Otherwise a failed doorway continuation can restart with a lower
+    # start_hp before the next four-move review notices its accumulated loss.
+    if p.pursuit_retreat_moves-p.pursuit_reassessed_move<4 and not injury_exhausted:return
+    p.pursuit_reassessed_move=p.pursuit_retreat_moves
+    exhausted=p.pursuit_retreat_moves>=12 or injury_exhausted
     if exhausted:
         p.pursuit_lure_exhausted=True
         p.ambush_plan=p.snake_door_reset=None
