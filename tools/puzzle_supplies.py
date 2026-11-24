@@ -463,6 +463,12 @@ def revisit_flight_room(p,state,demand,distance):
     """
     kind=demand.kind
     if kind not in {'flight','gas'} or p.recent_threats or p.puzzle_revisit_steps[kind]>=48:return None
+    key=(state['depth'],state.get('branch',0),demand.cell)
+    if kind=='gas' and any(receipt[:3]==key for receipt in p.gas_approach_receipts):
+        # This ordinary observation was actually reached. A failed test-bank
+        # admission is not new information and must not reverse other floor work.
+        # Known supplies and actual test/storage/trip admission run before here.
+        return None
     hero=state['hero'];pos=hero['cell'];width=state['map']['width']
     try:
         from .policy_geometry import neighbors
@@ -505,7 +511,9 @@ def revisit_flight_room(p,state,demand,distance):
         'status':'Return to observed approach, then reobserve and replan candidate test/round trip',
         'identity_inferred':False,'qualification':'No hazard entry or potion use admitted by this staging move'}
     room='levitation' if kind=='flight' else 'gas'
-    return p.toward(state,view,'room: revisit '+room+'-room approach before deferring protected reward',paths,intent=Intent.REPOSITION)
+    decision=p.toward(state,view,'room: revisit '+room+'-room approach before deferring protected reward',paths,intent=Intent.REPOSITION)
+    if decision and kind=='gas':p.gas_approach_pending=(*key,view)
+    return decision
 
 
 def known_flight_choices(p,state,neighbors):
@@ -682,9 +690,10 @@ def observe_pool_entrance(p,before,state):
     # A dry approach scout is an observation task, not a protection or loot
     # receipt. Once actually reached, leaving it for other floor work must not
     # restart that same detour. Supply/test admission still runs on every input.
-    pending=p.pool_approach_pending
-    if pending is not None:
-        p.pool_approach_pending=None
+    for kind in ('pool','gas'):
+        pending=getattr(p,kind+'_approach_pending',None)
+        if pending is None:continue
+        setattr(p,kind+'_approach_pending',None)
         depth,branch,_,bank=pending
         decision=p.last_decision
         tile=next((t for t in state.get('map',{}).get('cells',[]) if t['cell']==bank),{})
@@ -694,7 +703,7 @@ def observe_pool_entrance(p,before,state):
                 and (state.get('depth'),state.get('branch',0))==(depth,branch) \
                 and before.get('hero',{}).get('cell')!=bank \
                 and state.get('hero',{}).get('cell')==bank and tile.get('visible'):
-            p.pool_approach_receipts.add(pending)
+            getattr(p,kind+'_approach_receipts').add(pending)
         elif before and decision and decision.intent==Intent.REPOSITION \
                 and (before.get('depth'),before.get('branch',0))==(depth,branch) \
                 and (state.get('depth'),state.get('branch',0))==(depth,branch):
@@ -709,7 +718,7 @@ def observe_pool_entrance(p,before,state):
                     and decision.action=={'type':'cell','cell':reached} \
                     and route and route[-1]==bank and reached in route[1:-1] \
                     and fresh.get('visible'):
-                p.pool_approach_pending=pending
+                setattr(p,kind+'_approach_pending',pending)
     for kind in ('pool','flight'):
         pending=getattr(p,kind+'_entrance_pending')
         if pending is None:continue
