@@ -2903,5 +2903,21 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000228"
+  },
+  {
+    "id": "000229-pool-preparation-handoff",
+    "priority": "high",
+    "summary": "Establish an executable, safely funded preparation transaction for an unfinished pool before descent becomes the only proposed progress.",
+    "evidence": [
+      "Decision 1413, log line 4122: chest 1381 and three giant piranhas first appear; the hungry hero has no food or known invisibility.",
+      "Decision 1420, log line 4138: the pool reward is explicitly pending, but the supply controller declines and exploration proceeds.",
+      "Decision 1495, log lines 4357–4359: the pool descent veto leads to blink fallback, without collection credit.",
+      "Decision 1537, accepted log line 4498: waterskin restores one HP but does not resolve the missing preparation.",
+      "Decision 1538, log lines 4499–4500: planner exhaustion with full health; recovery rejects escape or hunger admission.",
+      "tools/piranha_tactics.py:choose; tools/puzzle_supplies.py:142–191,718–817,977–1039; tools/mage_policy.py:444–458; tools/floor_abandonment.py:route."
+    ],
+    "status": "deferred",
+    "reason": "No safe focused patch is established. The initiating and terminal inventories lack food, identified invisibility and non-drinking identification supplies. An independent first-sighting fixture admits neither a fresh testing bank nor a dry-approach journey, even with hunger removed on an isolated copy. Lowering hunger or hazard checks would therefore not certify a replacement. Next derive paired first-sighting and surveyed-exterior fixtures, preflight a dry observation approach with fresh arrival, remote storage, protection-funded reward return and an actual hunger source, then add a new original-red/candidate-green regression for the executable handoff. If those resources cannot support preparation, separately certify dry-bank ranged pool clearance; the existing aquarium helper is not sufficient evidence. Preserve mandatory pickups and terminal exhaustion.",
+    "origin_run": "000229"
   }
 ]
