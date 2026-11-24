@@ -3469,5 +3469,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000266"
+  },
+  {
+    "id": "000267-gas-approach-envelope",
+    "priority": "high",
+    "summary": "Reject structurally incompatible gas-testing approaches before they repeatedly reverse useful exploration.",
+    "evidence": [
+      "D192–195, log lines 542–553: gas discovery, escape and return to the chasm-adjacent approach.",
+      "D223–226, log lines 641–654: navigation recovery followed by mandatory-preparation planner exhaustion.",
+      "tools/puzzle_supplies.py:183–211,457–514: gas test-bank terrain differs from the shared reobservation envelope.",
+      "Offline reconstruction matched D0–195; an isolated candidate preparation probe selects the observed route toward bank 938."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000267"
   }
 ]
