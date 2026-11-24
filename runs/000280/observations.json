@@ -1,0 +1,208 @@
+{
+  "schema_version": 1,
+  "run_id": "000280",
+  "source_commit": "4cbf4aff3721973d2032bc8ff780e08067491aeb",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000280/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000280/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 3508,
+      "depth": 7,
+      "cell": 541,
+      "type": "cell",
+      "target_cell": 503,
+      "intent": "retreat"
+    },
+    {
+      "index": 3509,
+      "depth": 7,
+      "cell": 503,
+      "type": "item"
+    },
+    {
+      "index": 3510,
+      "depth": 7,
+      "cell": 503,
+      "type": "cell",
+      "target_cell": 504
+    },
+    {
+      "index": 3511,
+      "depth": 7,
+      "cell": 503,
+      "type": "item"
+    },
+    {
+      "index": 3512,
+      "depth": 7,
+      "cell": 503,
+      "type": "cell",
+      "target_cell": 467
+    },
+    {
+      "index": 3513,
+      "depth": 7,
+      "cell": 503,
+      "type": "item"
+    },
+    {
+      "index": 3514,
+      "depth": 7,
+      "cell": 503,
+      "type": "cell",
+      "target_cell": 541
+    },
+    {
+      "index": 3515,
+      "depth": 7,
+      "cell": 503,
+      "type": "cell",
+      "target_cell": 466,
+      "intent": "retreat"
+    },
+    {
+      "index": 3516,
+      "depth": 7,
+      "cell": 466,
+      "type": "cell",
+      "target_cell": 503,
+      "intent": "retreat"
+    },
+    {
+      "index": 3517,
+      "depth": 7,
+      "cell": 503,
+      "type": "cell",
+      "target_cell": 541,
+      "intent": "retreat"
+    },
+    {
+      "index": 3518,
+      "depth": 7,
+      "cell": 541,
+      "type": "cell",
+      "target_cell": 579,
+      "intent": "retreat"
+    },
+    {
+      "index": 3519,
+      "depth": 7,
+      "cell": 579,
+      "type": "cell",
+      "target_cell": 617,
+      "intent": "retreat"
+    },
+    {
+      "index": 3520,
+      "depth": 7,
+      "cell": 617,
+      "type": "cell",
+      "target_cell": 654,
+      "intent": "retreat"
+    },
+    {
+      "index": 3521,
+      "depth": 7,
+      "cell": 654,
+      "type": "item"
+    },
+    {
+      "index": 3522,
+      "depth": 7,
+      "cell": 654,
+      "type": "cell",
+      "target_cell": 617
+    },
+    {
+      "index": 3523,
+      "depth": 7,
+      "cell": 654,
+      "type": "item"
+    },
+    {
+      "index": 3524,
+      "depth": 7,
+      "cell": 654,
+      "type": "cell",
+      "target_cell": 617
+    },
+    {
+      "index": 3525,
+      "depth": 7,
+      "cell": 654,
+      "type": "cell",
+      "target_cell": 691,
+      "intent": "reposition"
+    },
+    {
+      "index": 3526,
+      "depth": 7,
+      "cell": 691,
+      "type": "cell",
+      "target_cell": 728,
+      "intent": "reposition"
+    },
+    {
+      "index": 3527,
+      "depth": 7,
+      "cell": 728,
+      "type": "item"
+    },
+    {
+      "index": 3528,
+      "depth": 7,
+      "cell": 728,
+      "type": "cell",
+      "target_cell": 1024
+    },
+    {
+      "index": 3529,
+      "depth": 7,
+      "cell": 728,
+      "type": "cell",
+      "target_cell": 765,
+      "intent": "retreat"
+    },
+    {
+      "index": 3530,
+      "depth": 7,
+      "cell": 765,
+      "type": "cell",
+      "target_cell": 802,
+      "intent": "retreat"
+    },
+    {
+      "index": 3531,
+      "depth": 7,
+      "cell": 802,
+      "type": "cell",
+      "target_cell": 765,
+      "intent": "retreat"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "1cdd9f990a57b72e",
+      "kind": "planner-stop:immediate-safety-emergency",
+      "reason": "Wraiths: no charged magic, doorway ambush, or safe retreat; refusing futile melee",
+      "depth": 7,
+      "cell": 765,
+      "action_from": 3508,
+      "action_to": 3531
+    },
+    {
+      "signature": "db59c2dc5ada446c",
+      "kind": "planner-incident",
+      "reason": "Wraiths: no charged magic, doorway ambush, or safe retreat; refusing futile melee",
+      "depth": 7,
+      "cell": 765,
+      "action_from": 3508,
+      "action_to": 3532
+    }
+  ],
+  "prior_review_attempt": false
+}
