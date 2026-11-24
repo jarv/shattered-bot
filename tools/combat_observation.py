@@ -245,6 +245,29 @@ def dm100_arcane_disintegration_receipt(before,after,pending):
     return not any(o.get("name","").lower()=="dm-100" for o in after.get("objects",[]))
 
 
+def appended_repeat_dm100_defeat(before, after):
+    """Prove replacement of an identical rendered GameLog entry, not novelty.
+
+    GameLog appends entries and removes an old prefix; ApiUI preserves member
+    order. A unique retained pickup line cannot move from after the old defeat
+    to before that same entry. Require this order witness rather than treating
+    disappearance, XP, or a retained defeat string alone as a kill receipt.
+    """
+    if before.get("scene") != "GameScene" or after.get("scene") != "GameScene" \
+            or before.get("status") != "ready" or after.get("status") != "ready" \
+            or before.get("modal") or after.get("modal"):
+        return False
+    old = before.get("ui", {}).get("texts", [])
+    new = after.get("ui", {}).get("texts", [])
+    message = "You defeated DM-100."
+    if old.count(message) != 1 or new.count(message) != 1:
+        return False
+    return any(isinstance(text, str) and text.startswith("You picked up: ") \
+               and old.count(text) == 1 and new.count(text) == 1 \
+               and old.index(message) < old.index(text) \
+               and new.index(text) < new.index(message) for text in old)
+
+
 def retire_confirmed_dm100(p,before,after,target):
     """A fresh kill receipt is usable even when fire censors damage samples."""
     memory=getattr(p,"dm100_threat",None)
@@ -252,8 +275,9 @@ def retire_confirmed_dm100(p,before,after,target):
     if target["name"].lower()=="dm-100" and memory and memory["cell"]==target["cell"] \
             and after.get("status")=="ready" \
             and before["depth"]==after["depth"] and before.get("branch",0)==after.get("branch",0) \
-            and any(t.strip().lower()=="you defeated dm-100."
-                    for t in after.get("ui",{}).get("texts",[]) if t not in before_texts) \
+            and (any(t.strip().lower()=="you defeated dm-100."
+                     for t in after.get("ui",{}).get("texts",[]) if t not in before_texts)
+                 or appended_repeat_dm100_defeat(before,after)) \
             and not any(o.get("cell")==target["cell"] and o.get("name","").lower()=="dm-100"
                         for o in after.get("objects",[])):
         p.dm100_threat=None
