@@ -149,6 +149,8 @@ def observe_energy(p,before,state):
 
 def inventory_baseline(state, brew):
     names = {*brew.ingredients, brew.output}
+    if brew.output == 'dreamfruit' and brew.ingredients == ('blandfruit', 'seed of mageroyal'):
+        names.add('magefruit')  # Rendered name of this known recipe.
     if brew.fallback:names.add(brew.fallback)
     if brew.output == 'trinket':
         try:
@@ -264,6 +266,14 @@ def alchemy_menu(p, state):
                 if brew.energy and (not energy or available < brew.energy+plan.get("reserve", 2)):
                     craft = None
                 output = brew.output
+                # The played English UI renders the dreamfruit recipe as
+                # magefruit. Admit only that exact known ingredient recipe and
+                # an offered craft button; keep the actual name for receipts.
+                if not craft and brew.output == 'dreamfruit' \
+                        and brew.ingredients == ('blandfruit', 'seed of mageroyal'):
+                    craft = button("craft: magefruit")
+                    if craft:
+                        output = 'magefruit'
                 if not craft and brew.fallback:
                     craft = button("craft: " + brew.fallback)
                     output = brew.fallback

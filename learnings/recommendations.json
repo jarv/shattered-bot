@@ -2962,5 +2962,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000234"
+  },
+  {
+    "id": "000235-mageroyal-craft-preview",
+    "priority": "high",
+    "summary": "Recognize the offered magefruit name for the known mageroyal fruit recipe instead of abandoning preparation.",
+    "evidence": [
+      "D3301–D3308, log lines 9397–9411: selected ingredients lead to an offered magefruit craft but Back is chosen.",
+      "D3324 and D3339, log lines 9447 and 9481: repeated recipe exits.",
+      "D3542, log line 10102: next-floor arrival already starving.",
+      "D4074, log line 11645: mandatory iron key remains behind magical fire; preparation is exhausted."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000235"
   }
 ]
