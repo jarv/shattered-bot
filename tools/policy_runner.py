@@ -164,11 +164,30 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                          "intent": decision.intent, "controller": decision.controller}
             if getattr(decision, "floor_abandonment", None):
                 record["planner_recovery_incident"] = decision.floor_abandonment
+                receipt=getattr(decision,"recovery_receipt",None)
+                if receipt:
+                    record["recovery_proposal"]=receipt.record()
             if getattr(decision,"potion_purpose",None):record["potion_purpose"]=decision.potion_purpose
             if getattr(decision,"vertigo_kind",None):record["vertigo_action"]=decision.vertigo_kind
             if decision.movement_batch:record['requested_movement_route']=list(decision.movement_batch)
             if isinstance(policy, SurvivalPolicy):
                 record["controllers"] = policy.planner.report.get("controllers", [])
+                if policy.objective_episodes.episodes:
+                    record["objective_episodes"] = policy.objective_episodes.records()
+                if policy.reward_lifecycles:
+                    record["protected_work"] = [work.record() for work in policy.reward_lifecycles]
+                stash=getattr(policy,"potion_stash",None)
+                if stash and hasattr(stash,"record"):
+                    record["stash_workflow"]=stash.record()
+                payload=getattr(policy,"trap_payload_return",None)
+                if payload and hasattr(payload,"record"):
+                    record["payload_workflow"]=payload.record()
+                if policy.physical_ledger.entries:
+                    record["physical_obligations"]=policy.physical_ledger.records()
+                    record["resource_claims"]=policy.physical_ledger.claim_records()
+                itinerary=getattr(getattr(policy,"room_journey",None),"itinerary",None)
+                if itinerary:
+                    record["preparation_itinerary"]=itinerary.record()
                 if policy.engine == "planner":
                     record["decision_engine"] = policy.planner.report
             if hasattr(policy, "challenge_combat"):
@@ -200,6 +219,15 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                     log.write(json.dumps({"rejected": str(error), "index": index}) + "\n")
                     state = api.state()
                     continue
+                try:
+                    from .owned_transfers import unknown_execution
+                except ImportError:
+                    from owned_transfers import unknown_execution
+                owners=unknown_execution(policy,state,decision,str(error))
+                if owners:
+                    log.write(json.dumps({"index":index,"ambiguous_owned_transfer":{
+                        "owners":owners,"error":str(error),"transfer_confirmed":False}})+"\n")
+                    log.flush()
                 raise
             try:
                 from .floor_metrics import snapshot
@@ -214,7 +242,8 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                 if incident:
                     log.write(json.dumps({"index": index, "planner_recovery_update": {
                         key: incident.get(key) for key in
-                        ("id", "status", "accepted_actions", "stalled_actions", "target", "collection_credited")
+                        ("id", "status", "accepted_actions", "owned_actions", "interruptions",
+                         "unattributed_actions", "stalled_actions", "best_distance", "target", "collection_credited")
                     }}) + "\n")
                     log.flush()
             if isinstance(policy, SurvivalPolicy):
@@ -235,6 +264,9 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                     from .corruption_tactics import observe as observe_corruption
                     from .movement_batching import observe as observe_movement_batch
                     from .room_supplies import observe as observe_room_supply
+                    from .potion_stash import observe_drop as observe_stash
+                    from .payload_workflow import observe_landing as observe_payload
+                    from .owned_transfers import observe_pickup as observe_owned_pickup
                     from .descent_potions import observe as observe_descent_potion
                     from .vertigo_tactics import observe as observe_vertigo
                     from .objective_planning import observe as observe_objective
@@ -246,6 +278,9 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                     from corruption_tactics import observe as observe_corruption
                     from movement_batching import observe as observe_movement_batch
                     from room_supplies import observe as observe_room_supply
+                    from potion_stash import observe_drop as observe_stash
+                    from payload_workflow import observe_landing as observe_payload
+                    from owned_transfers import observe_pickup as observe_owned_pickup
                     from descent_potions import observe as observe_descent_potion
                     from vertigo_tactics import observe as observe_vertigo
                     from objective_planning import observe as observe_objective
@@ -255,6 +290,9 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                                        ('observed_full_mapping',observe_mapping(policy,state,decision,next_state)),
                                        ('observed_corruption_input',observe_corruption(policy,state,decision,next_state)),
                                        ('observed_movement_batch',observe_movement_batch(policy,state,decision,next_state)),
+                                       ('observed_potion_stash',observe_stash(policy,state,decision,next_state)),
+                                       ('observed_payload_landing',observe_payload(policy,state,decision,next_state)),
+                                       ('observed_owned_pickup',observe_owned_pickup(policy,state,decision,next_state)),
                                        ('observed_room_supply',observe_room_supply(policy,state,decision,next_state)),
                                        ('observed_descent_potion',observe_descent_potion(policy,state,decision,next_state)),
                                        ('observed_vertigo_action',observe_vertigo(policy,state,decision,next_state)),
@@ -297,7 +335,12 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                     log.flush()
                 feedback=observe_accepted_attack(policy,state,decision,next_state)
                 if feedback:
-                    log.write(json.dumps({"index":index,"observed_combat_damage":feedback})+"\n")
+                    retirement=feedback.get("threat_retirement")
+                    if retirement:
+                        log.write(json.dumps({"index":index,"observed_threat_retirement":retirement})+"\n")
+                    damage={k:v for k,v in feedback.items() if k!="threat_retirement"}
+                    if damage:
+                        log.write(json.dumps({"index":index,"observed_combat_damage":damage})+"\n")
                     log.flush()
                 try:
                     from .region_navigation import accepted_navigation
@@ -346,6 +389,22 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                       defeated_bosses=sorted(getattr(policy, "defeated_bosses", set())),
                        cleared_floors=getattr(policy, "cleared_floors", []))
         result["deferred_obligations"]=list(getattr(policy,"deferred_obligations",[]))
+        if hasattr(policy,"objective_episodes"):
+            result["objective_episodes"]=policy.objective_episodes.records()
+        stash=getattr(policy,"potion_stash",None)
+        if stash and hasattr(stash,"record"):
+            result["stash_workflow"]=stash.record()
+        payload=getattr(policy,"trap_payload_return",None)
+        if payload and hasattr(payload,"record"):
+            result["payload_workflow"]=payload.record()
+        if hasattr(policy,"physical_ledger"):
+            result["physical_obligations"]=policy.physical_ledger.records()
+            result["resource_claims"]=policy.physical_ledger.claim_records()
+        if hasattr(policy,"evidence_reducer"):
+            result["threat_retirements"]=list(policy.evidence_reducer.retirements)
+        itinerary=getattr(getattr(policy,"room_journey",None),"itinerary",None)
+        if itinerary:
+            result["preparation_itinerary"]=itinerary.record()
         result['missed_loot']=list(getattr(policy,'missed_loot',[]))
         result['continuation_errors']=list(getattr(policy,'continuation_errors',[]))
         result['inventory_management']=list(getattr(policy,'inventory_events',[]))
@@ -366,7 +425,7 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
         log.write(json.dumps({"result": result, "state": state}, ensure_ascii=False) + "\n")
     if abandonment:
         if abandonment.active:
-            abandonment.active["status"] = "interrupted"
+            abandonment.interrupt()
         result["planner_incident_count"] = len(abandonment.incidents)
         result["planner_recoveries_succeeded"] = sum(i["status"] == "descended" for i in abandonment.incidents)
     return result

@@ -37,7 +37,9 @@ class RecoveryEfficiencyTests(unittest.TestCase):
         self.assertFalse(action and action.action.get('action')=='DRINK')
 
     def test_deferred_controller_does_not_fund_speculative_healing(self):
-        s,p=self.encounter();s['hero']['cell']=190;p.deferred_room_controllers.add('potion-supplies')
+        from tools.objective_planning import exhaust_preparation
+        s,p=self.encounter();s['hero']['cell']=190
+        exhaust_preparation(p,s,"test: preparation exhausted")
         self.assertFalse(frost_recovery_nearby(p,s,distance))
         self.assertEqual(0.8,p.recovery_target(s))
 

@@ -77,12 +77,17 @@ def choose(p,state,enemies):
         if plan['kind']=='trap':valid=valid and cold_trigger_safe(p,state,actuator,distance,neighbors)
         if not valid or not weight:plan['phase']='collect'
         else:
+            try:
+                from .payload_workflow import throw as throw_payload
+            except ImportError:
+                from payload_workflow import throw as throw_payload
+            action=throw_payload(p,state,weight,actuator,
+                'food: remotely trigger cold over the full dropped meat stack',
+                disarm_required=plan['kind']=='trap')
+            if not action:return None
             plan['phase']='cooling'
             if plan['kind']=='trap':p.trap_attempts.add((state['depth'],actuator))
-            if base_name(weight) in {'waterskin','dew vial','dew pouch'}:
-                p.trap_payload_return={'cell':actuator,'name':base_name(weight),'depth':state['depth'],
-                    'steps':0,'disarm_required':plan['kind']=='trap'}
-            return p.use(weight,'THROW','food: remotely trigger cold over the full dropped meat stack',target=actuator)
+            return action
     if plan['phase']=='cooling':
         if p.tiles.get(cell,{}).get('effects') or p.tiles.get(cell,{}).get('plant'):
             return p.decision({'type':'wait'},'food: observe cold expiry before recovering the freezing batch')

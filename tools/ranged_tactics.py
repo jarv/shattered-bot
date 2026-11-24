@@ -5,12 +5,14 @@ try:
     from .challenge_combat import exposure
     from .combat_items import unencumbered
     from .consumable_tactics import base_name
+    from .public_evidence import bind_threat, binding_in_scope
 except ImportError:
     from policy_geometry import distance,neighbors,line_clear,projectile_line_clear
     from policy_decision import Intent
     from challenge_combat import exposure
     from combat_items import unencumbered
     from consumable_tactics import base_name
+    from public_evidence import bind_threat, binding_in_scope
 
 
 def ranged_enemy(p,enemy):
@@ -31,6 +33,9 @@ def exposed_wait(p,state,enemies):
 def choose(p,state,enemies,*,escape_only=False):
     if not getattr(p,'unit_strategies_enabled',False) or state.get('status')!='ready' or state.get('modal') \
              or state.get('danger_cells') or state.get('boss_health_text'):return None
+    if p.ranged_plan and p.ranged_plan.get('name')=='dm-100' \
+            and not binding_in_scope(p.ranged_plan,state):
+        p.ranged_plan=None
     if p.ranged_plan and p.ranged_plan.get('mode')=='door-flight':
         try:
             from .dm100_escape import choose as door_flight
@@ -43,7 +48,7 @@ def choose(p,state,enemies,*,escape_only=False):
     if not targets:
         targets=[e for e in p.recent_threats.values() if ranged_enemy(p,e) and
                  (e['name'].lower()=='gnoll trickster' or 'ranged-pull' in p.unit_strategies.profile(e).capabilities)]
-    if not targets and p.dm100_threat and plan and plan.get('name')=='dm-100':
+    if not targets and binding_in_scope(p.dm100_threat,state) and plan and plan.get('name')=='dm-100':
         targets=[{'name':'DM-100','cell':p.dm100_threat['cell']}]
     if not targets and not plan:return None
     if not targets:
@@ -148,6 +153,7 @@ def choose(p,state,enemies,*,escape_only=False):
         p.ranged_plan={'name':target['name'].lower(),'goal':destination,'mode':mode,'steps':1,'waits':0,'hp':hp,'dot':dot,
                        'harmful':sorted(harmful)}
         if dm100:p.ranged_plan['door']=door_bank(destination)
+        if dm100:bind_threat(p,state,p.ranged_plan,target['cell'])
         report_dm('move to verified doorway bank',route)
         if trickster:p.trickster_reposition=False
         return p.cell(route[1],'ranged: commit to '+('close melee range' if mode=='close' else 'doorway or wall cover'),
@@ -169,6 +175,7 @@ def choose(p,state,enemies,*,escape_only=False):
             ranged_attack.reason='quest: gnoll trickster prioritize ranged damage, then break dart line'
             return ranged_attack
     if plan:
+        if dm100:bind_threat(p,state,plan,target['cell'])
         lost_hp=hp<plan['hp']
         damaged=lost_hp and not (dot or plan.get('dot',False))
         newly_harmful=bool(harmful-set(plan.get('harmful',harmful)))
@@ -225,7 +232,8 @@ def choose(p,state,enemies,*,escape_only=False):
                 and p.ranged_cover_waits[target['name'].lower()]<12 \
                 and (not dm100 or door_bank(pos) is not None) and can_wait():
             p.ranged_plan={'name':target['name'].lower(),'goal':pos,'mode':'cover','steps':1,'waits':1,
-                           'hp':hp,'dot':dot,'harmful':sorted(harmful)}
+                            'hp':hp,'dot':dot,'harmful':sorted(harmful)}
+            if dm100:bind_threat(p,state,p.ranged_plan,target['cell'])
             p.ranged_cover_waits[target['name'].lower()]+=1
             report_dm('retain verified bank for bounded lure')
             return p.decision({'type':'wait'},'ranged: retain wall/door cover against ranged/control threat; do not step into doorway',intent=Intent.RECOVER)

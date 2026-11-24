@@ -24,6 +24,7 @@ try:
     from .ghost_quest import observe_quest, visit_ghost, quest_menu, quest_combat
     from .puzzle_supplies import prepare_supplies, identify_menu, recover_probe, demands as supply_demands, frost_recovery_nearby
     from .potion_stash import advance_stash
+    from .public_evidence import bind_threat
     from .room_tactics import charge_suspect_container
     from .wand_tactics import choose_transfusion, observe_wand_cast
     from .environment_tactics import recover_trap_payload
@@ -55,6 +56,7 @@ except ImportError:
     from ghost_quest import observe_quest, visit_ghost, quest_menu, quest_combat
     from puzzle_supplies import prepare_supplies, identify_menu, recover_probe, demands as supply_demands, frost_recovery_nearby
     from potion_stash import advance_stash
+    from public_evidence import bind_threat
     from room_tactics import charge_suspect_container
     from wand_tactics import choose_transfusion, observe_wand_cast
     from environment_tactics import recover_trap_payload
@@ -524,9 +526,21 @@ class MagePolicy(SurvivalPolicy):
                 decision.reason+='; ERROR: outstanding loot logged, continuing descent without clear credit'
             pending = obligations(self,state)
             if self.trap_payload_return:
-                pending.append({"kind":"unretrieved reusable trap payload","cell":self.trap_payload_return["cell"]})
+                try:
+                    from .payload_workflow import workflow as payload_workflow, PayloadPhase
+                except ImportError:
+                    from payload_workflow import workflow as payload_workflow, PayloadPhase
+                payload=payload_workflow(self)
+                if payload.phase in {PayloadPhase.LANDED,PayloadPhase.UNVERIFIED}:
+                    uncertain=payload.proposal if payload.phase==PayloadPhase.UNVERIFIED else None
+                    self.physical_ledger.defer(payload,"Unfinished reusable payload at selected descent",uncertain)
             if self.potion_stash:
-                pending.append({"kind":"unretrieved potion stash","cell":self.potion_stash["cell"]})
+                try:
+                    from .stash_workflow import workflow
+                except ImportError:
+                    from stash_workflow import workflow
+                stash=workflow(self)
+                self.physical_ledger.defer(stash,"Unfinished potion stash at selected descent",stash.pending)
             if pending:
                 import json
                 if self.stop_on_incomplete_loot and not self.planner.report.get("exploration_budget") and locked_room_route(self,state,[o for o in state.get("objects",[]) if is_hostile(o)]):
@@ -550,12 +564,15 @@ class MagePolicy(SurvivalPolicy):
 
     def defer_obligations(self,state,pending,reason):
         new=[]
-        known={(r["depth"],r["obligation"].get("kind"),r["obligation"].get("cell")) for r in self.deferred_obligations}
+        known={(r["depth"],r.get("branch",r["obligation"].get("branch",0)),
+                r["obligation"].get("kind"),r["obligation"].get("cell")) for r in self.legacy_deferred_obligations}
         for obligation in pending:
-            key=(state["depth"],obligation.get("kind"),obligation.get("cell"))
+            branch=obligation.get("branch",state.get("branch",0))
+            key=(state["depth"],branch,obligation.get("kind"),obligation.get("cell"))
             if key not in known:
-                record={"depth":state["depth"],"status":"deferred-unfinished","obligation":dict(obligation),"reason":reason}
-                self.deferred_obligations.append(record)
+                record={"depth":state["depth"],"branch":branch,"status":"deferred-unfinished",
+                        "obligation":dict(obligation),"reason":reason}
+                self.legacy_deferred_obligations.append(record)
                 new.append(record)
                 known.add(key)
         if new:self.planner.report.setdefault("nonfatal_obligations",[]).extend(new)
@@ -678,7 +695,10 @@ class MagePolicy(SurvivalPolicy):
         observe_hunts(self,state,distance)
         if state.get("status")=="ready" and not state.get("modal"):
             seen={o["cell"]:dict(o,observations_ago=0) for o in state.get("objects",[])
-                  if is_hostile(o) and not o.get("sleeping")}
+                   if is_hostile(o) and not o.get("sleeping")}
+            for cell,enemy in seen.items():
+                if enemy["name"].lower()=="dm-100":
+                    bind_threat(self,state,enemy,cell)
             self.recent_threats={c:dict(e,observations_ago=e["observations_ago"]+1)
                                  for c,e in self.recent_threats.items()
                                  if c not in seen and not self.tiles.get(c,{}).get("visible")

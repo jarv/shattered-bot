@@ -159,9 +159,16 @@ def clear_shocking_resource(p,state,resources,paths):
             if not valid:break
         if not valid or pos in area or any(o['cell'] in area and not o.get('top_item')
                                          for o in state.get('objects',[])):continue
-        p.trap_attempts.add((state['depth'],cell))
-        p.trap_payload_return={'cell':cell,'name':base_name(item),'depth':state['depth'],'steps':0}
-        return p.use(item,'THROW','trap: remotely clear revealed shocking plate under required resource; reobserve electricity before retrieval',target=cell)
+        try:
+            from .payload_workflow import throw as throw_payload
+        except ImportError:
+            from payload_workflow import throw as throw_payload
+        action=throw_payload(p,state,item,cell,
+            'trap: remotely clear revealed shocking plate under required resource; reobserve electricity before retrieval',
+            track=True)
+        if action:
+            p.trap_attempts.add((state['depth'],cell))
+            return action
     return None
 
 

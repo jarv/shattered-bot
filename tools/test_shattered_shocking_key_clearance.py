@@ -5,6 +5,7 @@ import unittest
 from tools.test_regular_feedback import arena
 from tools.priority_resources import choose, targets
 from tools.environment_tactics import recover_trap_payload
+from tools.payload_workflow import observe_landing
 
 
 def fixture():
@@ -41,7 +42,13 @@ class ShockingKeyClearanceTests(unittest.TestCase):
         self.assertEqual(tiles,p.tiles)
         self.assertIn(201,targets(p))
         self.assertEqual(201,p.trap_payload_return["cell"])
+        before=copy.deepcopy(s)
+        skin=s["inventory"][0]
         s["inventory"] = []
+        s["observation_id"]+=1
+        s["objects"]=[o for o in s["objects"] if o["cell"]!=201]+[
+            dict(cell=201,name="waterskin",top_item=skin)]
+        observe_landing(p,before,action,s)
         self.assertIsNone(recover_trap_payload(p,s,[]))
         # Synthetic follow-up, not a continuation of the recorded run.
         p.tiles[201].update(terrain=19,trap=None,effects=["electricity"])

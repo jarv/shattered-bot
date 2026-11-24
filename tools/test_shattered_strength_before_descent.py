@@ -9,7 +9,7 @@ from tools.descent_potions import begin, advance, observe, PURPOSE
 from tools.policy_decision import Decision, Intent, GameplayBlocked, PlannerStuck
 from tools.policy_geometry import distance, neighbors
 from tools.policy_runtime import Transaction
-from tools.potion_stash import advance_stash
+from tools.potion_stash import advance_stash, observe_accepted
 from tools.puzzle_supplies import Demand
 from tools.survival_policy import SurvivalPolicy
 from tools.test_challenge_rules import verified
@@ -125,7 +125,8 @@ class StrengthBeforeDescentTests(unittest.TestCase):
                            ("sentry", "potion of haste"), ("flame", "potion of liquid flame"),
                            ("gas", "potion of purity"), ("flight", "potion of levitation")]:
             s, p = ready()
-            p.deferred_room_controllers.add("potion-supplies")
+            from tools.objective_planning import exhaust_preparation
+            exhaust_preparation(p,s,"test: preparation exhausted")
             with patch("tools.descent_potions.requirements", return_value=[Demand(kind, name, 90)]):
                 with self.assertRaises(PlannerStuck):
                     begin(p, s)
@@ -250,6 +251,7 @@ class StrengthBeforeDescentTests(unittest.TestCase):
                 if action is None:
                     break
             after = copy.deepcopy(s)
+            after["observation_id"]=s.get("observation_id",0)+1
             if action.action["type"] == "cell":
                 after["hero"]["cell"] = action.action["cell"]
                 picked = [o for o in after["objects"] if o["cell"] == after["hero"]["cell"]]
@@ -268,6 +270,7 @@ class StrengthBeforeDescentTests(unittest.TestCase):
                 drank = True
             else:
                 self.fail(action)
+            observe_accepted(p, s, action, after)
             s = after
             p.update(s)
             action = None

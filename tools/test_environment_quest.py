@@ -1,4 +1,5 @@
 import unittest
+import copy
 
 from tools.test_challenge_systems import ready, item
 from tools.survival_bot import distance, neighbors, line_clear, Finished
@@ -6,6 +7,9 @@ from tools.environment_tactics import trigger_trap, use_bomb, observe_bombs, pay
 from tools.ghost_quest import visit_ghost, quest_menu, quest_combat, observe_quest
 from tools.resource_tactics import choose_well
 from tools.room_tactics import investigate_suspect_container, charge_suspect_container
+from tools.payload_workflow import observe_landing
+from tools.owned_transfers import observe_pickup
+from tools.policy_decision import Decision
 
 
 class EnvironmentTests(unittest.TestCase):
@@ -19,13 +23,23 @@ class EnvironmentTests(unittest.TestCase):
         action=trigger_trap(p,s,[enemy],distance,neighbors,line_clear)
         self.assertEqual(skin["id"],action.action["id"])
         self.assertEqual("20/20",skin["status"])
+        before=copy.deepcopy(s)
         s["inventory"]=[]
+        s["observation_id"]+=1
+        s["objects"].append(dict(cell=43,name="waterskin",top_item=skin))
+        self.assertEqual("payload-landed",observe_landing(p,before,action,s)["kind"])
         self.assertIsNone(recover_trap_payload(p,s,[enemy]))
         self.assertIsNone(recover_trap_payload(p,s,[]))
         p.tiles[43]["terrain"]=19
         p.loot[43]={"name":"waterskin","top_item":skin}
         self.assertEqual("loot",recover_trap_payload(p,s,[]).intent)
+        before=copy.deepcopy(s)
+        before["hero"]["cell"]=42
+        s["hero"]["cell"]=43
+        s["observation_id"]+=1
         s["inventory"]=[skin]
+        s["objects"]=[o for o in s["objects"] if o["cell"]!=43]
+        self.assertIsNotNone(observe_pickup(p,before,Decision(dict(type="cell",cell=43),"pickup"),s))
         self.assertIsNone(recover_trap_payload(p,s,[]))
         self.assertIsNone(p.trap_payload_return)
 

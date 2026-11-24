@@ -40,6 +40,7 @@ class FloorAbandonmentTests(unittest.TestCase):
         self.assertFalse(p.completed_room_rewards)
         for _ in range(10):
             after = copy.deepcopy(s)
+            after["observation_id"]=s["observation_id"]+1
             after["evaluation_stats"] = {"elapsed_turns": s.get("evaluation_stats", {}).get("elapsed_turns", 0)+1}
             if action.action["cell"] == 93:
                 after["depth"] += 1
@@ -90,8 +91,10 @@ class FloorAbandonmentTests(unittest.TestCase):
     def test_no_progress_budget_and_one_episode_per_floor(self):
         s, p, recovery = fixture()
         action = self.start(s, recovery)
-        for _ in range(8):
-            recovery.observe(s, action, copy.deepcopy(s))
+        for i in range(8):
+            after=copy.deepcopy(s)
+            after["observation_id"]=s["observation_id"]+i+1
+            recovery.observe(s, action, after)
         with self.assertRaises(PlannerStuck):
             recovery.next(s)
         self.assertEqual("exhausted", recovery.incidents[0]["status"])
@@ -154,6 +157,7 @@ class FloorAbandonmentTests(unittest.TestCase):
             def state(self): return self.observation
             def step(self, action):
                 after = copy.deepcopy(self.observation)
+                after["observation_id"]+=1
                 if action["cell"] == 93:
                     after["depth"] = 2
                 else: after["hero"]["cell"] = action["cell"]

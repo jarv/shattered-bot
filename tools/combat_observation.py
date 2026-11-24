@@ -2,9 +2,11 @@
 try:
     from .combat_items import stats
     from .challenge_combat import champion
+    from .public_evidence import ThreatRef, RetirementProof, RetirementRule
 except ImportError:
     from combat_items import stats
     from challenge_combat import champion
+    from public_evidence import ThreatRef, RetirementProof, RetirementRule
 
 
 def context(state,enemy):
@@ -72,7 +74,8 @@ def capture(state,enemy,key):
     tile=next((t for t in state["map"]["cells"] if t["cell"]==enemy["cell"]),{})
     if before is None or key is None or tile.get("effects"):
         return None
-    return {"cell":enemy["cell"],"name":enemy["name"],"context":context(state,enemy),"source":key,"before":before}
+    return {"cell":enemy["cell"],"name":enemy["name"],"context":context(state,enemy),
+            "branch":state.get("branch",0),"source":key,"before":before}
 
 
 def dm100_missile_receipt(before,after,pending):
@@ -236,6 +239,40 @@ def dm100_arcane_disintegration_receipt(before,after,pending):
     return not any(o.get("name","").lower()=="dm-100" for o in after.get("objects",[]))
 
 
+def retirement_proof(before,after,pending,before_texts):
+    """Domain validators establish the fact; the reducer owns its consequences."""
+    if pending["name"].lower()!="dm-100" or before.get("depth")!=after.get("depth") \
+            or before.get("branch",0)!=after.get("branch",0) \
+            or pending["context"][0]!=before.get("depth") \
+            or pending.get("branch",before.get("branch",0))!=before.get("branch",0):
+        return None
+    for old,new in ((before.get("observation_id"),after.get("observation_id")),
+                    ((before.get("evaluation_stats") or {}).get("elapsed_turns"),
+                     (after.get("evaluation_stats") or {}).get("elapsed_turns"))):
+        if isinstance(old,(int,float)) and isinstance(new,(int,float)) and new<old:
+            return None
+    fresh=any(t.strip().lower()=="you defeated dm-100."
+              for t in after.get("ui",{}).get("texts",[]) if t not in before_texts)
+    casters=[o for o in before.get("objects",[]) if o.get("name","").lower()=="dm-100"
+             and not o.get("top_item")]
+    fresh=fresh and len(casters)==1 and casters[0].get("cell")==pending["cell"] \
+        and not any(o.get("name","").lower()=="dm-100" and not o.get("top_item")
+                    for o in after.get("objects",[]))
+    rule=RetirementRule.FRESH_DEFEAT_TEXT if fresh else None
+    if rule is None:
+        for candidate,validate in (
+                (RetirementRule.ADJACENT_MISSILE_XP,dm100_missile_receipt),
+                (RetirementRule.ARCANE_MISSILE_XP,dm100_arcane_missile_levelup_receipt),
+                (RetirementRule.ARCANE_DISINTEGRATION_XP,dm100_arcane_disintegration_receipt)):
+            if validate(before,after,pending):
+                rule=candidate
+                break
+    if rule is None:
+        return None
+    return RetirementProof(ThreatRef.observed(before,pending["cell"]),rule,
+        after.get("observation_id"),(after.get("evaluation_stats") or {}).get("elapsed_turns"))
+
+
 def observe_accepted_attack(p,before,decision,after):
     """Called only after a confirmed API execution; targeting menus cost no sample."""
     action=decision.action
@@ -260,41 +297,30 @@ def observe_accepted_attack(p,before,decision,after):
     pending=p.damage_pending
     p.damage_pending=None
     if not pending or after.get("status")!="ready":return
+    if pending["context"][0]!=before.get("depth") \
+            or pending.get("branch",before.get("branch",0))!=before.get("branch",0) \
+            or (before.get("depth"),before.get("branch",0))!=(after.get("depth"),after.get("branch",0)):
+        return  # A pending source from another scope cannot describe this hit.
     before_texts=set(before.get("ui",{}).get("texts",[]))
-    memory=getattr(p,"dm100_threat",None)
-    if memory and memory["cell"]==pending["cell"] and (
-            dm100_missile_receipt(before,after,pending)
-            or dm100_arcane_missile_levelup_receipt(before,after,pending)
-            or dm100_arcane_disintegration_receipt(before,after,pending)):
-        p.dm100_threat=None
-        if p.ranged_plan and p.ranged_plan.get("name")=="dm-100":
-            p.ranged_plan=None
+    proof=retirement_proof(before,after,pending,before_texts)
+    retirement=p.evidence_reducer.retire(p,proof) if proof else None
     defeated=any("you defeated" in t.lower() and pending["name"].lower() in t.lower()
                  for t in after.get("ui",{}).get("texts",[]) if t not in before_texts)
+    if pending["name"].lower()=="dm-100":
+        defeated=bool(proof and proof.rule==RetirementRule.FRESH_DEFEAT_TEXT)
     key=(pending["context"],pending["source"])
     if defeated:
         retire_defeated_escape_edge(p, before, after, pending, before_texts)
-        # The separate lightning-lane memory outlives ordinary visible-cell
-        # threat tracking. Retire it on this accepted, newly confirmed kill,
-        # not on disappearance or a defeat message retained from an old fight.
-        memory=getattr(p,"dm100_threat",None)
-        if pending["name"].lower()=="dm-100" and memory and memory["cell"]==pending["cell"] \
-                and before["depth"]==after["depth"] and before.get("branch",0)==after.get("branch",0) \
-                and any(t.strip().lower()=="you defeated dm-100."
-                        for t in after.get("ui",{}).get("texts",[]) if t not in before_texts) \
-                and not any(o.get("cell")==pending["cell"] and o.get("name","").lower()=="dm-100"
-                            for o in after.get("objects",[])):
-            p.dm100_threat=None
-            if p.ranged_plan and p.ranged_plan.get("name")=="dm-100":
-                p.ranged_plan=None
         sample=p.damage_samples.setdefault(key,{"count":0,"bar_loss":0.0})
         sample["censored_count"]=sample.get("censored_count",0)+1
         sample["censored_bar_loss_lower_bound"]=sample.get("censored_bar_loss_lower_bound",0)+pending["before"]
         return {"enemy":pending["name"],"depth":before["depth"],"method":pending["source"][0],
                 "item":pending["source"][1],"bar_loss_lower_bound":pending["before"],"censored":True,
+                **({"threat_retirement":retirement} if retirement else {}),
                 "note":"Confirmed kill; total damage may exceed remaining visible health. Not actual HP."}
     target=next((o for o in after.get("objects",[]) if o["cell"]==pending["cell"] and o["name"]==pending["name"]),None)
-    if not target or context(after,target)!=pending["context"]:return
+    if not target or context(after,target)!=pending["context"]:
+        return {"threat_retirement":retirement} if retirement else None
     after_fraction=fraction(target)
     tile=next((t for t in after.get("map",{}).get("cells",[]) if t["cell"]==target["cell"]),{})
     if tile.get("effects") or any("you defeated" in t.lower() for t in after.get("ui",{}).get("texts",[]) if t not in before_texts):

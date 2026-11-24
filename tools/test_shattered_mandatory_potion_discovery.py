@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import patch
 
 from tools.descent_potions import begin, advance, observe, PURPOSE
-from tools.potion_stash import potions, can_protect_potions
+from tools.potion_stash import potions, can_protect_potions, observe_accepted
 from tools.policy_decision import Decision, Intent, PlannerStuck
 from tools.policy_geometry import distance, neighbors
 from tools.policy_runtime import Transaction
@@ -120,6 +120,7 @@ class MandatoryDiscoveryTests(unittest.TestCase):
                     if action is None:
                         break
                 after = copy.deepcopy(s)
+                after["observation_id"]=s.get("observation_id",0)+1
                 if action.action["type"] == "cell":
                     after["hero"]["cell"] = action.action["cell"]
                     ground = next((o for o in after["objects"] if o["cell"] == after["hero"]["cell"]), None)
@@ -155,6 +156,7 @@ class MandatoryDiscoveryTests(unittest.TestCase):
                     drank = True
                 else:
                     self.fail(str(action.action))
+                observe_accepted(p,s,action,after)
                 p.update(after)
                 s = after
                 if drank and not p.potion_stash:

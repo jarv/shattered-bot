@@ -9,8 +9,18 @@ from dataclasses import dataclass, field, fields
 
 try:
     from .policy_interaction import MenuPhase
+    from .objective_episodes import EpisodeRegistry
+    from .stash_workflow import StashWorkflow
+    from .physical_obligations import PhysicalLedger
+    from .public_evidence import EvidenceReducer
+    from .payload_workflow import PayloadReturn
 except ImportError:
     from policy_interaction import MenuPhase
+    from objective_episodes import EpisodeRegistry
+    from stash_workflow import StashWorkflow
+    from physical_obligations import PhysicalLedger
+    from public_evidence import EvidenceReducer
+    from payload_workflow import PayloadReturn
 
 def local(factory):
     return field(default_factory=factory, metadata={"floor": True})
@@ -215,15 +225,14 @@ class ResourceMemory:
     natural_healing_waits: int = value(0, floor=True)
     food_freeze_plan: object = value(None, floor=True)
     deferred_room_controllers: set = local(set)
-    stash_supply_retry: object = value(None, floor=True)
     wand_usage: dict = field(default_factory=dict)
     wand_observation_clock: int = 0
-    trap_payload_return: object = value(None, floor=True)
+    trap_payload_return: PayloadReturn | None = value(None, floor=True)
     summoning_pending: object = value(None, floor=True)
     food_recovery_until: int = value(0, floor=True)
     food_recovery_source: object = value(None, floor=True)
     transfusion_names: set = local(set)
-    potion_stash: object = value(None, floor=True)
+    potion_stash: StashWorkflow | None = value(None, floor=True)
     rests: int = value(0, floor=True)
     meat_plan: object = value(None, floor=True)
     enchant_target: object = None
@@ -271,13 +280,17 @@ class InteractionMemory:
 
 @dataclass
 class RunMemory:
+    evidence_reducer: EvidenceReducer = field(default_factory=EvidenceReducer)
+    objective_episodes: EpisodeRegistry = local(EpisodeRegistry)
     objective_results: dict = local(dict)
     objective_progress: dict = local(dict)
     objective_stack: list = local(list)
     inventory_events: list = field(default_factory=list)
     continuation_errors: list = field(default_factory=list)
     missed_loot: list = field(default_factory=list)
-    deferred_obligations: list = field(default_factory=list)
+    legacy_deferred_obligations: list = field(default_factory=list)
+    physical_ledger: PhysicalLedger = field(default_factory=PhysicalLedger)
+    reward_lifecycles: list = field(default_factory=list)
     cleared_floors: list = field(default_factory=list)
     last_decision: object = None
     boss_seen: bool = False

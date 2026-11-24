@@ -3,10 +3,16 @@ try:
     from .consumable_tactics import base_name
     from .policy_decision import Intent
     from .policy_geometry import neighbors, distance
+    from .stash_workflow import StashWorkflow, StashPhase, DropProposal, workflow
+    from .objective_episodes import Scope
+    from .owned_transfers import inventory_counts, observe_pickup
 except ImportError:
     from consumable_tactics import base_name
     from policy_decision import Intent
     from policy_geometry import neighbors, distance
+    from stash_workflow import StashWorkflow, StashPhase, DropProposal, workflow
+    from objective_episodes import Scope
+    from owned_transfers import inventory_counts, observe_pickup
 
 
 STASH_TRANSIT = {1,2,3,9,11,14,15,19,20,29,30}
@@ -100,13 +106,14 @@ def stash_paths(p,state):
     return p.paths(state,excluded)
 
 
-def stash_cells(p,state,distance,neighbors,safe_bank):
+def stash_cells(p,state,distance,neighbors,safe_bank,*,all_sites=False):
     """Read-only admission shared by test-bank preflight and actual stashing."""
     bank=state["hero"]["cell"]
     width=state["map"]["width"]
     paths=stash_paths(p,state)
     footprint=fire_footprint(p,state,bank)
-    cells = [c for c in paths if 3<=distance(c,bank,width)<=5 and len(p.route(paths,c))<=7
+    cells = [c for c in paths if p.physical_ledger.site_available(Scope.of(state),c)
+             and 3<=distance(c,bank,width)<=5 and len(p.route(paths,c))<=7
              and (safe_bank(p,state,c,distance,neighbors,allow_dry=True)
                   or storage_safe(p,state,bank,c,footprint))
              and c not in footprint
@@ -114,12 +121,23 @@ def stash_cells(p,state,distance,neighbors,safe_bank):
                     and not p.tiles[n].get("trap") and not p.tiles[n].get("effects")
                      and n not in p.loot for n in p.route(paths,c))]
     preferred = [c for c in cells if safe_bank(p,state,c,distance,neighbors,allow_dry=True)]
-    return preferred or cells
+    return cells if all_sites else preferred or cells
+
+
+def fire_reaches_owned_items(p,state):
+    return any(a.scope==Scope.of(state) and a.unresolved
+               and fire_reaches_stash(p,state,state['hero']['cell'],a.cell)
+               for a in p.physical_ledger.entries.values())
 
 
 def can_protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isolated_stack=False):
     """No drops, receipts, or inferred effects: only preparation feasibility."""
-    if p.potion_stash and fire_reaches_stash(p,state,state["hero"]["cell"],p.potion_stash["cell"]):
+    if p.potion_stash and workflow(p).pending:
+        return False
+    if not p.physical_ledger.inventory_available(
+            Scope.of(state),[candidate["id"]],getattr(p.potion_stash,"owner",None)):
+        return False
+    if fire_reaches_owned_items(p,state):
         return False
     if bandolier_protected(p,state) and not p.potion_stash:
         return True
@@ -130,11 +148,19 @@ def can_protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isola
         return True
     if p.potion_stash or any("DROP" not in i.get("actions",[]) for i in others):
         return False
+    if not p.physical_ledger.inventory_available(
+            Scope.of(state),[i["id"] for i in [candidate,*others]]):
+        return False
     return bool(stash_cells(p,state,distance,neighbors,safe_bank))
 
 
-def protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isolated_stack=False):
-    if p.potion_stash and fire_reaches_stash(p,state,state["hero"]["cell"],p.potion_stash["cell"]):
+def protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isolated_stack=False,preferred_cell=None):
+    if p.potion_stash and workflow(p).pending:
+        p.stop_obligation("potion-stash","Potion protection still lacks an accepted drop receipt")
+    if not p.physical_ledger.inventory_available(
+            Scope.of(state),[candidate["id"]],getattr(p.potion_stash,"owner",None)):
+        p.stop_obligation("potion-stash","Potion candidate belongs to another workflow")
+    if fire_reaches_owned_items(p,state):
         p.stop_obligation("potion-stash","Potion test collateral can now reach the stash; retrieve before replanning")
     if bandolier_protected(p,state) and not p.potion_stash:
         return None  # No remote drops, stack splitting or bag disposal are needed.
@@ -152,63 +178,130 @@ def protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isolated_
         p.stop_obligation("potion-stash","Potion stash incomplete: other potions remain before potential frost drink")
     bank=state["hero"]["cell"]
     paths=stash_paths(p,state)
-    stashes=stash_cells(p,state,distance,neighbors,safe_bank)
+    stashes=stash_cells(p,state,distance,neighbors,safe_bank,all_sites=preferred_cell is not None)
+    if preferred_cell is not None:
+        stashes=[c for c in stashes if c==preferred_cell]
     if not stashes or any("DROP" not in i.get("actions",[]) for i in others):
         p.stop_obligation("potion-stash","Potential frost test has no verified remote potion stash/drop route")
-    p.potion_stash={"depth":state["depth"],"bank":bank,"cell":min(stashes,key=lambda c:len(p.route(paths,c))),
-                    "candidate":base_name(candidate),"phase":"drop","steps":0,"dropped":{},"pending":None}
+    plan=StashWorkflow(
+        depth=state["depth"],branch=state.get("branch",0),bank=bank,
+        cell=min(stashes,key=lambda c:len(p.route(paths,c))),
+        candidate=base_name(candidate))
+    if not p.physical_ledger.register(plan,[i["id"] for i in [candidate,*others]]):
+        p.stop_obligation("potion-stash","Potion stash resources already owned by another workflow")
+    p.potion_stash=plan
     return advance_stash(p,state,[],distance)
 
 
 def advance_stash(p,state,enemies,distance):
-    plan=p.potion_stash
+    plan=workflow(p)
     if not plan:
         return None
-    if plan["depth"]!=state["depth"]:
+    if plan.scope!=Scope.of(state):
         p.stop_obligation("potion-stash","Potion stash was left on another floor")
     if enemies or state.get("danger_cells"):
-        plan["phase"]="retrieve"
+        plan.retrieve()
         return None  # Combat interrupts; it never cancels the retrieval obligation.
     buffs=" ".join(b["name"].lower() for b in state["hero"].get("buffs",[]))
     if p.puzzle_probe or any(t in buffs for t in ("chill","frozen","burning","poison","paral","vertigo")):
         return None
-    plan["steps"]+=1
-    if plan["steps"]>48:
+    plan.steps+=1
+    if plan.steps>48:
         p.stop_obligation("potion-stash","Potion stash exceeded bounded preparation/retrieval budget")
     pos=state["hero"]["cell"]
-    if plan["pending"]:
-        name,quantity=plan["pending"]
-        if any(base_name(i)==name for i in potions(state)) or plan["cell"] not in p.loot:
-            p.stop_obligation("potion-stash","Potion stash drop not confirmed by public inventory and ground observation")
-        plan["dropped"][name]=plan["dropped"].get(name,0)+quantity
-        plan["pending"]=None
-    if plan["phase"]=="drop":
-        if pos!=plan["cell"]:
-            return p.toward(state,plan["cell"],"potion: approach remote safe stash",stash_paths(p,state),intent=Intent.REPOSITION)
+    if plan.pending:
+        p.stop_obligation("potion-stash","Potion stash drop lacks a matching accepted-action receipt")
+    if plan.phase==StashPhase.DROP:
+        if pos!=plan.cell:
+            return p.toward(state,plan.cell,"potion: approach remote safe stash",stash_paths(p,state),intent=Intent.REPOSITION)
         # Recheck after arrival, before changing inventory. Existing own drops
         # occupy this square on subsequent steps and are verified below.
         tile=p.tiles.get(pos,{})
         if tile.get("terrain") not in STASH_TRANSIT or not tile.get("visible") \
                 or any(tile.get(k) for k in ("trap","plant","effects")) \
                 or pos in p.room_blocked or pos in p.blocked \
-                or pos in p.loot and not plan["dropped"] \
-                or fire_reaches_stash(p,state,plan["bank"],pos):
+                or pos in p.loot and not plan.outstanding \
+                or fire_reaches_stash(p,state,plan.bank,pos):
             p.stop_obligation("potion-stash","Stash arrival lost its hazard/collateral admission")
-        other=next((i for i in potions(state) if base_name(i)!=plan["candidate"]),None)
+        other=next((i for i in potions(state) if base_name(i)!=plan.candidate),None)
         if other:
-            plan["pending"]=(base_name(other),other.get("quantity",1))
-            return p.use(other,"DROP","potion: set other potions aside before potentially chilling drink")
-        plan["phase"]="ready"
-    if plan["phase"]=="ready":
-        if pos!=plan["bank"]:
-            return p.toward(state,plan["bank"],"potion: leave stash outside frost-test radius",stash_paths(p,state),intent=Intent.REPOSITION)
+            if not p.physical_ledger.register(plan,[other["id"]]):
+                p.stop_obligation("potion-stash","Potion drop item belongs to another workflow")
+            action=p.use(other,"DROP","potion: set other potions aside before potentially chilling drink")
+            plan.pending=DropProposal(base_name(other),other.get("quantity",1),other["id"])
+            action.stash_drop=plan.pending
+            return action
+        plan.ready()
+    if plan.phase==StashPhase.READY:
+        if pos!=plan.bank:
+            return p.toward(state,plan.bank,"potion: leave stash outside frost-test radius",stash_paths(p,state),intent=Intent.REPOSITION)
         return None
-    if plan["phase"]=="retrieve":
-        counts={base_name(i):i.get("quantity",1) for i in potions(state)}
-        if all(counts.get(n,0)>=q for n,q in plan["dropped"].items()) and not plan["pending"]:
+    if plan.phase==StashPhase.RETRIEVE:
+        if not plan.outstanding:
+            plan.complete()
+            p.physical_ledger.finish(plan)
             p.potion_stash=None
             return None
         paths=p.paths(state)
-        if plan["cell"] not in paths or p.tiles[plan["cell"]].get("effects"):
+        if plan.cell not in paths or p.tiles[plan.cell].get("effects"):
             p.stop_obligation("potion-stash","Potion stash retrieval blocked by observed hazard or unreachable ground")
-        return p.toward(state,plan["cell"],"potion: retrieve protected potions before further exploration",paths,intent=Intent.LOOT)
+        return p.toward(state,plan.cell,"potion: retrieve protected potions before further exploration",paths,intent=Intent.LOOT)
+
+
+def observe_drop(p,before,decision,after):
+    """Reconcile physical transfers before dependent preparation observers run.
+
+    Selection, matching carried names, heap disappearance and elapsed turns are
+    not transfer receipts. Ambiguous transfers retain the unfinished obligation.
+    """
+    if not p.potion_stash:
+        return None
+    plan=workflow(p)
+    if before.get("depth") is None:
+        return None
+    scope=Scope.of(before)
+    if after.get("depth") is not None and Scope.of(after)!=scope:
+        # Preserve physical facts before update() resets floor-local intent.
+        # The transition itself proves neither pickup nor completion.
+        if plan and plan.scope==scope:
+            p.physical_ledger.defer(plan,"Accepted transition left the potion stash scope",plan.pending)
+        return None
+    if (after.get("depth"),after.get("branch",0))!=(scope.depth,scope.branch) \
+            or "inventory" not in before or "inventory" not in after:
+        return None
+    token=after.get("observation_id")
+    if p.physical_ledger.seen(scope,token):
+        return None
+    action=decision.action
+    old,new=inventory_counts(before),inventory_counts(after)
+    drop=getattr(decision,"stash_drop",None)
+    kind=None
+    if plan and plan.scope==scope and drop and drop==plan.pending \
+            and action==dict(type="item",id=drop.item_id,action="DROP") \
+            and before.get("hero",{}).get("cell")==after.get("hero",{}).get("cell")==plan.cell:
+        item=next((i for i in potions(before) if i.get("id")==drop.item_id),None)
+        ground=next((o.get("top_item") for o in after.get("objects",[])
+                     if o.get("cell")==plan.cell and not o.get("for_sale")
+                     and o.get("top_item") and base_name(o["top_item"])==drop.name),None)
+        prior=next((o["top_item"].get("quantity",1) for o in before.get("objects",[])
+                    if o.get("cell")==plan.cell and o.get("top_item")
+                    and base_name(o["top_item"])==drop.name),0)
+        if not item or base_name(item)!=drop.name \
+                or item.get("quantity",1)!=drop.quantity \
+                or old[drop.name]-new[drop.name]!=drop.quantity \
+                or not ground or ground.get("quantity",1)<prior+drop.quantity:
+            return None
+        plan.dropped[drop.name]=plan.dropped.get(drop.name,0)+drop.quantity
+        p.physical_ledger.remember(scope,token)
+        plan.pending=None
+        kind="drop"
+        name,quantity=drop.name,drop.quantity
+    if kind is None:
+        return None
+    return dict(kind=kind,name=name,quantity=quantity,stash=plan.record(),
+                collection_credited=False)
+
+
+def observe_accepted(p,before,decision,after):
+    """Compatibility entry point; the runner calls each receipt stage once."""
+    return observe_drop(p,before,decision,after) or observe_pickup(p,before,decision,after)

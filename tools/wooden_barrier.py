@@ -5,12 +5,14 @@ try:
     from .combat_items import unencumbered
     from .consumable_tactics import base_name
     from .potion_stash import protect_potions
+    from .stash_workflow import retrieve as retrieve_stash
 except ImportError:
     from policy_geometry import distance,neighbors
     from policy_decision import Intent
     from combat_items import unencumbered
     from consumable_tactics import base_name
     from potion_stash import protect_potions
+    from stash_workflow import retrieve as retrieve_stash
 
 
 def prepare(p,state,demand,candidate,safe_bank):
@@ -56,7 +58,7 @@ def prepare(p,state,demand,candidate,safe_bank):
         return p.toward(state,bank,'room: stage unknown fire potion beside wooden barrier with immediate water exit',paths,intent=Intent.REPOSITION)
     stash=protect_potions(p,state,candidate,distance,neighbors,safe_bank)
     if stash:return stash
-    if p.potion_stash:p.potion_stash['phase']='retrieve'
+    if p.potion_stash:retrieve_stash(p)
     p.wood_probe_attempts[wood]+=1
     p.puzzle_drinks.add((state['depth'],base_name(candidate)))
     p.wood_burn_plan={'depth':state['depth'],'branch':state.get('branch',0),'wood':wood,'bank':bank,

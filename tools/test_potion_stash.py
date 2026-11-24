@@ -1,10 +1,11 @@
 import unittest
+import copy
 
 from tools.test_challenge_systems import ready, item
 from tools.policy_geometry import distance, neighbors
 from tools.policy_runtime import Transaction
-from tools.policy_decision import Finished
-from tools.potion_stash import protect_potions, advance_stash
+from tools.policy_decision import Finished, Decision
+from tools.potion_stash import protect_potions, advance_stash, observe_accepted
 
 
 class PotionStashTests(unittest.TestCase):
@@ -27,12 +28,17 @@ class PotionStashTests(unittest.TestCase):
         action=advance_stash(p,s,[],distance)
         self.assertEqual("DROP",action.action.get("action"))
         self.assertEqual("other",action.action.get("id"))
+        self.drop_action=action
         return s,p,candidate,other
 
     def test_drop_confirm_separate_drink_and_retrieve_after_chill(self):
         s,p,candidate,other=self.start()
+        before=copy.deepcopy(s)
+        s["observation_id"]+=1
         s["inventory"].remove(other)
+        s["objects"]=[dict(cell=21,name=other["name"],top_item=other)]
         p.loot[21]={"name":"potion of strength","top_item":other}
+        self.assertIsNotNone(observe_accepted(p,before,self.drop_action,s))
         action=advance_stash(p,s,[],distance)
         self.assertEqual("reposition",action.intent)
         self.assertEqual({"potion of strength":2},p.potion_stash["dropped"])
@@ -44,7 +50,12 @@ class PotionStashTests(unittest.TestCase):
         self.assertIsNotNone(p.potion_stash)
         s["hero"]["buffs"]=[]
         self.assertEqual("loot",advance_stash(p,s,[],distance).intent)
+        before=copy.deepcopy(s)
+        s["observation_id"]+=1
+        s["hero"]["cell"]=21
         s["inventory"].append(other)
+        s["objects"]=[]
+        self.assertIsNotNone(observe_accepted(p,before,Decision(dict(type="cell",cell=21),"pickup"),s))
         self.assertIsNone(advance_stash(p,s,[],distance))
         self.assertIsNone(p.potion_stash)
 
@@ -54,11 +65,16 @@ class PotionStashTests(unittest.TestCase):
 
     def test_interrupt_keeps_retrieval_obligation(self):
         s,p,candidate,other=self.start()
+        before=copy.deepcopy(s)
+        s["observation_id"]+=1
         s["inventory"].remove(other)
+        s["objects"]=[dict(cell=21,name=other["name"],top_item=other)]
         p.loot[21]={"name":"potion of strength","top_item":other}
+        observe_accepted(p,before,self.drop_action,s)
         self.assertIsNone(advance_stash(p,s,[{"name":"mimic","cell":25}],distance))
         self.assertEqual("retrieve",p.potion_stash["phase"])
-        self.assertIsNotNone(p.potion_stash["pending"])
+        self.assertIsNone(p.potion_stash["pending"])
+        self.assertEqual({"potion of strength":2},p.potion_stash["dropped"])
 
     def test_candidate_stack_and_missing_safe_stash_refuse_drink(self):
         s,p,candidate,other,safe=self.setup_stash()

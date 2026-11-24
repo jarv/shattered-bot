@@ -1,5 +1,9 @@
 """Bounded floor abandonment after a recorded planner failure, never blind escape."""
 import copy
+try:
+    from .workflow_accounting import RecoveryEpisode, RecoveryPhase, OwnedAction
+except ImportError:
+    from workflow_accounting import RecoveryEpisode, RecoveryPhase, OwnedAction
 
 try:
     from .policy_decision import Intent, PlannerStuck, BlockerKind
@@ -28,14 +32,24 @@ class FloorAbandonment:
     def __init__(self, policy):
         self.policy = policy
         self.incidents = []
-        self.active = None
+        self._active = None
         self.attempted = set()
         self.route_rejections = []
+
+    @property
+    def active(self):
+        return self._active
+
+    @active.setter
+    def active(self, episode):
+        self._active = RecoveryEpisode.from_record(episode) if isinstance(episode, dict) else episode
 
     def hard_gate(self, state):
         p = self.policy
         if getattr(p, "stop_on_incomplete_loot", False):
             return "strict loot completion requested"
+        if p.physical_ledger.has_unresolved():
+            return "owned item debt or unverified transfer remains"
         if any(getattr(p, key, None) for key in (
                 "potion_stash", "trap_payload_return", "room_journey", "drop_plan",
                 "puzzle_probe", "wood_burn_plan", "menu_plan")):
@@ -99,14 +113,14 @@ class FloorAbandonment:
     def start(self, state, failure, report, index):
         reason = getattr(failure, "blocker", failure.reason)
         kind = getattr(failure, "blocker_kind", BlockerKind.UNKNOWN)
-        incident = {"id": len(self.incidents)+1, "index": index, "kind": "planner-failure", "severity": "error",
+        incident = RecoveryEpisode.from_record({"id": len(self.incidents)+1, "index": index, "kind": "planner-failure", "severity": "error",
                     "reason": reason, "depth": state.get("depth"), "branch": state.get("branch", 0),
                     "blocker_kind": kind,
                     "cell": state.get("hero",{}).get("cell"), "hp": state.get("hero",{}).get("hp"),
                     "review_priority": "high", "policy_report": copy.deepcopy(report),
                     "status": "declined", "accepted_actions": 0, "stalled_actions": 0,
-                    "collection_credited": False}
-        self.incidents.append(incident)
+                    "collection_credited": False})
+        self.incidents.append(incident.report)
         floor = (state.get("depth"), state.get("branch", 0))
         if floor in self.attempted:
             incident["recovery_reason"] = "one recovery episode per floor already used"
@@ -165,16 +179,19 @@ class FloorAbandonment:
         decision.controller = "floor-abandonment"
         decision.navigation_route = tuple(route)
         decision.floor_abandonment = incident["id"]
+        decision.recovery_receipt = OwnedAction.capture(incident["id"],state,decision,route)
+        incident["status"] = "active"
         return decision
 
     def next(self, state):
         if self.active is None:
             return None
         incident = self.active
-        if incident["accepted_actions"] >= 64 or incident["stalled_actions"] >= 8:
+        if incident.budget.exhausted:
             self.stop("accepted-action or no-progress budget reached")
         if self.interrupted(state):
             # Run the normal policy rather than moving through combat/hazards.
+            incident["status"] = "paused"
             return None
         self.policy.update(state)
         if (state["depth"], state.get("branch", 0)) != (incident["depth"], incident["branch"]):
@@ -183,6 +200,7 @@ class FloorAbandonment:
         if gate:
             self.stop(gate)
         if self.policy.recent_threats or self.policy.unseen_damage_turns:
+            incident["status"] = "paused"
             return None
         route = self.route(state, incident["target"])
         incident["route_rejections"] = copy.deepcopy(self.route_rejections)
@@ -194,28 +212,42 @@ class FloorAbandonment:
         if self.active is None:
             return
         incident = self.active
-        incident["accepted_actions"] += 1
+        token = after.get("observation_id")
+        if token is not None and token in incident.receipts:
+            return
+        if token is not None:
+            incident.receipts.add(token)
+        receipt = getattr(decision,"recovery_receipt",None)
+        owned = isinstance(receipt,OwnedAction) and receipt.matches(incident["id"],before,decision) \
+            and (receipt.scope.depth,receipt.scope.branch)==(incident["depth"],incident["branch"]) \
+            and receipt.route and receipt.route[0]==receipt.origin \
+            and receipt.route[-1]==incident["target"] \
+            and decision.action.get("type")=="cell" \
+            and decision.action.get("cell")==(receipt.route[1] if len(receipt.route)>1 else receipt.origin)
+        distance = None
+        if owned and len(receipt.route)>1 \
+                and receipt.route[0]==receipt.origin \
+                and after.get("depth")==incident["depth"] \
+                and after.get("branch",0)==incident["branch"] \
+                and after.get("hero",{}).get("cell")==receipt.route[1]:
+            distance = len(receipt.route)-2
+        incident.budget.accept(owned,distance)
+        incident.phase = RecoveryPhase.ACTIVE if owned else RecoveryPhase.PAUSED
+        incident.publish()
         if after.get("hero", {}).get("hp", 1) <= 0:
             incident["status"] = "died"
             self.active = None
         elif (after.get("depth") == incident["depth"]+1
               and after.get("branch", 0) == incident["branch"]
-              and getattr(decision, "floor_abandonment", None) == incident["id"]
+              and owned
               and decision.action.get("cell") == incident["target"]):
             incident["status"] = "descended"
             self.active = None
-        elif getattr(decision, "floor_abandonment", None) == incident["id"] \
-                and after.get("hero", {}).get("cell") != before["hero"]["cell"] \
-                and after.get("hero", {}).get("cell") == decision.action.get("cell") \
-                and incident.get("last_distance", 64) < incident["best_distance"]:
-            incident["best_distance"] = incident["last_distance"]
-            incident["stalled_actions"] = 0
-        elif getattr(decision, "floor_abandonment", None) == incident["id"]:
-            # Survival arbitration (including its target-selection inputs)
-            # did not attempt this route. Count a failed recovery step only
-            # against the navigation stall limit. All accepted inputs still
-            # spend the unchanged total episode budget above.
-            incident["stalled_actions"] += 1
+
+    def interrupt(self):
+        if self.active:
+            self.active["status"] = "interrupted"
+            self.active = None
 
     def rejected(self):
         if self.active:

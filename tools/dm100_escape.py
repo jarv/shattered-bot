@@ -3,10 +3,12 @@ try:
     from .policy_geometry import neighbors,distance,line_clear,projectile_line_clear
     from .policy_decision import Intent
     from .challenge_combat import exposure
+    from .public_evidence import bind_threat, binding_in_scope
 except ImportError:
     from policy_geometry import neighbors,distance,line_clear,projectile_line_clear
     from policy_decision import Intent
     from challenge_combat import exposure
+    from public_evidence import bind_threat, binding_in_scope
 
 
 GROUND={1,2,3,5,6,9,11,14,15,19,20,29,30}
@@ -14,11 +16,14 @@ GROUND={1,2,3,5,6,9,11,14,15,19,20,29,30}
 
 def observe(p,state):
     if state.get('status')!='ready' or state.get('modal'):return
+    if p.dm100_threat and not binding_in_scope(p.dm100_threat,state):
+        p.dm100_threat=None  # Scope invalidation, not a defeat receipt.
     visible=[o for o in state.get('objects',[]) if o['name'].lower()=='dm-100' and not o.get('sleeping')]
     turn=state.get('evaluation_stats',{}).get('elapsed_turns')
     if visible:
         enemy=min(visible,key=lambda o:distance(state['hero']['cell'],o['cell'],state['map']['width']))
         p.dm100_threat={'cell':enemy['cell'],'age':0,'turn':turn}
+        bind_threat(p,state,p.dm100_threat,enemy['cell'])
     elif p.dm100_threat:
         p.dm100_threat['age']+=1
         last=p.dm100_threat.get('turn')
@@ -42,7 +47,7 @@ def sees(p,state,source,target,*,open_doors=False):
 
 def exposed_memory(p,state):
     memory=p.dm100_threat
-    return bool(memory and distance(state['hero']['cell'],memory['cell'],state['map']['width'])>1
+    return bool(binding_in_scope(memory,state) and distance(state['hero']['cell'],memory['cell'],state['map']['width'])>1
                 and sees(p,state,memory['cell'],state['hero']['cell']))
 
 
@@ -60,8 +65,10 @@ def choose(p,state,enemies):
     pos=state['hero']['cell'];width,height=state['map']['width'],state['map']['height']
     active=[e for e in enemies if not e.get('sleeping')]
     targets=[e for e in active if e['name'].lower()=='dm-100']
+    if p.ranged_plan and p.ranged_plan.get('name')=='dm-100' and not binding_in_scope(p.ranged_plan,state):
+        p.ranged_plan=None  # Invalid intent context, not an actor defeat.
     plan=p.ranged_plan if p.ranged_plan and p.ranged_plan.get('mode')=='door-flight' else None
-    memory=p.dm100_threat
+    memory=p.dm100_threat if binding_in_scope(p.dm100_threat,state) else None
     if not targets and not plan and not exposed_memory(p,state):return None
     if any(p.unit_strategies.profile(e).strategy.startswith('boss:') for e in active):return None
     target=min(targets,key=lambda e:distance(pos,e['cell'],width)) if targets else None
@@ -129,12 +136,15 @@ def choose(p,state,enemies):
             p.ranged_plan={'name':'dm-100','mode':'door-flight','stage':'bank','door':pos,'goal':bank,
                            'approach':pos,'steps':0,'waits':0,'depth':state['depth'],
                            'branch':state.get('branch',0),'last_seen':source,'hp':state['hero']['hp'],
-                           'armed':False}
+                            'armed':False}
+            bind_threat(p,state,p.ranged_plan,source)
             report('step off current observed threshold; verify closure on arrival',[pos,bank])
             return p.cell(bank,'DM-100: step off current doorway to break lightning sight',
                           intent=Intent.RETREAT)
     if plan:
-        if target:plan['last_seen']=source
+        if target:
+            plan['last_seen']=source
+            bind_threat(p,state,plan,source)
         plan['steps']+=1
         if plan['depth']!=state['depth'] or plan['branch']!=state.get('branch',0) or plan['steps']>24 \
                 or p.tiles.get(plan['door'],{}).get('terrain') not in {5,6}:
@@ -242,6 +252,7 @@ def choose(p,state,enemies):
         p.ranged_plan={'name':'dm-100','mode':'door-flight','stage':'door','door':door,'goal':door,
                        'approach':approach,'steps':0,'waits':0,'depth':state['depth'],'branch':state.get('branch',0),
                        'last_seen':source,'hp':hp,'armed':False}
+    bind_threat(p,state,p.ranged_plan,source)
     report('immediate flight to nearest visible admitted door' if not remembered
            else 'no current visible door; use nearest previously observed door',route)
     return p.cell(route[1],'DM-100: flee immediately to nearest '+('remembered' if remembered else 'visible')+' door before trading lightning',

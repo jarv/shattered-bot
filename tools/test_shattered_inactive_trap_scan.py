@@ -79,13 +79,16 @@ class InactiveTrapScanTests(unittest.TestCase):
         self.assertIsNone(p.trap_scan_pending)
 
     def test_active_or_ambiguous_trap_and_hazards_remain_excluded(self):
-        for mode in ("active", "ambiguous", "unobserved", "fire", "plant", "room",
+        for mode in ("active", "active-unnamed", "ambiguous", "unobserved", "fire", "plant", "room",
                      "danger", "enemy", "retreat", "total-budget"):
             with self.subTest(mode=mode):
                 s, p, move = fixture()
                 tile = p.tiles[1552]
                 enemies = []
                 if mode == "active": tile["terrain"] = 18
+                elif mode == "active-unnamed":
+                    tile["terrain"]=18
+                    tile.pop("trap",None)
                 elif mode == "ambiguous": tile["terrain"] = 1
                 elif mode == "unobserved": tile.update(visible=False, observed=False)
                 elif mode == "fire": tile["effects"] = ["A fire is raging here."]

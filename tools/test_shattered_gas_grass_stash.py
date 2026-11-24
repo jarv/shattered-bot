@@ -11,7 +11,7 @@ from tools.test_survival_bot import state
 from tools.test_challenge_rules import verified
 from tools.policy_geometry import distance, neighbors
 from tools.potion_stash import (stash_cells, stash_paths, can_protect_potions,
-    protect_potions, advance_stash, fire_reaches_stash, storage_safe)
+    protect_potions, advance_stash, fire_reaches_stash, storage_safe, observe_accepted)
 from tools.puzzle_supplies import safe_test_bank
 from tools.policy_decision import Finished
 
@@ -79,6 +79,7 @@ class GasGrassStashTests(unittest.TestCase):
         action = protect_potions(p,s,s["inventory"][0],distance,neighbors,safe_test_bank)
         for _ in range(12):
             after = copy.deepcopy(s)
+            after["observation_id"]=s.get("observation_id",0)+1
             if action.action["type"] == "cell":
                 after["hero"]["cell"] = action.action["cell"]
             else:
@@ -88,6 +89,7 @@ class GasGrassStashTests(unittest.TestCase):
                 self.assertEqual(2, item["quantity"])
                 after["inventory"].remove(item)
                 after["objects"] = [dict(cell=327, name=item["name"], top_item=item)]
+            observe_accepted(p,s,action,after)
             p.update(after)
             s = after
             action = advance_stash(p,s,[],distance)
@@ -107,10 +109,12 @@ class GasGrassStashTests(unittest.TestCase):
             if action is None:
                 break
             after = copy.deepcopy(s)
+            after["observation_id"]=s.get("observation_id",0)+1
             after["hero"]["cell"] = action.action["cell"]
             if after["hero"]["cell"] == 327:
                 after["inventory"] = [after["objects"][0]["top_item"]]
                 after["objects"] = []
+            observe_accepted(p,s,action,after)
             p.update(after)
             s = after
         self.assertIsNone(p.potion_stash)

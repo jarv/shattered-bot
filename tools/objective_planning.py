@@ -4,19 +4,43 @@ This layer schedules existing admitted actions; it never grants hazard access,
 infers item identity, or marks a reward collected.
 """
 from dataclasses import dataclass, field
-from enum import Enum
 try:
     from .policy_runtime import Transaction
+    from .objective_episodes import Evidence, EvidenceKind, Scope, Status
 except ImportError:
     from policy_runtime import Transaction
+    from objective_episodes import Evidence, EvidenceKind, Scope, Status
 
 
-class Status(str, Enum):
-    READY = "ready"
-    BLOCKED = "blocked"
-    PAUSED = "paused"
-    COMPLETE = "complete"
-    EXHAUSTED = "exhausted"
+PREPARATION = "potion-preparation"
+
+
+def preparation_allowed(p, state):
+    """Eligibility only. Existing action-specific safety checks still apply."""
+    return p.objective_episodes.allowed(PREPARATION, Scope.of(state))
+
+
+def publish_episodes(p):
+    p.planner.report["objective_episodes"] = p.objective_episodes.records()
+
+
+def exhaust_preparation(p, state, reason, *, new_supply_can_retry=False):
+    retry_on = (EvidenceKind.NEW_UNTESTED_SUPPLY,) if new_supply_can_retry else ()
+    episode = p.objective_episodes.exhaust(PREPARATION, Scope.of(state), reason,
+                                           retry_on=retry_on)
+    publish_episodes(p)
+    return episode
+
+
+def accept_preparation_supply(p, state, name):
+    """The supply observer has already checked pickup location and actual gain."""
+    if (state["depth"], name) in p.puzzle_drinks:
+        return []
+    changed = p.objective_episodes.accept(Evidence(
+        EvidenceKind.NEW_UNTESTED_SUPPLY, Scope.of(state), name,
+        state.get("observation_id")))
+    publish_episodes(p)
+    return changed
 
 
 @dataclass

@@ -15,6 +15,8 @@ try:
     from .mimic_hunt import begin_hunt
     from .mimic_tactics import suspicious_container
     from .room_supplies import use as use_room_supply, eligible as room_supply_eligible
+    from .public_evidence import TileEvidence
+    from .reward_lifecycle import lifecycle
 except ImportError:
     from consumable_tactics import base_name
     from combat_items import unencumbered
@@ -23,6 +25,8 @@ except ImportError:
     from mimic_hunt import begin_hunt
     from mimic_tactics import suspicious_container
     from room_supplies import use as use_room_supply, eligible as room_supply_eligible
+    from public_evidence import TileEvidence
+    from reward_lifecycle import lifecycle
 
 
 GROUND = {1, 2, 3, 6, 9, 11, 14, 15, 19, 20, 29, 30}
@@ -63,19 +67,26 @@ class Journey:
     interactions: int = 0
     steps: int = 0
     interaction_budget: int = 2
+    branch: int = 0
+    lifecycle: object = None
 
     def advance(self, p, state, enemies, neighbors):
         pos = state["hero"]["cell"]
+        work = lifecycle(p, self)
         self.steps += 1
-        if self.depth != state["depth"]:
-            p.room_journey = None
-            return None
+        if (self.depth,self.branch) != (state["depth"],state.get("branch",0)):
+            work.interrupt("protected journey crossed floor or branch")
+            p.stop_obligation("room-journey","Protected journey crossed floor or branch without returning")
         _, buff = PROTECTION[self.kind]
         duration = remaining(state, buff)
+        work.observe(state, duration)
         if self.stage == "protect" and duration == 0:
             # This is still a hypothesis, not a protected trip. Recovery from
             # an actual failed potion effect may have moved off the dry-run
             # route; discard the unstarted plan before checking displacement.
+            if pos in self.route[1:]:
+                p.stop_obligation("room-journey","Unprotected hero remains inside protected return route")
+            work.cancel()
             p.room_journey = None
             return None
         if pos not in self.route:
@@ -107,7 +118,10 @@ class Journey:
                 return p.cell(pos, "room: collect protected reward within interaction budget")
             self.stage = "return"
         if self.stage == "return" and index == 0:
-            if self.route[-1] not in p.loot and self.route[-1] not in p.combat_deferred_loot:
+            work.returned(state)
+            if self.route[-1] in work.receipts and self.route[-1] not in p.loot \
+                    and self.route[-1] not in p.unconfirmed_loot \
+                    and self.route[-1] not in p.combat_deferred_loot:
                 p.completed_room_rewards.add((state["depth"],self.kind,self.route[-1]))
             p.room_journey = None
             return None
@@ -211,7 +225,7 @@ def sentry_geometry(p, state):
     # Mapping supplies terrain, not an actual survey. Treat unseen mapped
     # interior/perimeter as incomplete so ordinary-floor reconnaissance can
     # run; do not infer enclosure or suppress that prerequisite from map data.
-    if any(not p.tiles.get(c, {}).get("observed", p.tiles.get(c, {}).get("visible", False))
+    if any(not TileEvidence.of(p.tiles.get(c, {})).observed
            for c in interior | boundary):
         return set(), 0
     doors = [c for c in boundary if p.tiles.get(c, {}).get("terrain") in {5,6}]
@@ -318,7 +332,8 @@ def plan_journey(p, state, enemies, neighbors, *, probe_kind=None, plan_only=Fal
                 budget = 2*(len(route)-1)*(1/3 if kind=="sentry" else 1)+interactions+3
                 if budget > (duration or 20):
                     continue
-                journey=Journey(kind,route,state['depth'],interaction_budget=interactions)
+                journey=Journey(kind,route,state['depth'],interaction_budget=interactions,
+                                branch=state.get('branch',0))
                 if kind == "flight" and flight_key_deficit and base_name(loot.get("top_item", loot)) != "golden key":
                     if fallback is None:fallback = journey
                 else:
@@ -349,6 +364,13 @@ def plan_journey(p, state, enemies, neighbors, *, probe_kind=None, plan_only=Fal
                     queue.append(adjacent)
         if fallback is not None:return select(fallback)
         if kind=='pool' and getattr(p,'reserve_floor_puzzle_supplies',False):
+            try:
+                from .protected_rewards import asymmetric_pool_plan
+            except ImportError:
+                from protected_rewards import asymmetric_pool_plan
+            alternate=asymmetric_pool_plan(p,state,ordinary_paths)
+            if alternate:
+                return select(alternate)
             try:
                 from .piranha_profile import survey_plan
             except ImportError:

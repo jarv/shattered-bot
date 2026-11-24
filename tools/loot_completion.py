@@ -22,7 +22,7 @@ def pending_collections(p):
     except ImportError:
         from room_supplies import deferred_loot
     return bool(set(required_loot(p))-deferred_loot(p) or missing_keys(p) or p.mimic_obligations
-                or p.potion_stash or p.trap_payload_return)
+                or p.potion_stash or p.trap_payload_return or p.physical_ledger.has_unresolved())
 
 
 def missing_keys(p):
@@ -46,7 +46,8 @@ def missing_keys(p):
 
 def observe_collected(p,before,decision,after):
     """Called only after an accepted action. Absence alone is not collection."""
-    if before.get('depth')!=after.get('depth') or decision.action.get('type')!='cell':return
+    if (before.get('depth'),before.get('branch',0)) != (
+            after.get('depth'),after.get('branch',0)) or decision.action.get('type')!='cell':return
     try:
         from .maze_objective import observe_open,collected
     except ImportError:
@@ -75,6 +76,11 @@ def observe_collected(p,before,decision,after):
     journal=journal_pickup(before,decision.action,after)
     gained=gained or bool(journal)
     if gained:
+        try:
+            from .reward_lifecycle import observe_collection
+        except ImportError:
+            from reward_lifecycle import observe_collection
+        observe_collection(p,before,cell)
         collected(p,cell)
         p.loot_collection_receipts.add(cell)
         p.unconfirmed_loot.pop(cell,None)

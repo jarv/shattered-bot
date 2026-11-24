@@ -163,13 +163,18 @@ def choose(p, state, enemies):
                 continue
             # The whole potential spawn area is separated from hero and retreat.
             # No gas prethrow: gas can diffuse through this same open doorway.
+            try:
+                from .payload_workflow import throw as throw_payload
+            except ImportError:
+                from payload_workflow import throw as throw_payload
+            action=throw_payload(p,state,item,target,
+                "summoning: trigger visible plate remotely from exterior choke",track=True)
+            if not action:continue
             p.trap_attempts.add((state["depth"],target))
-            p.trap_payload_return = {"cell":target,"name":item["name"].lower().split(" x")[0],
-                                     "depth":state["depth"],"steps":0}
             p.summoning_pending = {"area":set(area),"door":door,"stand":stand}
             report.update(status="ready",reason="remote activation from exterior choke",
                           target=target,door=door,stand=stand,retreat=retreat)
-            return p.use(item,"THROW","summoning: trigger visible plate remotely from exterior choke",target=target)
+            return action
     return None
 
 

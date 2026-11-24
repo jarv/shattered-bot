@@ -36,6 +36,12 @@ def escape(p, state):
         from .survival_policy import FLOOR, TRANSITIONS, HARMFUL_PLANTS, is_hostile
     except ImportError:
         from survival_policy import FLOOR, TRANSITIONS, HARMFUL_PLANTS, is_hostile
+    if journey:
+        try:
+            from .reward_lifecycle import interrupt
+        except ImportError:
+            from reward_lifecycle import interrupt
+        interrupt(p, "emergency toxic-gas escape preempted protected work")
     for plan in ("ranged_plan", "ambush_plan", "room_journey", "room_loot_plan"):
         if hasattr(p, plan):
             setattr(p, plan, None)  # Do not resume a stationary lure/loot commitment inside gas.

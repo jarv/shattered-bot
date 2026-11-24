@@ -2,9 +2,11 @@
 try:
     from .policy_geometry import distance
     from .policy_decision import Intent
+    from .public_evidence import TileEvidence, Mechanism
 except ImportError:
     from policy_geometry import distance
     from policy_decision import Intent
+    from public_evidence import TileEvidence, Mechanism
 
 
 def before_move(p,state,decision,enemies):
@@ -26,11 +28,12 @@ def before_move(p,state,decision,enemies):
     # A publicly triggered plate retains its trap name but is inactive.
     # It may anchor an ordinary search only after the independent effect,
     # plant and room checks; this never certifies neighboring hidden ground.
-    inactive=tile.get('terrain')==19 and (tile.get('visible') or tile.get('observed'))
-    if (tile.get('trap') and not inactive) or tile.get('plant') \
+    evidence=TileEvidence.of(tile)
+    inactive=evidence.mechanism==Mechanism.INACTIVE
+    if evidence.mechanism==Mechanism.ACTIVE or (tile.get('trap') and not inactive) or tile.get('plant') \
             or p.effects_block_movement(tile) or pos in p.room_blocked:return None
-    traps=[c for c,t in p.tiles.items() if t.get('trap') and t['terrain']==18
-           and (t.get('visible') or t.get('observed')) and distance(step,c,width)<=4
+    traps=[c for c,t in p.tiles.items() if t.get('trap') and TileEvidence.of(t).mechanism==Mechanism.ACTIVE
+           and distance(step,c,width)<=4
            and p.shot_clear(state,c)]
     # A single revealed summoning trap is already a local crowding hazard:
     # summons can press neighboring traps. Inspect the immediate approach
@@ -40,7 +43,8 @@ def before_move(p,state,decision,enemies):
         and distance(pos,c,width)==1 and distance(step,c,width)<=1 for c in traps)
     if (len(traps)<3 and not adjacent_summoning) or distance(pos,step,width)!=1:return None
     if min(distance(step,c,width) for c in traps)>min(distance(pos,c,width) for c in traps):return None
-    p.planner.report['trap_field']={'observed_traps':sorted(traps),'status':'Observed trap-density hypothesis; hidden cells remain unknown'}
+    p.planner.report['trap_field']={'observed_traps':sorted(traps),'anchor':evidence.record(),
+        'status':'Observed trap-density hypothesis; hidden cells remain unknown'}
     if p.trap_scan_cells[pos]>=2 or sum(p.trap_scan_cells.values())>=6:return None
     talisman=next((i for i in state['inventory'] if i.get('equipped') and not i.get('known_cursed')
                    and i['name'].lower().startswith('talisman of foresight') and 'SCRY' in i.get('actions',[])),None)

@@ -246,13 +246,21 @@ def ember_combat(p,state,enemies):
     weight=payload(state)
     plan=q.get('icecap')
     if plan:
-        cell=plan['cell'];q.pop('icecap',None)
+        cell=plan['cell']
         if (weight and 'icecap' in p.tiles.get(cell,{}).get('plant','').lower()
                 and distance(cell,foe['cell'],width)<=1 and safe(cell)):
-            if base_name(weight) in {'waterskin','dew vial','dew pouch'}:
-                p.trap_payload_return={'cell':cell,'name':base_name(weight),'depth':state['depth'],
-                                       'steps':0,'disarm_required':False}
-            return p.use(weight,'THROW','quest: trigger observed Icecap with payload; flying elemental cannot trample it',target=cell)
+            try:
+                from .payload_workflow import throw as throw_payload
+            except ImportError:
+                from payload_workflow import throw as throw_payload
+            action=throw_payload(p,state,weight,cell,
+                'quest: trigger observed Icecap with payload; flying elemental cannot trample it',
+                disarm_required=False)
+            if action:
+                q.pop('icecap',None)
+                return action
+        else:
+            q.pop('icecap',None)
     seed=next((i for i in state['inventory'] if base_name(i)=='seed of icecap'
                and 'THROW' in i.get('actions',[])),None)
     if seed and weight and not p.barren_land and not q.get('icecap_attempted'):

@@ -6,6 +6,9 @@ try:
     from .wand_tactics import choose_transfusion
     from .room_loot import inventory_context
     from .retreat_geometry import onward_exit
+    from .objective_planning import exhaust_preparation
+    from .stash_workflow import workflow, StashPhase
+    from .payload_workflow import workflow as payload_workflow, PayloadPhase
 except ImportError:
     from challenge_combat import champion, exposure, reach, mixed_water_escape
     from policy_decision import Intent,Finished
@@ -13,6 +16,9 @@ except ImportError:
     from wand_tactics import choose_transfusion
     from room_loot import inventory_context
     from retreat_geometry import onward_exit
+    from objective_planning import exhaust_preparation
+    from stash_workflow import workflow, StashPhase
+    from payload_workflow import workflow as payload_workflow, PayloadPhase
 
 
 def recover(p,state,enemies,blocked,distance,neighbors,line_clear):
@@ -29,27 +35,36 @@ def recover(p,state,enemies,blocked,distance,neighbors,line_clear):
         controller=blocked.code.split(":",1)[1]
         pending=[{"kind":"unresolved "+controller,"cell":state["hero"]["cell"]}]
         if controller=="potion-stash":
-            if p.potion_stash:pending[0]["cell"]=p.potion_stash["cell"]
-            plan=p.potion_stash
+            plan=workflow(p)
+            if plan:pending[0]["cell"]=plan.cell
+            if plan:
+                # Clearing executable intent must not erase owned quantities.
+                # Pending drops are not silently promoted to confirmed items.
+                p.physical_ledger.defer(plan,blocked.reason,plan.pending)
+                if plan.unresolved:
+                    pending=[]  # The typed ledger is the sole physical owner.
             # Only a blocked, confirmed retrieval can be retried with a new
             # floor supply. Failed drops, budgets and probes stay disabled.
-            p.stash_supply_retry = (
-                (state["depth"],state.get("branch",0))
-                if plan and plan["depth"]==state["depth"]
-                and plan["phase"]=="retrieve" and plan["dropped"]
-                and not plan["pending"] and plan["steps"]<=48
-                and (plan["cell"] not in p.paths(state)
-                     or p.tiles.get(plan["cell"],{}).get("effects"))
-                else None)
+            retry = bool(
+                plan and plan.depth==state["depth"]
+                and plan.branch==state.get("branch",0)
+                and plan.phase==StashPhase.RETRIEVE and plan.outstanding
+                and not plan.pending and plan.steps<=48
+                and (plan.cell not in p.paths(state)
+                     or p.tiles.get(plan.cell,{}).get("effects")))
+            exhaust_preparation(p,state,blocked.reason,new_supply_can_retry=retry)
             p.potion_stash=None
             p.puzzle_probe=None
-            p.deferred_room_controllers.add("potion-supplies")
         elif controller=="potion-probe":
-            p.stash_supply_retry=None
+            exhaust_preparation(p,state,blocked.reason)
             p.puzzle_probe=None
-            p.deferred_room_controllers.add("potion-supplies")
         elif controller=="trap-payload":
-            if p.trap_payload_return:pending[0]["cell"]=p.trap_payload_return["cell"]
+            plan=payload_workflow(p)
+            if plan:
+                uncertain=plan.proposal if plan.phase in {
+                    PayloadPhase.PROPOSED,PayloadPhase.AIMING,PayloadPhase.UNVERIFIED} else None
+                p.physical_ledger.defer(plan,blocked.reason,uncertain)
+                pending=[]  # The typed ledger, not a copied generic record, owns it.
             p.trap_payload_return=None
         elif controller=="mimic-hunt":
             pending=[{"kind":"unverified mimic reward","cell":c} for c in p.mimic_obligations]
@@ -57,6 +72,11 @@ def recover(p,state,enemies,blocked,distance,neighbors,line_clear):
                 p.unconfirmed_loot[c]={'cell':c,'name':'Unconfirmed suspicious chest reward'}
             p.mimic_obligations.clear()
         elif controller=="room-journey":
+            try:
+                from .reward_lifecycle import interrupt
+            except ImportError:
+                from reward_lifecycle import interrupt
+            interrupt(p,blocked.reason)
             p.room_journey=None
             p.deferred_room_controllers.add(controller)
         elif controller=="drop-room":

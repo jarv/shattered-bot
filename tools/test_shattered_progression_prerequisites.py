@@ -63,6 +63,11 @@ class ProgressionPrerequisites(unittest.TestCase):
             if d is None:break
             target=d.action["cell"]
             if target==s["hero"]["cell"]==1371:
+                from tools.loot_completion import observe_collected
+                before=copy.deepcopy(s)
+                before["objects"]=[dict(cell=1371,name="gold",top_item=dict(name="gold",quantity=10))]
+                s["hero"]["gold"]=s["hero"].get("gold",0)+10
+                observe_collected(p,before,d,s)
                 p.loot.pop(1371,None)
             s["hero"]["cell"]=target
         self.assertEqual(1266,s["hero"]["cell"])

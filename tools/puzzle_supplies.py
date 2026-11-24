@@ -15,6 +15,8 @@ try:
     from .policy_decision import Intent
     from .policy_geometry import distance
     from .room_supplies import use as use_room_supply
+    from .objective_planning import preparation_allowed
+    from .stash_workflow import retrieve as retrieve_stash
 except ImportError:
     from consumable_tactics import base_name, unknown_potion
     from room_tactics import GROUND, PROTECTION, remaining, plan_journey,sentry_geometry
@@ -24,6 +26,8 @@ except ImportError:
     from policy_decision import Intent
     from policy_geometry import distance
     from room_supplies import use as use_room_supply
+    from objective_planning import preparation_allowed
+    from stash_workflow import retrieve as retrieve_stash
 
 
 @dataclass(frozen=True)
@@ -129,7 +133,7 @@ def frost_recovery_nearby(p,state,distance):
     This does not relax the near-full-HP potion-test admission threshold.
     Ordinary bounded healing remains available while travelling/exploring.
     """
-    if 'potion-supplies' in p.deferred_room_controllers:return False
+    if not preparation_allowed(p,state):return False
     pos=state['hero']['cell'];width=state['map']['width']
     barriers=[c for c,t in p.tiles.items() if fire_barrier(t) and distance(pos,c,width)<=6]
     if not barriers:return False
@@ -483,7 +487,7 @@ def prepare_flight_armor(p,state,neighbors):
 def prepare_pool_armor(p,state,neighbors):
     """Preparation only: retain every unknown-test and actual journey gate."""
     if not getattr(p,'reserve_floor_puzzle_supplies',False) \
-            or 'potion-supplies' in p.deferred_room_controllers \
+            or not preparation_allowed(p,state) \
             or state.get('status')!='ready' or state.get('modal') \
             or p.potion_stash or p.room_journey or p.drop_plan or p.trap_payload_return \
             or not bandolier_protected(p,state) \
@@ -682,7 +686,9 @@ def unscouted_entrance(p,state,journey):
     # Ordinary doors close again when stepped off. A receipted entrance scout is
     # not undone by that normal reclosure. The newly planned round trip still
     # budgets entering the door, and Journey.advance rechecks every step.
-    return next((c for c in journey.route[1:] if p.tiles[c]['terrain']==5
+    itinerary=getattr(journey,'itinerary',None)
+    route=[*journey.route[1:],*(itinerary.return_route[1:] if itinerary else ())]
+    return next((c for c in route if p.tiles[c]['terrain']==5
                and not (journey.kind in {'pool','flight','gas'}
                         and (state['depth'],state.get('branch',0),c)
                             in getattr(p,journey.kind+'_entrance_receipts')
@@ -709,7 +715,7 @@ def open_journey_entrance(p,state,journey):
 
 
 def prepare_supplies(p, state, enemies, distance, neighbors):
-    if enemies or p.puzzle_probe or state.get("danger_cells") or "potion-supplies" in p.deferred_room_controllers:
+    if enemies or p.puzzle_probe or state.get("danger_cells") or not preparation_allowed(p,state):
         return None
     try:
         from .piranha_profile import scout
@@ -937,7 +943,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
             if stash:
                 return stash
             if p.potion_stash:
-                p.potion_stash["phase"]="retrieve"
+                retrieve_stash(p)
             p.puzzle_drinks.add((state["depth"],base_name(candidate)))
             p.puzzle_probe={"depth":state["depth"],"kind":"frost","turns":0}
             try:
@@ -985,7 +991,13 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
             for bank in banks:
                 staged=dict(state,hero=dict(hero,cell=bank))
                 journey=plan_journey(p,staged,[],neighbors,probe_kind=demand.kind,plan_only=True)
-                if journey and entrance_actionable(p,staged,journey):journeys[bank]=journey
+                if journey and entrance_actionable(p,staged,journey):
+                    try:
+                        from .protected_rewards import bind_test_storage
+                    except ImportError:
+                        from protected_rewards import bind_test_storage
+                    if bind_test_storage(p,staged,journey,candidate,distance,neighbors,safe_test_bank):
+                        journeys[bank]=journey
             banks=[bank for bank in banks if bank in journeys]
         if not banks:
             if getattr(p,'reserve_floor_puzzle_supplies',False):
@@ -1019,11 +1031,14 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
             if not ready:
                 if opening:return opening
                 continue
-        stash=protect_potions(p,state,candidate,distance,neighbors,safe_test_bank,isolated_stack=demand.kind=='gas')
+        itinerary=getattr(journeys.get(bank),'itinerary',None)
+        stash=protect_potions(p,state,candidate,distance,neighbors,safe_test_bank,
+                              isolated_stack=demand.kind=='gas',
+                              preferred_cell=itinerary.storage_cell if itinerary else None)
         if stash:
             return stash
         if p.potion_stash:
-            p.potion_stash["phase"]="retrieve"
+            retrieve_stash(p)
         p.puzzle_drinks.add((state["depth"],base_name(candidate)))
         if journeys:
             journey=journeys[bank]

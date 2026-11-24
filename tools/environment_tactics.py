@@ -3,10 +3,14 @@ try:
     from .combat_items import stats
     from .consumable_tactics import base_name
     from .policy_decision import Intent
+    from .payload_workflow import throw as throw_payload, workflow as payload_workflow, PayloadPhase, finish_if_settled
+    from .objective_episodes import Scope
 except ImportError:
     from combat_items import stats
     from consumable_tactics import base_name
     from policy_decision import Intent
+    from payload_workflow import throw as throw_payload, workflow as payload_workflow, PayloadPhase, finish_if_settled
+    from objective_episodes import Scope
 
 
 def payload(state):
@@ -61,32 +65,34 @@ def trigger_trap(p, state, enemies, distance, neighbors, line_clear):
             choices.append((hits, -distance(pos,cell,width), -cell, cell))
     if choices:
         target = max(choices)[3]
-        p.trap_attempts.add((state["depth"], target))
-        if base_name(item) in {"waterskin","dew vial","dew pouch"}:
-            p.trap_payload_return={"cell":target,"name":base_name(item),"depth":state["depth"],"steps":0}
-        return p.use(item, "THROW", "trap: press revealed mechanism against visible enemies; recover item only after safe disarm", target=target)
+        action=throw_payload(p,state,item,target,"trap: press revealed mechanism against visible enemies; recover item only after safe disarm")
+        if action:p.trap_attempts.add((state["depth"],target))
+        return action
     return None
 
 
 def recover_trap_payload(p,state,enemies):
-    plan=p.trap_payload_return
-    if not plan or state.get("status")!="ready" or state.get("modal"):
+    if not p.trap_payload_return or state.get("status")!="ready" or state.get("modal"):
         return None
-    if any(base_name(i)==plan["name"] for i in state["inventory"]):
-        p.trap_payload_return=None
+    plan=payload_workflow(p)
+    if finish_if_settled(p):
         return None
     if enemies or state.get("danger_cells") or p.recent_threats:
         return None
-    if plan["depth"]!=state["depth"]:
-        p.stop_obligation("trap-payload","Reusable trap payload left on another floor")
+    if plan.scope!=Scope.of(state):
+        p.stop_obligation("trap-payload","Reusable trap payload left on another floor or branch")
+    if plan.phase==PayloadPhase.UNVERIFIED:
+        p.stop_obligation("trap-payload","Reusable trap payload landing lacks a matching accepted transfer receipt")
+    if plan.phase in {PayloadPhase.PROPOSED,PayloadPhase.AIMING}:
+        return None
     paths=p.paths(state)
-    if plan["cell"] not in paths or (plan.get('disarm_required',True) and p.tiles[plan["cell"]].get("terrain")!=19) \
-            or p.effects_block_movement(p.tiles.get(plan['cell'],{})):
+    if plan.cell not in paths or (plan.disarm_required and p.tiles[plan.cell].get("terrain")!=19) \
+            or p.effects_block_movement(p.tiles.get(plan.cell,{})):
         return None  # Do not enter a still-active or otherwise hazardous trap.
-    if plan["steps"]>=16:
+    if plan.steps>=16:
         p.stop_obligation("trap-payload","Reusable trap payload retrieval exceeded bounded path budget")
-    plan["steps"]+=1
-    return p.toward(state,plan["cell"],"trap: retrieve reusable dew container after safe disarm",paths,intent=Intent.LOOT)
+    plan.steps+=1
+    return p.toward(state,plan.cell,"trap: retrieve reusable payload after fresh disarm/hazard checks",paths,intent=Intent.LOOT)
 
 
 def cold_trigger_safe(p,state,cell,distance,neighbors):
@@ -134,12 +140,13 @@ def clear_blocking_trap(p,state,enemies,distance,neighbors):
         if gain and (gain>1 or p.loot.get(cell) or beyond):
             choices.append((-gain,distance(state['hero']['cell'],cell,state['map']['width']),cell))
     if not choices:return None
-    cell=min(choices)[-1];p.trap_attempts.add((state['depth'],cell))
-    if base_name(item) in {'waterskin','dew vial','dew pouch'}:
-        p.trap_payload_return={'cell':cell,'name':base_name(item),'depth':state['depth'],'steps':0}
+    cell=min(choices)[-1]
+    action=throw_payload(p,state,item,cell,'trap: remotely press revealed blocking chilling trap from outside its radius')
+    if not action:return None
+    p.trap_attempts.add((state['depth'],cell))
     p.planner.report['trap_clearance']={'cell':cell,'trap':'chilling trap','ordinary_chest':bool(p.loot.get(cell)),
         'caveat':'Known cold radius only; observe disarm and cloud expiry before walking/retrieving. No hidden trap assumed.'}
-    return p.use(item,'THROW','trap: remotely press revealed blocking chilling trap from outside its radius',target=cell)
+    return action
 
 
 def observe_bombs(p, state, distance):

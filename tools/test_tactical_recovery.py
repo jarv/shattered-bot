@@ -56,7 +56,8 @@ class TacticalRecoveryTests(unittest.TestCase):
         action=p.recover_tactical_block(s,caught.exception)
         self.assertIsNotNone(action)
         self.assertNotEqual("DRINK",action.action.get("action"))
-        self.assertIn("potion-supplies",p.deferred_room_controllers)
+        from tools.objective_planning import preparation_allowed
+        self.assertFalse(preparation_allowed(p,s))
         self.assertTrue(p.deferred_obligations)
         self.assertIsNone(prepare_supplies(p,s,[],distance,neighbors))
 

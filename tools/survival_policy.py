@@ -187,6 +187,11 @@ class SurvivalPolicy:
     def cell(self, cell, reason, *, intent=Intent.OTHER):
         return self.decision({"type": "cell", "cell": cell}, reason, intent=intent)
 
+    @property
+    def deferred_obligations(self):
+        """Compatibility report view; stash quantities have one typed owner."""
+        return self.legacy_deferred_obligations + self.physical_ledger.deferred_records()
+
     def use(self, item, action, reason, target=None, *, intent=Intent.OTHER):
         if not self.item_action_allowed(item, action):
             raise Finished("blocked", f"Policy safety veto: {action} {item['name']}")
@@ -765,6 +770,8 @@ class SurvivalPolicy:
             return None
         paths = self.paths(state, occupied)
         options = []
+        preflights = {}
+        scoped_preflight = kind == "doorway" and getattr(self,"unit_strategies_enabled",False)
         for door in paths:
             if self.tiles[door]["terrain"] not in (5, 6) or self.ambush_attempts[door]>=self.door_ambush_limit():
                 continue
@@ -772,12 +779,18 @@ class SurvivalPolicy:
             if len(route) > 7 or len(route) - 1 > min(distance(door, e["cell"], width) for e in enemies):
                 continue
             for hide in neighbors(door, width, height):
-                # Doorway arbitration protects accepted retreat edges. A fresh
-                # approach cannot then hide by reversing its final edge.
-                # Decline that bank now, not after spending the approach.
-                if kind == "doorway" and getattr(self, "unit_strategies_enabled", False) \
-                        and len(route) > 1 and hide == route[-2]:
-                    continue
+                if scoped_preflight:
+                    try:
+                        from .escape_commitment import preflight
+                    except ImportError:
+                        from escape_commitment import preflight
+                    witness=preflight(self,state,route,hide)
+                    if not witness.allowed:
+                        declines=self.planner.report.setdefault("commitment_declines",[])
+                        if len(declines)<8:
+                            declines.append(dict(door=door,hide=hide,**witness.record()))
+                        continue
+                    preflights[door,hide]=witness
                 if not self.walkable(hide, occupied) or self.tiles[hide]["terrain"] not in FLOOR - TRANSITIONS - {5, 6}:
                     continue
                 closed = dict(self.tiles)
@@ -788,6 +801,8 @@ class SurvivalPolicy:
         if options:
             _, door, hide = min(options)
             self.ambush_plan = {"door": door, "hide": hide, "waits": 0, "kind": kind}
+            if scoped_preflight:
+                self.ambush_plan["preflight"]=preflights[door,hide].record()
             if getattr(self,'unit_strategies_enabled',False):
                 # Observed distance only: no hidden enemy path, position or arrival guarantee.
                 self.ambush_plan['arrival_budget']=min(10,max(3,min(distance(door,e['cell'],width) for e in targets)+2))

@@ -9,6 +9,7 @@ try:
     from .room_supplies import requirements, discovery_requirements
     from .survival_policy import is_hostile
     from .objective_planning import Status, Result, publish, resolve, available, mark, exhausted
+    from .stash_workflow import retrieve as retrieve_stash
 except ImportError:
     from consumable_tactics import base_name, unknown_potion, discovery_score
     from policy_geometry import distance, neighbors
@@ -18,6 +19,7 @@ except ImportError:
     from room_supplies import requirements, discovery_requirements
     from survival_policy import is_hostile
     from objective_planning import Status, Result, publish, resolve, available, mark, exhausted
+    from stash_workflow import retrieve as retrieve_stash
 
 
 PURPOSE = "pre-descent-strength"
@@ -187,7 +189,7 @@ def remembered_preparation(p, state, bank):
 def cancel(p, reason):
     p.planner.report["descent_potion_testing"] = {"status": "deferred", "reason": reason}
     if p.potion_stash and p.potion_stash.get("purpose") == PURPOSE:
-        p.potion_stash["phase"] = "retrieve"
+        retrieve_stash(p)
     p.descent_potion_plan = None
     publish(p, "potion-discovery", Result(
         Status.COMPLETE if p.strength_identified and not p.potion_stash else Status.BLOCKED, reason))
@@ -483,7 +485,7 @@ def advance(p, state):
         if stash:
             return stash
     if p.potion_stash:
-        p.potion_stash["phase"] = "retrieve"
+        retrieve_stash(p)
     plan["pending"] = True
     p.puzzle_probe = {"depth": state["depth"], "kind": PURPOSE, "turns": 0}
     decision = p.use(candidate, "DRINK", "identify: test unknown potion before descending until strength is identified")

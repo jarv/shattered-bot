@@ -4,6 +4,7 @@ import unittest
 
 from tools.floor_abandonment import FloorAbandonment
 from tools.policy_decision import Decision, Intent, PlannerStuck
+from tools.workflow_accounting import OwnedAction
 
 
 def fixture():
@@ -48,6 +49,7 @@ class RecoveryCombatAccountingTests(unittest.TestCase):
         decision = Decision(dict(type="cell", cell=539), "recovery",
                             intent=Intent.DESCEND)
         decision.floor_abandonment = 1
+        decision.recovery_receipt = OwnedAction.capture(1,state,decision,[496,539,511])
         for _ in range(8):
             recovery.observe(state, decision, state)
         self.assertEqual(8, recovery.active["stalled_actions"])
@@ -77,7 +79,7 @@ class RecoveryCombatAccountingTests(unittest.TestCase):
         after["depth"] = 8
         recovery.observe(state, Decision(dict(type="cell", cell=511), "other"), after)
         self.assertIsNotNone(recovery.active)
-        self.assertEqual("active", recovery.active["status"])
+        self.assertEqual("paused", recovery.active["status"])
         self.assertFalse(recovery.active["collection_credited"])
 
     def test_death_during_interruption_still_ends_recovery(self):

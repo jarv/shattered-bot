@@ -99,7 +99,9 @@ class PoolArmorPreparationTests(unittest.TestCase):
                 elif case=="unseen-bank": p.tiles[1810]["visible"]=False
                 elif case=="bag-uncertain": p.bandolier_inventory=(True,True)
                 elif case=="already-safe": worn["identified"]=True
-                elif case=="deferred": p.deferred_room_controllers.add("potion-supplies")
+                elif case=="deferred":
+                    from tools.objective_planning import exhaust_preparation
+                    exhaust_preparation(p,s,"test: preparation exhausted")
                 elif case=="test-limit": p.puzzle_drinks.update((6,str(i)) for i in range(12))
                 elif case=="already-tested": p.puzzle_drinks.add((6,"ivory potion"))
                 d=choose(p,s,enemies)

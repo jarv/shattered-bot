@@ -96,7 +96,9 @@ class HungryFrostIdentificationTests(unittest.TestCase):
                 elif case == "trap": p.tiles[589]["trap"] = "toxic vent"
                 elif case == "effects": p.tiles[589]["effects"] = ["fire"]
                 elif case == "unseen": p.tiles[589]["visible"] = False
-                elif case == "deferred": p.deferred_room_controllers.add("potion-supplies")
+                elif case == "deferred":
+                    from tools.objective_planning import exhaust_preparation
+                    exhaust_preparation(p,s,"test: preparation exhausted")
                 enemies = [dict(cell=590, name="marsupial rat")] if case == "enemy" else []
                 self.assertIsNone(prepare_supplies(p, s, enemies, distance, neighbors))
                 self.assertIn(1222, targets(p))
