@@ -3311,5 +3311,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000256"
+  },
+  {
+    "id": "000257-gas-tour-continuation",
+    "priority": "high",
+    "summary": "Establish a verified protected gas-tour continuation and prevent unsuccessful approach arrivals from repeatedly reversing exploration.",
+    "evidence": [
+      "D1304–1311, log lines 4094–4115: known purity activation, partial collection and emergency escape.",
+      "D1341–1347, log lines 4190–4210: gas approach and exploration alternate.",
+      "D1438–1448, log lines 4494–4526: repeated reversals end in navigation-stalled planner failure.",
+      "D1469, log lines 4654–4655: actual recovery descent after 22 accepted actions, without collection credit.",
+      "tools/toxic_escape.py:23–44; tools/protected_rewards.py:191–280; tools/puzzle_supplies.py:457–508,1021–1068."
+    ],
+    "status": "deferred",
+    "reason": "Complete source resolves the selecting-chain gap, but original mutable tour state and a certified replacement remain missing. Escape checks a static route while adaptive tours operate within their room; later reobservation does not prove fresh testing, storage or reward-return admission. Next reconstruct and validate selected inputs through D1308, inspect D1309 route ownership and observed immunity, and derive a regression proving delegation to unchanged funded-return checks. Then derive the arrival-at-980 fixture and demonstrate an admitted progress action before suppressing retries. Do not expand hazard admission, extend bounds, infer protection or collection, or waive mandatory pickups.",
+    "origin_run": "000257"
   }
 ]
