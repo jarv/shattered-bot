@@ -31,6 +31,21 @@ def ranged_first(p,state,enemies,target):
     return p.best_attack(state,target,allowed_kinds={'magic','thrown'})
 
 
+def ordinary_contact_attack(p,state,enemies):
+    """Existing empty-staff alternative to physically splitting a contact fly."""
+    if p.charged_magic(state) or state.get('status')!='ready' \
+            or state.get('modal') or state.get('danger_cells'):
+        return None
+    pos=state['hero']['cell'];width=state['map']['width'];book=p.unit_strategies
+    contacts=sorted((e for e in enemies if not e.get('sleeping')
+                     and book.profile(e).strategy=='melee' and not book.profile(e).protected
+                     and not champion(e) and distance(pos,e['cell'],width)==1),key=lambda e:e['cell'])
+    for contact in contacts:
+        attack=p.best_attack(state,contact,allowed_kinds={'melee'})
+        if attack:return contact,attack
+    return None
+
+
 def ranged(p,state,enemies,target):
     try:
         from .ranged_tactics import choose
@@ -75,8 +90,15 @@ def dedicated(p,state,enemies,target,strategy):
             from .fly_tactics import desperate_attack
         except ImportError:
             from fly_tactics import desperate_attack
-        return fly_escape(p,state,enemies,list(p.recent_threats.values())) or ranged_first(p,state,enemies,target) \
-            or desperate_attack(p,state,enemies)
+        escaped=fly_escape(p,state,enemies,list(p.recent_threats.values()))
+        if escaped:return escaped
+        # A thrown weapon is physical too. Do not let this early species
+        # dispatch bypass shared control/withdrawal and the already admitted
+        # ordinary-contact strike merely because a club is still carried.
+        if distance(state['hero']['cell'],target['cell'],state['map']['width'])==1 \
+                and ordinary_contact_attack(p,state,enemies):
+            return None
+        return ranged_first(p,state,enemies,target) or desperate_attack(p,state,enemies)
     if strategy=='mimic':return fight_mimic(p,state,enemies,distance,neighbors,line_clear)
     if strategy in {'ranged-first','stationary','aquatic'}:return ranged_first(p,state,enemies,target)
     if strategy=='ranged':return ranged(p,state,enemies,target)
@@ -155,21 +177,16 @@ def choose(p,state,enemies):
     # contact foe offers an admitted non-splitting strike. Keep escape, magic,
     # environmental control and withdrawal ahead of this empty-staff fallback.
     # Do not promote protected species, champions, sleepers or remote targets.
-    if profile.strategy=='fly-swarm' and distance(pos,target['cell'],width)==1 \
-            and not p.charged_magic(state) and state.get('status')=='ready' \
-            and not state.get('modal') and not state.get('danger_cells'):
-        contacts=sorted((e for e in active if book.profile(e).strategy=='melee'
-                         and not book.profile(e).protected and not champion(e)
-                         and distance(pos,e['cell'],width)==1),key=lambda e:e['cell'])
-        for contact in contacts:
-            attack=p.best_attack(state,contact,allowed_kinds={'melee'})
-            if attack:
-                p.planner.report['unit_target']=contact['cell']
-                selection.update(name=contact['name'],cell=contact['cell'],
-                    strategy=book.profile(contact).strategy,movement=book.profile(contact).movement,
-                    status='admitted ordinary contact strike before empty-staff fly melee')
-                attack.reason='combat: strike ordinary contact foe instead of splitting adjacent fly'
-                return attack
+    if profile.strategy=='fly-swarm' and distance(pos,target['cell'],width)==1:
+        contact_action=ordinary_contact_attack(p,state,active)
+        if contact_action:
+            contact,attack=contact_action
+            p.planner.report['unit_target']=contact['cell']
+            selection.update(name=contact['name'],cell=contact['cell'],
+                strategy=book.profile(contact).strategy,movement=book.profile(contact).movement,
+                status='admitted ordinary contact strike before empty-staff fly melee')
+            attack.reason='combat: strike ordinary contact foe instead of splitting adjacent fly'
+            return attack
     selection['status']='shared combat fallback for selected unit profile'
     return None
 

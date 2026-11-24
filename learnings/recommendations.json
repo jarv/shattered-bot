@@ -3266,5 +3266,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000252"
+  },
+  {
+    "id": "000253-mixed-fly-thrown-priority",
+    "priority": "high",
+    "summary": "Prevent early physical fly dispatch from bypassing an admitted ordinary-contact alternative.",
+    "evidence": [
+      "Decision 1120, log line 3202: empty wands, adjacent gnoll and fly, club selected against fly.",
+      "Decisions 1121–1123, log lines 3205–3210: settled throws reduce hero HP from 27 to 22 while gnoll remains at 8/16.",
+      "Decisions 1124–1125, log lines 3212–3217: existing contact rule becomes reachable after uncursed clubs leave inventory.",
+      "Played tools/unit_strategies.py:30–31,73–79,154–172; tools/survival_policy.py:629–684."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000253"
   }
 ]
