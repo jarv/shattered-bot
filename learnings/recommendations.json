@@ -3367,5 +3367,21 @@
     "status": "deferred",
     "reason": "No second repair is supported yet: individual bank/journey/storage rejection results and contemporaneous pool approach receipts and revisit expenditure were not recorded. Source inspection resolved the selecting chain but not its first rejected prerequisite. Next, validate original offline selections through decision 770 and extract those rejection reasons, stopping at the first mismatch. Unknown potion effects and an unsafe return cannot be assumed.",
     "origin_run": "000260"
+  },
+  {
+    "id": "000261-crab-recovery-pocket-bypass",
+    "priority": "high",
+    "summary": "Prevent tactical recovery from repeating a crab-pocket-vetoed move, with a verified non-idling continuation.",
+    "evidence": [
+      "D2103, log lines 6126–6130: retreat reaches 538 before the crab blocks the return.",
+      "D2104, log lines 6131–6134: pocket guard rejects 539, but recovery selects and reaches that same cell.",
+      "D2107, log lines 6141–6144: recovery waits beside the guarding crab; HP falls from 48 to 46.",
+      "D2119, log lines 6185–6186: known haste is consumed without subsequent escape.",
+      "D2136, log lines 6245–6247: final wait precedes death; terminal public text names the great crab.",
+      "tools/mage_policy.py:360–382,994–999; tools/great_crab_tactics.py:25–78; tools/tactical_recovery.py:137–199."
+    ],
+    "status": "deferred",
+    "reason": "Source and the original veto/action pair establish the recovery bypass. No patch is submitted because applying the existing guard to recovery squares in an isolated contemporaneous snapshot only substitutes wait; neither enemy has an admitted attack there, and the fly shot is blocked. Haste alone does not certify escape, and unknown potion effects cannot be assumed. Next validate original selections and receipts through D2102, stop at the first mismatch, and derive paired D2103/D2104 fixtures proving an earlier admitted doorway or second-exit continuation before adding recovery filtering and a positive regression. Preserve guarding, hazard admission, mandatory pickups and terminal exhaustion.",
+    "origin_run": "000261"
   }
 ]
