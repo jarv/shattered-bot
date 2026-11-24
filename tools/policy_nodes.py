@@ -39,6 +39,14 @@ def rinse(c):
     return rinse_ooze(c.policy, c.state, c.enemies, distance, neighbors)
 
 
+def rooted_recovery(c):
+    try:
+        from .rooted_recovery import choose
+    except ImportError:
+        from rooted_recovery import choose
+    return choose(c)
+
+
 def vertigo_response(c):
     try:
         from .vertigo_tactics import choose

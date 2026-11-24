@@ -21,6 +21,7 @@ POLICY = Selector("survival", (
         Leaf("warning-escape", n.warned_cell),
         Leaf("harmful-effect-escape", n.harmful_effect),
         Leaf("dm100-door-escape", n.dm100_door_escape),
+        Leaf("rooted-recovery", n.rooted_recovery),
     )),
     Selector("survival-and-preparation", (
         Leaf("rule-preparation", lambda c: c.policy.preparation(c.state, c.enemies)),

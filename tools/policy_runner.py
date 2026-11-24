@@ -301,11 +301,14 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                 try:
                     from .inventory_tactics import observe_accepted as observe_inventory
                     from .trap_field_tactics import observe_accepted as observe_scan
+                    from .rooted_recovery import observe as observe_roots
                 except ImportError:
                     from inventory_tactics import observe_accepted as observe_inventory
                     from trap_field_tactics import observe_accepted as observe_scan
+                    from rooted_recovery import observe as observe_roots
                 for label,feedback in (('observed_inventory_management',observe_inventory(policy,state,decision,next_state)),
-                                       ('observed_trap_scan',observe_scan(policy,state,decision,next_state))):
+                                       ('observed_trap_scan',observe_scan(policy,state,decision,next_state)),
+                                       ('observed_root_recovery',observe_roots(policy,state,decision,next_state))):
                     if feedback:
                         log.write(json.dumps({'index':index,label:feedback})+'\n');log.flush()
                 try:

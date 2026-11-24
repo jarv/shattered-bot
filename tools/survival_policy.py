@@ -308,7 +308,12 @@ class SurvivalPolicy:
             if action["type"] == "cell" and pos == self.last_state["hero"]["cell"]:
                 before = [(o["cell"], o["name"]) for o in self.last_state.get("objects", [])]
                 after = [(o["cell"], o["name"]) for o in state.get("objects", [])]
-                if before == after:
+                # An immobilized move does not test the destination's terrain.
+                # Preserve prior real failures; do not globally clear obstacles.
+                rooted_move = action["cell"] != pos and any(
+                    b.get("name", "").lower() == "rooted"
+                    for b in self.last_state["hero"].get("buffs", []))
+                if before == after and not rooted_move:
                     self.failed_moves[action["cell"]] += 1
                     if self.failed_moves[action["cell"]] >= 2:
                         refused_dew = action["cell"] == pos and self.last_decision.intent == Intent.LOOT \

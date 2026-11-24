@@ -32,6 +32,7 @@ def value(default, *, floor=False):
 
 @dataclass
 class NavigationMemory:
+    root_recovery_plan: object = value(None, floor=True)
     movement_batch_disabled: bool = value(False, floor=True)
     movement_batch_ready_at: float = value(0, floor=True)
     corruption_pending: object = value(None, floor=True)
