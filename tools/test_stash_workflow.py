@@ -275,7 +275,7 @@ class StashReceiptContracts(unittest.TestCase):
         def check_reconciled(*args):
             self.assertIsNone(p.potion_stash.pending)
             self.assertEqual({"potion of strength":2},p.potion_stash.outstanding)
-        with tempfile.TemporaryDirectory(dir="/tmp/opencode") as directory:
+        with tempfile.TemporaryDirectory(dir="/tmp/opencode" if Path("/tmp/opencode").is_dir() else None) as directory:
             path=Path(directory)/"run.jsonl"
             with patch.object(p,"choose",side_effect=lambda state:advance_stash(p,state,[],distance)), \
                     patch("tools.descent_potions.observe",side_effect=check_reconciled) as consumer:
@@ -304,7 +304,7 @@ class StashReceiptContracts(unittest.TestCase):
                 raise PlayerAPIError(504,"execution status unknown")
 
         api=API()
-        with tempfile.TemporaryDirectory(dir="/tmp/opencode") as directory:
+        with tempfile.TemporaryDirectory(dir="/tmp/opencode" if Path("/tmp/opencode").is_dir() else None) as directory:
             with patch.object(p,"choose",side_effect=lambda state:advance_stash(p,state,[],distance)):
                 with self.assertRaises(PlayerAPIError):
                     run(api,p,2,0,Path(directory)/"run.jsonl",bounded=True)

@@ -326,7 +326,7 @@ class PayloadCustodyContracts(unittest.TestCase):
             if state["status"]=="targeting":
                 return p.cell(43,"target payload")
             return throw(p,state,state["inventory"][0],43,"remote throw")
-        with tempfile.TemporaryDirectory(dir="/tmp/opencode") as directory:
+        with tempfile.TemporaryDirectory(dir="/tmp/opencode" if Path("/tmp/opencode").is_dir() else None) as directory:
             path=Path(directory)/"run.jsonl"
             with patch.object(p,"choose",side_effect=choose):
                 result=run(API(),p,3,0,path,bounded=True)
@@ -349,7 +349,7 @@ class PayloadCustodyContracts(unittest.TestCase):
                 self.calls+=1
                 raise PlayerAPIError(504,"execution status unknown")
         api=API()
-        with tempfile.TemporaryDirectory(dir="/tmp/opencode") as directory:
+        with tempfile.TemporaryDirectory(dir="/tmp/opencode" if Path("/tmp/opencode").is_dir() else None) as directory:
             path=Path(directory)/"run.jsonl"
             with patch.object(p,"choose",side_effect=lambda state:
                               throw(p,state,state["inventory"][0],43,"remote throw")):
