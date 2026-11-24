@@ -170,6 +170,8 @@ def return_for_reward(p,state,ghosts,distance,neighbors):
                      and (not p.tiles[c].get('trap') or p.tiles[c].get('terrain')==19)
                      and not p.effects_block_movement(p.tiles[c])]
             if not targets:
+                observation=observe_return_fire(p,state,area,views,paths,neighbors)
+                if observation:return observation
                 p.stop_gameplay('Sad Ghost reward pending: first encounter area searched without a visible ghost; no collection or descent inferred')
             # Reach the remembered region, then inspect different nearby views;
             # do not select alternating neighbors of a stale NPC coordinate.
@@ -193,6 +195,54 @@ def return_for_reward(p,state,ghosts,distance,neighbors):
         'ghost_visible':bool(ghosts),'reward_collected':False}
     return p.toward(state,bank,'quest: return to first Sad Ghost encounter area and reobserve reward giver'
                     if not ghosts else 'quest: approach visible Sad Ghost for pending reward',paths,intent=Intent.REPOSITION)
+
+
+def observe_return_fire(p,state,area,views,paths,neighbors):
+    """A disconnected return is not a searched room. Observe, never enter fire."""
+    try:
+        from .hunger_budget import forecast
+        from .survival_policy import is_hostile
+    except ImportError:
+        from hunger_budget import forecast
+        from survival_policy import is_hostile
+    pos=state['hero']['cell'];width=state['map']['width'];height=state['map']['height']
+    buffs=' '.join(b['name'].lower() for b in state['hero'].get('buffs',[]))
+    if state.get('status')!='ready' or state.get('modal') or state.get('danger_cells') \
+            or p.recent_threats or p.ranged_plan \
+            or any(is_hostile(o) for o in state.get('objects',[])) \
+            or state['hero']['hp']<.7*state['hero']['max_hp'] \
+            or any(b in buffs for b in ('starv','burn','poison','bleed','ooze','blind','vertigo','paral','root')) \
+            or p.hazard_recheck_steps>=60 or p.hazard_recheck_waits>=16 \
+            or not p.walkable(pos):
+        return None
+    # Fire spreads only into flammable cardinal neighbors. The current bank
+    # and its entire cardinal boundary must be freshly known, nonflammable,
+    # effect/plant-free terrain. No movement or speculative escape is needed.
+    bank=[pos,*[n for n in neighbors(pos,width,height)
+                if abs(n%width-pos%width)+abs(n//width-pos//width)==1]]
+    if any(not p.tiles.get(c,{}).get('visible') or not p.tiles[c].get('observed')
+           or p.tiles[c]['terrain'] not in {1,4,29}
+           or p.tiles[c].get('effects') or p.tiles[c].get('plant')
+           or p.tiles[c].get('trap') for c in bank):
+        return None
+    estimate=forecast(p,state)
+    if not estimate or estimate['remaining_to_starvation_lower_bound']<46:
+        return None  # Fund the whole existing 16-input allowance plus reserve, without eating.
+    pending={c for c in area-views if c!=pos and c not in paths
+             and p.tiles.get(c,{}).get('terrain') in {1,3,6,9,11,14,19,20,29}
+             and not any(p.tiles[c].get(k) for k in ('effects','plant','trap'))}
+    fires=[c for c,t in p.tiles.items() if t.get('visible') and t.get('observed')
+           and t.get('terrain') in {5,6}
+           and t.get('effects') and all(e.strip().lower()=='a fire is raging here.' for e in t['effects'])
+           and not t.get('plant') and not t.get('trap')
+           and any(n in paths for n in neighbors(c,width,height))
+           and any(n in pending for n in neighbors(c,width,height))]
+    if not fires:return None
+    p.hazard_recheck_steps+=1;p.hazard_recheck_waits+=1
+    p.planner.report['ghost_return']={'status':'visible fire blocks unsearched return',
+        'hazard':min(fires),'reward_collected':False}
+    return p.decision({'type':'wait'},'quest: observe blocking doorway fire from nonflammable safe ground',
+                      intent=Intent.RECOVER)
 
 
 def prepare_ghost(p,state,enemies):

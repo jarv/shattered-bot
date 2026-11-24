@@ -116,7 +116,11 @@ def hold_doorway(p,state,enemies,distance,neighbors,line_clear):
             strategy=p.unit_strategies.profile(target).strategy
             if strategy=='wraith':
                 action=p.best_attack(state,target,allowed_kinds={'magic'})
-            elif strategy=='undead':
+            # Linked skeletons dispatch as summoners, not undead. When one
+            # visibly has adrenaline, use the existing skeleton ranged
+            # preference rather than trading ordinary melee into fast pressure.
+            elif strategy=='undead' or (target['name'].lower()=="necromancer's skeleton"
+                                        and 'adrenaline' in target.get('status_icons',[])):
                 action=p.best_attack(state,target,allowed_kinds={'magic','thrown'})
         if not action:
             action=p.best_attack(state,target,reserve=reserve,reserve_magic=reserve)

@@ -263,6 +263,15 @@ def choose(p,state,enemies):
                for c in route[1:]):continue
         choices.append((len(route),cell))
     if not choices:
+        # Mandatory loot preempts general preparation, including its post-fire
+        # return controller. Delegate that unfinished transaction here too:
+        # mapping or distant keyed-room work cannot resolve its cold entrance.
+        try:
+            from .barrier_followup import advance as finish_barrier
+        except ImportError:
+            from barrier_followup import advance as finish_barrier
+        followup=finish_barrier(p,state,enemies,distance,neighbors) if getattr(p,'barrier_followup',None) else None
+        if followup:return followup
         clearance=clear_shocking_resource(p,state,resources,paths)
         if clearance:return clearance
         # Preparation yields to this priority leaf. If pickup is not admitted,

@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "id": "000223",
+  "started_at": "2026-11-23T23:37:48Z",
+  "completed_at": "2026-11-23T23:39:32.461825+00:00",
+  "source_commit": "f0d3354bdd423869fd56fba146fab2f0ce329ecd",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 261,
+  "duration_seconds": 101.733,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000222",
+  "previous_source_commit": "2ffc9b50f42d5d2ef7f603e3183181774c98a8c1",
+  "improvements": [
+    "The bot now recognizes a freshly confirmed DM-100 defeat even when the enemy is burning, so unreliable weapon-damage measurements do not leave that defeated enemy marked as a lightning threat."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Keep confirmed defeat receipts independent of damage attribution. Fire can make a weapon-damage sample unreliable without making an exact fresh defeat confirmation unusable. Preserve hazard vetoes and terminal planner diagnostics rather than masking stale-threat failures with waits or blind attacks.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health when mandatory potion preparation exhausted; this was not a death. Decision 44 opened the gas entrance, and decision 45 retreated from observed gas. Decisions 47–55 successfully staged and protected inventory for one unknown-potion test, but its observed effect was mind vision, not purity. After retrieving the stored potion and completing other floor work, the bot could not return to that preparation area. At decision 261, lines 727–728, missing purity blocked strength discovery, while the supply planner required a currently visible testing bank and had no gas reobservation handoff. All four preparation alternatives declined; recovery accepted no actions and credited no collection. Offline reconstruction against the played source matched decisions 0–260. On a copy of that validated terminal state, the candidate selects ordinary-ground travel toward the earlier bank instead of exhaustion. The focused correction extends the existing observation-only flight approach planner to gas, retaining hypothetical reward-route checks, hazard exclusions, bounded travel, and fresh arrival requirements. The new regression fails on the original helper and passes on the candidate; the full suite passes. This establishes an available preparation action, not successful arrival, safe potion consumption, room collection, or survival.",
+    "learnings": "A missing potion reservation needs an executable preparation return, not just a visible-bank requirement. Reuse a verified ordinary approach to refresh observations before testing; never treat hypothetical protection, a failed potion hypothesis, or fallback descent as a pickup receipt."
+  },
+  "recommendations": [
+    {
+      "id": "000112-gas-preparation-return",
+      "priority": "high",
+      "summary": "Provide bounded observation-only return to gas preparation when other floor work has taken the hero away.",
+      "evidence": [
+        "Decision 44, accepted line 123; decision 45, accepted line 126: gas entrance observation and retreat.",
+        "Decisions 47–55, lines 131–155: admitted bank, remote potion storage, and an unknown drink with observed mind vision.",
+        "Decision 261, lines 727–728: missing purity blocks mandatory discovery; every preparation prerequisite declines.",
+        "tools/descent_potions.py:350–387; tools/puzzle_supplies.py:416–468,968–1008.",
+        "Original-source reconstruction matches decisions 0–260; isolated terminal candidate selects ordinary approach travel. Four new regression cases pass, and the full suite passes."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000112"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000223/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000223/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 254,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 255,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 321
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 0,
+    "gold_complete": true,
+    "turns": 254,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

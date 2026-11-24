@@ -1,0 +1,530 @@
+{
+  "schema_version": 1,
+  "id": "000241",
+  "started_at": "2026-11-24T05:38:48Z",
+  "completed_at": "2026-11-24T06:04:40.287187+00:00",
+  "source_commit": "1eb38c72b824380e04e521913668efa821c56dd4",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "immediate-safety-emergency",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 11,
+  "actions": 3813,
+  "duration_seconds": 1537.933,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000240",
+  "previous_source_commit": "efae65dcc740c5e3bda26cb47fd3c12f74c5eab7",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "Distinguish an exhausted search allowance from an unresolved corridor prerequisite. Clearing one trap does not clear a multi-trap approach. Preserve active-trap exclusions, mandatory pickups and the stuck-planner outcome. A replacement must verify safe activation, retirement, hazard expiry and payload retrieval rather than infer safety from distance or mapped connectivity.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remains alive at 25 HP. Decision 3813 (log lines 10959–10961) steps from an open door onto publicly ordinary floor; the accepted move activates a hidden burning trap. Decision 3814 (10962–10963) then exhausts recovery without another accepted input. The three nonwall adjacent exits all contain fire, including the now-closed departure door. Burning recovery precedes hazardous-room escape and searches only ordinary hazard-excluding paths, leaving no reachable water route. The complete inventory has neither known frost nor purity, no known healing, and an empty waterskin. Existing continuation supplies no action. This is an immediate-safety planner failure, not death or optional exploration exhaustion.\n\nComplete source inspection and isolated original-source snapshot probes resolve the selecting-chain and geometry gaps, without claiming reconstructed runtime memory. The source revision matches the recording. Simply delegating to hazardous-room escape selects the burning closed door and does not certify relocation or extinguishing. Known levitation does splash away fire, but also creates renewing confusion gas; the current confusion controller has no admitted low-health continuation here. No safe focused replacement is established, so no policy patch or new regression is supplied. Original-source validation passed 69 targeted tests and the full 2,264-test suite, with four skips; these are not repair validation.",
+    "learnings": "Fire-enclosure recovery needs an executable continuation, not merely a first escape click. Account for closed-door opening, renewed burning, damage funding and actual extinguishing. A known levitation splash introduces confusion gas and needs its own retirement plan. Preserve unknown identities, hazard gates, mandatory pickups and terminal exhaustion."
+  },
+  "recommendations": [
+    {
+      "id": "000241-enclosed-burning-recovery",
+      "priority": "high",
+      "summary": "Establish a verified fire-enclosure recovery transaction before burning recovery exhausts.",
+      "evidence": [
+        "Decision 3813, log 10959: cell 1269 is ordinary observed floor before the selected frontier step.",
+        "Decision 3813, logs 10960–10961: accepted movement triggers the hidden burning trap.",
+        "Decision 3814, logs 10962–10963: living hero, fire-covered adjacent exits and no accepted recovery input.",
+        "tools/policy_tree.py:18–19; tools/combat_positioning.py:98–200; tools/survival_policy.py:435–471,954–1013.",
+        "Original-source isolated probe: ordinary paths contain only the hero cell; generic hazardous-room escape instead selects the burning closed door.",
+        "tools/vertigo_tactics.py:149–232; pinned PotionOfLevitation.shatter creates confusion gas after its splash."
+      ],
+      "status": "deferred",
+      "reason": "No safe replacement is certified. Source browsing resolves the selecting-source gap, but the generic alternative clicks an actively burning closed door, and a clear square beyond another flame does not establish survivable ongoing burning. The known levitation splash instead introduces renewing confusion exposure without an admitted low-health continuation. Next derive paired departure/ignition fixtures and prove either an input-aware, damage-funded fire-retirement route or a stationary splash-and-gas-retirement transaction with interruption and fresh-observation checks. Then require a new original-red/candidate-green regression. Do not merely reorder the controllers, extend waits, relax fire or confusion checks, guess potion identities, or abandon mandatory progression.",
+      "origin_run": "000241"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000241/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000241/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 125,
+        "turns": 334,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 332,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 157
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 16,
+        "gold_gained": 295,
+        "turns": 396,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 398,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 38,
+        "gold_gained": 514,
+        "turns": 522,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 533,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 59,
+        "gold_gained": 388,
+        "turns": 557,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 584,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 212,
+        "turns": 136,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 121,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Rat King",
+            "status": "encountered"
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 59,
+        "gold_gained": 252,
+        "turns": 462,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 531,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 768
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "experience_gained": 40,
+        "gold_gained": 353,
+        "turns": 271,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 280,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Old Wandmaker",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 801
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "experience_gained": 83,
+        "gold_gained": 127,
+        "turns": 451,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 483,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 9,
+        "branch": 0,
+        "experience_gained": 47,
+        "gold_gained": 194,
+        "turns": 147,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 163,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 253
+          }
+        ]
+      },
+      {
+        "depth": 10,
+        "branch": 0,
+        "experience_gained": 20,
+        "gold_gained": 0,
+        "turns": 137,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 152,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "boss",
+            "label": "Tengu",
+            "status": "encountered"
+          },
+          {
+            "kind": "boss",
+            "label": "Tengu",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 11,
+        "branch": 0,
+        "experience_gained": 35,
+        "gold_gained": 0,
+        "turns": 205,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 229,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 13,
+    "ending_experience": 32,
+    "ending_level": 12,
+    "starving_turns": 197,
+    "starving_turns_complete": false,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 7,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 15,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 24,
+        "starving_turns_complete": false
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "starving_turns": 1,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 9,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 10,
+        "branch": 0,
+        "starving_turns": 127,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 11,
+        "branch": 0,
+        "starving_turns": 14,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 12,
+    "gold_collected": 2460,
+    "gold_complete": false,
+    "turns": 3618,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": false,
+        "max_level": 8,
+        "max_level_complete": false
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 9,
+        "max_level_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 10,
+        "max_level_complete": true
+      },
+      {
+        "depth": 9,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 11,
+        "max_level_complete": true
+      },
+      {
+        "depth": 10,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 11,
+        "max_level_complete": true
+      },
+      {
+        "depth": 11,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 12,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

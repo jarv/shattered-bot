@@ -156,6 +156,43 @@ def use_artifact(p, state, enemies):
             p.artifact_menu = "chalice"
             return p.use(chalice, "PRICK", "artifact: inspect rendered prick damage before deciding")
         talisman = equipped.get("talisman of foresight")
+        # A rendered foresight warning is already evidence worth inspecting:
+        # do not require failed wall searches before checking a loot approach.
+        # This is information only, not a trap identity or a safe-route receipt.
+        raw = (talisman.get("status") or "?").rstrip("%") if talisman else "?"
+        if talisman and "SCRY" in talisman.get("actions", []) and "foresight" in buffs \
+                and raw.isdigit() and int(raw) >= 20 \
+                and sum(d == state["depth"] for d, _ in p.scry_attempts) < 2 \
+                and state.get("status") == "ready" and not state.get("modal") \
+                and not state.get("danger_cells") and not p.recent_threats \
+                and not p.unseen_damage_turns \
+                and not any(b in buffs for b in ("starving", "burn", "poison", "bleed",
+                                                "blind", "vertigo", "paral", "root", "magic immun")) \
+                and not (p.puzzle_probe or p.potion_stash or p.room_journey or p.drop_plan):
+            width = state["map"]["width"]
+            pos = hero["cell"]
+            paths = p.paths(state)
+            targets = []
+            for cell, obj in p.loot.items():
+                dist = max(abs(cell % width-pos % width), abs(cell//width-pos//width))
+                if not (2 <= dist <= 4) or cell not in paths or obj.get("for_sale") \
+                        or not obj.get("top_item") or not p.tiles[cell].get("visible") \
+                        or (state["depth"], cell) in p.scry_attempts:
+                    continue
+                route = p.route(paths, cell)
+                if len(route) > 5 or not p.shot_clear(state, cell) or any(
+                        p.tiles[c].get("trap") or p.tiles[c].get("plant")
+                        or p.effects_block_movement(p.tiles[c]) or c in p.room_blocked
+                        or p.tiles[c]["terrain"] in {7,8,10,18,21,22,31,37,38}
+                        for c in route):
+                    continue
+                targets.append((len(route), cell))
+            if targets:
+                _, target = min(targets)
+                p.scry_attempts.add((state["depth"], target))
+                return p.use(talisman, "SCRY",
+                             "artifact: inspect foresight warning toward observed loot before walking",
+                             target=target)
         try:
             from .hidden_doors import secret_search_allowed
         except ImportError:

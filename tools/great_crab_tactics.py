@@ -100,8 +100,17 @@ def choose(p,state,enemies):
         cancel(p,'Other active enemies preempt the single-crab lure')
         return None
     if plan:
+        clock=state.get('evaluation_stats',{}).get('elapsed_turns')
+        prior_clock=plan.get('clock')
+        # Other controllers can consume many turns while leaving this plan
+        # untouched. Its last_crab/armed fields then cannot witness a *fresh*
+        # doorway entry. Retire that claim, retaining ordinary escape planning.
+        interrupted=(clock is not None and prior_clock is not None
+                     and not 0<=clock-prior_clock<=1)
+        plan['clock']=clock
         plan['steps']+=1
         if plan['depth']!=state['depth'] or plan['branch']!=state.get('branch',0) \
+                or interrupted \
                 or plan['steps']>24 or hero['hp']<.5*hero['max_hp'] \
                 or plan['start_hp']-hero['hp']>.2*hero['max_hp'] or other \
                 or p.tiles.get(plan['door'],{}).get('terrain') not in {5,6} \
@@ -172,7 +181,8 @@ def choose(p,state,enemies):
             _,_,door,hide,escape=min(options)
             p.great_crab_plan={'depth':state['depth'],'branch':state.get('branch',0),
                 'door':door,'hide':hide,'start_hp':hero['hp'],'steps':0,'waits':0,
-                'last_crab':foe['cell'],'armed':False}
+                'last_crab':foe['cell'],'armed':False,
+                'clock':state.get('evaluation_stats',{}).get('elapsed_turns')}
             p.planner.report['great_crab']={'status':'lure planned','door':door,'hide':hide,
                 'escape_route':escape,'qualification':'Observed geometry only; no guaranteed enemy movement'}
             if pos==door:

@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "id": "000243",
+  "started_at": "2026-11-24T06:45:31Z",
+  "completed_at": "2026-11-24T06:59:29.152003+00:00",
+  "source_commit": "5be6e017af6c3149cc8b0a49f104fe5d724e404a",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "dead",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "blocker_kind": "execution-failure",
+  "outcome_summary": "Died to the great crab after repeated tactical-recovery waits",
+  "outcome_reason": "Hero died",
+  "max_depth": 4,
+  "actions": 1925,
+  "duration_seconds": 829.426,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000242",
+  "previous_source_commit": "e874b52dc29145e9ea64f1dc14391f8f8061da5e",
+  "improvements": [
+    "The bot now recognizes a narrowly verified prismatic-light kill of a DM-100 even when its health bar was missing. Ambiguous evidence still leaves the lightning threat active."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "A missing enemy health bar must not erase independently verifiable kill evidence. For a known uncursed prismatic zap, require consumed charge, one-turn six-XP receipt, Arcane Vision, a freshly observed clear ray, a single eligible target and no surviving caster before retiring its matching lightning memory. Keep ambiguous sightings, mandatory pickups, hazard gates and terminal planner exhaustion unchanged.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero died, not a stuck planner. The complete terminal observation explicitly says the great crab killed the Mage (decision 1924, accepted transition at log 5677), resolving the packet’s unknown killer. Earlier, a doorway-surprise plan survived intervening fly combat: its last dedicated wait was decision 1846 at turn 1838, but decision 1863 at turn 1847 attacked a crab already repeatedly observed in doorway 918 (logs 5426–5454). The accepted attack did not reduce its visible health bar, and the next observation reported its claw block. The selector mistook stale plan history for fresh entry. A focused correction now retires a lure’s surprise claim after a multi-turn interruption and reuses unchanged escape admission. A reduced public-map fixture selects retreat to 856 instead of that blocked strike; original policy fails its assertion and the candidate passes both new tests. The full Python suite passes 2,269 tests with four skips. Plan fields in the fixture are explicitly reconstructed, not recorded runtime memory; contiguous local original-controller selections 1841–1846 were checked against the recording. This does not establish survival or quest completion. A separate unresolved retreat contradiction remains: decisions 1885–1888 moved toward the room edge, then decisions 1889–1924 waited at 790 as health declined. No planner incidents were recorded. Unknown potions remain unknown, and unfinished rewards are not credited. The adapter derives changed files; the files list is intentionally empty.",
+    "learnings": "A doorway entry claim must expire when intervening combat consumes multiple turns; a cached last-seen position is not fresh surprise evidence. Preserve observed second exits and direct-attack restrictions. Separately, inspect crab retreat continuation before choosing room-edge separation over executable exit progress."
+  },
+  "recommendations": [
+    {
+      "id": "000243-interrupted-crab-surprise",
+      "priority": "high",
+      "summary": "Invalidate stale doorway-surprise claims after intervening combat.",
+      "evidence": [
+        "Decision 1846, log 5408: last dedicated lure wait at turn 1838.",
+        "Decisions 1853–1862, logs 5426–5453: fly combat while the crab occupies doorway 918.",
+        "Decision 1863, logs 5454–5456: purported fresh surprise has zero observed health-bar loss.",
+        "tools/great_crab_tactics.py:102–127; tools/ghost_quest.py:392–397."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000243"
+    },
+    {
+      "id": "000243-crab-room-edge-retreat",
+      "priority": "high",
+      "summary": "Establish an executable crab escape before retreating toward a room edge.",
+      "evidence": [
+        "Decisions 1885–1888, logs 5543–5556: separation retreats end at 790.",
+        "Decision 1889, logs 5559–5561: quest combat declines and recovery waits.",
+        "Decision 1924, logs 5676–5677: final wait and explicit great-crab death message.",
+        "tools/great_crab_tactics.py:187–208; tools/tactical_recovery.py:113–186."
+      ],
+      "status": "deferred",
+      "reason": "Not repaired by surprise freshness. At decision 1889, the observed clean alternatives 760 and 791 are both adjacent to the crab at 759; existing escape routes cross its immediate approach. Relaxing separation, second-exit or exposure checks would not certify safe movement. No known invisibility or healing supply is recorded. Next derive paired decision-1885 and decision-1889 fixtures, prove a threat-separated exit continuation or receipt-checked camouflage preparation from public terrain, and require a positive progress regression before changing retreat scoring. Do not extend waits or guess the magenta potion.",
+      "origin_run": "000243"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000243/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000243/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 131,
+        "turns": 325,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 258,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 263
+          },
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 26,
+        "gold_gained": 640,
+        "turns": 545,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 569,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1619
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 34,
+        "gold_gained": 321,
+        "turns": 466,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 480,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 453
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 67,
+        "gold_gained": 262,
+        "turns": 571,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 611,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt/choice container",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 2,
+    "ending_level": 7,
+    "starving_turns": 12,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 6,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 7,
+    "gold_collected": 1354,
+    "gold_complete": true,
+    "turns": 1907,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

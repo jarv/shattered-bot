@@ -778,6 +778,25 @@ class MagePolicy(SurvivalPolicy):
         discovery_target=.85 if not self.pharmacophobia and not self.strength_identified and any(
                 unknown_potion(i) and "DRINK" in i.get("actions",[]) for i in state["inventory"]) else 0
         if not self.rules.scarce_recovery:
+            # A blocked mandatory fire reward still needs the unchanged 95%
+            # unknown-frost test threshold. Ordinary recovery otherwise yields
+            # to exploration at 65/75%, stranding that preparation prerequisite.
+            # Raise the target only: the existing hunger, exposure and total
+            # floor wait budget continue to admit or reject each recovery input.
+            if any(unknown_potion(i) and "DRINK" in i.get("actions",[])
+                   and (state["depth"],base_name(i)) not in self.puzzle_drinks
+                   for i in state["inventory"]) and not any(
+                       base_name(i)=="potion of frost" for i in state["inventory"]):
+                try:
+                    from .priority_resources import targets, NAMES
+                except ImportError:
+                    from priority_resources import targets, NAMES
+                paths=self.paths(state)
+                fires=[c for c,t in self.tiles.items() if fire_barrier(t)]
+                if any(c not in paths and base_name(obj.get("top_item",obj)) in NAMES
+                       and any(distance(c,f,state["map"]["width"])<=6 for f in fires)
+                       for c,obj in targets(self).items()):
+                    return .95
             return max(discovery_target,.9 if state['depth']%5==0 else .75 if self.food_items(state) else .65)
         if (self.food_items(state) or self.food_recovery_until>self.floor_recovery) and frost_recovery_nearby(self,state,distance) \
                 and any(unknown_potion(i) and "DRINK" in i.get("actions",[]) for i in state["inventory"]):

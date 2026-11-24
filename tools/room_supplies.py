@@ -296,6 +296,13 @@ def descend(p,state,enemies):
     paths = p.paths(state)
     exits = [c for c in paths if p.tiles[c]["terrain"] in {8,22}]
     if not exits:return None
+    # A spent supply defers its room, not the rest of the floor. This early
+    # selector precedes ordinary exploration; leaving here can force strength
+    # discovery while another room still lacks observed preparation geometry.
+    # Yield to existing exploration admission, never invent a scouting move.
+    report = p.exploration_report(state, paths)
+    if report["unexplored_frontiers"] or report["unopened_doors"]:
+        return None
     try:
         from .policy_decision import Intent
     except ImportError:

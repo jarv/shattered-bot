@@ -72,7 +72,12 @@ def fraction(enemy):
 def capture(state,enemy,key):
     before=fraction(enemy)
     tile=next((t for t in state["map"]["cells"] if t["cell"]==enemy["cell"]),{})
-    if before is None or key is None or tile.get("effects"):
+    # A newly encountered caster need not have a health bar yet. Keep only
+    # receipt bookkeeping for a prismatic zap; never invent a damage fraction.
+    receipt_only = (before is None and key is not None and key[0]=="magic"
+                    and "of prismatic light" in key[1].lower()
+                    and enemy["name"].lower()=="dm-100")
+    if (before is None and not receipt_only) or key is None or tile.get("effects"):
         return None
     return {"cell":enemy["cell"],"name":enemy["name"],"context":context(state,enemy),
             "branch":state.get("branch",0),"source":key,"before":before}
@@ -124,9 +129,11 @@ def dm100_missile_receipt(before,after,pending):
 
 
 def dm100_arcane_missile_levelup_receipt(before,after,pending):
-    """One consumed, clear-ray missile with Arcane Vision and six XP.
+    """One consumed, clear-ray missile or prismatic zap with tracking and six XP.
 
     Tracking rules out a struck survivor hiding beyond the old neighborhood.
+    Both known, uncursed bolts hit only their collision target and apply
+    Arcane Vision before damage. Prismatic map revelation is not extra damage.
     Accept either unchanged level or one rollover, with public XP thresholds.
     Keep the older adjacent/no-level-up receipt unchanged.
     """
@@ -157,7 +164,9 @@ def dm100_arcane_missile_levelup_receipt(before,after,pending):
     item=next((i for i in before.get("inventory",[])
                if i["name"]==pending["source"][1]),None)
     if not item or not item.get("identified") or not item.get("curse_known") \
-            or item.get("known_cursed") or "of magic missile" not in item["name"].lower():
+            or item.get("known_cursed") or not any(
+                "of "+kind in item["name"].lower()
+                for kind in ("magic missile","prismatic light")):
         return False
     used=next((i for i in after.get("inventory",[])
                if i.get("id")==item.get("id") and i["name"]==item["name"]),None)
@@ -190,34 +199,53 @@ def dm100_arcane_disintegration_receipt(before,after,pending):
     A public Magic Charge level supplies a minimum range even when the wand's
     own level is unknown. Do not generalize this to curses, other wands, or
     mere disappearance: the existing missile neighborhood proof stays intact.
+    An identified, non-degraded staff at contact instead proves execution by
+    spending a visible charge; it needs no Magic Charge boost to reach its foe.
     """
     import re
     if pending["name"].lower()!="dm-100" or pending["source"][0]!="magic":
         return False
     item=next((i for i in before.get("inventory",[])
                if i["name"]==pending["source"][1]),None)
-    if not item or item["name"].lower()!="wand of disintegration" \
-            or not item.get("curse_known") or item.get("known_cursed"):
+    if not item or not item.get("curse_known") or item.get("known_cursed"):
         return False
     hero=before["hero"]
     if hero.get("hero_class")!="mage" or not any(
             t.get("name")=="arcane vision" and t.get("points",0)>0
             for t in hero.get("talents",[])):
         return False
-    charge=next((b.get("description","") for b in hero.get("buffs",[])
-                 if b.get("name")=="magic charge"),"")
-    boost=re.search(r"Your wands are boosted to: \+(\d+)\.",charge)
-    turns=re.search(r"Turns of magic charge remaining: (\d+)\.",charge)
-    # Consumption of a non-expiring boost distinguishes an executed zap from
-    # an empty-wand selection while some unrelated actor grants experience.
-    if not boost or not turns or int(turns[1])<=1 or any(
-            b.get("name")=="magic charge" for b in after["hero"].get("buffs",[])):
-        return False
     try:
         from .policy_geometry import distance
     except ImportError:
         from policy_geometry import distance
-    if distance(hero["cell"],pending["cell"],before["map"]["width"])>6+2*int(boost[1]):
+    adjacent_staff = (item.get("identified")
+        and re.fullmatch(r"staff of disintegration \+\d+",item["name"].lower())
+        and isinstance(item.get("visible_upgrade"),int) and item["visible_upgrade"]>=0
+        and distance(hero["cell"],pending["cell"],before["map"]["width"])==1
+        and not any("degrad" in b.get("name","").lower() for b in hero.get("buffs",[])))
+    if adjacent_staff:
+        # The identified staff's imbued wand shares its level. At contact it
+        # cannot fall short; Arcane Vision tracks a struck survivor through fog.
+        # Charge consumption, not XP alone, proves this zap actually executed.
+        used=next((i for i in after.get("inventory",[])
+                   if i.get("id")==item.get("id") and i["name"]==item["name"]),None)
+        bc=re.fullmatch(r"(\d+)/(\d+)",item.get("status",""))
+        ac=re.fullmatch(r"(\d+)/(\d+)",used.get("status","")) if used else None
+        if not bc or not ac or int(bc[1])-int(ac[1])!=1 or bc[2]!=ac[2]:
+            return False
+    elif item["name"].lower()=="wand of disintegration":
+        charge=next((b.get("description","") for b in hero.get("buffs",[])
+                      if b.get("name")=="magic charge"),"")
+        boost=re.search(r"Your wands are boosted to: \+(\d+)\.",charge)
+        turns=re.search(r"Turns of magic charge remaining: (\d+)\.",charge)
+        # Consumption of a non-expiring boost proves execution for the
+        # original unidentified-wand receipt, whose charges may be hidden.
+        if not boost or not turns or int(turns[1])<=1 or any(
+                b.get("name")=="magic charge" for b in after["hero"].get("buffs",[])):
+            return False
+        if distance(hero["cell"],pending["cell"],before["map"]["width"])>6+2*int(boost[1]):
+            return False
+    else:
         return False
     actors=[o for o in before.get("objects",[]) if not o.get("top_item")]
     if len(actors)!=1 or actors[0].get("cell")!=pending["cell"] \
@@ -259,6 +287,11 @@ def retirement_proof(before,after,pending,before_texts):
         and not any(o.get("name","").lower()=="dm-100" and not o.get("top_item")
                     for o in after.get("objects",[]))
     rule=RetirementRule.FRESH_DEFEAT_TEXT if fresh else None
+    if rule is None and len(casters)==1 and casters[0].get("cell")==pending["cell"] \
+            and not any(o.get("name","").lower()=="dm-100" and not o.get("top_item")
+                        for o in after.get("objects",[])) \
+            and appended_repeat_dm100_defeat(before,after):
+        rule=RetirementRule.APPENDED_REPEAT_DEFEAT
     if rule is None:
         for candidate,validate in (
                 (RetirementRule.ADJACENT_MISSILE_XP,dm100_missile_receipt),
@@ -271,6 +304,46 @@ def retirement_proof(before,after,pending,before_texts):
         return None
     return RetirementProof(ThreatRef.observed(before,pending["cell"]),rule,
         after.get("observation_id"),(after.get("evaluation_stats") or {}).get("elapsed_turns"))
+
+
+def appended_repeat_dm100_defeat(before, after):
+    """Prove replacement of an identical rendered GameLog entry, not novelty.
+
+    GameLog appends entries and removes an old prefix; ApiUI preserves member
+    order. A unique retained pickup line cannot move from after the old defeat
+    to before that same entry. Require this order witness rather than treating
+    disappearance, XP, or a retained defeat string alone as a kill receipt.
+    """
+    if before.get("scene") != "GameScene" or after.get("scene") != "GameScene" \
+            or before.get("status") != "ready" or after.get("status") != "ready" \
+            or before.get("modal") or after.get("modal"):
+        return False
+    old = before.get("ui", {}).get("texts", [])
+    new = after.get("ui", {}).get("texts", [])
+    message = "You defeated DM-100."
+    if old.count(message) != 1 or new.count(message) != 1:
+        return False
+    return any(isinstance(text, str) and text.startswith("You picked up: ") \
+               and old.count(text) == 1 and new.count(text) == 1 \
+               and old.index(message) < old.index(text) \
+               and new.index(text) < new.index(message) for text in old)
+
+
+def retire_confirmed_dm100(p,before,after,target):
+    """A fresh kill receipt is usable even when fire censors damage samples."""
+    before_texts=set(before.get("ui",{}).get("texts",[]))
+    if after.get("status")!="ready" or target["name"].lower()!="dm-100":
+        return
+    pending=dict(target,context=context(before,target),branch=before.get("branch",0),
+                 source=("melee","unmeasured",""))
+    # This path has only text/order evidence, never a damage or XP sample.
+    if not (any(t.strip().lower()=="you defeated dm-100."
+                for t in after.get("ui",{}).get("texts",[]) if t not in before_texts)
+            or appended_repeat_dm100_defeat(before,after)):
+        return
+    proof=retirement_proof(before,after,pending,before_texts)
+    if proof:
+        return p.evidence_reducer.retire(p,proof)
 
 
 def observe_accepted_attack(p,before,decision,after):
@@ -291,6 +364,9 @@ def observe_accepted_attack(p,before,decision,after):
         target=next((o for o in before.get("objects",[]) if o["cell"]==action.get("cell")
                      and not o.get("top_item") and o.get("health_bar")),None)
         if not target:return
+        # Accepted melee can confirm a kill on a burning square without
+        # attributing that foe's health loss to the weapon rather than fire.
+        retire_confirmed_dm100(p,before,after,target)
         p.damage_pending=capture(before,target,source(before))
     else:
         return
@@ -304,10 +380,13 @@ def observe_accepted_attack(p,before,decision,after):
     before_texts=set(before.get("ui",{}).get("texts",[]))
     proof=retirement_proof(before,after,pending,before_texts)
     retirement=p.evidence_reducer.retire(p,proof) if proof else None
+    if pending["before"] is None:
+        return {"threat_retirement":retirement} if retirement else None
     defeated=any("you defeated" in t.lower() and pending["name"].lower() in t.lower()
                  for t in after.get("ui",{}).get("texts",[]) if t not in before_texts)
     if pending["name"].lower()=="dm-100":
-        defeated=bool(proof and proof.rule==RetirementRule.FRESH_DEFEAT_TEXT)
+        defeated=bool(proof and proof.rule in {
+            RetirementRule.FRESH_DEFEAT_TEXT,RetirementRule.APPENDED_REPEAT_DEFEAT})
     key=(pending["context"],pending["source"])
     if defeated:
         retire_defeated_escape_edge(p, before, after, pending, before_texts)

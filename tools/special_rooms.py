@@ -11,6 +11,16 @@ ROOM_ACTORS = {"red sentry", "giant piranha", "phantom piranha", "animated statu
 CONTAINERS = {"chest", "locked chest", "crystal chest", "tomb", "skeleton", "skeletal remains", "remains"}
 
 
+def container_name(obj):
+    """Name for container hazards, not for identifying an observed item heap."""
+    name = obj.get("name", "").lower()
+    if name == "skeleton key" and obj.get("top_item", {}).get("name", "").lower() == name:
+        # The public heap item is not unopened bones. Do not infer this from
+        # the title alone, and do not waive terrain, actor or mimic checks.
+        return ""
+    return name
+
+
 def fire_barrier(tile):
     """Recognize the rendered eternal-fire description, not an internal blob ID."""
     text=" ".join(tile.get("effects",[])).replace("_","").lower()
@@ -92,7 +102,7 @@ def assess(tiles, actors, loot, width, height, harmless_effect=None, rot_quest=F
             blocked.add(cell)
             notes.append({"kind": "chasm/trap", "cell": cell, "reason": "Requires a levitation round-trip plan"})
     for cell, obj in loot.items():
-        if any(word in obj["name"].lower() for word in ("tomb", "skeleton", "crystal chest")):
+        if any(word in container_name(obj) for word in ("tomb", "skeleton", "crystal chest")):
             blocked.add(cell)
             notes.append({"kind": "crypt/choice container", "cell": cell, "reason": "Do not open on a transit route; preparation or a resource choice is needed"})
     skipped.update(blocked)

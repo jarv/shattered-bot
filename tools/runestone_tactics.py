@@ -111,6 +111,25 @@ def prepare_intuition(p, state, guess=None, candidate=None):
         return None
     item = candidate if candidate is not None else max(unknown, key=lambda i: (unknown_potion(i), i.get("quantity", 1)))
     choice = guess or ("potion of strength" if unknown_potion(item) else "scroll of recharging" if unknown_scroll(item) else "ring of energy")
+    if guess is None and unknown_potion(item):
+        try:
+            from .room_supplies import requirements, counts
+        except ImportError:
+            from room_supplies import requirements, counts
+        # The generic information window can run when hungry/wounded room
+        # preparation declines. Do not spend that same admitted stone on an
+        # unrelated default while missing frost blocks discovery. This is only
+        # a declared hypothesis, never a drink permit or an identity receipt.
+        needs = requirements(p, state)
+        if any(d.kind == "frost" for d in needs) \
+                and not counts(state)["potion of frost"]:
+            choice = "potion of frost"
+        elif any(d.kind == "pool" for d in needs) \
+                and not counts(state)["potion of invisibility"]:
+            # The same information window must not repeatedly cancel an
+            # unavailable default while an observed pool still needs a supply.
+            # This changes only the declared guess, never drink/route admission.
+            choice = "potion of invisibility"
     p.intuition_attempts.add(item["name"])
     p.intuition_plan = {"item": item["name"].lower(), "guess": choice, "stage": "item", "steps": 0, "bags": set()}
     return p.use(stone, "USE", "stone: test declared identity hypothesis without drinking unknown potion")

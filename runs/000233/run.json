@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "id": "000233",
+  "started_at": "2026-11-24T02:21:59Z",
+  "completed_at": "2026-11-24T02:28:13.075468+00:00",
+  "source_commit": "75ac3070769b08603efd32a805590f284d98263a",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "dead",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "blocker_kind": "execution-failure",
+  "outcome_summary": "Died under mixed fly, rat and gnoll pressure",
+  "outcome_reason": "Hero died",
+  "max_depth": 3,
+  "actions": 947,
+  "duration_seconds": 369.066,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000232",
+  "previous_source_commit": "4055a3332bef654f0571c71b6f49c5022e428405",
+  "improvements": [
+    "When an unfinished piranha pool needs invisibility, the bot now uses an admitted stone of intuition attempt to test that missing supply rather than defaulting to strength. The guess does not authorize drinking an unknown potion."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Use admitted non-drinking information opportunities for the missing supply of an observed unfinished pool, not an unavailable default hypothesis. A failed or canceled guess identifies nothing. Preserve fresh bank, inventory-protection, actual-effect and return checks; fallback descent is neither collection nor planner repair.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero died under mixed enemy pressure, not planner exhaustion; no planner incidents were recorded. Decision 946, accepted log line 2767, shows HP falling from 3 to 0, but does not identify an unambiguous killer. The initiating defect addressed here appears earlier: at decision 764 (selected line 2183), an empty staff and adjacent gnoll did not dislodge the urgent fly target. Decisions 766 and 944 (accepted lines 2190 and 2759) show subsequent fly melee adding another visible swarm while ordinary contact foes remained. In tools/unit_strategies.py:97–119, species urgency retains the fly target after its dedicated tactics decline; tools/policy_nodes.py:467–469 then carries that target into ordinary melee. The fly guard counts adjacent flies, so one fly plus other contact attackers remains admitted. A deterministic public-observation reduction reproduces this arbitration gap without claiming recovery of original runtime memory. The proposed correction selects an already-admitted ordinary contact melee strike only after existing escape, magic, control and withdrawal options decline. Original policy fails the new assertion; the candidate passes seven regressions and the full 2,246-test suite, with four skips. This establishes selection behavior, not prevention of the recorded death. Post-death item identities were not used to justify earlier actions. The earlier doorway hold failure and recovery depletion are not certified repaired.",
+    "learnings": "When magic is exhausted and retreat or control has not produced an action, avoid splitting an adjacent fly if an awake ordinary contact foe already offers an admitted melee strike. Preserve protected enemy tactics, hazard checks, mandatory pickup and honest collection receipts. A visible health bar is not a guaranteed finishing hit, and a different target is not proof of survival."
+  },
+  "recommendations": [
+    {
+      "id": "000233-mixed-contact-fly-splitting",
+      "priority": "high",
+      "summary": "Prefer an admitted ordinary contact strike over empty-staff fly melee in mixed contact after higher-priority options decline.",
+      "evidence": [
+        "Decision 764, selected log line 2183 and accepted line 2184: fly melee despite adjacent gnoll and staff 0/5.",
+        "Decision 766, selected line 2189 and accepted line 2190: another visible fly appears while gnoll and crab remain in contact.",
+        "Decision 944, selected line 2758 and accepted line 2759: fly melee adds another swarm; HP falls from 10 to 6 with rat and gnoll adjacent.",
+        "tools/unit_strategies.py:97–119; tools/policy_nodes.py:467–469; tools/fly_tactics.py:40–68.",
+        "New public-reduction regression: original assertion fails; candidate passes seven tests; full suite passes 2,246 tests with four skips."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000233"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000233/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000233/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 208,
+        "turns": 275,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 278,
+        "terminal_floor": false,
+        "highlights": []
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 19,
+        "gold_gained": 288,
+        "turns": 359,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 362,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 29,
+        "gold_gained": 366,
+        "turns": 287,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 301,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 13,
+    "ending_level": 4,
+    "starving_turns": 35,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 35,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 4,
+    "gold_collected": 862,
+    "gold_complete": true,
+    "turns": 921,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

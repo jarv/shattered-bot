@@ -32,6 +32,22 @@ def starving_food(p,state,enemies):
                 and all(not any(distance(n,e['cell'],width)<=4 for e in p.recent_threats.values())
                         for n in p.route(paths,c)[1:])]
     for cell in sorted(candidates,key=lambda c:len(p.route(paths,c))):
+        pressure=getattr(p,'inventory_pressure',None)
+        if pressure:
+            try:
+                from .inventory_tactics import choose as cleanup, signature
+                from .pickup_priority import bag
+            except ImportError:
+                from inventory_tactics import choose as cleanup, signature
+                from pickup_priority import bag
+            incoming=p.loot[cell].get('top_item',p.loot[cell])
+            refused=pressure.get('item')
+            if pressure.get('depth')==state['depth'] and pressure['signature']==signature(state) \
+                    and refused and bag(state,refused)==bag(state,incoming):
+                # Preparation precedes normal inventory relief. A receipt-backed
+                # full bag needs the same guarded cleanup, not another food click.
+                # Decline if cleanup cannot act; the pickup remains outstanding.
+                return cleanup(p,state,enemies,incoming_item=incoming)
         action=p.toward(state,cell,'survival: prioritize observed food while starving',paths,intent=Intent.LOOT)
         if action:return action
     return None

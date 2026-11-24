@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "id": "000236",
+  "started_at": "2026-11-24T03:50:56Z",
+  "completed_at": "2026-11-24T03:55:51.903218+00:00",
+  "source_commit": "3df60e55919a3ad6dfa2da700f5842530f0312db",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "dead",
+  "death_category": "unknown/missing",
+  "death_category_evidence": "no unambiguous terminal cause in recorded evidence",
+  "blocker_kind": "execution-failure",
+  "outcome_summary": "Died under rat, fly and crab pressure",
+  "outcome_reason": "Hero died",
+  "max_depth": 3,
+  "actions": 761,
+  "duration_seconds": 291.632,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000235",
+  "previous_source_commit": "669d98accb8150d3d94b5ab10d89409802027935",
+  "improvements": [
+    "The bot now recognizes the magefruit crafting option when cooking blandfruit with mageroyal. It checks the resulting inventory for the actual named fruit rather than treating the recipe preview as a completed craft."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Verify known recipes against their publicly rendered output names. A recipe preview is not acquisition: retain pre-craft counts and require actual inventory changes. Repairing the missed fruit craft does not establish later frost identification, key collection or survival.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero died under combined rat, fly and crab pressure; the recording does not establish an individual killer. An earlier unknown emerald-ring equip at decision 404 (selection line 1165, accepted receipt 1166) revealed a curse and reduced strength from 10 to 8. During the final pursuit, strength was 9 while identified cloth armor required 10. Decisions 749–755 repeatedly retreated with observed movement costs of approximately 1.2 turns. At decision 755 (selection 2178, receipt 2179), the planner admitted endpoint 235 with one possible approach attacker, despite the longer movement allowing additional approach opportunities. The selecting chain reaches multi_enemy_tactics.approach_pressure, which used a fixed one-step normal or two-step fast-enemy horizon without accounting for known armor encumbrance. Decisions 758–760 then show HP falling 20 to 13 to 4 to zero during melee and dew drinking. No planner incident was recorded. The proposed next-run correction conservatively expands that approach horizon using observed strength and identified armor requirements; it does not invent a safe alternative. A new reduced public-observation regression fails on the original helper and passes on the correction. The full suite passes 2,260 tests with four skipped. This is not a reconstruction of original runtime memory or evidence that the changed policy would survive.",
+    "learnings": "Known armor encumbrance must affect retreat approach estimates: a move that costs more than one turn can admit extra enemy movement. Keep current contact separate from prospective approach pressure. Unknown-ring effects and post-death revelations must not be used to justify earlier choices; a corrected risk estimate does not establish a safe escape or survival."
+  },
+  "recommendations": [
+    {
+      "id": "000236-encumbered-retreat-envelope",
+      "priority": "high",
+      "summary": "Account for publicly known armor slowdown when evaluating multi-enemy retreat approaches.",
+      "evidence": [
+        "Decision 404, selection line 1165 and accepted receipt 1166: unknown-ring equip reveals a curse and reduces observed strength.",
+        "Decisions 749–755, accepted receipts 2149–2179: retreat moves cost approximately 1.2 turns with strength 9 and identified armor requiring 10.",
+        "Decision 755, selection line 2178: endpoint 235 is admitted with one approach slot while a fly, rat and fast crab are closing.",
+        "Decisions 758–760, accepted receipts 2191, 2193 and 2196: health falls to zero after retreat options are exhausted.",
+        "tools/multi_enemy_tactics.py:31–80 and 174–177: approach estimates govern endpoint admission."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000236"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000236/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000236/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 75,
+        "turns": 321,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 316,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 554
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 15,
+        "gold_gained": 83,
+        "turns": 255,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 212,
+        "terminal_floor": false,
+        "highlights": []
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 12,
+        "gold_gained": 254,
+        "turns": 252,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 227,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 12,
+    "ending_level": 3,
+    "starving_turns": 6,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 412,
+    "gold_complete": true,
+    "turns": 828,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

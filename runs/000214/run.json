@@ -1,0 +1,500 @@
+{
+  "schema_version": 1,
+  "id": "000214",
+  "started_at": "2026-11-23T18:58:49Z",
+  "completed_at": "2026-11-23T19:31:06.560582+00:00",
+  "source_commit": "6352e6e42b7d78886e238943e736d8595fdef79b",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "unclassified",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 10,
+  "actions": 4589,
+  "duration_seconds": 1921.15,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000213",
+  "previous_source_commit": "b363b365b828fe05eee387064b3a6ab2fce00e14",
+  "improvements": [
+    "When toxic gas blocks every observed escape, the bot can throw an identified potion of purity at its own safe tile to clear the cloud. It still refuses unknown potions and unsafe impact tiles."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "When gas escape routes are exhausted, consider an identified purity self-splash on a verified safe impact tile before declaring planner failure. Reobserve the result; never infer clearance, protection or collection from selecting the action. Unknown rooms must not be judged using later revelations.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at 26/80 HP when the planner stopped. The initiating defect was stale door bookkeeping after Tengu's final arena replacement. Door 746 had already been crossed at decisions 4489–4490 (accepted log lines 13133 and 13135). Decision 4586's accepted transition (line 13391) records the defeat and relocation; decision 4587 observes the same door closed and visible. The bot correctly collected the mask in decisions 4587–4588, but decision 4589 reported no unopened doors and exhausted planning (lines 13398–13399). The door retained the same closed terrain value, so the terrain-change refresh missed it, while historical visits excluded it from exploration. The pinned game source confirms final victory replaces this map. A focused correction rearms publicly observed closed doors once on confirmed final victory, retaining normal route, hazard, failed-movement and pickup checks. A reduced evidence-derived fixture, not recovered runtime memory, fails with two expected assertions on original policy and passes all five tests with the correction. No gameplay was replayed. This establishes door admission, not successful exit discovery, descent or survival.",
+    "learnings": "A boss victory can replace the map without changing a previously crossed door's terrain value. Treat freshly observed closed doors as new work once after confirmed final Tengu victory, while preserving reward pickup and all existing movement safety checks. Selecting the route is not evidence of crossing it or reaching the exit."
+  },
+  "recommendations": [
+    {
+      "id": "000214-tengu-victory-door",
+      "priority": "high",
+      "summary": "Rearm observed closed doors after final Tengu victory even when their terrain value is unchanged.",
+      "evidence": [
+        "Decisions 4489–4490, accepted log lines 13133 and 13135: door 746 is crossed.",
+        "Decision 4586, accepted log line 13391: final defeat relocates the hero and reveals the mask reward.",
+        "Decision 4587, log line 13392: reused door 746 is closed and visible.",
+        "Decisions 4587–4588, accepted log lines 13393 and 13396: reward pickup precedes exhaustion.",
+        "Decision 4589, log lines 13398–13399: no unopened doors admitted; living hero cannot proceed.",
+        "tools/survival_policy.py:340–355,878–879,1105–1109; tools/boss_strategies.py:TenguStrategy.victory."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000214"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000214/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000214/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 47,
+        "turns": 406,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 397,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 643
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 24,
+        "gold_gained": 240,
+        "turns": 399,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 418,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "objective-completed-dialogue"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 37,
+        "gold_gained": 582,
+        "turns": 584,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 583,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 84,
+        "gold_gained": 587,
+        "turns": 730,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 747,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 323,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 332,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 66,
+        "gold_gained": 211,
+        "turns": 463,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 505,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 523
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 801
+          }
+        ]
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "experience_gained": 87,
+        "gold_gained": 249,
+        "turns": 492,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 526,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 460
+          }
+        ]
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "experience_gained": 69,
+        "gold_gained": 207,
+        "turns": 506,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 531,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Old Wandmaker",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Rot garden landmark",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 9,
+        "branch": 0,
+        "experience_gained": 54,
+        "gold_gained": 0,
+        "turns": 378,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 377,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 605
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 10,
+        "branch": 0,
+        "experience_gained": 20,
+        "gold_gained": 0,
+        "turns": 140,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 160,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "boss",
+            "label": "Tengu",
+            "status": "encountered"
+          },
+          {
+            "kind": "boss",
+            "label": "Tengu",
+            "status": "reported-defeated"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 14,
+    "ending_experience": 11,
+    "ending_level": 13,
+    "starving_turns": 219.24951171875,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 25,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 1,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "starving_turns": 1,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 9,
+        "branch": 0,
+        "starving_turns": 46.24951171875,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 10,
+        "branch": 0,
+        "starving_turns": 140,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 13,
+    "gold_collected": 2123,
+    "gold_complete": true,
+    "turns": 4421,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 9,
+        "max_level_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 10,
+        "max_level_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 12,
+        "max_level_complete": true
+      },
+      {
+        "depth": 9,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 12,
+        "max_level_complete": true
+      },
+      {
+        "depth": 10,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 13,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

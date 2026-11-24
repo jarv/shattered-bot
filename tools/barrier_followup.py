@@ -48,6 +48,33 @@ def advance(p,state,enemies,distance,neighbors):
         defer('Post-barrier sweep health/movement budget exhausted; rewards not certified collected')
         return None
     if not anchors:
+        # A successful frost throw can leave the *approach* cold while the
+        # fire cells themselves are clear. Do not discard the return goal just
+        # because ordinary paths correctly exclude that temporary cloud.
+        # This is a fresh-observation hold on safe ground, never cold entry or
+        # an expiry inference. Both accounts are finite; all gates rerun.
+        tile=p.tiles.get(pos,{})
+        cold=[c for c,t in p.tiles.items()
+              if t.get('visible') and t.get('observed') and t.get('effects')
+              and all(e.lower()=='the air is unnaturally frigid here.' for e in t['effects'])
+              and min((distance(c,a,w) for a in plan['cleared']),default=99)<=2
+              and any(n in paths for n in neighbors(c,w,state['map']['height']))]
+        if cold and plan.get('cold_waits',0)<12 and not p.recent_threats \
+                and not p.unseen_damage_turns and not p.trap_payload_return \
+                and state['hero']['hp']>=.95*state['hero']['max_hp'] \
+                and not any(b in buffs for b in ('hungr','starv','bleed','levitat','drows','sleep')) \
+                and tile.get('visible') and tile.get('observed') \
+                and tile.get('terrain') in {1,3,6,9,11,14,19,20,29} \
+                and not any(tile.get(k) for k in ('effects','plant','trap')) \
+                and p.walkable(pos) and distance(pos,plan['anchor'],w)<=4 \
+                and all(p.tiles.get(a,{}).get('visible') and not fire_barrier(p.tiles[a])
+                        for a in plan['barriers']) \
+                and any(p.walkable(n) and not any(p.tiles[n].get(k) for k in ('effects','plant','trap'))
+                        for n in neighbors(pos,w,state['map']['height'])):
+            plan['cold_waits']=plan.get('cold_waits',0)+1
+            plan['steps']+=1
+            return p.decision({'type':'wait'},
+                'room: observe temporary frost clearing from safe ground before required return')
         if plan['cleared']:
             # The entry was visibly extinguished but may still remember cold
             # after recovery moved out of sight. Reobserve from safe ground;

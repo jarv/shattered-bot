@@ -76,7 +76,12 @@ def exposure(p, state, enemies, cell, distance, line_clear):
               or getattr(p,'unit_strategies_enabled',False) and 'ranged-attacks' in p.unit_strategies.profile(enemy).capabilities) \
                 and enemy_line(p, enemy, cell, width, line_clear):
             ranged += 2
-        elif dist <= reach(enemy)+1 and visibly_accelerated(enemy):
+        elif dist <= reach(enemy)+1 and (visibly_accelerated(enemy)
+                or getattr(p,'unit_strategies_enabled',False)
+                and 'fast-movement' in p.unit_strategies.profile(enemy).capabilities):
+            # Species speed already informs multi-enemy approach pressure.
+            # A bat/crab need not render a speed buff to close this gap.
+            # This is pursuit exposure, not a claim of a current melee hit.
             pursuit += weight
     return {"melee": melee, "ranged": ranged, "fast_pursuit": pursuit, "exposure": melee+ranged+pursuit}
 

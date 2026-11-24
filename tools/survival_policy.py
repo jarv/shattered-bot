@@ -15,7 +15,7 @@ try:
     from .policy_geometry import distance, neighbors, line_clear
     from .policy_tree import POLICY
     from .policy_interaction import menu as choose_menu
-    from .special_rooms import ROOM_ACTORS, CONTAINERS, assess
+    from .special_rooms import ROOM_ACTORS, CONTAINERS, assess, container_name
     from .combat_items import known_cursed, magic_score, physical_score, stats
     from .hidden_doors import search_coverage, wall_scores, corridor_ends
     from .boss_strategies import create_strategies, strategy_for
@@ -36,7 +36,7 @@ except ImportError:
     from policy_geometry import distance, neighbors, line_clear
     from policy_tree import POLICY
     from policy_interaction import menu as choose_menu
-    from special_rooms import ROOM_ACTORS, CONTAINERS, assess
+    from special_rooms import ROOM_ACTORS, CONTAINERS, assess, container_name
     from combat_items import known_cursed, magic_score, physical_score, stats
     from hidden_doors import search_coverage, wall_scores, corridor_ends
     from boss_strategies import create_strategies, strategy_for
@@ -446,7 +446,7 @@ class SurvivalPolicy:
             except ImportError:
                 from keyed_rooms import crystal_keys_ready
             if not crystal_keys_ready(self):return False
-        container = self.loot.get(cell, {}).get("name", "").lower()
+        container = container_name(self.loot.get(cell, {}))
         passable = tile is not None and (tile["terrain"] in FLOOR
                     or self.keys.get(DOOR_KEYS.get(tile["terrain"]), 0) > 0)
         return passable and (not tile.get("trap") or tile["terrain"] == 19) \
@@ -1089,7 +1089,7 @@ class SurvivalPolicy:
                 continue  # Purchases require an explicit shop plan and price check.
             if cell not in previous or cell in self.blocked or cell in skipped or self.tiles[cell]["terrain"] in TRANSITIONS:
                 continue
-            if any(word in name for word in AVOID_CONTAINERS) and cell not in self.allowed_chests:
+            if any(word in container_name(obj) for word in AVOID_CONTAINERS) and cell not in self.allowed_chests:
                 continue
             if not self.exploration_loot_allowed(state,cell,previous):
                 continue

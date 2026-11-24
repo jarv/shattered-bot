@@ -83,6 +83,7 @@ class ThreatRef:
 
 class RetirementRule(str, Enum):
     FRESH_DEFEAT_TEXT = "fresh-matching-defeat-text"
+    APPENDED_REPEAT_DEFEAT = "appended-repeat-defeat-order-witness"
     ADJACENT_MISSILE_XP = "dm100-adjacent-missile-public-xp"
     ARCANE_MISSILE_XP = "dm100-arcane-missile-public-xp"
     ARCANE_DISINTEGRATION_XP = "dm100-arcane-disintegration-public-xp"

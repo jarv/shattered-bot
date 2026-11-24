@@ -38,9 +38,12 @@ def threats(p, state):
     return visible + [o for c, o in getattr(p, "recent_threats", {}).items() if c not in cells]
 
 
-def safe_tile(p, state, cell):
+def safe_tile(p, state, cell, *, random_landing=False):
     tile = p.tiles.get(cell, {})
-    if not tile.get("visible") or tile.get("terrain") not in GROUND or tile.get("plant") \
+    # An exit is passable when landed on, but requesting it may interact
+    # with stairs. Admit it only in the random-outcome check, never as a goal.
+    ground = tile.get("terrain") in GROUND or random_landing and tile.get("terrain") == 8
+    if not tile.get("visible") or not ground or tile.get("plant") \
             or (tile.get("trap") and tile.get("terrain") != 19) \
             or (tile.get("effects") and not confusion(tile)) \
             or cell in p.blocked or cell in state.get("danger_cells", []) \
@@ -77,9 +80,11 @@ def landings(p, state, cell):
         tile = p.tiles.get(adjacent, {})
         if not tile.get("visible"):
             return None
-        if tile.get("terrain") in {4, 12}:
+        # Region decorations (e.g. sewer storage barrels) are solid, with
+        # neither PASSABLE nor AVOID, so Char.move bumps rather than lands.
+        if tile.get("terrain") in {4, 12, 33}:
             continue
-        if not safe_tile(p, state, adjacent):
+        if not safe_tile(p, state, adjacent, random_landing=True):
             return None
         result.append(adjacent)
     return result
@@ -99,6 +104,8 @@ def exit_route(p, state, random):
         choices = landings(p, state, cell) if random else [
             c for c in neighbors(cell, state["map"]["width"], state["map"]["height"]) if safe_tile(p, state, c)]
         for adjacent in choices or ():
+            if p.tiles[adjacent].get("terrain") == 8:
+                continue  # Possible random landing, not a requested stair input.
             if adjacent not in seen:
                 seen.add(adjacent)
                 queue.append(route + [adjacent])

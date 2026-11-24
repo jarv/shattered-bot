@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "id": "000220",
+  "started_at": "2026-11-23T22:38:29Z",
+  "completed_at": "2026-11-23T22:43:00.476729+00:00",
+  "source_commit": "cc7c77bc49a3776d65ba443ad096afc2870bdf7c",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 673,
+  "duration_seconds": 266.933,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000219",
+  "previous_source_commit": "d770b48e482b64d9e8e1b989b3aa30b7d8473ae0",
+  "improvements": [
+    "The bot now aims to recover closer to full health when an unfinished upgrade or strength reward requires testing a potion beside magical fire. Its existing limits on waiting, hunger and exposure still apply."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Budget health for required potion preparation before exploring away from an unfinished upgrade room. Recovery should recognize the existing test threshold without extending waits or lowering safety requirements. Keep unknown potion identities unknown and require actual extinguishing and pickup receipts.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The recording ends in planner exhaustion, not death: the hero is alive at full health. Decision 671 enters a previously unexplored gas-room doorway; decision 672 escapes without observed HP loss (accepted log lines 1920 and 1923). At decision 673, mandatory strength discovery reserves a missing purity supply for that unfinished room, but every preparation alternative is excluded (lines 1925–1926). Source-pinned offline reconstruction matched all 673 earlier selected actions and reasons and reproduced the terminal failure. Hunger blocks gas testing, but it is not the only cause: an isolated hunger-free copy still selects no preparation. The only admitted visible test bank, 1186, lacks an admitted remote stash for the other unidentified potions; nearby storage-capable banks fail test-bank checks. The inventory has neither an identify scroll nor an intuition stone. No patch is supplied because no existing helper certifies the complete safe bank, storage and return transaction; adding gas meals alone would leave that contradiction unresolved. The unchanged full suite passed 2,212 tests with four skips. No new regression or candidate red/green comparison was produced. Hypothetical protected routes do not establish protection, potion identity or collection.",
+    "learnings": "Treat gas preparation as a complete prerequisite transaction, not merely a hunger problem. Before funding a puzzle meal, jointly establish a safe test bank, protection of every other unidentified potion, a protection-funded reward return and fresh arrival checks. Keep unknown colors unknown and preserve mandatory progression pickup and explicit planner exhaustion."
+  },
+  "recommendations": [
+    {
+      "id": "000220-gas-bank-stash-handoff",
+      "priority": "high",
+      "summary": "Establish jointly executable gas-test staging and remote potion storage before mandatory discovery exhausts.",
+      "evidence": [
+        "Decision 671, log lines 1919–1920: exploration enters doorway 1150.",
+        "Decision 672, log lines 1922–1923: gas is observed and the full-health hero retreats to 1187.",
+        "Decision 673, log lines 1925–1926: missing purity reservation exhausts mandatory discovery without an accepted preparation action.",
+        "tools/descent_potions.py:350–392; tools/puzzle_supplies.py:743–806,968–1012; tools/potion_stash.py:95–133.",
+        "Validated offline reconstruction matches decisions 0–672; isolated terminal probes find bank 1186 safe but without admitted storage, even without hunger."
+      ],
+      "status": "deferred",
+      "reason": "Complete source and offline reconstruction resolved the selecting-state uncertainty, but no helper jointly certifies test-bank safety and remote protection of the actual three-color inventory. The only admitted bank has no storage candidate in the required distance interval of its door-excluding transit corridor. A gas meal alone still leaves preparation blocked; relaxing geometry, collateral checks or unknown-drink safety is unsupported. Next build a paired public-observation fixture from decisions 672/673 and prove departure-aware storage across a known ordinary door, including fresh arrival, bounded return and collection receipts. Only then add the executable gas-preparation handoff with an original-red/candidate-green regression. Preserve terminal exhaustion and mandatory pickup.",
+      "origin_run": "000220"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000220/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000220/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 349,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 350,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 376
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 17,
+        "gold_gained": 342,
+        "turns": 320,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 317,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1146
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Possible drop-room exit",
+            "status": "reported-hypothesis"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 2,
+    "ending_level": 3,
+    "starving_turns": 3,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 3,
+    "gold_collected": 342,
+    "gold_complete": true,
+    "turns": 669,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

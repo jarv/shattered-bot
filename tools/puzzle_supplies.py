@@ -72,9 +72,38 @@ def nearby_flight_reward(p, cell, reward, width, height, distance):
     return False
 
 
+def aquarium_ground_rewards(p, state, paths):
+    """Recognition only: dry-ring loot need not fly past a nearby trap.
+
+    Ordinary paths deliberately exclude fish melee banks. Extend that graph
+    only for classification, over a positively recognized aquarium's observed,
+    trap-free dry ring. This neither admits movement nor credits collection.
+    Unknown/trapped approaches and actual chasm rewards remain unresolved.
+    """
+    try:
+        from .policy_geometry import neighbors
+    except ImportError:
+        from policy_geometry import neighbors
+    width, height = state["map"]["width"], state["map"]["height"]
+    ring = {n for h in getattr(p, "piranha_habitats", {}).values()
+            if h["profile"] == "aquarium"
+            for c in h["water"] for n in neighbors(c, width, height)
+            if p.tiles.get(n, {}).get("observed")
+            and p.tiles[n].get("terrain") in {1, 3, 14, 20}
+            and not any(p.tiles[n].get(k) for k in ("trap", "plant", "effects"))}
+    seen, queue = set(paths), deque(paths)
+    while queue:
+        for n in neighbors(queue.popleft(), width, height):
+            if n in ring and n not in seen:
+                seen.add(n)
+                queue.append(n)
+    return ring & seen
+
+
 def demands(p, state, distance, *, include_deferred=False):
     width = state["map"]["width"]
     paths = p.paths(state)
+    dry_aquarium_rewards = aquarium_ground_rewards(p, state, paths)
     found = []
     for cell, actor in p.room_actors.items():
         name = actor["name"].lower()
@@ -104,7 +133,7 @@ def demands(p, state, distance, *, include_deferred=False):
             found.append(Demand("flame", "potion of liquid flame", cell))
         elif cell not in paths and tile["terrain"] in {0,18} and any(
                 nearby_flight_reward(p, cell, c, width, state["map"]["height"], distance)
-                for c in p.loot if c not in paths):
+                for c in p.loot if c not in paths and c not in dry_aquarium_rewards):
             found.append(Demand("flight", "potion of levitation", cell))
         elif "cloud of toxic gas" in effects and cell not in paths and any(
                 distance(cell, c, width) <= 3 for c in p.loot if c not in paths):
@@ -418,8 +447,14 @@ def refresh_barrier(p,state,demand,paths,distance):
 
 
 def revisit_flight_room(p,state,demand,distance):
-    """Reach an observed approach before applying visible-only potion-test gates."""
-    if demand.kind!='flight' or p.recent_threats or p.puzzle_revisit_steps['flight']>=48:return None
+    """Reobserve a verified flight/gas approach before visible-only test gates.
+
+    A dry-run protected reward trip authorizes only ordinary approach travel,
+    never a drink or hazard entry. Gas needs this handoff too after floor work
+    has taken the hero out of sight of an earlier testing bank.
+    """
+    kind=demand.kind
+    if kind not in {'flight','gas'} or p.recent_threats or p.puzzle_revisit_steps[kind]>=48:return None
     hero=state['hero'];pos=hero['cell'];width=state['map']['width']
     try:
         from .policy_geometry import neighbors
@@ -436,32 +471,33 @@ def revisit_flight_room(p,state,demand,distance):
         # closest arbitrary chasm/trap across a wall. Require a dry-run round
         # trip, then reobserve the bank before permitting any potion drink.
         staged=dict(state,hero=dict(hero,cell=cell))
-        journey=plan_journey(p,staged,[],neighbors,probe_kind='flight',plan_only=True)
+        journey=plan_journey(p,staged,[],neighbors,probe_kind=kind,plan_only=True)
         if not journey or not entrance_actionable(p,staged,journey):continue
         around={cell,*neighbors(cell,width,state['map']['height'])}
         if any(c not in p.tiles or p.tiles[c]['terrain'] not in {0,1,3,4,5,6,9,11,12,14,18,19,20,29}
                or p.tiles[c].get('plant') or p.tiles[c].get('effects')
                or c in p.loot for c in around):continue
         if p.tiles[cell].get('trap') or sum(p.walkable(n) for n in neighbors(cell,width,state['map']['height']))<2:continue
-        choices.append((cell!=p.puzzle_flight_bank,len(route),cell))
+        choices.append((cell!=getattr(p,'puzzle_'+kind+'_bank',None),len(route),cell))
     if not choices:return None
     _,_,view=min(choices)
-    p.puzzle_flight_bank=view
+    setattr(p,'puzzle_'+kind+'_bank',view)
     if view==pos:
         # Scout an actionable entrance before the visible-only drink-bank check,
         # not after it. A hypothetical reward route alone is not a test bank.
         # This is only the existing adjacent observed-door input; the next
         # observation must still pass every test/protection/round-trip gate.
-        journey=plan_journey(p,state,[],neighbors,probe_kind='flight',plan_only=True)
+        journey=plan_journey(p,state,[],neighbors,probe_kind=kind,plan_only=True)
         if journey:
             _,opening=open_journey_entrance(p,state,journey)
             return opening
         return None
-    p.puzzle_revisit_steps['flight']+=1
-    p.planner.report['puzzle_revisit']={'kind':'flight','hazard':demand.cell,'approach':view,
+    p.puzzle_revisit_steps[kind]+=1
+    p.planner.report['puzzle_revisit']={'kind':kind,'hazard':demand.cell,'approach':view,
         'status':'Return to observed approach, then reobserve and replan candidate test/round trip',
         'identity_inferred':False,'qualification':'No hazard entry or potion use admitted by this staging move'}
-    return p.toward(state,view,'room: revisit levitation-room approach before deferring protected reward',paths,intent=Intent.REPOSITION)
+    room='levitation' if kind=='flight' else 'gas'
+    return p.toward(state,view,'room: revisit '+room+'-room approach before deferring protected reward',paths,intent=Intent.REPOSITION)
 
 
 def known_flight_choices(p,state,neighbors):
@@ -816,18 +852,20 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
                     and 'THROW' in known.get('actions',[]) and not p.recent_threats \
                     and state.get('status')=='ready' and not state.get('modal') \
                     and not (p.potion_stash or p.room_journey) \
-                    and p.puzzle_revisit_steps['frost']<48 \
-                    and not any(t.get('visible') and fire_barrier(t) for t in p.tiles.values()):
+                    and p.puzzle_revisit_steps['frost']<48:
                 # Identification changes the supply, not the unfinished return.
-                # Reuse observation-only travel; the extinguisher must still
-                # recheck visible fire, throwing distance and line of fire.
-                # Preserve its existing short throwing-vantage admission first.
+                # At arrival, hand off to the same guarded extinguisher too.
+                # Priority loot can suppress general preparation, so yielding
+                # merely because fire became visible strands the known supply.
+                # It still checks visibility, distance and line of fire.
                 try:
                     from .room_tactics import extinguish
                 except ImportError:
                     from room_tactics import extinguish
                 staged=extinguish(p,state,enemies,distance)
                 if staged:return staged
+                if any(t.get('visible') and fire_barrier(t) for t in p.tiles.values()):
+                    continue
                 paths=p.paths(state)
                 safe_paths={c:previous for c,previous in paths.items() if all(
                     p.tiles[n]['terrain'] not in {7,8,10,18,21,22,31,37,38}
