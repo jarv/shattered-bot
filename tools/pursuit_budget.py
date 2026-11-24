@@ -88,7 +88,11 @@ def reassess(p,state,enemies):
             or e['name'].lower() in excluded or 'fist' in e['name'].lower()
             or 'mimic' in e['name'].lower() for e in active):return None
     hp=hero['hp']/max(1,hero['max_hp'])
-    if hp>=0.65 and 'starving' not in buffs and not any(champion(e)=='growing' for e in active):
+    # Healthy HP is not progress once accepted pursuit has exhausted its lure
+    # budget. Let that outcome reach the same bounded known-charge review;
+    # contact, sight-break, hazard and projectile checks below still apply.
+    if hp>=0.65 and not p.pursuit_lure_exhausted and 'starving' not in buffs \
+            and not any(champion(e)=='growing' for e in active):
         return None
     pos,width,height=hero['cell'],state['map']['width'],state['map']['height']
     current=exposure(p,state,active,pos,distance,line_clear)

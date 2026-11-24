@@ -3237,5 +3237,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000250"
+  },
+  {
+    "id": "000251-healthy-exhausted-pursuit",
+    "priority": "high",
+    "summary": "Let exhausted pursuit reach bounded ranged reassessment even while the hero remains healthy.",
+    "evidence": [
+      "Decision 1348, log line 4021: staff has one known charge but retreat continues.",
+      "Decision 1350, log lines 4030–4031: twelve accepted retreats, exhausted lures, 37/40 HP and another retreat.",
+      "Decision 1378, log line 4172: forty accepted retreats and ten cumulative HP loss precede ordinary magic combat.",
+      "tools/pursuit_budget.py:77–139; tools/multi_enemy_tactics.py:148–166."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000251"
   }
 ]
