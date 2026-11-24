@@ -205,6 +205,30 @@
           "action_to": 766
         }
       ]
+    },
+    {
+      "id": "000278",
+      "outcome": "stuck-planner",
+      "observations": [
+        {
+          "signature": "8555d0da008d7fff",
+          "kind": "planner-stop:mandatory-preparation-unresolved",
+          "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+          "depth": 1,
+          "cell": 762,
+          "action_from": 318,
+          "action_to": 341
+        },
+        {
+          "signature": "bc7e2639d2768035",
+          "kind": "planner-incident",
+          "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+          "depth": 1,
+          "cell": 762,
+          "action_from": 318,
+          "action_to": 342
+        }
+      ]
     }
   ],
   "symptom_groups": [
@@ -214,9 +238,21 @@
       "run_ids": [
         "000273",
         "000274",
-        "000276"
+        "000276",
+        "000278"
       ],
-      "run_count": 3
+      "run_count": 4
+    },
+    {
+      "signature": "bc7e2639d2768035",
+      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+      "run_ids": [
+        "000273",
+        "000274",
+        "000276",
+        "000278"
+      ],
+      "run_count": 4
     },
     {
       "signature": "978b37be6c47758c",
@@ -225,16 +261,6 @@
         "000270",
         "000272",
         "000277"
-      ],
-      "run_count": 3
-    },
-    {
-      "signature": "bc7e2639d2768035",
-      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
-      "run_ids": [
-        "000273",
-        "000274",
-        "000276"
       ],
       "run_count": 3
     },
@@ -305,6 +331,6 @@
   ],
   "outcomes": {
     "dead": 1,
-    "stuck-planner": 7
+    "stuck-planner": 8
   }
 }
