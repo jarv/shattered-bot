@@ -104,6 +104,11 @@ def demands(p, state, distance, *, include_deferred=False):
     width = state["map"]["width"]
     paths = p.paths(state)
     dry_aquarium_rewards = aquarium_ground_rewards(p, state, paths)
+    # A receipt-resolved crystal alternative is still physically visible, but
+    # is no longer an obtainable reward with the spent shared key. It must not
+    # reserve protection for a nearby unrelated trap (run 252). New accepted
+    # crystal-key acquisition reopens these alternatives in keyed_rooms.
+    rewards = set(p.loot) - getattr(p, "resolved_crystal_alternatives", set())
     found = []
     for cell, actor in p.room_actors.items():
         name = actor["name"].lower()
@@ -133,10 +138,10 @@ def demands(p, state, distance, *, include_deferred=False):
             found.append(Demand("flame", "potion of liquid flame", cell))
         elif cell not in paths and tile["terrain"] in {0,18} and any(
                 nearby_flight_reward(p, cell, c, width, state["map"]["height"], distance)
-                for c in p.loot if c not in paths and c not in dry_aquarium_rewards):
+                for c in rewards if c not in paths and c not in dry_aquarium_rewards):
             found.append(Demand("flight", "potion of levitation", cell))
         elif "cloud of toxic gas" in effects and cell not in paths and any(
-                distance(cell, c, width) <= 3 for c in p.loot if c not in paths):
+                distance(cell, c, width) <= 3 for c in rewards if c not in paths):
             found.append(Demand("gas", "potion of purity", cell))
     for cell,room in p.piranha_rooms.items():
         if not room['collected']:
