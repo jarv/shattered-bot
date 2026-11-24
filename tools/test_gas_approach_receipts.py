@@ -15,7 +15,6 @@ def fixture():
     s["hero"]["cell"]=31
     for t in s["map"]["cells"]:
         if t["cell"]==31:t["terrain"]=6
-        if t["cell"]==48:t["terrain"]=0
         if t["cell"]==85:t.update(terrain=14,effects=["cloud of toxic gas"])
     s["objects"][0]["cell"]=85
     stone=dict(id="stone",name="stone of intuition",quantity=1,actions=["USE"])
@@ -60,7 +59,7 @@ class GasApproachReceiptTests(unittest.TestCase):
         self.assertIn(85,p.loot)
         self.assertFalse(p.completed_room_rewards)
         self.assertFalse(p.physical_ledger.has_unresolved())
-        self.assertFalse(safe_test_bank(p,after,40,distance,neighbors,allow_dry=True))
+        self.assertTrue(safe_test_bank(p,after,40,distance,neighbors,allow_dry=True))
         information=prepare_supplies(p,after,[],distance,neighbors)
         self.assertEqual(dict(type="item",id="stone",action="USE"),information.action)
         self.assertEqual("potion of purity",p.intuition_plan["guess"])
