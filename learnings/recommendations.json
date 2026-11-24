@@ -3094,5 +3094,33 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000242"
+  },
+  {
+    "id": "000243-interrupted-crab-surprise",
+    "priority": "high",
+    "summary": "Invalidate stale doorway-surprise claims after intervening combat.",
+    "evidence": [
+      "Decision 1846, log 5408: last dedicated lure wait at turn 1838.",
+      "Decisions 1853–1862, logs 5426–5453: fly combat while the crab occupies doorway 918.",
+      "Decision 1863, logs 5454–5456: purported fresh surprise has zero observed health-bar loss.",
+      "tools/great_crab_tactics.py:102–127; tools/ghost_quest.py:392–397."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000243"
+  },
+  {
+    "id": "000243-crab-room-edge-retreat",
+    "priority": "high",
+    "summary": "Establish an executable crab escape before retreating toward a room edge.",
+    "evidence": [
+      "Decisions 1885–1888, logs 5543–5556: separation retreats end at 790.",
+      "Decision 1889, logs 5559–5561: quest combat declines and recovery waits.",
+      "Decision 1924, logs 5676–5677: final wait and explicit great-crab death message.",
+      "tools/great_crab_tactics.py:187–208; tools/tactical_recovery.py:113–186."
+    ],
+    "status": "deferred",
+    "reason": "Not repaired by surprise freshness. At decision 1889, the observed clean alternatives 760 and 791 are both adjacent to the crab at 759; existing escape routes cross its immediate approach. Relaxing separation, second-exit or exposure checks would not certify safe movement. No known invisibility or healing supply is recorded. Next derive paired decision-1885 and decision-1889 fixtures, prove a threat-separated exit continuation or receipt-checked camouflage preparation from public terrain, and require a positive progress regression before changing retreat scoring. Do not extend waits or guess the magenta potion.",
+    "origin_run": "000243"
   }
 ]
