@@ -2817,5 +2817,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000222"
+  },
+  {
+    "id": "000224-foresight-loot-warning",
+    "priority": "high",
+    "summary": "Inspect public foresight warnings before ordinary loot travel can destroy potential preparation supplies.",
+    "evidence": [
+      "Decision 2147, log 6193: foresight warning, charged Talisman, loot-directed move.",
+      "Log 6194: accepted move onto previously ordinary-looking floor; log 6196: chilling trap and cold at the potion square.",
+      "Decision 2381, log 6812: mandatory resources observed beyond fire without carried frost.",
+      "Decision 2517, log 7225: mandatory-preparation-unresolved with the hero alive."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000224"
   }
 ]
