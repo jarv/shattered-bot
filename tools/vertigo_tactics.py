@@ -125,8 +125,13 @@ def rescue(p, state, gas, vertigo, *, reserved=False):
     inventory = state["inventory"]
     if gas:
         purity = next((i for i in inventory if base_name(i) == "potion of purity"
-                       and "DRINK" in i.get("actions", [])
-                       and (reserved or p.item_action_allowed(i, "DRINK"))), None)
+                        and "DRINK" in i.get("actions", [])
+                        # Keep the last dose for the existing checked escape
+                        # attempt, even before a gas-room demand is observed.
+                        # The late emergency pass still admits it if that
+                        # escape is unsafe, threatened, or out of budget.
+                        and (reserved or i.get("quantity", 1) > 1)
+                        and (reserved or p.item_action_allowed(i, "DRINK"))), None)
         if purity:
             try:
                 from .room_supplies import use

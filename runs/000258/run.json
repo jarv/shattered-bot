@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "id": "000258",
+  "started_at": "2026-11-24T12:17:01Z",
+  "completed_at": "2026-11-24T12:30:04.089696+00:00",
+  "source_commit": "e7ed5f7e083c428b5b26fec281e9200b453e76af",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "090ccf4-conflict-traversal",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 4,
+  "actions": 1880,
+  "duration_seconds": 773.599,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000257",
+  "previous_source_commit": "8acc179d31e0d08c5959656d9b3fd0aab3ed569a",
+  "improvements": [
+    "The bot now tries to wear Tengu's mask during safe, quiet preparation, before lower-priority optional work."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Investigate the protected gas-trip interruption before its eventual fallback. Validate adaptive tour ownership, actual immunity and a funded return on paired public observations; arrival at a remembered testing approach does not establish executable preparation.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended in planner exhaustion with the hero alive at full health, not an observed death. The initiating resource loss occurred at decision 1604: after a hidden confusion trap interrupted a key approach, the bot drank its only known purity dose before considering its existing checked escape. The accepted consumption and emergency-purpose receipt are recorded at log lines 4585–4586. An isolated fixture using the public neighboring tiles reproduces that drink on original source and admits the existing all-direction-checked escape instead after the correction. This is not reconstructed original runtime memory. At decision 1880, spent-gas-room descent conflicted with the mandatory iron key at 1536; cached harmful effects excluded its route. The upgrade scroll previously seen at 634 had already been collected. The proposal preserves the final purity dose for the existing escape attempt while retaining emergency consumption when escape is inadmissible. All 2435 suite tests passed, with four skipped. This does not establish successful escape, key retrieval, or resolution of the later planner contradiction.",
+    "learnings": "Preserve the last known purity dose when the existing bounded confusion escape passes every landing check. A requested direction is not a guaranteed dizzy landing. Keep mandatory pickup and hazard gates intact. Next, validate original terminal reobservation budgets and safe observation vantages before adding a bounded mandatory-key handoff ahead of spent-room descent; cached gas is neither proof of current danger nor permission to enter."
+  },
+  "recommendations": [
+    {
+      "id": "000258-confusion-last-purity",
+      "priority": "high",
+      "summary": "Try the existing fully checked confusion escape before consuming the final purity dose.",
+      "evidence": [
+        "Decision 1574, log lines 4502–4503: known purity pickup.",
+        "Decisions 1603–1604, log lines 4581–4586: hidden confusion trap, last-dose drink, and accepted emergency consumption receipt.",
+        "Decision 1880, log lines 5387–5389: mandatory key and spent-room descent conflict."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000258"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000258/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000258/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 181,
+        "turns": 402,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 395,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 706
+          },
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 31,
+        "gold_gained": 886,
+        "turns": 671,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 643,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 37,
+        "gold_gained": 432,
+        "turns": 503,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 503,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 666
+          },
+          {
+            "kind": "room",
+            "label": "Distant well",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 45,
+        "gold_gained": 234,
+        "turns": 317,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 333,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Crystal door",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Possible drop-room exit",
+            "status": "reported-hypothesis"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 12,
+    "ending_experience": 23,
+    "ending_level": 6,
+    "starving_turns": 156,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 8,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 12,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 136,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 6,
+    "gold_collected": 1733,
+    "gold_complete": true,
+    "turns": 1893,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 5,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
