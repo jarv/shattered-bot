@@ -2948,5 +2948,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000233"
+  },
+  {
+    "id": "000234-adrenalized-doorway-summon",
+    "priority": "high",
+    "summary": "Preserve admitted skeleton ranged preference against adrenalized linked summons in established doorway holds.",
+    "evidence": [
+      "Decision 2813, accepted log line 8305: retreat establishes the doorway encounter.",
+      "Decision 2815, selected line 8312 and accepted line 8313: adrenalized linked skeleton receives melee despite an admitted staff shot; HP falls from 33 to 31.",
+      "Decisions 2816–2818, accepted lines 8316–8321: repeated melee continues before the eventual zap.",
+      "tools/mage_policy.py:1228; tools/doorway_tactics.py:111–126; tools/unit_profiles.py:42–43."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000234"
   }
 ]
