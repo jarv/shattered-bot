@@ -846,18 +846,20 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
                     and 'THROW' in known.get('actions',[]) and not p.recent_threats \
                     and state.get('status')=='ready' and not state.get('modal') \
                     and not (p.potion_stash or p.room_journey) \
-                    and p.puzzle_revisit_steps['frost']<48 \
-                    and not any(t.get('visible') and fire_barrier(t) for t in p.tiles.values()):
+                    and p.puzzle_revisit_steps['frost']<48:
                 # Identification changes the supply, not the unfinished return.
-                # Reuse observation-only travel; the extinguisher must still
-                # recheck visible fire, throwing distance and line of fire.
-                # Preserve its existing short throwing-vantage admission first.
+                # At arrival, hand off to the same guarded extinguisher too.
+                # Priority loot can suppress general preparation, so yielding
+                # merely because fire became visible strands the known supply.
+                # It still checks visibility, distance and line of fire.
                 try:
                     from .room_tactics import extinguish
                 except ImportError:
                     from room_tactics import extinguish
                 staged=extinguish(p,state,enemies,distance)
                 if staged:return staged
+                if any(t.get('visible') and fire_barrier(t) for t in p.tiles.values()):
+                    continue
                 paths=p.paths(state)
                 safe_paths={c:previous for c,previous in paths.items() if all(
                     p.tiles[n]['terrain'] not in {7,8,10,18,21,22,31,37,38}
