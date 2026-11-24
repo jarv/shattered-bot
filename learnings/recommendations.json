@@ -3115,13 +3115,15 @@
     "priority": "high",
     "summary": "Establish an executable crab escape before retreating toward a room edge.",
     "evidence": [
-      "Decisions 1885–1888, logs 5543–5556: separation retreats end at 790.",
-      "Decision 1889, logs 5559–5561: quest combat declines and recovery waits.",
-      "Decision 1924, logs 5676–5677: final wait and explicit great-crab death message.",
-      "tools/great_crab_tactics.py:187–208; tools/tactical_recovery.py:113–186."
+      "Decisions 2187–2188, log lines 6278–6281: suspicious-container test reveals a mimic.",
+      "Decisions 2195–2208, log lines 6306–6365: mixed-enemy retreats end at cell 408.",
+      "Decision 2220, log lines 6399–6401: crab combat declines; recovery waits and HP falls from 24 to 19.",
+      "Decisions 2221 and 2239, log lines 6402 and 6455: healing and dew are used.",
+      "Decision 2260, log lines 6518–6519: final recovery wait precedes observed death.",
+      "tools/great_crab_tactics.py:197–208; tools/retreat_geometry.py:8–41; tools/tactical_recovery.py:190–199."
     ],
     "status": "deferred",
-    "reason": "Not repaired by surprise freshness. At decision 1889, the observed clean alternatives 760 and 791 are both adjacent to the crab at 759; existing escape routes cross its immediate approach. Relaxing separation, second-exit or exposure checks would not certify safe movement. No known invisibility or healing supply is recorded. Next derive paired decision-1885 and decision-1889 fixtures, prove a threat-separated exit continuation or receipt-checked camouflage preparation from public terrain, and require a positive progress regression before changing retreat scoring. Do not extend waits or guess the magenta potion.",
+    "reason": "The terminal public snapshot has no certified non-adjacent escape: only cell 407 is clean, and it remains adjacent to the awake crab. Its geometric exit does not satisfy existing threat-separation checks. No known invisibility is carried; unknown potion effects cannot be inferred. Fresh-memory earlier snapshots select different routes, so original attempt and pursuit bookkeeping cannot be assumed; offline reconstruction validated decisions 0–2174 but stopped before this episode because scratch checkpoint serialization failed. Next remove that checkpointing limitation and extend validation through decisions 2203–2206, then derive paired pre-edge/trapped fixtures and prove an admitted continuation toward an observed exit under unchanged pressure and hazard checks. Only then change endpoint selection and add a positive regression. If no such continuation exists, investigate earlier suspicious-container admission instead of weakening terminal safety or extending waits.",
     "origin_run": "000243"
   },
   {
@@ -3326,5 +3328,60 @@
     "status": "deferred",
     "reason": "Complete source resolves the selecting-chain gap, but original mutable tour state and a certified replacement remain missing. Escape checks a static route while adaptive tours operate within their room; later reobservation does not prove fresh testing, storage or reward-return admission. Next reconstruct and validate selected inputs through D1308, inspect D1309 route ownership and observed immunity, and derive a regression proving delegation to unchanged funded-return checks. Then derive the arrival-at-980 fixture and demonstrate an admitted progress action before suppressing retries. Do not expand hazard admission, extend bounds, infer protection or collection, or waive mandatory pickups.",
     "origin_run": "000257"
+  },
+  {
+    "id": "000258-confusion-last-purity",
+    "priority": "high",
+    "summary": "Try the existing fully checked confusion escape before consuming the final purity dose.",
+    "evidence": [
+      "Decision 1574, log lines 4502–4503: known purity pickup.",
+      "Decisions 1603–1604, log lines 4581–4586: hidden confusion trap, last-dose drink, and accepted emergency consumption receipt.",
+      "Decision 1880, log lines 5387–5389: mandatory key and spent-room descent conflict."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000258"
+  },
+  {
+    "id": "000260-enchanted-aquarium-missile",
+    "priority": "high",
+    "summary": "Recognize enchanted magic-missile staffs in guarded aquarium resource preparation.",
+    "evidence": [
+      "Decision 1928, log line 5552: charged chilling missile staff, visible aquarium and key; exploration selected.",
+      "Decision 2327, log line 6696: mandatory iron key excluded by aquarium hazard barrier.",
+      "tools/priority_resources.py:175-244: stationary missile preparation and identity filter."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000260"
+  },
+  {
+    "id": "000260-pool-trip-rejection",
+    "priority": "high",
+    "summary": "Identify the first protected-trip prerequisite that stranded the earlier pool reward.",
+    "evidence": [
+      "Decision 770, log line 2205: pool reward unresolved; no verified protected round trip.",
+      "Decision 788, log lines 2317-2318: accepted fallback descent, no collection credit.",
+      "tools/puzzle_supplies.py:1044-1099: bank, protected journey, entrance and storage admission."
+    ],
+    "status": "deferred",
+    "reason": "No second repair is supported yet: individual bank/journey/storage rejection results and contemporaneous pool approach receipts and revisit expenditure were not recorded. Source inspection resolved the selecting chain but not its first rejected prerequisite. Next, validate original offline selections through decision 770 and extract those rejection reasons, stopping at the first mismatch. Unknown potion effects and an unsafe return cannot be assumed.",
+    "origin_run": "000260"
+  },
+  {
+    "id": "000261-crab-recovery-pocket-bypass",
+    "priority": "high",
+    "summary": "Prevent tactical recovery from repeating a crab-pocket-vetoed move, with a verified non-idling continuation.",
+    "evidence": [
+      "D2103, log lines 6126–6130: retreat reaches 538 before the crab blocks the return.",
+      "D2104, log lines 6131–6134: pocket guard rejects 539, but recovery selects and reaches that same cell.",
+      "D2107, log lines 6141–6144: recovery waits beside the guarding crab; HP falls from 48 to 46.",
+      "D2119, log lines 6185–6186: known haste is consumed without subsequent escape.",
+      "D2136, log lines 6245–6247: final wait precedes death; terminal public text names the great crab.",
+      "tools/mage_policy.py:360–382,994–999; tools/great_crab_tactics.py:25–78; tools/tactical_recovery.py:137–199."
+    ],
+    "status": "deferred",
+    "reason": "Source and the original veto/action pair establish the recovery bypass. No patch is submitted because applying the existing guard to recovery squares in an isolated contemporaneous snapshot only substitutes wait; neither enemy has an admitted attack there, and the fly shot is blocked. Haste alone does not certify escape, and unknown potion effects cannot be assumed. Next validate original selections and receipts through D2102, stop at the first mismatch, and derive paired D2103/D2104 fixtures proving an earlier admitted doorway or second-exit continuation before adding recovery filtering and a positive regression. Preserve guarding, hazard admission, mandatory pickups and terminal exhaustion.",
+    "origin_run": "000261"
   }
 ]
