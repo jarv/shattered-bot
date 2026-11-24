@@ -87,6 +87,30 @@
           "action_to": 3516
         }
       ]
+    },
+    {
+      "id": "000273",
+      "outcome": "stuck-planner",
+      "observations": [
+        {
+          "signature": "8555d0da008d7fff",
+          "kind": "planner-stop:mandatory-preparation-unresolved",
+          "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+          "depth": 1,
+          "cell": 880,
+          "action_from": 190,
+          "action_to": 213
+        },
+        {
+          "signature": "bc7e2639d2768035",
+          "kind": "planner-incident",
+          "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+          "depth": 1,
+          "cell": 880,
+          "action_from": 190,
+          "action_to": 214
+        }
+      ]
     }
   ],
   "symptom_groups": [
@@ -138,9 +162,25 @@
         "000272"
       ],
       "run_count": 1
+    },
+    {
+      "signature": "8555d0da008d7fff",
+      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+      "run_ids": [
+        "000273"
+      ],
+      "run_count": 1
+    },
+    {
+      "signature": "bc7e2639d2768035",
+      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+      "run_ids": [
+        "000273"
+      ],
+      "run_count": 1
     }
   ],
   "outcomes": {
-    "stuck-planner": 3
+    "stuck-planner": 4
   }
 }
