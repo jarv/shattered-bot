@@ -3483,5 +3483,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000267"
+  },
+  {
+    "id": "000268-tracked-frost-retirement",
+    "priority": "high",
+    "summary": "Recognize the verified tracked frost kill before stale lightning memory blocks progress.",
+    "evidence": [
+      "D3399, log line 9725: chilled DM-100, known uncursed frost staff and Arcane Vision.",
+      "D3400, log lines 9727–9728: accepted target input at cell 642.",
+      "D3401, log line 9730: one charge, one turn, six XP through level-up and no surviving DM-100.",
+      "D3401–3402, log lines 9729–9733: stale lightning blockade persists after healing; hero remains alive.",
+      "tools/combat_observation.py:131–208,305–318; tools/policy_nodes.py:113–127."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000268"
   }
 ]

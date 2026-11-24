@@ -137,6 +137,20 @@ def dm100_arcane_missile_levelup_receipt(before,after,pending):
     Accept either unchanged level or one rollover, with public XP thresholds.
     Keep the older adjacent/no-level-up receipt unchanged.
     """
+    return _dm100_arcane_bolt_receipt(before,after,pending)
+
+
+def dm100_arcane_frost_receipt(before,after,pending):
+    """Frost procs tracking before damage, including against chilled targets.
+
+    Frozen targets return before that proc, so they remain excluded. A public
+    Chest is a heap, not a competing actor; no other extra object is admitted
+    beyond top-item heaps. This proves retirement, not an exact damage sample.
+    """
+    return _dm100_arcane_bolt_receipt(before,after,pending,frost=True)
+
+
+def _dm100_arcane_bolt_receipt(before,after,pending,*,frost=False):
     import re
     if pending["name"].lower()!="dm-100" or pending["source"][0]!="magic" \
             or pending["context"][2]:
@@ -166,7 +180,7 @@ def dm100_arcane_missile_levelup_receipt(before,after,pending):
     if not item or not item.get("identified") or not item.get("curse_known") \
             or item.get("known_cursed") or not any(
                 "of "+kind in item["name"].lower()
-                for kind in ("magic missile","prismatic light")):
+                 for kind in (("frost",) if frost else ("magic missile","prismatic light"))):
         return False
     used=next((i for i in after.get("inventory",[])
                if i.get("id")==item.get("id") and i["name"]==item["name"]),None)
@@ -174,10 +188,12 @@ def dm100_arcane_missile_levelup_receipt(before,after,pending):
     ac=re.fullmatch(r"(\d+)/(\d+)",used.get("status","")) if used else None
     if not bc or not ac or int(bc[1])-int(ac[1])!=1 or bc[2]!=ac[2]:
         return False
-    actors=[o for o in before.get("objects",[]) if not o.get("top_item")]
+    actors=[o for o in before.get("objects",[]) if not o.get("top_item")
+            and not (frost and o.get("name")=="Chest")]
     if len(actors)!=1 or actors[0].get("cell")!=pending["cell"] \
             or actors[0].get("name","").lower()!="dm-100" or actors[0].get("sleeping") \
-            or actors[0].get("status_icons") \
+            or (set(actors[0].get("status_icons",[]))-{"chilled"} if frost
+                else actors[0].get("status_icons")) \
             or any(o.get("name","").lower()=="dm-100" for o in after.get("objects",[])):
         return False
     try:
@@ -296,6 +312,7 @@ def retirement_proof(before,after,pending,before_texts):
         for candidate,validate in (
                 (RetirementRule.ADJACENT_MISSILE_XP,dm100_missile_receipt),
                 (RetirementRule.ARCANE_MISSILE_XP,dm100_arcane_missile_levelup_receipt),
+                (RetirementRule.ARCANE_FROST_XP,dm100_arcane_frost_receipt),
                 (RetirementRule.ARCANE_DISINTEGRATION_XP,dm100_arcane_disintegration_receipt)):
             if validate(before,after,pending):
                 rule=candidate
