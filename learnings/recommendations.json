@@ -2846,5 +2846,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000225"
+  },
+  {
+    "id": "000226-large-aquarium-preparation",
+    "priority": "high",
+    "summary": "Provide a safely justified preparation path for mandatory keys beside large aquariums.",
+    "evidence": [
+      "Decision 357, log line 1064: iron and crystal keys observed beside the aquarium.",
+      "Decision 394, log lines 1176–1177; decisions 395–397: upgrade scroll collected and used.",
+      "Decisions 664–665, log lines 1915–1919: keys remain observed before the terminal approach.",
+      "Decision 666, log lines 1922–1923: mandatory keys unreachable, charged staff available, living hero, no recovery action.",
+      "tools/priority_resources.py:203–208; tools/puzzle_supplies.py:79–83; tools/mage_policy.py:460–478."
+    ],
+    "status": "deferred",
+    "reason": "The current ranged helper explicitly requires fresh visibility of all 81 enclosure cells; no recorded observation satisfies it. Removing that requirement would relax a hazard check, while guessed movement or unknown potion effects cannot certify an alternative. The next concrete step is a bounded one-shot enclosure certificate, with pinned-source validation of dry-boundary persistence and terrain-changing hazards, followed by a large-aquarium regression and stale-boundary negative cases. Retain live projectile checks, whole-shore exclusion and mandatory pickup receipts. No replacement safety proof or patch is claimed here.",
+    "origin_run": "000226"
   }
 ]
