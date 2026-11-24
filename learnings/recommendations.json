@@ -3151,5 +3151,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000245"
+  },
+  {
+    "id": "000246-fast-species-doorway-pressure",
+    "priority": "high",
+    "summary": "Include known fast-species movement in pursuit exposure before admitting doorway scouting.",
+    "evidence": [
+      "Decision 5408, log 16180: fast-movement bat report, critical HP and admitted two-cell-gap scouting.",
+      "Decision 5408, log 16181: accepted movement consumes one turn; HP 4 to 3 while starving.",
+      "Decision 5411, logs 16188–16189: another scouting step preserves the same short pursuit gap.",
+      "tools/challenge_combat.py:65–86; tools/doorway_tactics.py:351–367; tools/unit_profiles.py:35–37.",
+      "New regression: original source fails four assertions; candidate passes all six tests and the full unittest suite."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000246"
   }
 ]
