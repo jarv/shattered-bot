@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "id": "000244",
+  "started_at": "2026-11-24T07:08:44Z",
+  "completed_at": "2026-11-24T07:12:04.356747+00:00",
+  "source_commit": "514e7ce2a4cf542c7218e18464f151f361225fda",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "immediate-safety-emergency",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 2,
+  "actions": 490,
+  "duration_seconds": 196.333,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000243",
+  "previous_source_commit": "5be6e017af6c3149cc8b0a49f104fe5d724e404a",
+  "improvements": [
+    "The bot now discards an old great-crab doorway surprise opportunity when intervening actions have consumed multiple turns. It replans instead of treating the crab's earlier position as a fresh doorway entry."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "A doorway entry claim must expire when intervening combat consumes multiple turns; a cached last-seen position is not fresh surprise evidence. Preserve observed second exits and direct-attack restrictions. Separately, inspect crab retreat continuation before choosing room-edge separation over executable exit progress.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "Decision 489 approached an unopened door across publicly ordinary floor (log 1431). The accepted move revealed a hidden confusion-gas trap and vertigo, with HP unchanged at 25/25 (log 1432). Decision 490 then exhausted recovery without accepting another action; the final observation still shows a living hero and an unchanged clock (logs 1434–1436). The vertigo controller excludes waiting in renewing gas and rejects its random escape because closed door 1772 is a possible landing. Clear floor 1672 alone cannot certify escape. Source inspection confirms that the door is passable and opens on entry, not a harmless wall bump. A reduced fresh-state probe isolates this rejection but is not recovered runtime memory. No patch is supplied: admitting the door would bypass an existing safety veto without proving containment of the complete pathfinding click, which can continue after an unintended random landing. The public inventory establishes no known purity or transport rescue; the jade potion remains unknown. Existing focused tests passed (23), as did the full suite (2,269 tests, four skipped). These results establish neither a safe replacement nor successful escape.",
+    "learnings": "Treat a closed door as a possible vertigo landing that can open sightlines, not as a wall bump. Before changing admission, validate the whole settled cell request, including repeated random movement and renewing gas. Preserve terminal planner exhaustion, unknown-item boundaries and mandatory pickup obligations."
+  },
+  "recommendations": [
+    {
+      "id": "000244-confusion-door-recovery",
+      "priority": "high",
+      "summary": "Establish a safe, whole-input recovery from confusion exposure beside a closed door.",
+      "evidence": [
+        "Decision 489, log 1431: destination 1722 is ordinary visible floor before entry.",
+        "Decision 489, log 1432: accepted entry reveals confusion gas and vertigo without HP loss.",
+        "Decision 490, logs 1434–1436: immediate-safety planner exhaustion, zero accepted recovery actions, living hero.",
+        "tools/vertigo_tactics.py:41–112,149–232; tools/test_shattered_vertigo_response.py: all-direction closed-door veto.",
+        "Pinned game Terrain.java:90, Char.java:1302–1336 and Hero.java:1014–1031,1808–1914 establish passable door landings and continuing movement requests."
+      ],
+      "status": "deferred",
+      "reason": "Source browsing resolves the selecting chain and door semantics, but not replacement safety. A copied terminal snapshot admits route 1722–1672 only when the closed door is diagnostically normalized; that is not an executable safety proof. The door can open on a random landing, and a normal cell request may continue before another observation. Original mutable threat state is also unrecovered. Next derive paired decision-489/490 fixtures and prove the complete settled-click envelope, including door opening, repeated random attempts, evolving gas and interruption, before adding a positive original-red/candidate-green regression. The existing 000237-vertigo-click-containment backlog remains relevant. Do not remove the door veto alone, change protected API behavior, extend waits, guess the unknown potion or waive mandatory pickup.",
+      "origin_run": "000244"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000244/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000244/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 55,
+        "turns": 281,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 259,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 371
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 12,
+        "gold_gained": 68,
+        "turns": 228,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 225,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 686
+          },
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 11,
+    "ending_experience": 12,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 123,
+    "gold_complete": true,
+    "turns": 509,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
