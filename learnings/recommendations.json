@@ -3050,5 +3050,19 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000239"
+  },
+  {
+    "id": "000240-blocking-trap-preparation",
+    "priority": "high",
+    "summary": "Develop a verified blocking-trap preparation transaction instead of searching unrelated walls after partial corridor clearance.",
+    "evidence": [
+      "Decision 2424, log 6945: toxic gas trap blocks the northern approach.",
+      "Decisions 2453–2455, logs 7032–7036: chilling plate clears but burning plate remains.",
+      "Decision 2462, log 7053: public mapping reveals exit-side geometry.",
+      "Decisions 2548–2549, logs 7302–7305: final search followed by planner exhaustion with a living hero."
+    ],
+    "status": "deferred",
+    "reason": "No safe replacement is certified. The chilling-only clearance rule cannot be extended directly: fire from the remaining plate can reach a flammable door and grass beyond it, and the existing expiry observer does not provide a complete fire-clearance transaction. Toxic gas likewise needs a justified spread and retirement envelope. Next, build a corridor regression covering the door, grass, mixed cold effects, safe activation bank, fresh expiry observations and honest payload recovery; derive conservative fire containment before selecting preparation. If containment fails, investigate the toxic corridor with a separately justified gas-retirement plan. Do not relax traversal checks or guess the unknown potion.",
+    "origin_run": "000240"
   }
 ]
