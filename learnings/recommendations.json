@@ -3115,13 +3115,15 @@
     "priority": "high",
     "summary": "Establish an executable crab escape before retreating toward a room edge.",
     "evidence": [
-      "Decisions 1885–1888, logs 5543–5556: separation retreats end at 790.",
-      "Decision 1889, logs 5559–5561: quest combat declines and recovery waits.",
-      "Decision 1924, logs 5676–5677: final wait and explicit great-crab death message.",
-      "tools/great_crab_tactics.py:187–208; tools/tactical_recovery.py:113–186."
+      "Decisions 2187–2188, log lines 6278–6281: suspicious-container test reveals a mimic.",
+      "Decisions 2195–2208, log lines 6306–6365: mixed-enemy retreats end at cell 408.",
+      "Decision 2220, log lines 6399–6401: crab combat declines; recovery waits and HP falls from 24 to 19.",
+      "Decisions 2221 and 2239, log lines 6402 and 6455: healing and dew are used.",
+      "Decision 2260, log lines 6518–6519: final recovery wait precedes observed death.",
+      "tools/great_crab_tactics.py:197–208; tools/retreat_geometry.py:8–41; tools/tactical_recovery.py:190–199."
     ],
     "status": "deferred",
-    "reason": "Not repaired by surprise freshness. At decision 1889, the observed clean alternatives 760 and 791 are both adjacent to the crab at 759; existing escape routes cross its immediate approach. Relaxing separation, second-exit or exposure checks would not certify safe movement. No known invisibility or healing supply is recorded. Next derive paired decision-1885 and decision-1889 fixtures, prove a threat-separated exit continuation or receipt-checked camouflage preparation from public terrain, and require a positive progress regression before changing retreat scoring. Do not extend waits or guess the magenta potion.",
+    "reason": "The terminal public snapshot has no certified non-adjacent escape: only cell 407 is clean, and it remains adjacent to the awake crab. Its geometric exit does not satisfy existing threat-separation checks. No known invisibility is carried; unknown potion effects cannot be inferred. Fresh-memory earlier snapshots select different routes, so original attempt and pursuit bookkeeping cannot be assumed; offline reconstruction validated decisions 0–2174 but stopped before this episode because scratch checkpoint serialization failed. Next remove that checkpointing limitation and extend validation through decisions 2203–2206, then derive paired pre-edge/trapped fixtures and prove an admitted continuation toward an observed exit under unchanged pressure and hazard checks. Only then change endpoint selection and add a positive regression. If no such continuation exists, investigate earlier suspicious-container admission instead of weakening terminal safety or extending waits.",
     "origin_run": "000243"
   },
   {
