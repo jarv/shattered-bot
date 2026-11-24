@@ -1,0 +1,483 @@
+{
+  "schema_version": 1,
+  "id": "000264",
+  "started_at": "2026-11-24T14:38:00Z",
+  "completed_at": "2026-11-24T15:02:39.505615+00:00",
+  "source_commit": "08c9cf256c68f348fad3c17b686a8aa38bda6979",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "090ccf4-conflict-traversal",
+  "outcome": "dead",
+  "death_category": "combat",
+  "death_category_evidence": "review summary: Killed by a necromancer's skeleton",
+  "blocker_kind": "execution-failure",
+  "outcome_summary": "Killed by a necromancer's skeleton",
+  "outcome_reason": "Hero died",
+  "max_depth": 9,
+  "actions": 3475,
+  "duration_seconds": 1464.596,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000263",
+  "previous_source_commit": "a263d8eb93bea99fa6b30a7dd68cedecc723ea14",
+  "improvements": [
+    "Before descending, the bot can revisit safe ground to look again at a required item last seen in confusion gas. It keeps the item unfinished until there is actual pickup evidence and does not assume the gas has disappeared."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Plan mandatory room preparation across possible failed hypotheses, including protection or identification of the remaining potion stacks. A successful unknown test transaction is not puzzle completion. Keep mandatory pickup receipts, fire restrictions and terminal planner exhaustion; do not replace missing prerequisites with extra waiting or guessed potion identities.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The complete recording confirms death: decision 3474, log 10249, changes HP from 2 to 0 and the terminal public text names a necromancer's skeleton. This is not inferred from nearby enemies; the compact packet omitted that text. Earlier attrition began with the guard pull during loot travel (D3324, logs 9734–9735); committed DM-100 flight then lost 19 HP over D3332–3333. A later, specific planning defect is that necromancer navigation treats a two-square gap from an adrenaline-buffed summon as contact-free. At D3442 (logs 10141–10142), the wounded hero investigates a remembered caster, moving from 108 to 149 while the empowered summon is at 107; HP falls from 23 to 20. The helper uses adjacency checks despite the shared risk evaluator already recognizing fast pursuit. A reduced public-input fixture reproduced this selection, without reconstructing original runtime memory or dispatching actions. No patch is retained: the proposed pursuit veto passed its four new probe cases but failed six existing regression assertions, replacing required spacing with adjacent summon attacks, including at 3 HP. That is not a supported safe replacement. All changes were reverted; the restored full suite passed 2,443 tests with four skips. No planner incidents were recorded. The exact enemy scheduling and a survival-preserving alternative remain unestablished.",
+    "learnings": "Account for publicly visible adrenaline when comparing necromancer approaches and withdrawals, but do not turn every threatened gap into a stationary summon attack. Preserve low-health death-blast spacing, bounded combat, hazard admission and mandatory pickup receipts. A locally admitted shot is not evidence of survival."
+  },
+  "recommendations": [
+    {
+      "id": "000264-empowered-summon-navigation",
+      "priority": "high",
+      "summary": "Make necromancer navigation account for empowered-summon pursuit without sacrificing low-health spacing.",
+      "evidence": [
+        "D3441–3442, logs 10136–10142: retreat is followed by a remembered-caster approach beside an adrenaline-buffed summon; HP falls from 23 to 20.",
+        "D3449–3460, logs 10168–10209: remembered-caster investigation continues amid attrition.",
+        "tools/necromancer_tactics.py:128–144,148–166: adjacency-only approach and withdrawal checks precede bounded blocker attacks.",
+        "tools/challenge_combat.py:34–40,65–86: public acceleration already contributes fast-pursuit exposure."
+      ],
+      "status": "deferred",
+      "reason": "Full source resolved the selecting-chain gap, but a blanket fast-pursuit veto is unsafe as a replacement: its local fixture passes while six existing assertions fail, including required spacing at 3 HP being replaced by an adjacent summon attack. No original mutable counters or enemy action phase were recovered, and no alternative survival transaction was proved. Next derive a movement-aware ranking, rather than a zero-exposure veto, against the paired D3442 corridor and existing low-health memory/visible-caster spacing fixtures. Require a positive admitted continuation in both before retaining a patch; preserve explosion checks and bounded exhaustion.",
+      "origin_run": "000264"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000264/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000264/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 204,
+        "turns": 297,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 299,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 232
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 14,
+        "gold_gained": 383,
+        "turns": 302,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 294,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 717
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 45,
+        "gold_gained": 656,
+        "turns": 527,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 524,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 1031
+          }
+        ]
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "experience_gained": 60,
+        "gold_gained": 167,
+        "turns": 500,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 506,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 585
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 969
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 217
+          },
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "objective-completed-dialogue"
+          }
+        ]
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 0,
+        "turns": 250,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 256,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "encountered"
+          },
+          {
+            "kind": "boss",
+            "label": "Goo",
+            "status": "reported-defeated"
+          }
+        ]
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "experience_gained": 48,
+        "gold_gained": 60,
+        "turns": 383,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 421,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Shop",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Animated statue",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "experience_gained": 49,
+        "gold_gained": 118,
+        "turns": 274,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 289,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Barricaded area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 709
+          }
+        ]
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "experience_gained": 90,
+        "gold_gained": 0,
+        "turns": 536,
+        "experience_complete": false,
+        "gold_complete": false,
+        "turns_complete": false,
+        "accepted_inputs": 575,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Old Wandmaker",
+            "status": "encountered"
+          },
+          {
+            "kind": "room",
+            "label": "Alchemy area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 147
+          }
+        ]
+      },
+      {
+        "depth": 9,
+        "branch": 0,
+        "experience_gained": 27,
+        "gold_gained": 0,
+        "turns": 275,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 293,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 751
+          },
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 339
+          },
+          {
+            "kind": "room",
+            "label": "Sentry area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 13,
+    "ending_experience": 28,
+    "ending_level": 11,
+    "starving_turns": 175.00006103515625,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 4,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3.00006103515625,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "starving_turns": 2,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "starving_turns": 97,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 9,
+        "branch": 0,
+        "starving_turns": 66,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 11,
+    "gold_collected": 1588,
+    "gold_complete": true,
+    "turns": 3344,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      },
+      {
+        "depth": 4,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 6,
+        "max_level_complete": true
+      },
+      {
+        "depth": 5,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 7,
+        "max_level_complete": true
+      },
+      {
+        "depth": 6,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 8,
+        "max_level_complete": true
+      },
+      {
+        "depth": 7,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 9,
+        "max_level_complete": true
+      },
+      {
+        "depth": 8,
+        "branch": 0,
+        "levels_gained": 2,
+        "levels_complete": true,
+        "max_level": 11,
+        "max_level_complete": true
+      },
+      {
+        "depth": 9,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 11,
+        "max_level_complete": true
+      }
+    ]
+  }
+}

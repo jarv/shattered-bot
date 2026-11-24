@@ -3427,5 +3427,19 @@
     "status": "deferred",
     "reason": "The recorded hero remained below the near-full unknown-test threshold after available healing. No safe pool experiment and protected retrieval at that health was established. A repair must first quote an evidenced health-funded preparation and return transaction from the original pool approach; increasing the wait allowance or reducing test-health admission is not supported. The accepted descent only deferred the unfinished chest.",
     "origin_run": "000263"
+  },
+  {
+    "id": "000264-empowered-summon-navigation",
+    "priority": "high",
+    "summary": "Make necromancer navigation account for empowered-summon pursuit without sacrificing low-health spacing.",
+    "evidence": [
+      "D3441–3442, logs 10136–10142: retreat is followed by a remembered-caster approach beside an adrenaline-buffed summon; HP falls from 23 to 20.",
+      "D3449–3460, logs 10168–10209: remembered-caster investigation continues amid attrition.",
+      "tools/necromancer_tactics.py:128–144,148–166: adjacency-only approach and withdrawal checks precede bounded blocker attacks.",
+      "tools/challenge_combat.py:34–40,65–86: public acceleration already contributes fast-pursuit exposure."
+    ],
+    "status": "deferred",
+    "reason": "Full source resolved the selecting-chain gap, but a blanket fast-pursuit veto is unsafe as a replacement: its local fixture passes while six existing assertions fail, including required spacing at 3 HP being replaced by an adjacent summon attack. No original mutable counters or enemy action phase were recovered, and no alternative survival transaction was proved. Next derive a movement-aware ranking, rather than a zero-exposure veto, against the paired D3442 corridor and existing low-health memory/visible-caster spacing fixtures. Require a positive admitted continuation in both before retaining a patch; preserve explosion checks and bounded exhaustion.",
+    "origin_run": "000264"
   }
 ]
