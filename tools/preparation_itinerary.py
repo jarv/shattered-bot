@@ -48,3 +48,24 @@ class PreparationItinerary:
                     storage_cell=self.storage_cell,handoff_route=list(self.handoff_route),
                     unknown_test_admitted=self.unknown_test_admitted,
                     protection_is_prerequisite=True,collection_credited=False)
+
+
+@dataclass(frozen=True)
+class StorageItinerary:
+    scope: Scope
+    bank: int
+    cell: int
+    route: tuple
+    doors: tuple
+    quoted_inputs: int
+
+    def __post_init__(self):
+        if not self.route or self.route[0]!=self.bank or self.route[-1]!=self.cell \
+                or self.cell in self.doors or self.bank in self.doors \
+                or not set(self.doors)<=set(self.route) or not 0<self.quoted_inputs<=48:
+            raise ValueError("Invalid bounded storage itinerary")
+
+    def record(self):
+        return dict(depth=self.scope.depth,branch=self.scope.branch,bank=self.bank,
+                    cell=self.cell,route=list(self.route),doors=list(self.doors),
+                    quoted_inputs=self.quoted_inputs,collection_credited=False)

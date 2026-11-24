@@ -23,6 +23,7 @@ class StashWorkflow(OwnedItems):
     steps: int = 0
     pending: DropProposal | None = None
     purpose: str | None = None
+    storage_itinerary: object = None
 
     def __post_init__(self):
         self.phase = StashPhase(self.phase)
@@ -57,7 +58,8 @@ class StashWorkflow(OwnedItems):
                     steps=self.steps, dropped=dict(self.dropped),
                     retrieved=dict(self.retrieved), outstanding=self.outstanding,
                     pending=self.pending.record() if self.pending else None,
-                    purpose=self.purpose)
+                    purpose=self.purpose,
+                    storage_itinerary=self.storage_itinerary.record() if self.storage_itinerary else None)
 
     # Narrow compatibility view for unmigrated read sites and historical fixture
     # assertions. These aliases share the typed object's fields, not a second plan.

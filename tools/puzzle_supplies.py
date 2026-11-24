@@ -770,6 +770,30 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
     hero = state["hero"]
     buffs = " ".join(b["name"].lower() for b in hero.get("buffs", []))
     pending=demands(p,state,distance)
+    # Cross-door preparation owns one test bank. If fresh arrival no longer
+    # admits that bank, recover the confirmed drops rather than moving the
+    # unknown experiment to another bank with an unrelated return promise.
+    storage=p.potion_stash
+    if storage and getattr(storage,'storage_itinerary',None) \
+            and storage.get('phase')=='ready':
+        if hero['cell']!=storage['bank']:
+            try:
+                from .potion_stash import advance_stash
+            except ImportError:
+                from potion_stash import advance_stash
+            return advance_stash(p,state,enemies,distance)
+        candidate=next((i for i in state['inventory']
+                        if base_name(i)==storage['candidate']),None)
+        if not candidate or not any(d.kind=='gas' for d in pending) \
+                or not safe_test_bank(p,state,storage['bank'],distance,neighbors,allow_dry=True) \
+                or not can_protect_potions(p,state,candidate,distance,neighbors,
+                                           safe_test_bank,isolated_stack=True,through_doors=True):
+            retrieve_stash(p)
+            try:
+                from .potion_stash import advance_stash
+            except ImportError:
+                from potion_stash import advance_stash
+            return advance_stash(p,state,enemies,distance)
     # A hungry hero cannot naturally recover to the near-full probe threshold.
     # Fund at most one nearby frost-room attempt from surplus known healing,
     # keeping one potion in reserve rather than lowering unknown-drink safety.
@@ -1065,7 +1089,8 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
         # a stash obligation that disables all other floor potion supplies.
         banks = [bank for bank in banks if can_protect_potions(
             p,dict(state,hero=dict(hero,cell=bank)),candidate,
-            distance,neighbors,safe_test_bank,isolated_stack=demand.kind=='gas')]
+            distance,neighbors,safe_test_bank,isolated_stack=demand.kind=='gas',
+            through_doors=demand.kind=='gas')]
         if not banks:
             continue
         bank = min(banks,key=lambda c:len(p.route(paths,c)))
@@ -1080,6 +1105,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
         itinerary=getattr(journeys.get(bank),'itinerary',None)
         stash=protect_potions(p,state,candidate,distance,neighbors,safe_test_bank,
                               isolated_stack=demand.kind=='gas',
+                              through_doors=demand.kind=='gas',
                               preferred_cell=itinerary.storage_cell if itinerary else None)
         if stash:
             return stash

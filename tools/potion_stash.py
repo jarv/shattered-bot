@@ -16,6 +16,8 @@ except ImportError:
 
 
 STASH_TRANSIT = {1,2,3,9,11,14,15,19,20,29,30}
+# Doors are ordinary transit, never storage or unknown-drink endpoints.
+STASH_CORRIDOR = STASH_TRANSIT | {5,6}
 FLAMMABLE = {2,5,6,13,15,27,30}
 
 
@@ -98,30 +100,69 @@ def bandolier_protected(p,state):
     return getattr(p,"bandolier_inventory",None)==(True,False) and bandolier_slots(state)<=19
 
 
-def stash_paths(p,state):
+def stash_paths(p,state,*,through_doors=False,corridor=None,heap=None):
     """Search inside the admitted stash corridor, not through rejected shortcuts."""
     excluded={c for c,t in p.tiles.items()
-               if t["terrain"] not in STASH_TRANSIT
-              or t.get("trap") or t.get("plant") or t.get("effects") or c in p.loot}
+               if t["terrain"] not in (STASH_CORRIDOR if through_doors else STASH_TRANSIT)
+               or t["terrain"] in {5,6} and not t.get("observed",t.get("visible",False))
+               or t.get("trap") or t.get("plant") or t.get("effects") or c in p.loot and c!=heap}
+    if corridor is not None:
+        excluded.update(set(p.tiles)-set(corridor))
     return p.paths(state,excluded)
 
 
-def stash_cells(p,state,distance,neighbors,safe_bank,*,all_sites=False):
+def stash_cells(p,state,distance,neighbors,safe_bank,*,all_sites=False,through_doors=False):
     """Read-only admission shared by test-bank preflight and actual stashing."""
     bank=state["hero"]["cell"]
     width=state["map"]["width"]
-    paths=stash_paths(p,state)
+    paths=stash_paths(p,state,through_doors=through_doors)
     footprint=fire_footprint(p,state,bank)
     cells = [c for c in paths if p.physical_ledger.site_available(Scope.of(state),c)
              and 3<=distance(c,bank,width)<=5 and len(p.route(paths,c))<=7
              and (safe_bank(p,state,c,distance,neighbors,allow_dry=True)
                   or storage_safe(p,state,bank,c,footprint))
              and c not in footprint
-             and all(p.tiles[n]["terrain"] in STASH_TRANSIT
+             and all(p.tiles[n]["terrain"] in (STASH_CORRIDOR if through_doors else STASH_TRANSIT)
                     and not p.tiles[n].get("trap") and not p.tiles[n].get("effects")
                      and n not in p.loot for n in p.route(paths,c))]
     preferred = [c for c in cells if safe_bank(p,state,c,distance,neighbors,allow_dry=True)]
     return cells if all_sites else preferred or cells
+
+
+def quote_storage(p,state,cell,candidate,distance,neighbors,safe_bank):
+    """Joint ordinary storage/return quote; no visibility or collateral waiver."""
+    try:
+        from .preparation_itinerary import StorageItinerary
+        from .protected_rewards import deterministic_doors
+        from .escape_commitment import preflight
+    except ImportError:
+        from preparation_itinerary import StorageItinerary
+        from protected_rewards import deterministic_doors
+        from escape_commitment import preflight
+    bank=state["hero"]["cell"]
+    if p.tiles.get(bank,{}).get("terrain") not in STASH_TRANSIT \
+            or p.tiles.get(cell,{}).get("terrain") not in STASH_TRANSIT \
+            or not safe_bank(p,state,bank,distance,neighbors,allow_dry=True) \
+            or cell not in stash_cells(p,state,distance,neighbors,safe_bank,
+                                      all_sites=True,through_doors=True):
+        return None
+    route=p.route(stash_paths(p,state,through_doors=True),cell)
+    doors=tuple(c for c in route if p.tiles[c]["terrain"] in {5,6})
+    if doors and not deterministic_doors(state):
+        return None
+    if doors and any(distance(bank,c,state["map"]["width"])<=1 for c in doors):
+        return None  # Reclosure must not change the bank's unknown-test gate.
+    # Approach, return to test, and later retrieval all reserve reopening every
+    # door. Whole-stack drops consume one input each, not one per unit.
+    cost=3*(len(route)-1+len(doors))+sum(i["id"]!=candidate["id"] for i in potions(state))
+    if cost>48 or any(not p.tiles[c].get("observed",p.tiles[c].get("visible",False))
+                      for c in route):
+        return None
+    reverse=list(reversed(route))
+    projected=dict(state,hero=dict(state["hero"],cell=cell))
+    if not preflight(p,projected,reverse[:-1],bank).allowed:
+        return None
+    return StorageItinerary(Scope.of(state),bank,cell,tuple(route),doors,cost)
 
 
 def fire_reaches_owned_items(p,state):
@@ -130,10 +171,13 @@ def fire_reaches_owned_items(p,state):
                for a in p.physical_ledger.entries.values())
 
 
-def can_protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isolated_stack=False):
+def can_protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isolated_stack=False,through_doors=False):
     """No drops, receipts, or inferred effects: only preparation feasibility."""
     if p.potion_stash and workflow(p).pending:
         return False
+    if p.potion_stash and workflow(p).storage_itinerary \
+            and state["hero"]["cell"]!=workflow(p).bank:
+        return False  # The quote owns this test bank as well as its storage.
     if not p.physical_ledger.inventory_available(
             Scope.of(state),[candidate["id"]],getattr(p.potion_stash,"owner",None)):
         return False
@@ -151,12 +195,18 @@ def can_protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isola
     if not p.physical_ledger.inventory_available(
             Scope.of(state),[i["id"] for i in [candidate,*others]]):
         return False
+    if through_doors:
+        return any(quote_storage(p,state,c,candidate,distance,neighbors,safe_bank)
+                   for c in stash_cells(p,state,distance,neighbors,safe_bank,through_doors=True))
     return bool(stash_cells(p,state,distance,neighbors,safe_bank))
 
 
-def protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isolated_stack=False,preferred_cell=None):
+def protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isolated_stack=False,preferred_cell=None,through_doors=False):
     if p.potion_stash and workflow(p).pending:
         p.stop_obligation("potion-stash","Potion protection still lacks an accepted drop receipt")
+    if p.potion_stash and workflow(p).storage_itinerary \
+            and state["hero"]["cell"]!=workflow(p).bank:
+        p.stop_obligation("potion-stash","Cross-door storage cannot hand off to a different test bank")
     if not p.physical_ledger.inventory_available(
             Scope.of(state),[candidate["id"]],getattr(p.potion_stash,"owner",None)):
         p.stop_obligation("potion-stash","Potion candidate belongs to another workflow")
@@ -177,16 +227,21 @@ def protect_potions(p,state,candidate,distance,neighbors,safe_bank, *, isolated_
     if plan:
         p.stop_obligation("potion-stash","Potion stash incomplete: other potions remain before potential frost drink")
     bank=state["hero"]["cell"]
-    paths=stash_paths(p,state)
-    stashes=stash_cells(p,state,distance,neighbors,safe_bank,all_sites=preferred_cell is not None)
+    paths=stash_paths(p,state,through_doors=through_doors)
+    stashes=stash_cells(p,state,distance,neighbors,safe_bank,all_sites=preferred_cell is not None,
+                       through_doors=through_doors)
+    quotes={c:quote_storage(p,state,c,candidate,distance,neighbors,safe_bank)
+            for c in stashes} if through_doors else {}
+    if through_doors:
+        stashes=[c for c in stashes if quotes[c]]
     if preferred_cell is not None:
         stashes=[c for c in stashes if c==preferred_cell]
     if not stashes or any("DROP" not in i.get("actions",[]) for i in others):
         p.stop_obligation("potion-stash","Potential frost test has no verified remote potion stash/drop route")
+    cell=min(stashes,key=lambda c:len(p.route(paths,c)))
     plan=StashWorkflow(
         depth=state["depth"],branch=state.get("branch",0),bank=bank,
-        cell=min(stashes,key=lambda c:len(p.route(paths,c))),
-        candidate=base_name(candidate))
+        cell=cell,candidate=base_name(candidate),storage_itinerary=quotes.get(cell))
     if not p.physical_ledger.register(plan,[i["id"] for i in [candidate,*others]]):
         p.stop_obligation("potion-stash","Potion stash resources already owned by another workflow")
     p.potion_stash=plan
@@ -209,11 +264,26 @@ def advance_stash(p,state,enemies,distance):
     if plan.steps>48:
         p.stop_obligation("potion-stash","Potion stash exceeded bounded preparation/retrieval budget")
     pos=state["hero"]["cell"]
+    contract=plan.storage_itinerary
+    if contract and (contract.scope!=Scope.of(state) or pos not in contract.route \
+                     or (plan.bank,plan.cell)!=(contract.bank,contract.cell)):
+        p.stop_obligation("potion-stash","Storage itinerary lost its scoped corridor")
+    if contract and contract.doors:
+        try:
+            from .protected_rewards import deterministic_doors
+        except ImportError:
+            from protected_rewards import deterministic_doors
+        if not deterministic_doors(state):
+            p.stop_obligation("potion-stash","Storage door timing changed under equipped bulk")
+    def transit():
+        return stash_paths(p,state,through_doors=contract is not None,
+                           corridor=contract.route if contract else None,
+                           heap=plan.cell if plan.phase==StashPhase.RETRIEVE else None)
     if plan.pending:
         p.stop_obligation("potion-stash","Potion stash drop lacks a matching accepted-action receipt")
     if plan.phase==StashPhase.DROP:
         if pos!=plan.cell:
-            return p.toward(state,plan.cell,"potion: approach remote safe stash",stash_paths(p,state),intent=Intent.REPOSITION)
+            return p.toward(state,plan.cell,"potion: approach remote safe stash",transit(),intent=Intent.REPOSITION)
         # Recheck after arrival, before changing inventory. Existing own drops
         # occupy this square on subsequent steps and are verified below.
         tile=p.tiles.get(pos,{})
@@ -234,7 +304,7 @@ def advance_stash(p,state,enemies,distance):
         plan.ready()
     if plan.phase==StashPhase.READY:
         if pos!=plan.bank:
-            return p.toward(state,plan.bank,"potion: leave stash outside frost-test radius",stash_paths(p,state),intent=Intent.REPOSITION)
+            return p.toward(state,plan.bank,"potion: leave stash outside frost-test radius",transit(),intent=Intent.REPOSITION)
         return None
     if plan.phase==StashPhase.RETRIEVE:
         if not plan.outstanding:
@@ -242,7 +312,7 @@ def advance_stash(p,state,enemies,distance):
             p.physical_ledger.finish(plan)
             p.potion_stash=None
             return None
-        paths=p.paths(state)
+        paths=transit() if contract else p.paths(state)
         if plan.cell not in paths or p.tiles[plan.cell].get("effects"):
             p.stop_obligation("potion-stash","Potion stash retrieval blocked by observed hazard or unreachable ground")
         return p.toward(state,plan.cell,"potion: retrieve protected potions before further exploration",paths,intent=Intent.LOOT)
