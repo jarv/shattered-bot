@@ -3064,5 +3064,21 @@
     "status": "deferred",
     "reason": "No safe replacement is certified. The chilling-only clearance rule cannot be extended directly: fire from the remaining plate can reach a flammable door and grass beyond it, and the existing expiry observer does not provide a complete fire-clearance transaction. Toxic gas likewise needs a justified spread and retirement envelope. Next, build a corridor regression covering the door, grass, mixed cold effects, safe activation bank, fresh expiry observations and honest payload recovery; derive conservative fire containment before selecting preparation. If containment fails, investigate the toxic corridor with a separately justified gas-retirement plan. Do not relax traversal checks or guess the unknown potion.",
     "origin_run": "000240"
+  },
+  {
+    "id": "000241-enclosed-burning-recovery",
+    "priority": "high",
+    "summary": "Establish a verified fire-enclosure recovery transaction before burning recovery exhausts.",
+    "evidence": [
+      "Decision 3813, log 10959: cell 1269 is ordinary observed floor before the selected frontier step.",
+      "Decision 3813, logs 10960–10961: accepted movement triggers the hidden burning trap.",
+      "Decision 3814, logs 10962–10963: living hero, fire-covered adjacent exits and no accepted recovery input.",
+      "tools/policy_tree.py:18–19; tools/combat_positioning.py:98–200; tools/survival_policy.py:435–471,954–1013.",
+      "Original-source isolated probe: ordinary paths contain only the hero cell; generic hazardous-room escape instead selects the burning closed door.",
+      "tools/vertigo_tactics.py:149–232; pinned PotionOfLevitation.shatter creates confusion gas after its splash."
+    ],
+    "status": "deferred",
+    "reason": "No safe replacement is certified. Source browsing resolves the selecting-source gap, but the generic alternative clicks an actively burning closed door, and a clear square beyond another flame does not establish survivable ongoing burning. The known levitation splash instead introduces renewing confusion exposure without an admitted low-health continuation. Next derive paired departure/ignition fixtures and prove either an input-aware, damage-funded fire-retirement route or a stationary splash-and-gas-retirement transaction with interruption and fresh-observation checks. Then require a new original-red/candidate-green regression. Do not merely reorder the controllers, extend waits, relax fire or confusion checks, guess potion identities, or abandon mandatory progression.",
+    "origin_run": "000241"
   }
 ]
