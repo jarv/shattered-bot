@@ -3019,5 +3019,20 @@
     "status": "deferred",
     "reason": "The report establishes failed bank/journey admission but does not isolate its rejecting conjunct. Original room-attempt exclusions, deferred controllers, pool-approach receipts and revisit bookkeeping have not been reconstructed; substituting fresh snapshot defaults would not justify relaxing them. Next reconstruct original selections and accepted feedback through decisions 1436 and 2100, stop at the first divergence, and enumerate bank, entrance and return-budget rejections on validated copies. Require an executable preparation transaction and new regression, not guessed invisibility or collection credit.",
     "origin_run": "000237"
+  },
+  {
+    "id": "000238-pool-preparation-and-reobservation",
+    "priority": "high",
+    "summary": "Establish executable pool preparation and reconcile the missing reward target after remote awareness.",
+    "evidence": [
+      "Decision 57, log lines 173–174: chest 85 observed from doorway 194 before exploration continues.",
+      "Decision 215, log lines 621–622: accepted awareness-well visit.",
+      "Decisions 216–217, log lines 623 and 626: remote pedestal marked visible without its chest object.",
+      "Decision 232, log lines 671–673: outstanding pool reward blocks descent; no recovery input is accepted.",
+      "tools/survival_policy.py:388–396; tools/puzzle_supplies.py:285–322,971–1029; tools/room_tactics.py:234–357; tools/mage_policy.py:443–458."
+    ],
+    "status": "deferred",
+    "reason": "Validated reconstruction resolves the original selecting-state uncertainty, but no jointly safe unknown-drink bank, potion storage and protected reward return is established. The nearby approach includes grass, while post-awareness loot memory lacks the chest target. Restoring that target alone would not repair preparation or certify current reward presence. Next derive paired entrance and post-awareness fixtures, establish authoritative reward reobservation without collection credit, and prove a positive testing/storage/retrieval transaction with unchanged hazard and actual-buff return gates before adding an original-red/candidate-green regression.",
+    "origin_run": "000238"
   }
 ]

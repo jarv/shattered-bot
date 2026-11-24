@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "id": "000238",
+  "started_at": "2026-11-24T04:42:21Z",
+  "completed_at": "2026-11-24T04:44:28.190736+00:00",
+  "source_commit": "edccd2966b32f338219665ad84c0c659916ccbf8",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "optional-work-exhausted",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 232,
+  "duration_seconds": 124.327,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000237",
+  "previous_source_commit": "cae2ab7fcfa8a91ae0d0a5bbbf32a6dacb783834",
+  "improvements": [],
+  "code_changed": false,
+  "incoming_learnings": "An adjacent cell click can execute repeated randomized movement before the next observation. Immediate landing checks and synthetic one-step receipts do not prove whole-input safety. Preserve terminal exhaustion, unknown-terrain checks, mandatory pickups and honest collection receipts; fallback descent does not repair unfinished preparation.",
+  "incoming_update_status": "review-only",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health when the planner stopped. Decision 57 (log line 173) observed the pool chest; decision 232 (lines 671–673) blocked descent because it remained uncollected, and recovery accepted no actions because mandatory potion discovery remained. Offline reconstruction matched original actions and reasons through decision 231 and reproduced the pool veto. No executable testing, storage and protected retrieval transaction was selected. An additional obstruction appeared after the awareness-well visit: decisions 216–217 marked the remote chest tile visible without exporting its object, causing ordinary loot memory to drop the target while the pool obligation correctly remained uncollected. Terminal probes found no admitted journey, including from the entrance. No patch is proposed: retaining the missing target alone does not prove safe preparation through the grassy approach with unidentified potions. Complete source and reconstruction resolved the selecting-state gap, but not replacement safety. The unchanged Python suite passed 2260 tests with four skips.",
+    "learnings": "An unresolved pool objective needs an executable preparation transaction, not merely a descent veto. Remote awareness visibility and missing chest objects must not be treated as collection evidence. Preserve unknown-potion, storage, habitat and protection-funded return checks."
+  },
+  "recommendations": [
+    {
+      "id": "000238-pool-preparation-and-reobservation",
+      "priority": "high",
+      "summary": "Establish executable pool preparation and reconcile the missing reward target after remote awareness.",
+      "evidence": [
+        "Decision 57, log lines 173–174: chest 85 observed from doorway 194 before exploration continues.",
+        "Decision 215, log lines 621–622: accepted awareness-well visit.",
+        "Decisions 216–217, log lines 623 and 626: remote pedestal marked visible without its chest object.",
+        "Decision 232, log lines 671–673: outstanding pool reward blocks descent; no recovery input is accepted.",
+        "tools/survival_policy.py:388–396; tools/puzzle_supplies.py:285–322,971–1029; tools/room_tactics.py:234–357; tools/mage_policy.py:443–458."
+      ],
+      "status": "deferred",
+      "reason": "Validated reconstruction resolves the original selecting-state uncertainty, but no jointly safe unknown-drink bank, potion storage and protected reward return is established. The nearby approach includes grass, while post-awareness loot memory lacks the chest target. Restoring that target alone would not repair preparation or certify current reward presence. Next derive paired entrance and post-awareness fixtures, establish authoritative reward reobservation without collection credit, and prove a positive testing/storage/retrieval transaction with unchanged hazard and actual-buff return gates before adding an original-red/candidate-green regression.",
+      "origin_run": "000238"
+    }
+  ],
+  "update_status": "review-only",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000238/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000238/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 9,
+        "gold_gained": 123,
+        "turns": 225,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 226,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 223
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool landmark",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Piranha pool",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 9,
+    "ending_level": 1,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 1,
+    "gold_collected": 123,
+    "gold_complete": true,
+    "turns": 225,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 0,
+        "levels_complete": true,
+        "max_level": 1,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
