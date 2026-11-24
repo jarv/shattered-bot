@@ -2991,5 +2991,33 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000236"
+  },
+  {
+    "id": "000237-vertigo-click-containment",
+    "priority": "high",
+    "summary": "Establish whole-input safety for vertigo movement instead of assuming an adjacent click is one attempt.",
+    "evidence": [
+      "Decision 3729, log lines 10628–10629: exploration enters apparently ordinary floor and reveals confusion exposure.",
+      "Decision 3730, log lines 10631–10632: immediate landing envelope excludes the eventual endpoint; one input advances seven turns.",
+      "Decision 3731, log lines 10635–10636: renewed gas and unchecked flanking terrain leave no admitted escape.",
+      "tools/vertigo_tactics.py:73–113,149–221; tools/survival_policy.py:187–188; pinned game Hero.actMove/getCloser and Char.move."
+    ],
+    "status": "deferred",
+    "reason": "The API exposes normal cell pathfinding, not an interruptible single-attempt move; changing that contract requires protected source. No eligible known-resource rescue or complete settled-click containment certificate is established for this inventory and evolving cloud. An earlier veto alone is not a progress repair. Next derive paired decision-3729/3730/3731 fixtures and a source-pinned whole-click envelope, including repeated random attempts and renewing gas, then require a positive safe rescue or containment regression before changing selection. Preserve unknown-neighbor, hazard and terminal checks.",
+    "origin_run": "000237"
+  },
+  {
+    "id": "000237-pool-round-trip-preparation",
+    "priority": "high",
+    "summary": "Identify and repair the pool preparation admission failure that preceded fallback descent.",
+    "evidence": [
+      "Decision 1436, log line 4157: pool chest 1602 is publicly observed.",
+      "Decision 2100, log line 6059: unfinished chest and no verified protected reward round trip trigger a planner incident.",
+      "Decisions 2100–2108, log lines 6062–6111: nine accepted recovery inputs culminate in descent without collection credit.",
+      "tools/puzzle_supplies.py:285–322,971–1018; tools/room_tactics.py:234–357; tools/mage_policy.py:439–458."
+    ],
+    "status": "deferred",
+    "reason": "The report establishes failed bank/journey admission but does not isolate its rejecting conjunct. Original room-attempt exclusions, deferred controllers, pool-approach receipts and revisit bookkeeping have not been reconstructed; substituting fresh snapshot defaults would not justify relaxing them. Next reconstruct original selections and accepted feedback through decisions 1436 and 2100, stop at the first divergence, and enumerate bank, entrance and return-budget rejections on validated copies. Require an executable preparation transaction and new regression, not guessed invisibility or collection credit.",
+    "origin_run": "000237"
   }
 ]
