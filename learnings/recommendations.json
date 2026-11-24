@@ -3397,5 +3397,35 @@
     "status": "rejected",
     "reason": "Candidate validation failed; code was not promoted.",
     "origin_run": "000262"
+  },
+  {
+    "id": "000263-frost-prerequisite-provisioning",
+    "priority": "high",
+    "summary": "Provision the remaining mandatory frost-room hypotheses before exhausting usable preparation.",
+    "evidence": [
+      "D356, log 991: puzzle meal; silver singleton and golden x2.",
+      "D362, log 1010: golden x2 drop verified.",
+      "D366, logs 1020–1021: silver test produces invisibility.",
+      "D386, log 1082: nonhungry preparation still declines.",
+      "D583–584, logs 1612–1617: fire-blocked upgrade and terminal mandatory-preparation failure.",
+      "tools/puzzle_supplies.py:816–828,875–956; tools/potion_stash.py:174–248."
+    ],
+    "status": "deferred",
+    "reason": "No safe patch is established. The remaining unidentified two-dose stack lacks a protected bag or usable identification resource, and ordinary DROP cannot separate one dose. Allowing its frost test would weaken existing collateral protection. Next, build a D356 multi-candidate prerequisite quote covering silver's possible nonfrost result, then establish an observed identification/protection acquisition and safe route before scheduling it. Any proposed single-dose separation needs public action and quantity receipts first; source inspection alone does not supply that capability.",
+    "origin_run": "000263"
+  },
+  {
+    "id": "000263-pool-preparation-exhaustion",
+    "priority": "high",
+    "summary": "Resolve pool preparation exhaustion rather than treating recovery descent as completion.",
+    "evidence": [
+      "D133, log 349: pool recognized after ordinary recovery inputs were spent.",
+      "D243, log 656: chest remains pending with 17/25 HP.",
+      "D272–273, logs 744–749: last healing leaves 21/25 HP and planner incident.",
+      "D274, logs 756–757: accepted recovery descent; no collection credit."
+    ],
+    "status": "deferred",
+    "reason": "The recorded hero remained below the near-full unknown-test threshold after available healing. No safe pool experiment and protected retrieval at that health was established. A repair must first quote an evidenced health-funded preparation and return transaction from the original pool approach; increasing the wait allowance or reducing test-health admission is not supported. The accepted descent only deferred the unfinished chest.",
+    "origin_run": "000263"
   }
 ]
