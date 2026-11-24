@@ -102,6 +102,10 @@ def accepted_navigation(p,state,decision,after):
 
 def choose(p,state,paths,skipped):
     try:
+        from .special_rooms import container_name
+    except ImportError:
+        from special_rooms import container_name
+    try:
         from .survival_policy import DOOR_KEYS,TRANSITIONS,AVOID_CONTAINERS
     except ImportError:
         from survival_policy import DOOR_KEYS,TRANSITIONS,AVOID_CONTAINERS
@@ -138,7 +142,7 @@ def choose(p,state,paths,skipped):
             continue
         if cell not in paths or cell in skipped or cell in p.blocked or obj.get('for_sale') \
                 or p.tiles[cell]['terrain'] in TRANSITIONS or suspicious_container(obj):continue
-        if any(word in name for word in AVOID_CONTAINERS) and cell not in p.allowed_chests:continue
+        if any(word in container_name(obj) for word in AVOID_CONTAINERS) and cell not in p.allowed_chests:continue
         if 'locked chest' in name and not p.keys.get('golden',0):continue
         if not p.exploration_loot_allowed(state,cell,paths):continue
         if p.room_loot_deferred.get(cell)==inventory_context(state):continue

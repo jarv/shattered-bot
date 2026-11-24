@@ -2861,5 +2861,33 @@
     "status": "deferred",
     "reason": "The current ranged helper explicitly requires fresh visibility of all 81 enclosure cells; no recorded observation satisfies it. Removing that requirement would relax a hazard check, while guessed movement or unknown potion effects cannot certify an alternative. The next concrete step is a bounded one-shot enclosure certificate, with pinned-source validation of dry-boundary persistence and terrain-changing hazards, followed by a large-aquarium regression and stale-boundary negative cases. Retain live projectile checks, whole-shore exclusion and mandatory pickup receipts. No replacement safety proof or patch is claimed here.",
     "origin_run": "000226"
+  },
+  {
+    "id": "000227-skeleton-key-heap",
+    "priority": "high",
+    "summary": "Do not classify a corroborated skeleton key item heap as an unopened crypt container.",
+    "evidence": [
+      "Decision 276, log lines 806–808: opening chest 148 reveals a skeleton key top_item without pickup.",
+      "Decision 277, log lines 809–811: the item remains visible when planning exhausts.",
+      "tools/special_rooms.py:95; tools/survival_policy.py:444–450; tools/region_navigation.py:141 in the played source.",
+      "Source-pinned offline reconstruction matches indices 0–276; an isolated corrected terminal selection chooses pickup at 148."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000227"
+  },
+  {
+    "id": "000227-sentry-staging-envelope",
+    "priority": "high",
+    "summary": "Provide executable preparation for a complete sentry room whose safe entrance lies outside the testing envelope.",
+    "evidence": [
+      "Decisions 232 and 242, log lines 674 and 704: chest 1236 and red sentry 1447 are observed.",
+      "Decision 277, log line 809: missing haste reservation and all four preparation prerequisites remain blocked.",
+      "Validated original terminal reconstruction: complete sentry geometry, but no reachable cell within the distance-five test envelope.",
+      "tools/puzzle_supplies.py:574–605,977–1014; tools/descent_potions.py:350–392."
+    ],
+    "status": "deferred",
+    "reason": "This independent preparation defect is not repaired by the single heap-classification change. The concrete safety blocker is the absence of a validated outside-envelope testing and return transaction: ordinary entrance water is six rows from the sentry, while nearer access crosses defended carpet. Complete source and reconstruction resolved the missing-state gap, not replacement safety. Next derive paired entrance and terminal fixtures proving inventory isolation, unknown-effect recovery, fresh arrival and an actual-haste-funded reward return before changing staging. Do not simply remove the proximity check, infer protection or abandon the obligation.",
+    "origin_run": "000227"
   }
 ]

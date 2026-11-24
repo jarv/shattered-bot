@@ -1,9 +1,9 @@
 """Descent obligations from observed puzzles/rewards, never generated room IDs."""
 try:
-    from .special_rooms import component, fire_barrier
+    from .special_rooms import component, fire_barrier, container_name
     from .room_tactics import sentry_geometry
 except ImportError:
-    from special_rooms import component, fire_barrier
+    from special_rooms import component, fire_barrier, container_name
     from room_tactics import sentry_geometry
 
 
@@ -44,7 +44,7 @@ def obligations(p, state):
         name = obj["name"].lower()
         if cell in p.resolved_crystal_alternatives:
             continue
-        if cell in p.room_skipped or any(word in name for word in ("tomb","skeleton","crystal chest","locked chest")):
+        if cell in p.room_skipped or any(word in container_name(obj) for word in ("tomb","skeleton","crystal chest","locked chest")):
             pending.append({"kind":"uncollected special-room reward","cell":cell,"name":obj["name"]})
         else:
             pending.append({'kind':'uncollected observed item/chest','cell':cell,'name':obj['name']})
