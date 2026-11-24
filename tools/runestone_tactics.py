@@ -120,9 +120,16 @@ def prepare_intuition(p, state, guess=None, candidate=None):
         # preparation declines. Do not spend that same admitted stone on an
         # unrelated default while missing frost blocks discovery. This is only
         # a declared hypothesis, never a drink permit or an identity receipt.
-        if any(d.kind == "frost" for d in requirements(p, state)) \
+        needs = requirements(p, state)
+        if any(d.kind == "frost" for d in needs) \
                 and not counts(state)["potion of frost"]:
             choice = "potion of frost"
+        elif any(d.kind == "pool" for d in needs) \
+                and not counts(state)["potion of invisibility"]:
+            # The same information window must not repeatedly cancel an
+            # unavailable default while an observed pool still needs a supply.
+            # This changes only the declared guess, never drink/route admission.
+            choice = "potion of invisibility"
     p.intuition_attempts.add(item["name"])
     p.intuition_plan = {"item": item["name"].lower(), "guess": choice, "stage": "item", "steps": 0, "bags": set()}
     return p.use(stone, "USE", "stone: test declared identity hypothesis without drinking unknown potion")

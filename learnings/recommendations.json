@@ -2909,15 +2909,29 @@
     "priority": "high",
     "summary": "Establish an executable, safely funded preparation transaction for an unfinished pool before descent becomes the only proposed progress.",
     "evidence": [
-      "Decision 1413, log line 4122: chest 1381 and three giant piranhas first appear; the hungry hero has no food or known invisibility.",
-      "Decision 1420, log line 4138: the pool reward is explicitly pending, but the supply controller declines and exploration proceeds.",
-      "Decision 1495, log lines 4357–4359: the pool descent veto leads to blink fallback, without collection credit.",
-      "Decision 1537, accepted log line 4498: waterskin restores one HP but does not resolve the missing preparation.",
-      "Decision 1538, log lines 4499–4500: planner exhaustion with full health; recovery rejects escape or hunger admission.",
-      "tools/piranha_tactics.py:choose; tools/puzzle_supplies.py:142–191,718–817,977–1039; tools/mage_policy.py:444–458; tools/floor_abandonment.py:route."
+      "Decisions 876–884, log lines 2620–2642: stash preparation returns toward the testing bank.",
+      "Decisions 885–886, log lines 2645–2648: ordinary loot travel alternates with returning to the stash bank.",
+      "Decision 943, log lines 2841–2843: stash budget exhaustion disables potion-supply preparation.",
+      "Decision 1270, log line 3753: optional-work-exhausted pool incident; decision 1293, log line 3896: actual recovery descent without collection credit.",
+      "tools/potion_stash.py:163–205; tools/puzzle_supplies.py:975–1029; tools/tactical_recovery.py:29–46."
     ],
     "status": "deferred",
-    "reason": "No safe focused patch is established. The initiating and terminal inventories lack food, identified invisibility and non-drinking identification supplies. An independent first-sighting fixture admits neither a fresh testing bank nor a dry-approach journey, even with hunger removed on an isolated copy. Lowering hunger or hazard checks would therefore not certify a replacement. Next derive paired first-sighting and surveyed-exterior fixtures, preflight a dry observation approach with fresh arrival, remote storage, protection-funded reward return and an actual hunger source, then add a new original-red/candidate-green regression for the executable handoff. If those resources cannot support preparation, separately certify dry-bank ranged pool clearance; the existing aquarium helper is not sufficient evidence. Preserve mandatory pickups and terminal exhaustion.",
+    "reason": "The hypothesis correction does not repair the earlier stash handoff. The recording omits the mutable ready-stash, journey and controller state needed to identify which bank-admission conjunct declined at decision 885. Complete source explains the subsequent disabling chain but does not certify replacement safety. Next reconstruct original selection and accepted feedback through decision 884, validate every earlier input, then isolate decision 885 bank, entrance, inventory-protection and return prerequisites before changing the transaction. Do not extend waiting bounds or weaken hazard and collection checks.",
     "origin_run": "000229"
+  },
+  {
+    "id": "000232-pool-intuition-hypothesis",
+    "priority": "high",
+    "summary": "Target missing pool invisibility during already-admitted generic intuition attempts.",
+    "evidence": [
+      "Decision 1155, log line 3475: intuition stone use with unknown azure and jade potions.",
+      "Decisions 1156–1157, log lines 3477–3479: azure selection followed by cancellation despite a rendered invisibility option.",
+      "Decisions 1158–1160 and 1246–1248: the same unavailable-hypothesis cancellation recurs.",
+      "Decision 1270, log line 3753: unfinished pool causes a recovered planner incident.",
+      "tools/runestone_tactics.py: prepare_intuition and intuition_menu; tools/mage_policy.py:1424–1432."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000232"
   }
 ]
