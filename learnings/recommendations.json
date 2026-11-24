@@ -3341,5 +3341,31 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000258"
+  },
+  {
+    "id": "000260-enchanted-aquarium-missile",
+    "priority": "high",
+    "summary": "Recognize enchanted magic-missile staffs in guarded aquarium resource preparation.",
+    "evidence": [
+      "Decision 1928, log line 5552: charged chilling missile staff, visible aquarium and key; exploration selected.",
+      "Decision 2327, log line 6696: mandatory iron key excluded by aquarium hazard barrier.",
+      "tools/priority_resources.py:175-244: stationary missile preparation and identity filter."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000260"
+  },
+  {
+    "id": "000260-pool-trip-rejection",
+    "priority": "high",
+    "summary": "Identify the first protected-trip prerequisite that stranded the earlier pool reward.",
+    "evidence": [
+      "Decision 770, log line 2205: pool reward unresolved; no verified protected round trip.",
+      "Decision 788, log lines 2317-2318: accepted fallback descent, no collection credit.",
+      "tools/puzzle_supplies.py:1044-1099: bank, protected journey, entrance and storage admission."
+    ],
+    "status": "deferred",
+    "reason": "No second repair is supported yet: individual bank/journey/storage rejection results and contemporaneous pool approach receipts and revisit expenditure were not recorded. Source inspection resolved the selecting chain but not its first rejected prerequisite. Next, validate original offline selections through decision 770 and extract those rejection reasons, stopping at the first mismatch. Unknown potion effects and an unsafe return cannot be assumed.",
+    "origin_run": "000260"
   }
 ]

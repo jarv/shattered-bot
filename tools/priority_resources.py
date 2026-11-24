@@ -191,8 +191,13 @@ def clear_aquarium_resource(p,state):
             or not tile.get('visible') or tile.get('terrain') not in {1,2,3,6,9,11,14,19,20,29} \
             or any(tile.get(k) for k in ('effects','plant','trap')):
         return None
-    missile=next((i for i in state['inventory'] if
-        re.sub(r' [+-]\d+$','',base_name(i)) in {'staff of magic missile','wand of magic missile'}
+    # Staff names include their visible melee enchantment before the imbued
+    # wand's staff name. That prefix does not change the known ZAP effect.
+    def missile_name(item):
+        name=re.sub(r' [+-]\d+$','',base_name(item))
+        return name in {'staff of magic missile','wand of magic missile'} \
+            or name.endswith(' staff of magic missile')
+    missile=next((i for i in state['inventory'] if missile_name(i)
         and i.get('identified') and i.get('curse_known') and not i.get('known_cursed')
         and (i.get('status') or '?').split('/')[0].isdigit()
         and int(i['status'].split('/')[0])>0 and 'ZAP' in i.get('actions',[])
