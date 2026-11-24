@@ -111,15 +111,57 @@
           "action_to": 214
         }
       ]
+    },
+    {
+      "id": "000274",
+      "outcome": "stuck-planner",
+      "observations": [
+        {
+          "signature": "8555d0da008d7fff",
+          "kind": "planner-stop:mandatory-preparation-unresolved",
+          "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+          "depth": 1,
+          "cell": 996,
+          "action_from": 199,
+          "action_to": 222
+        },
+        {
+          "signature": "bc7e2639d2768035",
+          "kind": "planner-incident",
+          "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+          "depth": 1,
+          "cell": 996,
+          "action_from": 199,
+          "action_to": 223
+        }
+      ]
     }
   ],
   "symptom_groups": [
+    {
+      "signature": "8555d0da008d7fff",
+      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+      "run_ids": [
+        "000273",
+        "000274"
+      ],
+      "run_count": 2
+    },
     {
       "signature": "978b37be6c47758c",
       "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
       "run_ids": [
         "000270",
         "000272"
+      ],
+      "run_count": 2
+    },
+    {
+      "signature": "bc7e2639d2768035",
+      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+      "run_ids": [
+        "000273",
+        "000274"
       ],
       "run_count": 2
     },
@@ -162,25 +204,9 @@
         "000272"
       ],
       "run_count": 1
-    },
-    {
-      "signature": "8555d0da008d7fff",
-      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
-      "run_ids": [
-        "000273"
-      ],
-      "run_count": 1
-    },
-    {
-      "signature": "bc7e2639d2768035",
-      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
-      "run_ids": [
-        "000273"
-      ],
-      "run_count": 1
     }
   ],
   "outcomes": {
-    "stuck-planner": 4
+    "stuck-planner": 5
   }
 }

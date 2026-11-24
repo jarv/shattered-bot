@@ -1,0 +1,230 @@
+{
+  "schema_version": 1,
+  "run_id": "000274",
+  "source_commit": "6bae50023c50e6e947da72c3079ea61b66be33f2",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "batch": {
+    "id": "000270",
+    "index": 5,
+    "size": 10,
+    "source_commit": "6bae50023c50e6e947da72c3079ea61b66be33f2",
+    "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa"
+  },
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000274/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000274/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 199,
+      "depth": 1,
+      "cell": 783,
+      "type": "cell",
+      "target_cell": 823
+    },
+    {
+      "index": 200,
+      "depth": 1,
+      "cell": 783,
+      "type": "talent"
+    },
+    {
+      "index": 201,
+      "depth": 1,
+      "cell": 783,
+      "type": "cell",
+      "target_cell": 826,
+      "intent": "explore"
+    },
+    {
+      "index": 202,
+      "depth": 1,
+      "cell": 826,
+      "type": "cell",
+      "target_cell": 869,
+      "intent": "explore"
+    },
+    {
+      "index": 203,
+      "depth": 1,
+      "cell": 869,
+      "type": "cell",
+      "target_cell": 912,
+      "intent": "explore"
+    },
+    {
+      "index": 204,
+      "depth": 1,
+      "cell": 912,
+      "type": "cell",
+      "target_cell": 956,
+      "intent": "explore"
+    },
+    {
+      "index": 205,
+      "depth": 1,
+      "cell": 956,
+      "type": "cell",
+      "target_cell": 1001,
+      "intent": "explore"
+    },
+    {
+      "index": 206,
+      "depth": 1,
+      "cell": 1001,
+      "type": "cell",
+      "target_cell": 1044,
+      "intent": "explore"
+    },
+    {
+      "index": 207,
+      "depth": 1,
+      "cell": 1044,
+      "type": "cell",
+      "target_cell": 1089,
+      "intent": "explore"
+    },
+    {
+      "index": 208,
+      "depth": 1,
+      "cell": 1089,
+      "type": "cell",
+      "target_cell": 1134,
+      "intent": "explore"
+    },
+    {
+      "index": 209,
+      "depth": 1,
+      "cell": 1134,
+      "type": "cell",
+      "target_cell": 1179,
+      "intent": "explore"
+    },
+    {
+      "index": 210,
+      "depth": 1,
+      "cell": 1179,
+      "type": "cell",
+      "target_cell": 1134,
+      "intent": "explore"
+    },
+    {
+      "index": 211,
+      "depth": 1,
+      "cell": 1134,
+      "type": "cell",
+      "target_cell": 1089,
+      "intent": "explore"
+    },
+    {
+      "index": 212,
+      "depth": 1,
+      "cell": 1089,
+      "type": "cell",
+      "target_cell": 1044,
+      "intent": "explore"
+    },
+    {
+      "index": 213,
+      "depth": 1,
+      "cell": 1044,
+      "type": "cell",
+      "target_cell": 1000,
+      "intent": "explore"
+    },
+    {
+      "index": 214,
+      "depth": 1,
+      "cell": 1000,
+      "type": "cell",
+      "target_cell": 956,
+      "intent": "explore"
+    },
+    {
+      "index": 215,
+      "depth": 1,
+      "cell": 956,
+      "type": "cell",
+      "target_cell": 911,
+      "intent": "explore"
+    },
+    {
+      "index": 216,
+      "depth": 1,
+      "cell": 911,
+      "type": "cell",
+      "target_cell": 866,
+      "intent": "explore"
+    },
+    {
+      "index": 217,
+      "depth": 1,
+      "cell": 866,
+      "type": "cell",
+      "target_cell": 865,
+      "intent": "explore"
+    },
+    {
+      "index": 218,
+      "depth": 1,
+      "cell": 865,
+      "type": "cell",
+      "target_cell": 908,
+      "intent": "explore"
+    },
+    {
+      "index": 219,
+      "depth": 1,
+      "cell": 908,
+      "type": "cell",
+      "target_cell": 952,
+      "intent": "explore"
+    },
+    {
+      "index": 220,
+      "depth": 1,
+      "cell": 952,
+      "type": "cell",
+      "target_cell": 996,
+      "intent": "explore"
+    },
+    {
+      "index": 221,
+      "depth": 1,
+      "cell": 996,
+      "type": "cell",
+      "target_cell": 1040,
+      "intent": "explore"
+    },
+    {
+      "index": 222,
+      "depth": 1,
+      "cell": 1040,
+      "type": "cell",
+      "target_cell": 996,
+      "intent": "retreat"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "8555d0da008d7fff",
+      "kind": "planner-stop:mandatory-preparation-unresolved",
+      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+      "depth": 1,
+      "cell": 996,
+      "action_from": 199,
+      "action_to": 222
+    },
+    {
+      "signature": "bc7e2639d2768035",
+      "kind": "planner-incident",
+      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+      "depth": 1,
+      "cell": 996,
+      "action_from": 199,
+      "action_to": 223
+    }
+  ],
+  "prior_review_attempt": false
+}
