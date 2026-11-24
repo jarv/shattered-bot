@@ -1,11 +1,14 @@
 """Single-attacker retreats with separate public ground/flying approach geometry."""
 from collections import deque
+from math import ceil
 try:
+    from .combat_items import stats
     from .policy_geometry import distance,neighbors
     from .challenge_combat import reach,visibly_accelerated
     from .policy_decision import Intent
     from .retreat_geometry import onward_exit
 except ImportError:
+    from combat_items import stats
     from policy_geometry import distance,neighbors
     from challenge_combat import reach,visibly_accelerated
     from policy_decision import Intent
@@ -32,6 +35,17 @@ def approach_pressure(p,state,enemies,cell):
     Flyers may instead occupy distinct adjacent pit/trap-field flank slots.
     """
     width,height=state['map']['width'],state['map']['height'];options=[]
+    # Identified over-strength armor makes a hero move take longer than one
+    # turn. Round enemy approach opportunities upward: exact actor timing is
+    # not public. Unknown armor requirements and hidden ring effects are not
+    # inferred here, nor is this envelope a prediction of actual enemy actions.
+    strength=state['hero'].get('strength')
+    move_delay=1
+    if isinstance(strength,(int,float)):
+        for item in state.get('inventory',[]):
+            value=stats(item) if item.get('equipped') and item.get('identified') else None
+            if value and value[0]=='armor' and value[2]>strength:
+                move_delay=max(move_delay,1.2**(value[2]-strength))
     for enemy in enemies:
         if enemy.get('sleeping'):continue
         slots=set()
@@ -49,7 +63,8 @@ def approach_pressure(p,state,enemies,cell):
             and cell==state['hero']['cell']==hold['hide'] and enemy['cell']==hold['door'] and not fast \
             and enemy['name'].lower() in {'marsupial rat','albino rat'} \
             and distance(cell,enemy['cell'],width)<=1
-        for _ in range(0 if profile.movement=='stationary' or contact_rat else 2 if fast else 1):
+        steps=0 if profile.movement=='stationary' or contact_rat else ceil(move_delay*(2 if fast else 1))
+        for _ in range(steps):
             front={n for start in front for n in neighbors(start,width,height) if n!=cell and footable(p,enemy,n)}-positions
             positions.update(front)
         for candidate in positions:

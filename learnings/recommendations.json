@@ -2976,5 +2976,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000235"
+  },
+  {
+    "id": "000236-encumbered-retreat-envelope",
+    "priority": "high",
+    "summary": "Account for publicly known armor slowdown when evaluating multi-enemy retreat approaches.",
+    "evidence": [
+      "Decision 404, selection line 1165 and accepted receipt 1166: unknown-ring equip reveals a curse and reduces observed strength.",
+      "Decisions 749–755, accepted receipts 2149–2179: retreat moves cost approximately 1.2 turns with strength 9 and identified armor requiring 10.",
+      "Decision 755, selection line 2178: endpoint 235 is admitted with one approach slot while a fly, rat and fast crab are closing.",
+      "Decisions 758–760, accepted receipts 2191, 2193 and 2196: health falls to zero after retreat options are exhausted.",
+      "tools/multi_enemy_tactics.py:31–80 and 174–177: approach estimates govern endpoint admission."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000236"
   }
 ]
