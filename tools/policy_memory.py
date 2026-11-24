@@ -74,6 +74,7 @@ class NavigationMemory:
     frost_view_attempts: set = local(set)
     combat_deferred_loot: set = local(set)
     room_loot_plan: object = value(None, floor=True)
+    resource_view_plan: object = value(None, floor=True)
     room_loot_deferred: dict = local(dict)
     fire_buffer: set = local(set)
     fire_spread_buffer: set = local(set)

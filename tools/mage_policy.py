@@ -374,6 +374,21 @@ class MagePolicy(SurvivalPolicy):
         # Policy metadata is local configuration, never inferred private game state.
         state = dict(state, policy_rules=self.rules.as_dict())
         decision = super().choose(state)
+        if decision.intent==Intent.DESCEND and self.unit_strategies_enabled:
+            try:
+                from .priority_resources import targets as progression_targets
+                from .pickup_priority import food as priority_food
+                from .resource_reobservation import choose as reobserve
+            except ImportError:
+                from priority_resources import targets as progression_targets
+                from pickup_priority import food as priority_food
+                from resource_reobservation import choose as reobserve
+            required={c:o for c,o in progression_targets(self).items()
+                      if not priority_food(o.get('top_item',o))}
+            if required:
+                observation=reobserve(self,state,required,
+                    [o for o in state.get('objects',[]) if is_hostile(o)],start=True)
+                if observation:decision=observation
         if state.get('scene')=='GameScene':
             try:
                 from .great_crab_tactics import guard_movement

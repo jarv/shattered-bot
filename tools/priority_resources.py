@@ -235,6 +235,11 @@ def clear_aquarium_resource(p,state):
 
 def choose(p,state,enemies):
     resources=targets(p)
+    try:
+        from .resource_reobservation import refresh
+    except ImportError:
+        from resource_reobservation import refresh
+    refresh(p,state,resources)
     if resources and hasattr(p,'planner'):
         p.planner.report['priority_resource']=diagnostics(p,state,enemies)
     if enemies or p.recent_threats or state.get('danger_cells') or state.get('status')!='ready' or state.get('modal'):return None
@@ -282,6 +287,12 @@ def choose(p,state,enemies):
             from puzzle_supplies import prepare_supplies
         preparation=prepare_supplies(p,state,enemies,distance,neighbors)
         if preparation:return preparation
+        try:
+            from .resource_reobservation import choose as reobserve
+        except ImportError:
+            from resource_reobservation import choose as reobserve
+        observation=reobserve(p,state,resources,enemies)
+        if observation:return observation
         if any(cell not in paths and (base_name(obj.get('top_item',obj)) in NAMES
                                      or base_name(obj.get('top_item',obj)).endswith(' key'))
                for cell,obj in resources.items()):
