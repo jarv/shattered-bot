@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "run_id": "000282",
+  "source_commit": "440c3d3f15dd49567008c218a4f7a4008ee5f491",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000282/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000282/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 1471,
+      "depth": 3,
+      "cell": 1201,
+      "type": "cell",
+      "target_cell": 1166,
+      "intent": "explore"
+    },
+    {
+      "index": 1472,
+      "depth": 3,
+      "cell": 1166,
+      "type": "cell",
+      "target_cell": 1201,
+      "intent": "reposition"
+    },
+    {
+      "index": 1473,
+      "depth": 3,
+      "cell": 1201,
+      "type": "cell",
+      "target_cell": 1200,
+      "intent": "reposition"
+    },
+    {
+      "index": 1474,
+      "depth": 3,
+      "cell": 1200,
+      "type": "cell",
+      "target_cell": 1199,
+      "intent": "reposition"
+    },
+    {
+      "index": 1475,
+      "depth": 3,
+      "cell": 1199,
+      "type": "cell",
+      "target_cell": 1162,
+      "intent": "reposition"
+    },
+    {
+      "index": 1476,
+      "depth": 3,
+      "cell": 1162,
+      "type": "cell",
+      "target_cell": 1125,
+      "intent": "reposition"
+    },
+    {
+      "index": 1477,
+      "depth": 3,
+      "cell": 1125,
+      "type": "cell",
+      "target_cell": 1089,
+      "intent": "reposition"
+    },
+    {
+      "index": 1478,
+      "depth": 3,
+      "cell": 1089,
+      "type": "cell",
+      "target_cell": 1052,
+      "intent": "reposition"
+    },
+    {
+      "index": 1479,
+      "depth": 3,
+      "cell": 1052,
+      "type": "cell",
+      "target_cell": 1051,
+      "intent": "retreat"
+    },
+    {
+      "index": 1480,
+      "depth": 3,
+      "cell": 1051,
+      "type": "cell",
+      "target_cell": 1086,
+      "intent": "retreat"
+    },
+    {
+      "index": 1481,
+      "depth": 3,
+      "cell": 1086,
+      "type": "cell",
+      "target_cell": 1121,
+      "intent": "retreat"
+    },
+    {
+      "index": 1482,
+      "depth": 3,
+      "cell": 1121,
+      "type": "wait"
+    },
+    {
+      "index": 1483,
+      "depth": 3,
+      "cell": 1121,
+      "type": "wait"
+    },
+    {
+      "index": 1484,
+      "depth": 3,
+      "cell": 1121,
+      "type": "wait"
+    },
+    {
+      "index": 1485,
+      "depth": 3,
+      "cell": 1121,
+      "type": "cell",
+      "target_cell": 1086
+    },
+    {
+      "index": 1486,
+      "depth": 3,
+      "cell": 1121,
+      "type": "cell",
+      "target_cell": 1086
+    },
+    {
+      "index": 1487,
+      "depth": 3,
+      "cell": 1121,
+      "type": "wait"
+    },
+    {
+      "index": 1488,
+      "depth": 3,
+      "cell": 1121,
+      "type": "wait"
+    },
+    {
+      "index": 1489,
+      "depth": 3,
+      "cell": 1121,
+      "type": "wait"
+    },
+    {
+      "index": 1490,
+      "depth": 3,
+      "cell": 1121,
+      "type": "cell",
+      "target_cell": 1086,
+      "intent": "reposition"
+    },
+    {
+      "index": 1491,
+      "depth": 3,
+      "cell": 1086,
+      "type": "cell",
+      "target_cell": 1049,
+      "intent": "reposition"
+    },
+    {
+      "index": 1492,
+      "depth": 3,
+      "cell": 1049,
+      "type": "cell",
+      "target_cell": 1048
+    },
+    {
+      "index": 1493,
+      "depth": 3,
+      "cell": 1049,
+      "type": "back"
+    },
+    {
+      "index": 1494,
+      "depth": 3,
+      "cell": 1049,
+      "type": "cell",
+      "target_cell": 1086,
+      "intent": "explore"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "1c143173d483cb1c",
+      "kind": "planner-stop:optional-work-exhausted",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "depth": 3,
+      "cell": 1086,
+      "action_from": 1471,
+      "action_to": 1494
+    },
+    {
+      "signature": "978b37be6c47758c",
+      "kind": "planner-incident",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "depth": 3,
+      "cell": 1086,
+      "action_from": 1471,
+      "action_to": 1495
+    }
+  ],
+  "prior_review_attempt": false
+}
