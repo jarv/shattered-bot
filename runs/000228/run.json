@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "id": "000228",
+  "started_at": "2026-11-24T01:01:50Z",
+  "completed_at": "2026-11-24T01:03:46.086416+00:00",
+  "source_commit": "81c4a4b4533cf236e90901912d20da2cbc0325d2",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "ce1bb42-typed-blockers",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "mandatory-preparation-unresolved",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 1,
+  "actions": 303,
+  "duration_seconds": 113.379,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000227",
+  "previous_source_commit": "1e69e5fa207c09134a76f581dbb6c670f9c73b7f",
+  "improvements": [
+    "The bot now distinguishes an exposed skeleton key from skeletal remains when the visible item confirms it, while keeping the usual terrain and container safety checks."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "Distinguish a publicly exposed skeleton key item from skeletal remains, and verify actual collection afterward. Keep the separate sentry preparation obligation: a complete room can still lack an admitted testing bank. Do not infer haste, cross defended carpet, waive mandatory pickup or replace planner exhaustion with waiting.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The run ended in planner exhaustion with the hero alive at full health, not an observed death. At decisions 281–283 (log lines 763–767), identified frost extinguished the fire, but cold remained across the approach to an observed upgrade scroll. The mandatory-pickup controller then selected mapping and exploration left for another room. Source inspection shows that mandatory targets bypassed the existing post-barrier return controller; that controller also lacked a safe observation hold when fresh cold blocked its entrance. Decisions 301 and 303 explicitly rejected the upgrade route at remembered cold cells, and the accepted blink did not collect it or produce a descent. The proposed focused repair delegates the existing return transaction from mandatory pickup and admits only bounded observation from freshly verified safe ground. A new regression fails on original source with mapping selected instead, passes on the candidate, and the full suite passes 2235 tests with four skips. This does not establish actual collection, puzzle completion, or improved survival.",
+    "learnings": "Extinguishing a barrier is not the same as opening a currently safe route. Keep the required return transaction active while freshly observed frost blocks the approach, reobserve only from safe ground, and require actual hazard clearance and pickup evidence before crediting progress. Do not reinterpret stale cold as safe or abandon mandatory upgrade collection."
+  },
+  "recommendations": [
+    {
+      "id": "000228-frost-return-arbitration",
+      "priority": "high",
+      "summary": "Keep mandatory post-fire retrieval active through safe observation of temporary frost.",
+      "evidence": [
+        "Decision 281, log line 763: known frost selected for mandatory-resource preparation.",
+        "Decisions 282–283, log lines 765–767: fire extinguished, approach cold, mapping selected.",
+        "Decision 284, log line 770: exploration leaves the still-cold entrance.",
+        "Decisions 301 and 303, log lines 821 and 827–830: upgrade route excluded and planner exhaustion recorded."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000228"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000228/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000228/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 60,
+        "turns": 291,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 297,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 487
+          },
+          {
+            "kind": "room",
+            "label": "Crystal choice container",
+            "status": "observed-landmark"
+          },
+          {
+            "kind": "room",
+            "label": "Gas/fire hazard",
+            "status": "reported-unresolved"
+          },
+          {
+            "kind": "room",
+            "label": "Crypt/choice container",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 0,
+    "ending_level": 2,
+    "starving_turns": 0,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 2,
+    "gold_collected": 60,
+    "gold_complete": true,
+    "turns": 291,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
