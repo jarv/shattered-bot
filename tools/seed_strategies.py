@@ -1,4 +1,6 @@
 """Budgeted observed seed setup/control; no assumed trigger, hit, or private mob state."""
+from collections import deque
+
 try:
     from .policy_geometry import distance,neighbors
     from .challenge_combat import reach
@@ -19,6 +21,31 @@ def turn(state):return state.get('evaluation_stats',{}).get('elapsed_turns',0)
 
 def count(state,kind):
     return sum(i.get('quantity',1) for i in state.get('inventory',[]) if base_name(i)=='seed of '+kind)
+
+
+def preserves_exits(p,state,cell,paths):
+    """An untriggered harmful plant must not cut a currently reachable stair.
+
+    This is only a topology veto, not a safe movement or enemy-trigger proof.
+    Keep the ordinary path graph and its destination-only stairs/locks/heaps;
+    do not mutate terrain, ignore hazards, or assume the foe tramples the seed.
+    """
+    transitions={7,8,22,37}
+    exits={c for c in paths if p.tiles[c]['terrain'] in transitions}
+    if not exits:return True
+    start=state['hero']['cell']
+    found={start}
+    queue=deque([start])
+    while queue:
+        current=queue.popleft()
+        for n in neighbors(current,state['map']['width'],state['map']['height']):
+            if n==cell or n not in paths or n in found:continue
+            found.add(n)
+            obj=p.loot.get(n,{})
+            if p.tiles[n]['terrain'] not in transitions|{10,21,31,38} \
+                    and not obj.get('for_sale') and 'chest' not in obj.get('name','').lower():
+                queue.append(n)
+    return exits<=found
 
 
 def observe(p,before,decision,after):
@@ -138,6 +165,7 @@ def choose(p,state,enemies):
                 a=issue('starflower','PLANT',pos)
                 if a:return a
     if not active or recent or not time_for(1) or 'blind' in buffs:return None
+    paths=p.paths(state)
     occupied={o['cell'] for o in state.get('objects',[]) if not o.get('top_item')}
     targets=[e for e in active if p.unit_strategies.profile(e).triggers_ground_plants
              and not p.unit_strategies.profile(e).strategy.startswith(('boss:','quest:'))
@@ -151,7 +179,8 @@ def choose(p,state,enemies):
         need_control=hp<.65 or len(active)>1 or speed(enemy)>1 or not p.charged_magic(state)
         if not need_control:continue
         cells=[c for c,t in p.tiles.items() if 1<=distance(pos,c,width)<=3 and c not in occupied and c not in p.loot
-               and plantable(c) and p.walkable(c) and p.shot_clear(state,c) and distance(c,enemy['cell'],width)<gap]
+               and plantable(c) and p.walkable(c) and p.shot_clear(state,c) and distance(c,enemy['cell'],width)<gap
+               and preserves_exits(p,state,c,paths)]
         if not cells:continue
         poison_immune=enemy['name'].lower()=='prison guard' or any(t in enemy['name'].lower() for t in ('skeleton','ghost','wraith','golem','dm-','statue'))
         kinds=['blindweed','stormvine'] if hp<.65 or len(active)>1 or poison_immune else ['sorrowmoss','blindweed','stormvine']

@@ -3222,5 +3222,20 @@
     "status": "implemented",
     "reason": "Patch passed isolated validation and was accepted.",
     "origin_run": "000249"
+  },
+  {
+    "id": "000250-seed-exit-cut",
+    "priority": "high",
+    "summary": "Prevent offensive seed placement from severing the hero's known stair routes.",
+    "evidence": [
+      "Decision 1095, log 3200: icecap THROW selected from doorway 1099.",
+      "Decision 1096, logs 3202–3204: target 1027 receives a publicly observed icecap plant.",
+      "Decisions 1098–1099, logs 3208–3211: final zap followed by planner exhaustion with 35/35 HP and the plant still present.",
+      "tools/seed_strategies.py: original target ranking; tools/survival_policy.py:436–470,1174–1183.",
+      "New reduced regression reproduces the original choke target and validates a bypassable alternative without dispatch."
+    ],
+    "status": "implemented",
+    "reason": "Patch passed isolated validation and was accepted.",
+    "origin_run": "000250"
   }
 ]

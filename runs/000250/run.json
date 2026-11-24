@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "id": "000250",
+  "started_at": "2026-11-24T09:53:48Z",
+  "completed_at": "2026-11-24T10:00:57.028562+00:00",
+  "source_commit": "3037b51a862e19c2bf7c4ecdb839583ee2295487",
+  "review_commit": "",
+  "next_source_commit": "",
+  "notes_url": "",
+  "game_build": "f3c82c492ad64189c4afc2032e615a513bcf5625732e29ed64c0886632391d0b",
+  "game_source": "a107d1fd1e737ccc71fa52020fa1c6bc58e58b4e",
+  "game_checksum": "2e6fd9734f34ccba0e0a3e1ce09adc17b6a55ef9c3aaec333c302911c494168d",
+  "supervisor_version": "e41b490-coordination",
+  "outcome": "stuck-planner",
+  "death_category": "stuck bot",
+  "death_category_evidence": "recorded outcome: stuck-planner",
+  "planner_incident_count": 1,
+  "blocker_kind": "unclassified",
+  "outcome_summary": "stuck planner (bot unable to proceed)",
+  "outcome_reason": "stuck planner (bot unable to proceed)",
+  "death_reason": "stuck planner (bot unable to proceed)",
+  "max_depth": 3,
+  "actions": 1099,
+  "duration_seconds": 424.133,
+  "configuration": {
+    "hero": "Mage",
+    "requested_challenges": [],
+    "review_engine": "opencode",
+    "verified_challenges": []
+  },
+  "previous_run_id": "000249",
+  "previous_source_commit": "45ffb1d846a2fbfac849c1ea004053188f7afc06",
+  "improvements": [
+    "The bot can now recognize a defeated DM-100 after a close-range disintegration staff blast, using the spent charge and other public evidence. It keeps uncertain threats on record rather than assuming that disappearance means defeat."
+  ],
+  "code_changed": true,
+  "incoming_learnings": "A consumed disintegration staff zap can confirm the matching caster is defeated without a new defeat text when Arcane Vision rules out a hidden survivor and conservative public XP, timing and actor checks agree. Retire only that threat; do not credit loot or floor clearance. Healing cannot resolve a stale safety obligation. This receipt repair does not establish a safe cover itinerary or eventual survival.",
+  "incoming_update_status": "accepted",
+  "model": "gpt-6.1-sol",
+  "service_tier": "fast",
+  "review": {
+    "review": "The hero remained alive at full health when planning stopped. The initiating defect was an icecap seed thrown onto the only return connector, not the final crab fight. Decision 1095 (log 3200) chose the seed; decision 1096 (logs 3202–3204) planted it at 1027. The plant remained visible at decision 1099, excluding the mapped exit at 426 from ordinary paths. Full mapping correctly suppressed further wall searches. Source tracing reaches seed-preparation through tools/policy_nodes.py and tools/seed_tactics.py to tools/seed_strategies.py; its original target ranking lacked an exit-connectivity check. Isolated public-observation probes reproduce target 1027 and show that excluding it cuts both known stairs. These are fixture probes, not recovered original runtime memory. The proposed correction rejects offensive seed targets that sever currently reachable stairs, retaining all existing hazard and collateral checks. A reduced regression fails three assertions on original source and passes on the candidate; the full suite passes 2,289 tests with four skipped. This establishes prevention of the self-sealing proposal, not successful descent or survival. Earlier deferred frontiers and snake routing trouble remain separate observations.",
+    "learnings": "A seed that has not triggered is still a real obstacle. Before placing a harmful pursuit plant, preserve observed access to currently reachable stairs without assuming the enemy will activate it. Keep mandatory loot unfinished until public collection receipts establish otherwise."
+  },
+  "recommendations": [
+    {
+      "id": "000250-seed-exit-cut",
+      "priority": "high",
+      "summary": "Prevent offensive seed placement from severing the hero's known stair routes.",
+      "evidence": [
+        "Decision 1095, log 3200: icecap THROW selected from doorway 1099.",
+        "Decision 1096, logs 3202–3204: target 1027 receives a publicly observed icecap plant.",
+        "Decisions 1098–1099, logs 3208–3211: final zap followed by planner exhaustion with 35/35 HP and the plant still present.",
+        "tools/seed_strategies.py: original target ranking; tools/survival_policy.py:436–470,1174–1183.",
+        "New reduced regression reproduces the original choke target and validates a bypassable alternative without dispatch."
+      ],
+      "status": "implemented",
+      "reason": "Patch passed isolated validation and was accepted.",
+      "origin_run": "000250"
+    }
+  ],
+  "update_status": "accepted",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000250/video.mp4",
+  "poster": "https://media.shattered.jarv.org/bot-v1/runs/000250/poster.jpg",
+  "floor_metrics": {
+    "schema_version": 1,
+    "source": "public-accepted-transitions-v1",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "experience_gained": 10,
+        "gold_gained": 275,
+        "turns": 296,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 300,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "hidden",
+            "label": "Hidden doorway",
+            "status": "reported-discovery",
+            "cell": 776
+          },
+          {
+            "kind": "room",
+            "label": "Crypt container",
+            "status": "observed-landmark"
+          }
+        ]
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "experience_gained": 18,
+        "gold_gained": 175,
+        "turns": 312,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 314,
+        "terminal_floor": false,
+        "highlights": [
+          {
+            "kind": "quest",
+            "label": "Sad Ghost",
+            "status": "encountered"
+          }
+        ]
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "experience_gained": 32,
+        "gold_gained": 74,
+        "turns": 463.25,
+        "experience_complete": true,
+        "gold_complete": true,
+        "turns_complete": true,
+        "accepted_inputs": 479,
+        "terminal_floor": true,
+        "highlights": [
+          {
+            "kind": "room",
+            "label": "Chasm/trap area",
+            "status": "reported-unresolved"
+          }
+        ]
+      }
+    ]
+  },
+  "run_stats": {
+    "schema_version": 1,
+    "ending_strength": 10,
+    "ending_experience": 15,
+    "ending_level": 4,
+    "starving_turns": 6,
+    "starving_turns_complete": true,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff"
+  },
+  "floor_starvation_metrics": {
+    "schema_version": 1,
+    "source": "public-observations; game-turn intervals attributed to starting hunger buff",
+    "log_complete": true,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "starving_turns": 0,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "starving_turns": 3,
+        "starving_turns_complete": true
+      }
+    ]
+  },
+  "progression_metrics": {
+    "schema_version": 1,
+    "source": "public-observed-progression-v1",
+    "log_complete": true,
+    "max_level": 4,
+    "gold_collected": 524,
+    "gold_complete": true,
+    "turns": 1071.25,
+    "floors": [
+      {
+        "depth": 1,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 2,
+        "max_level_complete": true
+      },
+      {
+        "depth": 2,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 3,
+        "max_level_complete": true
+      },
+      {
+        "depth": 3,
+        "branch": 0,
+        "levels_gained": 1,
+        "levels_complete": true,
+        "max_level": 4,
+        "max_level_complete": true
+      }
+    ]
+  }
+}
