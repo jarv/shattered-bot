@@ -3383,5 +3383,19 @@
     "status": "deferred",
     "reason": "Source and the original veto/action pair establish the recovery bypass. No patch is submitted because applying the existing guard to recovery squares in an isolated contemporaneous snapshot only substitutes wait; neither enemy has an admitted attack there, and the fly shot is blocked. Haste alone does not certify escape, and unknown potion effects cannot be assumed. Next validate original selections and receipts through D2102, stop at the first mismatch, and derive paired D2103/D2104 fixtures proving an earlier admitted doorway or second-exit continuation before adding recovery filtering and a positive regression. Preserve guarding, hazard admission, mandatory pickups and terminal exhaustion.",
     "origin_run": "000261"
+  },
+  {
+    "id": "000262-rooted-clock-recovery",
+    "priority": "high",
+    "summary": "Retire observed roots before movement failures incorrectly exhaust navigation.",
+    "evidence": [
+      "D3006–3007, log lines 8738–8741: probing the unidentified wand reveals its curse, grass eruption and roots.",
+      "D3008–3023, log lines 8742–8789: repeated movement inputs leave the hero, roots and game clock unchanged.",
+      "D3024, log lines 8790–8792: exploration exhaustion ends the run with the hero alive at full health.",
+      "tools/survival_policy.py:306–341; tools/policy_tree.py; tools/policy_nodes.py:rooted_recovery."
+    ],
+    "status": "rejected",
+    "reason": "Candidate validation failed; code was not promoted.",
+    "origin_run": "000262"
   }
 ]
