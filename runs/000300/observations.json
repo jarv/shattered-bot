@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "run_id": "000300",
+  "source_commit": "aa31dd477ec81d23f36ff6441d0474083d240d62",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "dead",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000300/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000300/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 2571,
+      "depth": 7,
+      "cell": 484,
+      "type": "cell",
+      "target_cell": 443,
+      "intent": "retreat"
+    },
+    {
+      "index": 2572,
+      "depth": 7,
+      "cell": 442,
+      "type": "cell",
+      "target_cell": 399,
+      "intent": "retreat"
+    },
+    {
+      "index": 2573,
+      "depth": 7,
+      "cell": 399,
+      "type": "cell",
+      "target_cell": 357,
+      "intent": "retreat"
+    },
+    {
+      "index": 2574,
+      "depth": 7,
+      "cell": 357,
+      "type": "item"
+    },
+    {
+      "index": 2575,
+      "depth": 7,
+      "cell": 357,
+      "type": "cell",
+      "target_cell": 315,
+      "intent": "retreat"
+    },
+    {
+      "index": 2576,
+      "depth": 7,
+      "cell": 315,
+      "type": "cell",
+      "target_cell": 314,
+      "intent": "retreat"
+    },
+    {
+      "index": 2577,
+      "depth": 7,
+      "cell": 314,
+      "type": "cell",
+      "target_cell": 313,
+      "intent": "retreat"
+    },
+    {
+      "index": 2578,
+      "depth": 7,
+      "cell": 313,
+      "type": "cell",
+      "target_cell": 354,
+      "intent": "retreat"
+    },
+    {
+      "index": 2579,
+      "depth": 7,
+      "cell": 354,
+      "type": "cell",
+      "target_cell": 353,
+      "intent": "retreat"
+    },
+    {
+      "index": 2580,
+      "depth": 7,
+      "cell": 353,
+      "type": "cell",
+      "target_cell": 352,
+      "intent": "retreat"
+    },
+    {
+      "index": 2581,
+      "depth": 7,
+      "cell": 352,
+      "type": "cell",
+      "target_cell": 394,
+      "intent": "retreat"
+    },
+    {
+      "index": 2582,
+      "depth": 7,
+      "cell": 394,
+      "type": "cell",
+      "target_cell": 395,
+      "intent": "retreat"
+    },
+    {
+      "index": 2583,
+      "depth": 7,
+      "cell": 395,
+      "type": "cell",
+      "target_cell": 438,
+      "intent": "retreat"
+    },
+    {
+      "index": 2584,
+      "depth": 7,
+      "cell": 438,
+      "type": "item"
+    },
+    {
+      "index": 2585,
+      "depth": 7,
+      "cell": 438,
+      "type": "cell",
+      "target_cell": 395
+    },
+    {
+      "index": 2586,
+      "depth": 7,
+      "cell": 438,
+      "type": "item"
+    },
+    {
+      "index": 2587,
+      "depth": 7,
+      "cell": 438,
+      "type": "cell",
+      "target_cell": 396
+    },
+    {
+      "index": 2588,
+      "depth": 7,
+      "cell": 438,
+      "type": "cell",
+      "target_cell": 480,
+      "intent": "retreat"
+    },
+    {
+      "index": 2589,
+      "depth": 7,
+      "cell": 480,
+      "type": "item"
+    },
+    {
+      "index": 2590,
+      "depth": 7,
+      "cell": 480,
+      "type": "cell",
+      "target_cell": 438
+    },
+    {
+      "index": 2591,
+      "depth": 7,
+      "cell": 480,
+      "type": "item"
+    },
+    {
+      "index": 2592,
+      "depth": 7,
+      "cell": 480,
+      "type": "cell",
+      "target_cell": 482
+    },
+    {
+      "index": 2593,
+      "depth": 7,
+      "cell": 480,
+      "type": "item"
+    },
+    {
+      "index": 2594,
+      "depth": 7,
+      "cell": 480,
+      "type": "cell",
+      "target_cell": 481
+    }
+  ],
+  "observations": [
+    {
+      "signature": "7b8a6e3739ab70be",
+      "kind": "observed-death:unknown/missing",
+      "reason": "Hero died; cause not established by the recording summary",
+      "action_from": 2571,
+      "action_to": 2594
+    }
+  ],
+  "prior_review_attempt": false
+}
