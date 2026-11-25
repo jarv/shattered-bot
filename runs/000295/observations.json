@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "run_id": "000295",
+  "source_commit": "6b1ce3940f4f5ee0729ddfc5a22669c0f5fdf065",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000295/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000295/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 2020,
+      "depth": 7,
+      "cell": 616,
+      "type": "cell",
+      "target_cell": 579,
+      "intent": "retreat"
+    },
+    {
+      "index": 2021,
+      "depth": 7,
+      "cell": 579,
+      "type": "cell",
+      "target_cell": 618,
+      "intent": "retreat"
+    },
+    {
+      "index": 2022,
+      "depth": 7,
+      "cell": 618,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2023,
+      "depth": 7,
+      "cell": 618,
+      "type": "cell",
+      "target_cell": 581,
+      "intent": "explore"
+    },
+    {
+      "index": 2024,
+      "depth": 7,
+      "cell": 581,
+      "type": "cell",
+      "target_cell": 582,
+      "intent": "explore"
+    },
+    {
+      "index": 2025,
+      "depth": 7,
+      "cell": 582,
+      "type": "cell",
+      "target_cell": 545,
+      "intent": "explore"
+    },
+    {
+      "index": 2026,
+      "depth": 7,
+      "cell": 469,
+      "type": "item"
+    },
+    {
+      "index": 2027,
+      "depth": 7,
+      "cell": 469,
+      "type": "cell",
+      "target_cell": 431
+    },
+    {
+      "index": 2028,
+      "depth": 7,
+      "cell": 469,
+      "type": "cell",
+      "target_cell": 507,
+      "intent": "retreat"
+    },
+    {
+      "index": 2029,
+      "depth": 7,
+      "cell": 507,
+      "type": "cell",
+      "target_cell": 545,
+      "intent": "retreat"
+    },
+    {
+      "index": 2030,
+      "depth": 7,
+      "cell": 545,
+      "type": "cell",
+      "target_cell": 582,
+      "intent": "retreat"
+    },
+    {
+      "index": 2031,
+      "depth": 7,
+      "cell": 582,
+      "type": "cell",
+      "target_cell": 581,
+      "intent": "retreat"
+    },
+    {
+      "index": 2032,
+      "depth": 7,
+      "cell": 581,
+      "type": "cell",
+      "target_cell": 580,
+      "intent": "retreat"
+    },
+    {
+      "index": 2033,
+      "depth": 7,
+      "cell": 580,
+      "type": "cell",
+      "target_cell": 579,
+      "intent": "retreat"
+    },
+    {
+      "index": 2034,
+      "depth": 7,
+      "cell": 579,
+      "type": "cell",
+      "target_cell": 616,
+      "intent": "retreat"
+    },
+    {
+      "index": 2035,
+      "depth": 7,
+      "cell": 616,
+      "type": "cell",
+      "target_cell": 653,
+      "intent": "retreat"
+    },
+    {
+      "index": 2036,
+      "depth": 7,
+      "cell": 653,
+      "type": "cell",
+      "target_cell": 652,
+      "intent": "retreat"
+    },
+    {
+      "index": 2037,
+      "depth": 7,
+      "cell": 652,
+      "type": "cell",
+      "target_cell": 651,
+      "intent": "retreat"
+    },
+    {
+      "index": 2038,
+      "depth": 7,
+      "cell": 651,
+      "type": "cell",
+      "target_cell": 688,
+      "intent": "retreat"
+    },
+    {
+      "index": 2039,
+      "depth": 7,
+      "cell": 688,
+      "type": "cell",
+      "target_cell": 649,
+      "intent": "retreat"
+    },
+    {
+      "index": 2040,
+      "depth": 7,
+      "cell": 649,
+      "type": "item"
+    },
+    {
+      "index": 2041,
+      "depth": 7,
+      "cell": 649,
+      "type": "cell",
+      "target_cell": 688
+    },
+    {
+      "index": 2042,
+      "depth": 7,
+      "cell": 649,
+      "type": "cell",
+      "target_cell": 686,
+      "intent": "retreat"
+    },
+    {
+      "index": 2043,
+      "depth": 7,
+      "cell": 686,
+      "type": "cell",
+      "target_cell": 725,
+      "intent": "retreat"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "ff5c4a0e133ccd10",
+      "kind": "planner-stop:immediate-safety-emergency",
+      "reason": "Ranged exposure: no admitted attack, short melee closure or verified cover; do not wait for recharge in the firing lane",
+      "depth": 7,
+      "cell": 725,
+      "action_from": 2020,
+      "action_to": 2043
+    },
+    {
+      "signature": "f0baed2478f8c029",
+      "kind": "planner-incident",
+      "reason": "Ranged exposure: no admitted attack, short melee closure or verified cover; do not wait for recharge in the firing lane",
+      "depth": 7,
+      "cell": 725,
+      "action_from": 2020,
+      "action_to": 2044
+    }
+  ],
+  "prior_review_attempt": false
+}
