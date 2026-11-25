@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "run_id": "000287",
+  "source_commit": "569f425924a13d49d701d833613e2b6e1c4881a9",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000287/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000287/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 2832,
+      "depth": 8,
+      "cell": 350,
+      "type": "cell",
+      "target_cell": 387,
+      "intent": "reposition"
+    },
+    {
+      "index": 2833,
+      "depth": 8,
+      "cell": 387,
+      "type": "cell",
+      "target_cell": 425
+    },
+    {
+      "index": 2834,
+      "depth": 8,
+      "cell": 387,
+      "type": "back"
+    },
+    {
+      "index": 2835,
+      "depth": 8,
+      "cell": 387,
+      "type": "back"
+    },
+    {
+      "index": 2836,
+      "depth": 8,
+      "cell": 387,
+      "type": "item"
+    },
+    {
+      "index": 2837,
+      "depth": 8,
+      "cell": 387,
+      "type": "button"
+    },
+    {
+      "index": 2838,
+      "depth": 8,
+      "cell": 387,
+      "type": "button"
+    },
+    {
+      "index": 2839,
+      "depth": 8,
+      "cell": 387,
+      "type": "back"
+    },
+    {
+      "index": 2840,
+      "depth": 8,
+      "cell": 387,
+      "type": "back"
+    },
+    {
+      "index": 2841,
+      "depth": 8,
+      "cell": 387,
+      "type": "cell",
+      "target_cell": 350,
+      "intent": "explore"
+    },
+    {
+      "index": 2842,
+      "depth": 8,
+      "cell": 350,
+      "type": "cell",
+      "target_cell": 313,
+      "intent": "explore"
+    },
+    {
+      "index": 2843,
+      "depth": 8,
+      "cell": 313,
+      "type": "cell",
+      "target_cell": 276,
+      "intent": "explore"
+    },
+    {
+      "index": 2844,
+      "depth": 8,
+      "cell": 276,
+      "type": "cell",
+      "target_cell": 315,
+      "intent": "explore"
+    },
+    {
+      "index": 2845,
+      "depth": 8,
+      "cell": 315,
+      "type": "cell",
+      "target_cell": 354,
+      "intent": "explore"
+    },
+    {
+      "index": 2846,
+      "depth": 8,
+      "cell": 354,
+      "type": "item"
+    },
+    {
+      "index": 2847,
+      "depth": 8,
+      "cell": 354,
+      "type": "cell",
+      "target_cell": 658
+    },
+    {
+      "index": 2848,
+      "depth": 8,
+      "cell": 354,
+      "type": "item"
+    },
+    {
+      "index": 2849,
+      "depth": 8,
+      "cell": 354,
+      "type": "cell",
+      "target_cell": 658
+    },
+    {
+      "index": 2850,
+      "depth": 8,
+      "cell": 354,
+      "type": "item"
+    },
+    {
+      "index": 2851,
+      "depth": 8,
+      "cell": 354,
+      "type": "item"
+    },
+    {
+      "index": 2852,
+      "depth": 8,
+      "cell": 354,
+      "type": "item"
+    },
+    {
+      "index": 2853,
+      "depth": 8,
+      "cell": 354,
+      "type": "cell",
+      "target_cell": 280
+    },
+    {
+      "index": 2854,
+      "depth": 8,
+      "cell": 280,
+      "type": "cell",
+      "target_cell": 317,
+      "intent": "loot"
+    },
+    {
+      "index": 2855,
+      "depth": 8,
+      "cell": 317,
+      "type": "cell",
+      "target_cell": 354,
+      "intent": "loot"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "c2cfad78f92dcaf7",
+      "kind": "planner-stop:immediate-safety-emergency",
+      "reason": "Recent DM-100 lightning lane remains unverified; no ordinary recovery wait or guessed blind attack",
+      "depth": 8,
+      "cell": 354,
+      "action_from": 2832,
+      "action_to": 2855
+    },
+    {
+      "signature": "a279d004f253996c",
+      "kind": "planner-incident",
+      "reason": "Recent DM-100 lightning lane remains unverified; no ordinary recovery wait or guessed blind attack",
+      "depth": 8,
+      "cell": 354,
+      "action_from": 2832,
+      "action_to": 2856
+    }
+  ],
+  "prior_review_attempt": false
+}
