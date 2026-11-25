@@ -1,0 +1,224 @@
+{
+  "schema_version": 1,
+  "run_id": "000298",
+  "source_commit": "ae08bc262467e69ee036cb2d3ebee99ec5cad8eb",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000298/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000298/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 4025,
+      "depth": 8,
+      "cell": 661,
+      "type": "cell",
+      "target_cell": 662,
+      "intent": "explore"
+    },
+    {
+      "index": 4026,
+      "depth": 8,
+      "cell": 662,
+      "type": "cell",
+      "target_cell": 663,
+      "intent": "explore"
+    },
+    {
+      "index": 4027,
+      "depth": 8,
+      "cell": 663,
+      "type": "cell",
+      "target_cell": 664,
+      "intent": "explore"
+    },
+    {
+      "index": 4028,
+      "depth": 8,
+      "cell": 664,
+      "type": "cell",
+      "target_cell": 665,
+      "intent": "explore"
+    },
+    {
+      "index": 4029,
+      "depth": 8,
+      "cell": 665,
+      "type": "item"
+    },
+    {
+      "index": 4030,
+      "depth": 8,
+      "cell": 665,
+      "type": "cell",
+      "target_cell": 708
+    },
+    {
+      "index": 4031,
+      "depth": 8,
+      "cell": 665,
+      "type": "cell",
+      "target_cell": 664,
+      "intent": "retreat"
+    },
+    {
+      "index": 4032,
+      "depth": 8,
+      "cell": 664,
+      "type": "cell",
+      "target_cell": 663,
+      "intent": "retreat"
+    },
+    {
+      "index": 4033,
+      "depth": 8,
+      "cell": 663,
+      "type": "cell",
+      "target_cell": 662,
+      "intent": "retreat"
+    },
+    {
+      "index": 4034,
+      "depth": 8,
+      "cell": 662,
+      "type": "cell",
+      "target_cell": 661,
+      "intent": "retreat"
+    },
+    {
+      "index": 4035,
+      "depth": 8,
+      "cell": 661,
+      "type": "cell",
+      "target_cell": 660,
+      "intent": "retreat"
+    },
+    {
+      "index": 4036,
+      "depth": 8,
+      "cell": 660,
+      "type": "cell",
+      "target_cell": 659,
+      "intent": "retreat"
+    },
+    {
+      "index": 4037,
+      "depth": 8,
+      "cell": 659,
+      "type": "cell",
+      "target_cell": 658,
+      "intent": "retreat"
+    },
+    {
+      "index": 4038,
+      "depth": 8,
+      "cell": 658,
+      "type": "cell",
+      "target_cell": 615,
+      "intent": "retreat"
+    },
+    {
+      "index": 4039,
+      "depth": 8,
+      "cell": 615,
+      "type": "cell",
+      "target_cell": 572,
+      "intent": "retreat"
+    },
+    {
+      "index": 4040,
+      "depth": 8,
+      "cell": 572,
+      "type": "cell",
+      "target_cell": 614,
+      "intent": "retreat"
+    },
+    {
+      "index": 4041,
+      "depth": 8,
+      "cell": 614,
+      "type": "cell",
+      "target_cell": 657,
+      "intent": "retreat"
+    },
+    {
+      "index": 4042,
+      "depth": 8,
+      "cell": 657,
+      "type": "cell",
+      "target_cell": 658,
+      "intent": "retreat"
+    },
+    {
+      "index": 4043,
+      "depth": 8,
+      "cell": 658,
+      "type": "cell",
+      "target_cell": 659,
+      "intent": "retreat"
+    },
+    {
+      "index": 4044,
+      "depth": 8,
+      "cell": 659,
+      "type": "item"
+    },
+    {
+      "index": 4045,
+      "depth": 8,
+      "cell": 659,
+      "type": "item"
+    },
+    {
+      "index": 4046,
+      "depth": 8,
+      "cell": 659,
+      "type": "cell",
+      "target_cell": 658
+    },
+    {
+      "index": 4047,
+      "depth": 8,
+      "cell": 659,
+      "type": "item"
+    },
+    {
+      "index": 4048,
+      "depth": 8,
+      "cell": 659,
+      "type": "cell",
+      "target_cell": 658
+    }
+  ],
+  "observations": [
+    {
+      "signature": "ff5c4a0e133ccd10",
+      "kind": "planner-stop:immediate-safety-emergency",
+      "reason": "Ranged exposure: no admitted attack, short melee closure or verified cover; do not wait for recharge in the firing lane",
+      "depth": 8,
+      "cell": 659,
+      "action_from": 4025,
+      "action_to": 4048
+    },
+    {
+      "signature": "978b37be6c47758c",
+      "kind": "planner-incident",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "depth": 6,
+      "cell": 856,
+      "action_from": 2779,
+      "action_to": 2803
+    },
+    {
+      "signature": "f0baed2478f8c029",
+      "kind": "planner-incident",
+      "reason": "Ranged exposure: no admitted attack, short melee closure or verified cover; do not wait for recharge in the firing lane",
+      "depth": 8,
+      "cell": 659,
+      "action_from": 4025,
+      "action_to": 4049
+    }
+  ],
+  "prior_review_attempt": false
+}
