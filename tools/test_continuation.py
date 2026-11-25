@@ -76,6 +76,37 @@ class ContinuationTests(unittest.TestCase):
         a=p.recover_no_safe_action(s,NoSafeAction('No rescue route'))
         self.assertEqual('heal',a.action['id']);self.assertEqual('DRINK',a.action['action'])
 
+    def test_exhausted_withdrawal_does_not_restart_as_last_resort_retreat(self):
+        s=fully_known(state());s['hero']['hp']=3
+        p=MagePolicy();p.critical_retreats=12
+        with patch.object(p,'retreat',return_value=Decision({'type':'cell','cell':25},'retreat')) as retreat:
+            decision=p.recover_no_safe_action(s,NoSafeAction('Critical-health withdrawal exhausted'))
+        self.assertIsNone(decision)
+        retreat.assert_not_called()
+
+    def test_exhausted_withdrawal_still_allows_known_healing_and_emergency_transport(self):
+        s=fully_known(state());s['hero']['hp']=3
+        p=MagePolicy();p.critical_retreats=12
+        s['inventory'].append({'id':'heal','name':'potion of healing','actions':['DRINK']})
+        decision=p.recover_no_safe_action(s,NoSafeAction('Critical-health withdrawal exhausted'))
+        self.assertEqual('heal',decision.action['id'])
+        s['inventory']=[]
+        escape=Decision({'type':'cell','cell':25},'emergency transport')
+        with patch.object(p,'emergency_transport',return_value=escape):
+            self.assertIs(escape,p.recover_no_safe_action(s,NoSafeAction('Critical-health withdrawal exhausted')))
+
+    def test_runner_stops_exhausted_withdrawal_without_a_timeout_or_extra_retreat(self):
+        class ExhaustedWithdrawal(NoEscapePolicy):
+            def choose(self,s):
+                self.critical_retreats=12
+                return super().choose(s)
+        api=DamageAPI();p=ExhaustedWithdrawal()
+        with tempfile.TemporaryDirectory() as temp, patch.object(p,'retreat',
+                return_value=Decision({'type':'cell','cell':25},'retreat')):
+            result=run(api,p,10,0,Path(temp)/'log.jsonl')
+        self.assertEqual('stuck-planner',result['outcome'])
+        self.assertFalse(api.actions)
+
     def test_incomplete_loot_logs_error_and_allows_descent_without_clear_credit(self):
         s=fully_known(state());p=verified();p.update(s)
         p.loot[26]={'cell':26,'name':'Tomb'}

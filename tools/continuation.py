@@ -51,6 +51,11 @@ def best_effort(p,state,enemies):
             from fly_tactics import desperate_attack
         fly=desperate_attack(p,state,enemies)
         if fly:return fly
+    # Exception recovery must not restart the withdrawal that just exhausted
+    # its admitted movement budget. Known healing and emergency escapes above
+    # remain eligible; another ordinary retreat (or desperate melee) does not
+    # repair the missing recovery/usable-magic prerequisite.
+    if getattr(p,'critical_retreats',0)>=12:return None
     # Without enemies or a rendered warning there is nothing to retreat from.
     danger=state.get('danger_cells',[])
     escape=p.retreat(state,enemies,danger) if enemies or danger else None
