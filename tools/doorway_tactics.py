@@ -168,7 +168,10 @@ def hold_doorway(p,state,enemies,distance,neighbors,line_clear):
                     hold["inputs"]+=1
                     action.reason="doorway: draw observed sleeper while retaining established choke"
                     return action
-        p.stop_tactical("doorway-sleeper","Doorway hold: observed sleeping enemy cannot be safely drawn to the choke")
+        p.doorway_hold=None
+        p.ambush_plan=None
+        p.planner.report["doorway_hold"]={"status":"release choke; sleeping enemy will not approach"}
+        return None
     if active:
         hold["quiet"]=0
         hold["waits"]+=1

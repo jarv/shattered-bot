@@ -91,8 +91,16 @@ class MagePolicy(SurvivalPolicy):
     into_darkness=property(lambda self:self.rules.into_darkness)
     forbidden_runes=property(lambda self:self.rules.forbidden_runes)
     def __init__(self, goal="survival", engine="legacy", seed=None, rules=None,
-                 stop_on_no_safe_action=False,stop_on_incomplete_loot=False,unit_strategy_overrides=None):
+                 stop_on_no_safe_action=False,stop_on_incomplete_loot=False,unit_strategy_overrides=None,
+                 profile="legacy-bot"):
         super().__init__(goal=goal, engine=engine)
+        try:
+            from .bot_profiles import resolve
+        except ImportError:
+            from bot_profiles import resolve
+        self.profile = resolve(profile)
+        if not self.profile.special_rooms:self.reserve_floor_puzzle_supplies = False
+        self.simple_floors = {}
         if rules is not None and not isinstance(rules,ChallengeRules):
             raise ValueError('rules must be a ChallengeRules configuration')
         self.rules=rules if rules is not None else ChallengeRules()
@@ -407,7 +415,7 @@ class MagePolicy(SurvivalPolicy):
                 and not self.escape_step_allowed(state,decision.action.get("cell")) \
                 and not any(is_hostile(o) and o["cell"]==decision.action["cell"] for o in state.get("objects",[])):
             self.stop_tactical("fire-route-rejected","Active fire buffer: refusing movement beside a barrier or onto ignition-prone ground")
-        if state.get("scene")=="GameScene" and not any(is_hostile(o) for o in state.get("objects",[])):
+        if self.profile.special_rooms and state.get("scene")=="GameScene" and not any(is_hostile(o) for o in state.get("objects",[])):
             pickup=before_room_exit(self,state,decision)
             if pickup:
                 decision=pickup
@@ -457,7 +465,13 @@ class MagePolicy(SurvivalPolicy):
                 direct_exit = False
         if direct_exit and decision.intent!=Intent.DESCEND:
             self.stop_tactical("unplanned-stairs","Ordinary navigation attempted a stair transition; replan explicit descent or another route")
-        if decision.intent == Intent.DESCEND or direct_exit:
+        if (decision.intent == Intent.DESCEND or direct_exit) and not self.profile.full_exploration:
+            try:
+                from .simple_navigation import before_descent
+            except ImportError:
+                from simple_navigation import before_descent
+            decision = before_descent(self, state, decision)
+        if (decision.intent == Intent.DESCEND or direct_exit) and self.profile.full_exploration:
             try:
                 from .piranha_tactics import pending as pending_piranha_rooms
             except ImportError:
@@ -656,6 +670,12 @@ class MagePolicy(SurvivalPolicy):
                 if not enemies and not lost and not self.unseen_damage_turns:
                     self.last_safe_cell = hero["cell"]
         super().update(state)
+        if not self.profile.full_exploration:
+            try:
+                from .simple_navigation import observe
+            except ImportError:
+                from simple_navigation import observe
+            observe(self, state)
         if self.unit_strategies_enabled:
             observed=[o for o in state.get('objects',[]) if is_hostile(o)]
             self.unit_pending_movement=None
@@ -680,7 +700,7 @@ class MagePolicy(SurvivalPolicy):
             from .piranha_tactics import observe as observe_piranha_rooms
         except ImportError:
             from piranha_tactics import observe as observe_piranha_rooms
-        observe_piranha_rooms(self,state)
+        if self.profile.special_rooms:observe_piranha_rooms(self,state)
         try:
             from .piranha_profile import observe as observe_piranha_profiles
         except ImportError:
@@ -690,12 +710,12 @@ class MagePolicy(SurvivalPolicy):
             from .protected_rewards import observe as observe_protected_rewards
         except ImportError:
             from protected_rewards import observe as observe_protected_rewards
-        observe_protected_rewards(self,state)
+        if self.profile.special_rooms:observe_protected_rewards(self,state)
         try:
             from .puzzle_supplies import observe_pool_entrance
         except ImportError:
             from puzzle_supplies import observe_pool_entrance
-        observe_pool_entrance(self,previous,state)
+        if self.profile.special_rooms:observe_pool_entrance(self,previous,state)
         remember_missing(self,old_loot)
         if previous and previous.get("depth")==state["depth"] \
                 and previous.get("hero",{}).get("cell")!=state["hero"]["cell"] \
@@ -707,7 +727,7 @@ class MagePolicy(SurvivalPolicy):
                                  if any("fire is raging" in e.lower() for e in t.get("effects",[]))
                                  for n in neighbors(c,state["map"]["width"],state["map"]["height"])
                                  if self.tiles.get(n,{}).get("terrain") in {2,5,6,13,15,27,30}}
-        observe_hunts(self,state,distance)
+        if self.profile.special_rooms:observe_hunts(self,state,distance)
         if state.get("status")=="ready" and not state.get("modal"):
             seen={o["cell"]:dict(o,observations_ago=0) for o in state.get("objects",[])
                    if is_hostile(o) and not o.get("sleeping")}
@@ -738,7 +758,7 @@ class MagePolicy(SurvivalPolicy):
             from .keyed_rooms import observe as observe_keyed_rooms
         except ImportError:
             from keyed_rooms import observe as observe_keyed_rooms
-        observe_keyed_rooms(self,state)
+        if self.profile.special_rooms:observe_keyed_rooms(self,state)
         try:
             from .dm100_escape import observe as observe_dm100
         except ImportError:
@@ -746,14 +766,14 @@ class MagePolicy(SurvivalPolicy):
         observe_dm100(self,state)
         self.deferred_crystal_doors.intersection_update(c for c, t in self.tiles.items() if t["terrain"] == 31)
         self.optional_locks.update(self.deferred_crystal_doors)
-        observe_quest(self, state)
+        if self.profile.quests:observe_quest(self, state)
         try:
             from .wandmaker_quest import observe as observe_wandmaker
         except ImportError:
             from wandmaker_quest import observe as observe_wandmaker
-        observe_wandmaker(self,state)
+        if self.profile.quests:observe_wandmaker(self,state)
         observe_bombs(self, state, distance)
-        if not any(is_hostile(o) and not o.get("sleeping") for o in state.get("objects", [])):
+        if self.profile.special_rooms and not any(is_hostile(o) and not o.get("sleeping") for o in state.get("objects", [])):
             prepare_containers(self, state)
         if self.rules.combat_pressure and state.get("status") == "ready" and not state.get("modal"):
             self.challenge_combat.observe(self, state, [o for o in state.get("objects", []) if is_hostile(o)], line_clear)
@@ -824,6 +844,7 @@ class MagePolicy(SurvivalPolicy):
         return False  # Resource-aware selection uses verified routes and explicit deferrals instead.
 
     def descent_counts_as_clear(self):
+        if not self.profile.full_exploration:return False
         # A depth transition is not proof that deferred rooms/items were completed.
         try:
             from .loot_completion import pending_collections
@@ -1340,23 +1361,23 @@ class MagePolicy(SurvivalPolicy):
             from summoning_tactics import choose as prepare_summoning
             from seed_tactics import choose_seed
             from resource_tactics import choose_meat
-        resource=prepare_summoning(self,state,enemies) or garden(self,state,enemies) or choose_seed(self,state,enemies,distance,neighbors) \
+        resource=(prepare_summoning(self,state,enemies) or garden(self,state,enemies) if self.profile.special_rooms else None) or choose_seed(self,state,enemies,distance,neighbors) \
             or choose_meat(self,state,enemies,distance,neighbors) or clear_blocking_trap(self,state,enemies,distance,neighbors)
         if resource:return resource
         try:
             from .barrier_followup import advance
         except ImportError:
             from barrier_followup import advance
-        followup=advance(self,state,enemies,distance,neighbors)
+        followup=advance(self,state,enemies,distance,neighbors) if self.profile.special_rooms else None
         if followup:return followup
-        descent=selective_descent(self,state,enemies)
+        descent=selective_descent(self,state,enemies) if self.profile.full_exploration else None
         if descent:
             return descent
         buffs=" ".join(b["name"].lower() for b in state["hero"].get("buffs",[]))
         meal_key=(state["depth"],"suspect-room-meal")
         food=self.food_items(state)
         fire_recovery_key=(state["depth"],"fire-room-recovery-reserve")
-        if food and state["hero"]["hp"]<0.95*state["hero"]["max_hp"] and not self.recent_threats \
+        if self.profile.special_rooms and food and state["hero"]["hp"]<0.95*state["hero"]["max_hp"] and not self.recent_threats \
                 and frost_recovery_nearby(self,state,distance) \
                 and any(unknown_potion(i) for i in state["inventory"]) and fire_recovery_key not in self.room_attempts \
                 and not any(t in buffs for t in ("burning","poison","blind","vertigo","paral","root")):
@@ -1377,17 +1398,17 @@ class MagePolicy(SurvivalPolicy):
                 and not any(t in buffs for t in ("burning","poison","blind","vertigo","paral","root")):
             self.room_attempts.add(meal_key)
             return self.use(food[0],"EAT","room: fund bounded recovery before required suspicious-container test")
-        if self.ghost_quest.get("stage") in {"active","reward","collect_dropped"}:
+        if self.profile.quests and self.ghost_quest.get("stage") in {"active","reward","collect_dropped"}:
             reward = visit_ghost(self,state,enemies,distance,neighbors)
             if reward:
                 return reward
-        hunt=hunt_missing_mimic(self,state,enemies,distance)
+        hunt=hunt_missing_mimic(self,state,enemies,distance) if self.profile.special_rooms else None
         if hunt:
             return hunt
-        recharge=charge_suspect_container(self,state,enemies)
+        recharge=charge_suspect_container(self,state,enemies) if self.profile.special_rooms else None
         if recharge:
             return recharge
-        if self.unit_strategies_enabled:
+        if self.profile.quests and self.unit_strategies_enabled:
             try:
                 from .ghost_quest import prepare_ghost
             except ImportError:
@@ -1399,10 +1420,10 @@ class MagePolicy(SurvivalPolicy):
             intuition=prepare_intuition(self,state)
             if intuition:
                 return intuition  # Use a safe identification window before searching into another encounter.
-        search=seek_corridor_end(self,state,enemies,distance)
+        search=seek_corridor_end(self,state,enemies,distance) if self.profile.secret_hunting else None
         if search:
             return search
-        suspect=investigate_suspect_container(self,state,enemies,distance)
+        suspect=investigate_suspect_container(self,state,enemies,distance) if self.profile.special_rooms else None
         if suspect:
             return suspect
         buffs = " ".join(b["name"].lower() for b in state["hero"].get("buffs", []))
@@ -1459,6 +1480,9 @@ class MagePolicy(SurvivalPolicy):
             return progression
         if state["depth"] in {6, 11, 16} and state["depth"] not in self.shop_visited_floors:
             return None
+        if not self.profile.special_rooms:
+            return (approach_alchemy(self, state) or awareness_well(self, state, enemies, neighbors)
+                    or prepare_inventory_stone(self, state) or prepare_intuition(self, state))
         return (prepare_drop(self,state,enemies,distance,neighbors)
                 or prepare_supplies(self,state,enemies,distance,neighbors)
                 or approach_alchemy(self, state)
@@ -1491,6 +1515,12 @@ class MagePolicy(SurvivalPolicy):
         return super().escape_special_room(state)
 
     def explore(self, state, enemies):
+        if not self.profile.full_exploration:
+            try:
+                from .simple_navigation import choose
+            except ImportError:
+                from simple_navigation import choose
+            return choose(self, state, enemies)
         try:
             from .ghost_quest import seek_quest_foe
         except ImportError:

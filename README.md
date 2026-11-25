@@ -107,6 +107,37 @@ manual launch. Explicit challenge modes and other options are listed in `--help`
 
 ## Bot behavior
 
+### Select an implementation
+
+Both implementations share the same combat, item handling, safety and API code.
+Select a named objective/navigation profile:
+
+```sh
+python3 -m tools.survival_bot --bot-implementation legacy-bot --launch --watch
+python3 -m tools.survival_bot --bot-implementation simple-bot --launch --watch
+```
+
+`legacy-bot` is the default and retains the existing policy. `simple-bot` keeps
+combat/enemy strategies, alchemy, seeds/runes/scrolls/artifacts, shops, wells,
+equipment, talents, ordinary pickups and safe strength-potion discovery. It
+does not initiate quests, solve special rooms, reserve puzzle supplies, hunt
+secret rooms, or require full map coverage.
+
+Simple-bot requests descent after gaining one character level since first
+entering the floor, or exhausting reachable ordinary doors and observation
+frontiers. It first collects all known safely reachable ordinary loot (including
+loot out of current sight), consumes/identifies strength as required, and
+finishes owned-item retrieval. Inaccessible/unsafe/special loot is explicitly
+reported as excluded, not claimed collected. Level-up exits stop optional
+exploration; unknown stairs still require ordinary navigation to find them.
+Boss locks and immediate threats cannot be bypassed.
+
+Incidental dead-end searches remain: no search expeditions, at most two accepted
+searches per location and sixteen per floor/branch, and no optional searches
+after leveling when stairs are known. Search proposals/rejections spend no
+accepted-input budget. Neither profile claims a full floor clear merely from
+descending. Combat engine selection (`--engine`) is separate from bot profile.
+
 The bot uses public observations and ordinary game actions only. It does not
 read save files, inspect hidden game state or infer unidentified potion effects.
 Collection, crafting and movement require observed receipts rather than assumed

@@ -25,6 +25,9 @@ def recover(p,state,enemies,blocked,distance,neighbors,line_clear):
     if state.get("status")!="ready" or state.get("modal") or state.get("danger_cells"):
         return None
     p.soft_failures[blocked.code]+=1
+    if blocked.code in {"navigation-loop", "systematic-route-stall"} and p.soft_failures[blocked.code] >= 12:
+        p.stop_gameplay("Navigation recovery exhausted its bounded retries; do not walk or wait indefinitely",
+                       kind="navigation-stalled")
     if blocked.code in {'navigation-loop','systematic-route-stall'} and p.exploration_goal:
         try:
             from .region_navigation import decline_goal
@@ -196,6 +199,9 @@ def recover(p,state,enemies,blocked,distance,neighbors,line_clear):
                                 'No admitted progress action while hungry; bounded idle recovery exhausted')
             p.stop_gameplay('Hungry no-progress recovery exhausted; stop alive rather than silently wait to starvation',
                             kind="navigation-stalled")
+    if not active and any(e.get("sleeping") for e in enemies):
+        p.stop_gameplay("Tactical recovery has no admitted attack or route; sleeping enemies will not approach",
+                       kind="navigation-stalled")
     return mark(p,p.decision({"type":"wait"},"recovery: observe approach or recharge after tactical decline"),blocked)
 
 

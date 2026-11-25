@@ -58,7 +58,8 @@ def best_effort(p,state,enemies):
     if getattr(p,'critical_retreats',0)>=12:return None
     # Without enemies or a rendered warning there is nothing to retreat from.
     danger=state.get('danger_cells',[])
-    escape=p.retreat(state,enemies,danger) if enemies or danger else None
+    active=[e for e in enemies if not e.get('sleeping')]
+    escape=p.retreat(state,active,danger) if active or danger else None
     if escape:
         escape.reason='last resort: ordinary retreat without a verified survival guarantee'
         return escape
@@ -66,7 +67,6 @@ def best_effort(p,state,enemies):
     # Retain ordinary healing/transport/retreat above; with no rescue, exhaust
     # honestly rather than attack out of invisibility or invent recharge waits.
     if preserve_invisibility:return None
-    active=[e for e in enemies if not e.get('sleeping')]
     pos=state['hero']['cell'];width=state['map']['width']
     for enemy in sorted(active,key=lambda e:(-priority(p,state,active,e),distance(pos,e['cell'],width))):
         if distance(pos,enemy['cell'],width)!=1 and not p.shot_clear(state,enemy['cell']):continue

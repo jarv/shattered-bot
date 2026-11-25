@@ -172,6 +172,7 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
             if decision.movement_batch:record['requested_movement_route']=list(decision.movement_batch)
             if isinstance(policy, SurvivalPolicy):
                 record["controllers"] = policy.planner.report.get("controllers", [])
+                record["bot_implementation"] = getattr(getattr(policy, "profile", None), "name", "legacy-bot")
                 if policy.objective_episodes.episodes:
                     record["objective_episodes"] = policy.objective_episodes.records()
                 if policy.reward_lifecycles:
@@ -247,6 +248,12 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                     }}) + "\n")
                     log.flush()
             if isinstance(policy, SurvivalPolicy):
+                if not getattr(getattr(policy, "profile", None), "full_exploration", True):
+                    try:
+                        from .simple_navigation import accepted
+                    except ImportError:
+                        from simple_navigation import accepted
+                    accepted(policy, state, decision, next_state)
                 try:
                     from .preparation_prerequisites import observe_reconnaissance
                 except ImportError:
@@ -385,6 +392,7 @@ def run(api, policy, max_actions, delay, log_path, *, bounded=False):
                 result["fallback_waits_without_progress"] = fallback_progress.waits
                 break
         result.update(depth=state.get("depth"), hero=state.get("hero"),
+                      bot_implementation=getattr(getattr(policy, "profile", None), "name", "legacy-bot"),
                       game_seed=getattr(policy, "verified_seed", None),
                       max_depth=max(getattr(policy, "max_depth", 0) or 0, state.get("depth") or 0),
                       purchases=getattr(policy, "purchases", []),

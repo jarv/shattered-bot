@@ -101,6 +101,8 @@ def aquarium_ground_rewards(p, state, paths):
 
 
 def demands(p, state, distance, *, include_deferred=False):
+    if not getattr(getattr(p, "profile", None), "special_rooms", True):
+        return []
     width = state["map"]["width"]
     paths = p.paths(state)
     dry_aquarium_rewards = aquarium_ground_rewards(p, state, paths)

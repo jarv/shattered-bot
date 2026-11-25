@@ -18,8 +18,12 @@ except ImportError:
 class Leaf:
     name: str
     tick: Callable[["Context"], Decision | None]
+    requires: str | None = None
 
     def __call__(self, context):
+        profile = getattr(context.policy, "profile", None)
+        if self.requires and not getattr(profile, self.requires, True):
+            return None
         result = self.tick(context)
         context.trace.append({"node": self.name, "selected": result is not None})
         if result is not None:

@@ -41,10 +41,18 @@ def targets(p):
     kinds.update('golden' if o.get('name','').lower()=='locked chest' else 'crystal'
                  for o in p.loot.values() if o.get('name','').lower() in {'locked chest','crystal chest'})
     needed={f'{kind} key' for kind in kinds if not getattr(p,'keys',{}).get(kind,0)}
-    return {c:o for c,o in p.loot.items() if not o.get('for_sale')
+    result = {c:o for c,o in p.loot.items() if not o.get('for_sale')
             and c not in deferred
             and not discarded(p,c,o)
-            and (base_name(o.get('top_item',o)) in NAMES | needed or food(o.get('top_item',o)))}
+             and (base_name(o.get('top_item',o)) in NAMES | needed or food(o.get('top_item',o)))}
+    if not getattr(getattr(p, "profile", None), "full_exploration", True):
+        try:
+            from .simple_navigation import loot
+        except ImportError:
+            from simple_navigation import loot
+        eligible, _ = loot(p, p.last_state)
+        result = {c:o for c,o in result.items() if c in eligible}
+    return result
 
 
 def diagnostics(p,state,enemies=(),paths=None):

@@ -92,6 +92,8 @@ def stop_game(process):
 
 def configured_policy(args,policy_factory=None):
     """Resolve explicit options before launch; no game/API side effects."""
+    if getattr(args,'bot_implementation','legacy-bot') != 'legacy-bot' and policy_factory is not None:
+        raise ValueError('Named bot profiles require the configured Mage policy')
     try:
         from .mage_policy import MagePolicy
         from .challenge_rules import configured_rules
@@ -120,6 +122,7 @@ def configured_policy(args,policy_factory=None):
             return policy_factory(goal=args.goal,engine=args.engine)
         return policy_factory(goal=args.goal,engine=args.engine,**({'seed':args.seed} if args.seed else {}))
     policy=MagePolicy(goal=args.goal,engine=args.engine,seed=args.seed,rules=rules,
+                       profile=getattr(args,'bot_implementation','legacy-bot'),
                        unit_strategy_overrides=overrides,
                        stop_on_no_safe_action=getattr(args,'stop_on_no_safe_action',False),
                        stop_on_incomplete_loot=getattr(args,'stop_on_incomplete_loot',False))
@@ -132,6 +135,7 @@ def configured_policy(args,policy_factory=None):
 def main(policy_factory=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", default="http://127.0.0.1:8765")
+    parser.add_argument("--bot-implementation", choices=("legacy-bot", "simple-bot"), default="legacy-bot")
     parser.add_argument("--launch", action="store_true", help="Launch a graphical game in a separate profile")
     parser.add_argument("--game-dir", help="Separate game checkout for --launch (default: sibling shattered-pixel-dungeon)")
     parser.add_argument("--profile", help="Explicit save profile for --launch; default is a fresh temporary directory")

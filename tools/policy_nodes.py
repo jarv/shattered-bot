@@ -488,7 +488,7 @@ def ordinary_combat(c):
     # Do not wait for an ordinary enemy to approach while other awake enemies
     # are converging too. A distant second front is missed by the local radius.
     # Lone-enemy conservation and the separate queued-snake reserve remain.
-    reserve = (len(c.active) <= 1 and not crowded and charges[0].isdigit() and int(charges[0]) <= 2 and c.hp > 0.6
+    reserve = (not enemy.get("sleeping") and len(c.active) <= 1 and not crowded and charges[0].isdigit() and int(charges[0]) <= 2 and c.hp > 0.6
                and enemy["name"].lower() in {"marsupial rat", "albino rat", "gnoll scout"})
     adjacent = sum(distance(c.pos, e["cell"], c.width) == 1 for e in c.active)
     queued = [e for e in c.active if e["name"].lower() == "sewer snake" and distance(c.pos, e["cell"], c.width) > 1]
@@ -514,6 +514,10 @@ def ordinary_combat(c):
         if reserve_for_snake and attack.action["type"] == "cell":
             attack.reason = "combat: preserve magic for queued snake"
         return attack
+    if enemy.get("sleeping"):
+        p.planner.report["sleeper_engagement"] = {
+            "cell": enemy["cell"], "status": "no admitted attack; resume ordinary work, not a lure wait"}
+        return None
     if getattr(p,'unit_strategies_enabled',False) and any(distance(c.pos,e['cell'],c.width)==1 for e in c.active):
         p.stop_tactical('attack-position','Adjacent observed attacker while selected target has no admitted attack; recover/reselect instead of passive recharge')
     key = (p.depth, c.pos, enemy["cell"])
