@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "run_id": "000299",
+  "source_commit": "568a6eafd57254c42cd100646a646bea0e2827eb",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000299/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000299/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 1163,
+      "depth": 3,
+      "cell": 772,
+      "type": "cell",
+      "target_cell": 800,
+      "intent": "descend"
+    },
+    {
+      "index": 1164,
+      "depth": 3,
+      "cell": 800,
+      "type": "cell",
+      "target_cell": 828,
+      "intent": "descend"
+    },
+    {
+      "index": 1165,
+      "depth": 3,
+      "cell": 828,
+      "type": "cell",
+      "target_cell": 856,
+      "intent": "descend"
+    },
+    {
+      "index": 1166,
+      "depth": 3,
+      "cell": 856,
+      "type": "cell",
+      "target_cell": 884,
+      "intent": "descend"
+    },
+    {
+      "index": 1167,
+      "depth": 3,
+      "cell": 884,
+      "type": "cell",
+      "target_cell": 883,
+      "intent": "descend"
+    },
+    {
+      "index": 1168,
+      "depth": 3,
+      "cell": 883,
+      "type": "cell",
+      "target_cell": 853,
+      "intent": "descend"
+    },
+    {
+      "index": 1169,
+      "depth": 3,
+      "cell": 853,
+      "type": "cell",
+      "target_cell": 823,
+      "intent": "descend"
+    },
+    {
+      "index": 1170,
+      "depth": 3,
+      "cell": 823,
+      "type": "cell",
+      "target_cell": 793,
+      "intent": "descend"
+    },
+    {
+      "index": 1171,
+      "depth": 3,
+      "cell": 793,
+      "type": "cell",
+      "target_cell": 763,
+      "intent": "descend"
+    },
+    {
+      "index": 1172,
+      "depth": 3,
+      "cell": 763,
+      "type": "cell",
+      "target_cell": 793,
+      "intent": "retreat"
+    },
+    {
+      "index": 1173,
+      "depth": 3,
+      "cell": 793,
+      "type": "cell",
+      "target_cell": 763,
+      "intent": "retreat"
+    },
+    {
+      "index": 1174,
+      "depth": 3,
+      "cell": 763,
+      "type": "wait"
+    },
+    {
+      "index": 1175,
+      "depth": 3,
+      "cell": 763,
+      "type": "wait"
+    },
+    {
+      "index": 1176,
+      "depth": 3,
+      "cell": 763,
+      "type": "wait"
+    },
+    {
+      "index": 1177,
+      "depth": 3,
+      "cell": 763,
+      "type": "cell",
+      "target_cell": 793,
+      "intent": "retreat"
+    },
+    {
+      "index": 1178,
+      "depth": 3,
+      "cell": 793,
+      "type": "cell",
+      "target_cell": 822,
+      "intent": "retreat"
+    },
+    {
+      "index": 1179,
+      "depth": 3,
+      "cell": 822,
+      "type": "cell",
+      "target_cell": 793
+    },
+    {
+      "index": 1180,
+      "depth": 3,
+      "cell": 822,
+      "type": "cell",
+      "target_cell": 823,
+      "intent": "retreat"
+    },
+    {
+      "index": 1181,
+      "depth": 3,
+      "cell": 823,
+      "type": "cell",
+      "target_cell": 793,
+      "intent": "loot"
+    },
+    {
+      "index": 1182,
+      "depth": 3,
+      "cell": 793,
+      "type": "cell",
+      "target_cell": 763,
+      "intent": "descend"
+    },
+    {
+      "index": 1183,
+      "depth": 3,
+      "cell": 763,
+      "type": "cell",
+      "target_cell": 733,
+      "intent": "descend"
+    },
+    {
+      "index": 1184,
+      "depth": 3,
+      "cell": 733,
+      "type": "cell",
+      "target_cell": 703,
+      "intent": "descend"
+    },
+    {
+      "index": 1185,
+      "depth": 3,
+      "cell": 703,
+      "type": "cell",
+      "target_cell": 675,
+      "intent": "descend"
+    },
+    {
+      "index": 1186,
+      "depth": 3,
+      "cell": 675,
+      "type": "cell",
+      "target_cell": 647,
+      "intent": "descend"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "e9948cd770f2e449",
+      "kind": "planner-stop:unclassified",
+      "reason": "Exploration exhausted without a reachable exit: {\"known_cells\": 72, \"unvisited_reachable\": [], \"unexplored_frontiers\": [], \"unopened_doors\": [], \"unresolved_doors\": [], \"unreachable_known_floor\": [627], \"held_keys\": {\"iron\": 0, \"golden\": 0, \"crystal\": 0, \"worn\": 0, \"skeleton\": 0}, \"searches\": 0, \"searched_wall_cells\": [], \"secret_search_steps\": 0, \"remaining_enemy_sightings\": [], \"clear_sweep_steps\": 0, \"temporary_block_waits\": 0, \"hunger\": \"hungry\", \"food_portions\": 2, \"observed_distant_well_floors\": [1], ",
+      "depth": 4,
+      "cell": 545,
+      "action_from": 1163,
+      "action_to": 1186
+    },
+    {
+      "signature": "978b37be6c47758c",
+      "kind": "planner-incident",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "depth": 2,
+      "cell": 1009,
+      "action_from": 760,
+      "action_to": 784
+    },
+    {
+      "signature": "41a3212e07b98388",
+      "kind": "planner-incident",
+      "reason": "Exploration exhausted without a reachable exit: {\"known_cells\": 72, \"unvisited_reachable\": [], \"unexplored_frontiers\": [], \"unopened_doors\": [], \"unresolved_doors\": [], \"unreachable_known_floor\": [627], \"held_keys\": {\"iron\": 0, \"golden\": 0, \"crystal\": 0, \"worn\": 0, \"skeleton\": 0}, \"searches\": 0, \"searched_wall_cells\": [], \"secret_search_steps\": 0, \"remaining_enemy_sightings\": [], \"clear_sweep_steps\": 0, \"temporary_block_waits\": 0, \"hunger\": \"hungry\", \"food_portions\": 2, \"observed_distant_well_floors\": [1], ",
+      "depth": 4,
+      "cell": 545,
+      "action_from": 1163,
+      "action_to": 1187
+    }
+  ],
+  "prior_review_attempt": false
+}
