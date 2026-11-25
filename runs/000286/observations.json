@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "run_id": "000286",
+  "source_commit": "b92ce928be969b4d5d14f4c11534d330989ddd08",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000286/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000286/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 751,
+      "depth": 3,
+      "cell": 659,
+      "type": "item"
+    },
+    {
+      "index": 752,
+      "depth": 3,
+      "cell": 659,
+      "type": "cell",
+      "target_cell": 684
+    },
+    {
+      "index": 753,
+      "depth": 3,
+      "cell": 659,
+      "type": "cell",
+      "target_cell": 634,
+      "intent": "retreat"
+    },
+    {
+      "index": 754,
+      "depth": 3,
+      "cell": 634,
+      "type": "cell",
+      "target_cell": 635,
+      "intent": "retreat"
+    },
+    {
+      "index": 755,
+      "depth": 3,
+      "cell": 635,
+      "type": "cell",
+      "target_cell": 636,
+      "intent": "retreat"
+    },
+    {
+      "index": 756,
+      "depth": 3,
+      "cell": 636,
+      "type": "cell",
+      "target_cell": 637,
+      "intent": "retreat"
+    },
+    {
+      "index": 757,
+      "depth": 3,
+      "cell": 637,
+      "type": "cell",
+      "target_cell": 664,
+      "intent": "retreat"
+    },
+    {
+      "index": 758,
+      "depth": 3,
+      "cell": 664,
+      "type": "cell",
+      "target_cell": 691,
+      "intent": "retreat"
+    },
+    {
+      "index": 759,
+      "depth": 3,
+      "cell": 691,
+      "type": "cell",
+      "target_cell": 716,
+      "intent": "retreat"
+    },
+    {
+      "index": 760,
+      "depth": 3,
+      "cell": 716,
+      "type": "cell",
+      "target_cell": 741,
+      "intent": "retreat"
+    },
+    {
+      "index": 761,
+      "depth": 3,
+      "cell": 741,
+      "type": "cell",
+      "target_cell": 714,
+      "intent": "retreat"
+    },
+    {
+      "index": 762,
+      "depth": 3,
+      "cell": 714,
+      "type": "cell",
+      "target_cell": 687,
+      "intent": "retreat"
+    },
+    {
+      "index": 763,
+      "depth": 3,
+      "cell": 687,
+      "type": "cell",
+      "target_cell": 661,
+      "intent": "retreat"
+    },
+    {
+      "index": 764,
+      "depth": 3,
+      "cell": 661,
+      "type": "cell",
+      "target_cell": 634,
+      "intent": "retreat"
+    },
+    {
+      "index": 765,
+      "depth": 3,
+      "cell": 634,
+      "type": "cell",
+      "target_cell": 633,
+      "intent": "retreat"
+    },
+    {
+      "index": 766,
+      "depth": 3,
+      "cell": 633,
+      "type": "item"
+    },
+    {
+      "index": 767,
+      "depth": 3,
+      "cell": 633,
+      "type": "cell",
+      "target_cell": 634
+    },
+    {
+      "index": 768,
+      "depth": 3,
+      "cell": 633,
+      "type": "cell",
+      "target_cell": 658,
+      "intent": "retreat"
+    },
+    {
+      "index": 769,
+      "depth": 3,
+      "cell": 658,
+      "type": "cell",
+      "target_cell": 684,
+      "intent": "retreat"
+    },
+    {
+      "index": 770,
+      "depth": 3,
+      "cell": 684,
+      "type": "cell",
+      "target_cell": 710,
+      "intent": "retreat"
+    },
+    {
+      "index": 771,
+      "depth": 3,
+      "cell": 710,
+      "type": "cell",
+      "target_cell": 736,
+      "intent": "retreat"
+    },
+    {
+      "index": 772,
+      "depth": 3,
+      "cell": 736,
+      "type": "cell",
+      "target_cell": 762,
+      "intent": "retreat"
+    },
+    {
+      "index": 773,
+      "depth": 3,
+      "cell": 762,
+      "type": "cell",
+      "target_cell": 788,
+      "intent": "retreat"
+    },
+    {
+      "index": 774,
+      "depth": 3,
+      "cell": 788,
+      "type": "cell",
+      "target_cell": 814,
+      "intent": "retreat"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "28faf5a42e64de2a",
+      "kind": "planner-stop:immediate-safety-emergency",
+      "reason": "Critical-health withdrawal exhausted its budget without recovery or usable magic",
+      "depth": 3,
+      "cell": 814,
+      "action_from": 751,
+      "action_to": 774
+    },
+    {
+      "signature": "39f61fce25826364",
+      "kind": "planner-incident",
+      "reason": "Critical-health withdrawal exhausted its budget without recovery or usable magic",
+      "depth": 3,
+      "cell": 814,
+      "action_from": 751,
+      "action_to": 775
+    }
+  ],
+  "prior_review_attempt": false
+}
