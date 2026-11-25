@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "run_id": "000294",
+  "source_commit": "fd3691101c5bdeacf71f99319f907cceeb448642",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000294/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000294/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 1336,
+      "depth": 3,
+      "cell": 219,
+      "type": "cell",
+      "target_cell": 218,
+      "intent": "loot"
+    },
+    {
+      "index": 1337,
+      "depth": 3,
+      "cell": 218,
+      "type": "cell",
+      "target_cell": 172,
+      "intent": "explore"
+    },
+    {
+      "index": 1338,
+      "depth": 3,
+      "cell": 172,
+      "type": "cell",
+      "target_cell": 172,
+      "intent": "loot"
+    },
+    {
+      "index": 1339,
+      "depth": 3,
+      "cell": 172,
+      "type": "cell",
+      "target_cell": 171,
+      "intent": "loot"
+    },
+    {
+      "index": 1340,
+      "depth": 3,
+      "cell": 171,
+      "type": "cell",
+      "target_cell": 216,
+      "intent": "loot"
+    },
+    {
+      "index": 1341,
+      "depth": 3,
+      "cell": 216,
+      "type": "cell",
+      "target_cell": 217,
+      "intent": "loot"
+    },
+    {
+      "index": 1342,
+      "depth": 3,
+      "cell": 217,
+      "type": "cell",
+      "target_cell": 218,
+      "intent": "loot"
+    },
+    {
+      "index": 1343,
+      "depth": 3,
+      "cell": 218,
+      "type": "cell",
+      "target_cell": 174,
+      "intent": "explore"
+    },
+    {
+      "index": 1344,
+      "depth": 3,
+      "cell": 174,
+      "type": "cell",
+      "target_cell": 220,
+      "intent": "explore"
+    },
+    {
+      "index": 1345,
+      "depth": 3,
+      "cell": 220,
+      "type": "cell",
+      "target_cell": 176,
+      "intent": "explore"
+    },
+    {
+      "index": 1346,
+      "depth": 3,
+      "cell": 176,
+      "type": "cell",
+      "target_cell": 176,
+      "intent": "loot"
+    },
+    {
+      "index": 1347,
+      "depth": 3,
+      "cell": 176,
+      "type": "cell",
+      "target_cell": 221,
+      "intent": "explore"
+    },
+    {
+      "index": 1348,
+      "depth": 3,
+      "cell": 221,
+      "type": "cell",
+      "target_cell": 265,
+      "intent": "explore"
+    },
+    {
+      "index": 1349,
+      "depth": 3,
+      "cell": 265,
+      "type": "cell",
+      "target_cell": 266,
+      "intent": "explore"
+    },
+    {
+      "index": 1350,
+      "depth": 3,
+      "cell": 266,
+      "type": "cell",
+      "target_cell": 310,
+      "intent": "explore"
+    },
+    {
+      "index": 1351,
+      "depth": 3,
+      "cell": 310,
+      "type": "cell",
+      "target_cell": 311,
+      "intent": "explore"
+    },
+    {
+      "index": 1352,
+      "depth": 3,
+      "cell": 311,
+      "type": "cell",
+      "target_cell": 265,
+      "intent": "explore"
+    },
+    {
+      "index": 1353,
+      "depth": 3,
+      "cell": 265,
+      "type": "cell",
+      "target_cell": 264,
+      "intent": "explore"
+    },
+    {
+      "index": 1354,
+      "depth": 3,
+      "cell": 264,
+      "type": "cell",
+      "target_cell": 308,
+      "intent": "explore"
+    },
+    {
+      "index": 1355,
+      "depth": 3,
+      "cell": 308,
+      "type": "cell",
+      "target_cell": 352,
+      "intent": "explore"
+    },
+    {
+      "index": 1356,
+      "depth": 3,
+      "cell": 352,
+      "type": "cell",
+      "target_cell": 396,
+      "intent": "explore"
+    },
+    {
+      "index": 1357,
+      "depth": 3,
+      "cell": 396,
+      "type": "cell",
+      "target_cell": 441,
+      "intent": "explore"
+    },
+    {
+      "index": 1358,
+      "depth": 3,
+      "cell": 441,
+      "type": "cell",
+      "target_cell": 486,
+      "intent": "explore"
+    },
+    {
+      "index": 1359,
+      "depth": 3,
+      "cell": 486,
+      "type": "cell",
+      "target_cell": 531,
+      "intent": "explore"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "ca7b8bde144870db",
+      "kind": "planner-stop:unclassified",
+      "reason": "Exploration exhausted without a reachable exit: {\"known_cells\": 1214, \"unvisited_reachable\": [532, 576, 577, 442, 397, 306, 307, 261, 262, 263, 309], \"unexplored_frontiers\": [], \"unopened_doors\": [], \"unresolved_doors\": [], \"unreachable_known_floor\": [1358, 1401, 1402, 1403, 1404, 1405, 1406, 1446, 1447, 1448, 1450, 1492, 1493, 1494, 1495, 1537, 1538, 1539, 1540, 1582, 1583, 1584, 1627, 1628, 1356, 1357, 1311, 1044, 1089, 1134, 1176, 1177, 1178, 1179, 1221, 1266, 1407, 1408, 1414, 1453, 1459, 1498, 1499, 15",
+      "depth": 3,
+      "cell": 531,
+      "action_from": 1336,
+      "action_to": 1359
+    },
+    {
+      "signature": "8c8a6dfd7a49c09b",
+      "kind": "planner-incident",
+      "reason": "Exploration exhausted without a reachable exit: {\"known_cells\": 1214, \"unvisited_reachable\": [532, 576, 577, 442, 397, 306, 307, 261, 262, 263, 309], \"unexplored_frontiers\": [], \"unopened_doors\": [], \"unresolved_doors\": [], \"unreachable_known_floor\": [1358, 1401, 1402, 1403, 1404, 1405, 1406, 1446, 1447, 1448, 1450, 1492, 1493, 1494, 1495, 1537, 1538, 1539, 1540, 1582, 1583, 1584, 1627, 1628, 1356, 1357, 1311, 1044, 1089, 1134, 1176, 1177, 1178, 1179, 1221, 1266, 1407, 1408, 1414, 1453, 1459, 1498, 1499, 15",
+      "depth": 3,
+      "cell": 531,
+      "action_from": 1336,
+      "action_to": 1360
+    }
+  ],
+  "prior_review_attempt": false
+}
