@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "run_id": "000297",
+  "source_commit": "43e32c059b35f8a48ba2d40237491af6f4e98566",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000297/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000297/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 266,
+      "depth": 1,
+      "cell": 1260,
+      "type": "cell",
+      "target_cell": 1221,
+      "intent": "explore"
+    },
+    {
+      "index": 267,
+      "depth": 1,
+      "cell": 1221,
+      "type": "cell",
+      "target_cell": 1182,
+      "intent": "explore"
+    },
+    {
+      "index": 268,
+      "depth": 1,
+      "cell": 1182,
+      "type": "cell",
+      "target_cell": 1221,
+      "intent": "explore"
+    },
+    {
+      "index": 269,
+      "depth": 1,
+      "cell": 1221,
+      "type": "cell",
+      "target_cell": 1260,
+      "intent": "explore"
+    },
+    {
+      "index": 270,
+      "depth": 1,
+      "cell": 1260,
+      "type": "cell",
+      "target_cell": 1223,
+      "intent": "explore"
+    },
+    {
+      "index": 271,
+      "depth": 1,
+      "cell": 1223,
+      "type": "cell",
+      "target_cell": 1185,
+      "intent": "explore"
+    },
+    {
+      "index": 272,
+      "depth": 1,
+      "cell": 1185,
+      "type": "cell",
+      "target_cell": 1148,
+      "intent": "explore"
+    },
+    {
+      "index": 273,
+      "depth": 1,
+      "cell": 1148,
+      "type": "cell",
+      "target_cell": 1111,
+      "intent": "explore"
+    },
+    {
+      "index": 274,
+      "depth": 1,
+      "cell": 1111,
+      "type": "cell",
+      "target_cell": 1112,
+      "intent": "retreat"
+    },
+    {
+      "index": 275,
+      "depth": 1,
+      "cell": 1112,
+      "type": "cell",
+      "target_cell": 1075,
+      "intent": "retreat"
+    },
+    {
+      "index": 276,
+      "depth": 1,
+      "cell": 1075,
+      "type": "cell",
+      "target_cell": 1038,
+      "intent": "retreat"
+    },
+    {
+      "index": 277,
+      "depth": 1,
+      "cell": 1038,
+      "type": "cell",
+      "target_cell": 1039,
+      "intent": "retreat"
+    },
+    {
+      "index": 278,
+      "depth": 1,
+      "cell": 1039,
+      "type": "cell",
+      "target_cell": 1002,
+      "intent": "retreat"
+    },
+    {
+      "index": 279,
+      "depth": 1,
+      "cell": 1002,
+      "type": "cell",
+      "target_cell": 1039
+    },
+    {
+      "index": 280,
+      "depth": 1,
+      "cell": 1002,
+      "type": "cell",
+      "target_cell": 1039
+    },
+    {
+      "index": 281,
+      "depth": 1,
+      "cell": 1002,
+      "type": "cell",
+      "target_cell": 1039
+    },
+    {
+      "index": 282,
+      "depth": 1,
+      "cell": 1002,
+      "type": "wait"
+    },
+    {
+      "index": 283,
+      "depth": 1,
+      "cell": 1002,
+      "type": "wait"
+    },
+    {
+      "index": 284,
+      "depth": 1,
+      "cell": 1002,
+      "type": "wait"
+    },
+    {
+      "index": 285,
+      "depth": 1,
+      "cell": 1002,
+      "type": "cell",
+      "target_cell": 1003,
+      "intent": "explore"
+    },
+    {
+      "index": 286,
+      "depth": 1,
+      "cell": 1003,
+      "type": "cell",
+      "target_cell": 1042,
+      "intent": "explore"
+    },
+    {
+      "index": 287,
+      "depth": 1,
+      "cell": 1042,
+      "type": "cell",
+      "target_cell": 1081,
+      "intent": "explore"
+    },
+    {
+      "index": 288,
+      "depth": 1,
+      "cell": 1081,
+      "type": "cell",
+      "target_cell": 1120,
+      "intent": "explore"
+    },
+    {
+      "index": 289,
+      "depth": 1,
+      "cell": 1120,
+      "type": "cell",
+      "target_cell": 1159,
+      "intent": "explore"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "8555d0da008d7fff",
+      "kind": "planner-stop:mandatory-preparation-unresolved",
+      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+      "depth": 1,
+      "cell": 1159,
+      "action_from": 266,
+      "action_to": 289
+    },
+    {
+      "signature": "bc7e2639d2768035",
+      "kind": "planner-incident",
+      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+      "depth": 1,
+      "cell": 1159,
+      "action_from": 266,
+      "action_to": 290
+    }
+  ],
+  "prior_review_attempt": false
+}
