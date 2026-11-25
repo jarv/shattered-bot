@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "run_id": "000292",
+  "source_commit": "c765b4af77d23287d60767a7ca02ad999a81e2a8",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000292/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000292/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 236,
+      "depth": 1,
+      "cell": 564,
+      "type": "cell",
+      "target_cell": 563,
+      "intent": "explore"
+    },
+    {
+      "index": 237,
+      "depth": 1,
+      "cell": 563,
+      "type": "cell",
+      "target_cell": 562,
+      "intent": "loot"
+    },
+    {
+      "index": 238,
+      "depth": 1,
+      "cell": 562,
+      "type": "cell",
+      "target_cell": 563,
+      "intent": "retreat"
+    },
+    {
+      "index": 239,
+      "depth": 1,
+      "cell": 563,
+      "type": "cell",
+      "target_cell": 564,
+      "intent": "retreat"
+    },
+    {
+      "index": 240,
+      "depth": 1,
+      "cell": 564,
+      "type": "wait"
+    },
+    {
+      "index": 241,
+      "depth": 1,
+      "cell": 564,
+      "type": "wait"
+    },
+    {
+      "index": 242,
+      "depth": 1,
+      "cell": 564,
+      "type": "cell",
+      "target_cell": 563
+    },
+    {
+      "index": 243,
+      "depth": 1,
+      "cell": 564,
+      "type": "item"
+    },
+    {
+      "index": 244,
+      "depth": 1,
+      "cell": 564,
+      "type": "cell",
+      "target_cell": 563
+    },
+    {
+      "index": 245,
+      "depth": 1,
+      "cell": 564,
+      "type": "talent"
+    },
+    {
+      "index": 246,
+      "depth": 1,
+      "cell": 564,
+      "type": "cell",
+      "target_cell": 563,
+      "intent": "loot"
+    },
+    {
+      "index": 247,
+      "depth": 1,
+      "cell": 563,
+      "type": "cell",
+      "target_cell": 562,
+      "intent": "loot"
+    },
+    {
+      "index": 248,
+      "depth": 1,
+      "cell": 562,
+      "type": "cell",
+      "target_cell": 525,
+      "intent": "loot"
+    },
+    {
+      "index": 249,
+      "depth": 1,
+      "cell": 525,
+      "type": "cell",
+      "target_cell": 488,
+      "intent": "loot"
+    },
+    {
+      "index": 250,
+      "depth": 1,
+      "cell": 488,
+      "type": "cell",
+      "target_cell": 451,
+      "intent": "loot"
+    },
+    {
+      "index": 251,
+      "depth": 1,
+      "cell": 451,
+      "type": "cell",
+      "target_cell": 486,
+      "intent": "loot"
+    },
+    {
+      "index": 252,
+      "depth": 1,
+      "cell": 486,
+      "type": "cell",
+      "target_cell": 521,
+      "intent": "loot"
+    },
+    {
+      "index": 253,
+      "depth": 1,
+      "cell": 521,
+      "type": "item"
+    },
+    {
+      "index": 254,
+      "depth": 1,
+      "cell": 521,
+      "type": "button"
+    },
+    {
+      "index": 255,
+      "depth": 1,
+      "cell": 521,
+      "type": "button"
+    },
+    {
+      "index": 256,
+      "depth": 1,
+      "cell": 521,
+      "type": "cell",
+      "target_cell": 486,
+      "intent": "loot"
+    },
+    {
+      "index": 257,
+      "depth": 1,
+      "cell": 486,
+      "type": "cell",
+      "target_cell": 487,
+      "intent": "loot"
+    },
+    {
+      "index": 258,
+      "depth": 1,
+      "cell": 487,
+      "type": "cell",
+      "target_cell": 524,
+      "intent": "loot"
+    },
+    {
+      "index": 259,
+      "depth": 1,
+      "cell": 524,
+      "type": "cell",
+      "target_cell": 561,
+      "intent": "loot"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "8555d0da008d7fff",
+      "kind": "planner-stop:mandatory-preparation-unresolved",
+      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+      "depth": 1,
+      "cell": 561,
+      "action_from": 236,
+      "action_to": 259
+    },
+    {
+      "signature": "bc7e2639d2768035",
+      "kind": "planner-incident",
+      "reason": "Cannot descend before potion discovery: Preserve missing supplies for an unfinished recognized potion room or retrieval",
+      "depth": 1,
+      "cell": 561,
+      "action_from": 236,
+      "action_to": 260
+    }
+  ],
+  "prior_review_attempt": false
+}
