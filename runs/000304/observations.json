@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "run_id": "000304",
+  "source_commit": "de0ee5e76a89ff60a75c59e773ca546bffb82d6c",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000304/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000304/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 1593,
+      "depth": 4,
+      "cell": 788,
+      "type": "cell",
+      "target_cell": 757,
+      "intent": "reposition"
+    },
+    {
+      "index": 1594,
+      "depth": 4,
+      "cell": 757,
+      "type": "cell",
+      "target_cell": 726,
+      "intent": "reposition"
+    },
+    {
+      "index": 1595,
+      "depth": 4,
+      "cell": 726,
+      "type": "item"
+    },
+    {
+      "index": 1596,
+      "depth": 4,
+      "cell": 726,
+      "type": "cell",
+      "target_cell": 664
+    },
+    {
+      "index": 1597,
+      "depth": 4,
+      "cell": 726,
+      "type": "cell",
+      "target_cell": 693,
+      "intent": "retreat"
+    },
+    {
+      "index": 1598,
+      "depth": 4,
+      "cell": 693,
+      "type": "cell",
+      "target_cell": 661,
+      "intent": "retreat"
+    },
+    {
+      "index": 1599,
+      "depth": 4,
+      "cell": 661,
+      "type": "cell",
+      "target_cell": 630,
+      "intent": "retreat"
+    },
+    {
+      "index": 1600,
+      "depth": 4,
+      "cell": 630,
+      "type": "cell",
+      "target_cell": 599,
+      "intent": "retreat"
+    },
+    {
+      "index": 1601,
+      "depth": 4,
+      "cell": 599,
+      "type": "cell",
+      "target_cell": 566,
+      "intent": "retreat"
+    },
+    {
+      "index": 1602,
+      "depth": 4,
+      "cell": 566,
+      "type": "cell",
+      "target_cell": 533,
+      "intent": "retreat"
+    },
+    {
+      "index": 1603,
+      "depth": 4,
+      "cell": 533,
+      "type": "cell",
+      "target_cell": 500,
+      "intent": "retreat"
+    },
+    {
+      "index": 1604,
+      "depth": 4,
+      "cell": 500,
+      "type": "cell",
+      "target_cell": 467,
+      "intent": "retreat"
+    },
+    {
+      "index": 1605,
+      "depth": 4,
+      "cell": 467,
+      "type": "item"
+    },
+    {
+      "index": 1606,
+      "depth": 4,
+      "cell": 467,
+      "type": "cell",
+      "target_cell": 500
+    },
+    {
+      "index": 1607,
+      "depth": 4,
+      "cell": 467,
+      "type": "item"
+    },
+    {
+      "index": 1608,
+      "depth": 4,
+      "cell": 467,
+      "type": "cell",
+      "target_cell": 500
+    },
+    {
+      "index": 1609,
+      "depth": 4,
+      "cell": 467,
+      "type": "cell",
+      "target_cell": 434,
+      "intent": "retreat"
+    },
+    {
+      "index": 1610,
+      "depth": 4,
+      "cell": 434,
+      "type": "cell",
+      "target_cell": 467,
+      "intent": "loot"
+    },
+    {
+      "index": 1611,
+      "depth": 4,
+      "cell": 467,
+      "type": "cell",
+      "target_cell": 435,
+      "intent": "retreat"
+    },
+    {
+      "index": 1612,
+      "depth": 4,
+      "cell": 435,
+      "type": "cell",
+      "target_cell": 467,
+      "intent": "loot"
+    },
+    {
+      "index": 1613,
+      "depth": 4,
+      "cell": 467,
+      "type": "cell",
+      "target_cell": 500,
+      "intent": "loot"
+    },
+    {
+      "index": 1614,
+      "depth": 4,
+      "cell": 500,
+      "type": "cell",
+      "target_cell": 500,
+      "intent": "loot"
+    },
+    {
+      "index": 1615,
+      "depth": 4,
+      "cell": 500,
+      "type": "item"
+    },
+    {
+      "index": 1616,
+      "depth": 4,
+      "cell": 500,
+      "type": "button"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "f2b2cd6fdfd23a9f",
+      "kind": "planner-stop:unclassified",
+      "reason": "Exploration exhausted without a reachable exit: {\"known_cells\": 952, \"unvisited_reachable\": [468, 469, 501, 436, 498, 437, 438, 470, 502, 534, 565, 465, 497, 598, 464, 496, 629, 431, 463, 495, 633, 664, 430, 462, 494, 538, 634, 666, 697, 698, 336, 725, 507, 571, 667, 699, 729, 730, 731, 758, 761, 700, 732, 762, 763, 764, 271, 272, 789, 790, 792, 793, 794, 669, 733, 765, 795, 796, 797, 238, 239, 269, 240, 274, 339, 821, 822, 824, 825, 826, 827, 828, 829, 205, 206, 236, 268, 207, 208, 243, 308, 340, 851, 853,",
+      "depth": 4,
+      "cell": 500,
+      "action_from": 1593,
+      "action_to": 1616
+    },
+    {
+      "signature": "3a54a961355abfc3",
+      "kind": "planner-incident",
+      "reason": "Exploration exhausted without a reachable exit: {\"known_cells\": 952, \"unvisited_reachable\": [468, 469, 501, 436, 498, 437, 438, 470, 502, 534, 565, 465, 497, 598, 464, 496, 629, 431, 463, 495, 633, 664, 430, 462, 494, 538, 634, 666, 697, 698, 336, 725, 507, 571, 667, 699, 729, 730, 731, 758, 761, 700, 732, 762, 763, 764, 271, 272, 789, 790, 792, 793, 794, 669, 733, 765, 795, 796, 797, 238, 239, 269, 240, 274, 339, 821, 822, 824, 825, 826, 827, 828, 829, 205, 206, 236, 268, 207, 208, 243, 308, 340, 851, 853,",
+      "depth": 4,
+      "cell": 500,
+      "action_from": 1593,
+      "action_to": 1617
+    }
+  ],
+  "prior_review_attempt": false
+}
