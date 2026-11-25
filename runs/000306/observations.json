@@ -1,0 +1,208 @@
+{
+  "schema_version": 1,
+  "run_id": "000306",
+  "source_commit": "cd5c5615825934429897bdf1e6edcfaf711f6969",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "dead",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000306/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000306/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 3234,
+      "depth": 8,
+      "cell": 675,
+      "type": "cell",
+      "target_cell": 718,
+      "intent": "explore"
+    },
+    {
+      "index": 3235,
+      "depth": 8,
+      "cell": 718,
+      "type": "cell",
+      "target_cell": 761,
+      "intent": "loot"
+    },
+    {
+      "index": 3236,
+      "depth": 8,
+      "cell": 761,
+      "type": "cell",
+      "target_cell": 718,
+      "intent": "explore"
+    },
+    {
+      "index": 3237,
+      "depth": 8,
+      "cell": 718,
+      "type": "cell",
+      "target_cell": 675,
+      "intent": "explore"
+    },
+    {
+      "index": 3238,
+      "depth": 8,
+      "cell": 675,
+      "type": "cell",
+      "target_cell": 633,
+      "intent": "explore"
+    },
+    {
+      "index": 3239,
+      "depth": 8,
+      "cell": 633,
+      "type": "cell",
+      "target_cell": 592,
+      "intent": "explore"
+    },
+    {
+      "index": 3240,
+      "depth": 8,
+      "cell": 592,
+      "type": "item"
+    },
+    {
+      "index": 3241,
+      "depth": 8,
+      "cell": 592,
+      "type": "cell",
+      "target_cell": 594
+    },
+    {
+      "index": 3242,
+      "depth": 8,
+      "cell": 592,
+      "type": "item"
+    },
+    {
+      "index": 3243,
+      "depth": 8,
+      "cell": 592,
+      "type": "cell",
+      "target_cell": 552
+    },
+    {
+      "index": 3244,
+      "depth": 8,
+      "cell": 592,
+      "type": "cell",
+      "target_cell": 633,
+      "intent": "retreat"
+    },
+    {
+      "index": 3245,
+      "depth": 8,
+      "cell": 633,
+      "type": "cell",
+      "target_cell": 675,
+      "intent": "retreat"
+    },
+    {
+      "index": 3246,
+      "depth": 8,
+      "cell": 675,
+      "type": "cell",
+      "target_cell": 718,
+      "intent": "retreat"
+    },
+    {
+      "index": 3247,
+      "depth": 8,
+      "cell": 718,
+      "type": "cell",
+      "target_cell": 677,
+      "intent": "retreat"
+    },
+    {
+      "index": 3248,
+      "depth": 8,
+      "cell": 677,
+      "type": "item"
+    },
+    {
+      "index": 3249,
+      "depth": 8,
+      "cell": 677,
+      "type": "cell",
+      "target_cell": 718
+    },
+    {
+      "index": 3250,
+      "depth": 8,
+      "cell": 677,
+      "type": "cell",
+      "target_cell": 719,
+      "intent": "retreat"
+    },
+    {
+      "index": 3251,
+      "depth": 8,
+      "cell": 719,
+      "type": "cell",
+      "target_cell": 762,
+      "intent": "retreat"
+    },
+    {
+      "index": 3252,
+      "depth": 8,
+      "cell": 762,
+      "type": "cell",
+      "target_cell": 803,
+      "intent": "retreat"
+    },
+    {
+      "index": 3253,
+      "depth": 8,
+      "cell": 803,
+      "type": "item"
+    },
+    {
+      "index": 3254,
+      "depth": 8,
+      "cell": 803,
+      "type": "cell",
+      "target_cell": 761
+    },
+    {
+      "index": 3255,
+      "depth": 8,
+      "cell": 803,
+      "type": "item"
+    },
+    {
+      "index": 3256,
+      "depth": 8,
+      "cell": 803,
+      "type": "cell",
+      "target_cell": 761
+    },
+    {
+      "index": 3257,
+      "depth": 8,
+      "cell": 803,
+      "type": "cell",
+      "target_cell": 761
+    }
+  ],
+  "observations": [
+    {
+      "signature": "9f4913289a0d04e2",
+      "kind": "observed-death:combat",
+      "reason": "You were killed by the explosion of bones...",
+      "action_from": 3234,
+      "action_to": 3257
+    },
+    {
+      "signature": "978b37be6c47758c",
+      "kind": "planner-incident",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "depth": 6,
+      "cell": 1415,
+      "action_from": 2503,
+      "action_to": 2527
+    }
+  ],
+  "prior_review_attempt": false
+}
