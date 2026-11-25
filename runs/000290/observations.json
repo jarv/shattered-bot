@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "run_id": "000290",
+  "source_commit": "3a1101a0d056bc4a6837a4e5294a5201cb6faa2b",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000290/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000290/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 241,
+      "depth": 1,
+      "cell": 365,
+      "type": "cell",
+      "target_cell": 401,
+      "intent": "explore"
+    },
+    {
+      "index": 242,
+      "depth": 1,
+      "cell": 401,
+      "type": "cell",
+      "target_cell": 437,
+      "intent": "explore"
+    },
+    {
+      "index": 243,
+      "depth": 1,
+      "cell": 437,
+      "type": "cell",
+      "target_cell": 472,
+      "intent": "explore"
+    },
+    {
+      "index": 244,
+      "depth": 1,
+      "cell": 472,
+      "type": "cell",
+      "target_cell": 507,
+      "intent": "explore"
+    },
+    {
+      "index": 245,
+      "depth": 1,
+      "cell": 472,
+      "type": "cell",
+      "target_cell": 507,
+      "intent": "explore"
+    },
+    {
+      "index": 246,
+      "depth": 1,
+      "cell": 507,
+      "type": "cell",
+      "target_cell": 541,
+      "intent": "explore"
+    },
+    {
+      "index": 247,
+      "depth": 1,
+      "cell": 541,
+      "type": "cell",
+      "target_cell": 540,
+      "intent": "explore"
+    },
+    {
+      "index": 248,
+      "depth": 1,
+      "cell": 540,
+      "type": "cell",
+      "target_cell": 539,
+      "intent": "explore"
+    },
+    {
+      "index": 249,
+      "depth": 1,
+      "cell": 539,
+      "type": "cell",
+      "target_cell": 538,
+      "intent": "explore"
+    },
+    {
+      "index": 250,
+      "depth": 1,
+      "cell": 538,
+      "type": "cell",
+      "target_cell": 537,
+      "intent": "explore"
+    },
+    {
+      "index": 251,
+      "depth": 1,
+      "cell": 537,
+      "type": "cell",
+      "target_cell": 537,
+      "intent": "loot"
+    },
+    {
+      "index": 252,
+      "depth": 1,
+      "cell": 537,
+      "type": "cell",
+      "target_cell": 572,
+      "intent": "loot"
+    },
+    {
+      "index": 253,
+      "depth": 1,
+      "cell": 572,
+      "type": "cell",
+      "target_cell": 572,
+      "intent": "loot"
+    },
+    {
+      "index": 254,
+      "depth": 1,
+      "cell": 572,
+      "type": "cell",
+      "target_cell": 607,
+      "intent": "explore"
+    },
+    {
+      "index": 255,
+      "depth": 1,
+      "cell": 607,
+      "type": "cell",
+      "target_cell": 607,
+      "intent": "loot"
+    },
+    {
+      "index": 256,
+      "depth": 1,
+      "cell": 607,
+      "type": "cell",
+      "target_cell": 608,
+      "intent": "explore"
+    },
+    {
+      "index": 257,
+      "depth": 1,
+      "cell": 608,
+      "type": "cell",
+      "target_cell": 609,
+      "intent": "explore"
+    },
+    {
+      "index": 258,
+      "depth": 1,
+      "cell": 609,
+      "type": "cell",
+      "target_cell": 609,
+      "intent": "loot"
+    },
+    {
+      "index": 259,
+      "depth": 1,
+      "cell": 609,
+      "type": "cell",
+      "target_cell": 610,
+      "intent": "explore"
+    },
+    {
+      "index": 260,
+      "depth": 1,
+      "cell": 610,
+      "type": "cell",
+      "target_cell": 611,
+      "intent": "explore"
+    },
+    {
+      "index": 261,
+      "depth": 1,
+      "cell": 611,
+      "type": "cell",
+      "target_cell": 577,
+      "intent": "explore"
+    },
+    {
+      "index": 262,
+      "depth": 1,
+      "cell": 577,
+      "type": "cell",
+      "target_cell": 542,
+      "intent": "explore"
+    },
+    {
+      "index": 263,
+      "depth": 1,
+      "cell": 542,
+      "type": "cell",
+      "target_cell": 576,
+      "intent": "explore"
+    },
+    {
+      "index": 264,
+      "depth": 1,
+      "cell": 576,
+      "type": "cell",
+      "target_cell": 612,
+      "intent": "explore"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "f5d3fd232d035d7a",
+      "kind": "planner-stop:mandatory-preparation-unresolved",
+      "reason": "Cannot descend before potion discovery: No safe water/water-escape bank with verified potion-inventory protection",
+      "depth": 1,
+      "cell": 612,
+      "action_from": 241,
+      "action_to": 264
+    },
+    {
+      "signature": "14c1b22b8b340f2d",
+      "kind": "planner-incident",
+      "reason": "Cannot descend before potion discovery: No safe water/water-escape bank with verified potion-inventory protection",
+      "depth": 1,
+      "cell": 612,
+      "action_from": 241,
+      "action_to": 265
+    }
+  ],
+  "prior_review_attempt": false
+}
