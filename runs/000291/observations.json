@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "run_id": "000291",
+  "source_commit": "f5793ad099bc61be343d64cb17c044113a66c6f3",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000291/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000291/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 2747,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2748,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2749,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2750,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2751,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2752,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2753,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2754,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2755,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2756,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2757,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2758,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2759,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2760,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2761,
+      "depth": 7,
+      "cell": 1092,
+      "type": "item"
+    },
+    {
+      "index": 2762,
+      "depth": 7,
+      "cell": 1092,
+      "type": "cell",
+      "target_cell": 1149
+    },
+    {
+      "index": 2763,
+      "depth": 7,
+      "cell": 1092,
+      "type": "item"
+    },
+    {
+      "index": 2764,
+      "depth": 7,
+      "cell": 1092,
+      "type": "cell",
+      "target_cell": 1148
+    },
+    {
+      "index": 2765,
+      "depth": 7,
+      "cell": 1092,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 2766,
+      "depth": 7,
+      "cell": 1092,
+      "type": "cell",
+      "target_cell": 1141,
+      "intent": "loot"
+    },
+    {
+      "index": 2767,
+      "depth": 7,
+      "cell": 1141,
+      "type": "cell",
+      "target_cell": 1191,
+      "intent": "loot"
+    },
+    {
+      "index": 2768,
+      "depth": 7,
+      "cell": 1191,
+      "type": "cell",
+      "target_cell": 1141,
+      "intent": "loot"
+    },
+    {
+      "index": 2769,
+      "depth": 7,
+      "cell": 1141,
+      "type": "cell",
+      "target_cell": 1091,
+      "intent": "loot"
+    },
+    {
+      "index": 2770,
+      "depth": 7,
+      "cell": 1091,
+      "type": "cell",
+      "target_cell": 1041,
+      "intent": "loot"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "7fd3aa19a7618e00",
+      "kind": "planner-stop:immediate-safety-emergency",
+      "reason": "Burning: no verified water route or known frost splash; refusing loot/recharge fallthrough",
+      "depth": 7,
+      "cell": 1041,
+      "action_from": 2747,
+      "action_to": 2770
+    },
+    {
+      "signature": "978b37be6c47758c",
+      "kind": "planner-incident",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "depth": 4,
+      "cell": 730,
+      "action_from": 1730,
+      "action_to": 1754
+    },
+    {
+      "signature": "a2663b559dea51a9",
+      "kind": "planner-incident",
+      "reason": "Burning: no verified water route or known frost splash; refusing loot/recharge fallthrough",
+      "depth": 7,
+      "cell": 1041,
+      "action_from": 2747,
+      "action_to": 2771
+    }
+  ],
+  "prior_review_attempt": false
+}
