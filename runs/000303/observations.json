@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "run_id": "000303",
+  "source_commit": "90c2b15b9557372c0d1e7341ddd6e8086632271c",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "dead",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000303/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000303/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 4032,
+      "depth": 9,
+      "cell": 1161,
+      "type": "item"
+    },
+    {
+      "index": 4033,
+      "depth": 9,
+      "cell": 1161,
+      "type": "cell",
+      "target_cell": 1198
+    },
+    {
+      "index": 4034,
+      "depth": 9,
+      "cell": 1161,
+      "type": "cell",
+      "target_cell": 1125,
+      "intent": "retreat"
+    },
+    {
+      "index": 4035,
+      "depth": 9,
+      "cell": 1125,
+      "type": "item"
+    },
+    {
+      "index": 4036,
+      "depth": 9,
+      "cell": 1125,
+      "type": "cell",
+      "target_cell": 1162
+    },
+    {
+      "index": 4037,
+      "depth": 9,
+      "cell": 1125,
+      "type": "cell",
+      "target_cell": 1162
+    },
+    {
+      "index": 4038,
+      "depth": 9,
+      "cell": 1125,
+      "type": "cell",
+      "target_cell": 1162
+    },
+    {
+      "index": 4039,
+      "depth": 9,
+      "cell": 1125,
+      "type": "item"
+    },
+    {
+      "index": 4040,
+      "depth": 9,
+      "cell": 1125,
+      "type": "cell",
+      "target_cell": 1088,
+      "intent": "retreat"
+    },
+    {
+      "index": 4041,
+      "depth": 9,
+      "cell": 1088,
+      "type": "cell",
+      "target_cell": 1052,
+      "intent": "retreat"
+    },
+    {
+      "index": 4042,
+      "depth": 9,
+      "cell": 1052,
+      "type": "cell",
+      "target_cell": 1017,
+      "intent": "retreat"
+    },
+    {
+      "index": 4043,
+      "depth": 9,
+      "cell": 1017,
+      "type": "cell",
+      "target_cell": 980,
+      "intent": "retreat"
+    },
+    {
+      "index": 4044,
+      "depth": 9,
+      "cell": 980,
+      "type": "cell",
+      "target_cell": 945,
+      "intent": "retreat"
+    },
+    {
+      "index": 4045,
+      "depth": 9,
+      "cell": 945,
+      "type": "cell",
+      "target_cell": 909,
+      "intent": "retreat"
+    },
+    {
+      "index": 4046,
+      "depth": 9,
+      "cell": 909,
+      "type": "cell",
+      "target_cell": 945,
+      "intent": "retreat"
+    },
+    {
+      "index": 4047,
+      "depth": 9,
+      "cell": 945,
+      "type": "cell",
+      "target_cell": 909,
+      "intent": "retreat"
+    },
+    {
+      "index": 4048,
+      "depth": 9,
+      "cell": 909,
+      "type": "item"
+    },
+    {
+      "index": 4049,
+      "depth": 9,
+      "cell": 909,
+      "type": "cell",
+      "target_cell": 1052
+    },
+    {
+      "index": 4050,
+      "depth": 9,
+      "cell": 1016,
+      "type": "item"
+    },
+    {
+      "index": 4051,
+      "depth": 9,
+      "cell": 1016,
+      "type": "cell",
+      "target_cell": 1052
+    },
+    {
+      "index": 4052,
+      "depth": 9,
+      "cell": 1016,
+      "type": "item"
+    },
+    {
+      "index": 4053,
+      "depth": 9,
+      "cell": 1016,
+      "type": "cell",
+      "target_cell": 1052
+    },
+    {
+      "index": 4054,
+      "depth": 9,
+      "cell": 1016,
+      "type": "item"
+    },
+    {
+      "index": 4055,
+      "depth": 9,
+      "cell": 1016,
+      "type": "cell",
+      "target_cell": 1052
+    }
+  ],
+  "observations": [
+    {
+      "signature": "7b8a6e3739ab70be",
+      "kind": "observed-death:unknown/missing",
+      "reason": "Hero died; cause not established by the recording summary",
+      "action_from": 4032,
+      "action_to": 4055
+    },
+    {
+      "signature": "978b37be6c47758c",
+      "kind": "planner-incident",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "depth": 7,
+      "cell": 534,
+      "action_from": 3233,
+      "action_to": 3257
+    }
+  ],
+  "prior_review_attempt": false
+}
