@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "run_id": "000293",
+  "source_commit": "c787b608099df8adaf2b0e979735d8a0a4d57d6c",
+  "game_source": "a9333ff0aa935216f3766d7823cae50feb1e9baa",
+  "seed": null,
+  "outcome": "stuck-planner",
+  "qualification": "Not reviewed. Automatic improvement is disabled; observations are symptoms for manual analysis, not diagnoses.",
+  "video": "https://media.shattered.jarv.org/bot-v1/runs/000293/video.mp4",
+  "logs_url": "https://media.shattered.jarv.org/bot-v1/runs/000293/logs.tar.gz",
+  "recent_inputs": [
+    {
+      "index": 4079,
+      "depth": 8,
+      "cell": 219,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 4080,
+      "depth": 8,
+      "cell": 219,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 4081,
+      "depth": 8,
+      "cell": 219,
+      "type": "wait",
+      "intent": "recover"
+    },
+    {
+      "index": 4082,
+      "depth": 8,
+      "cell": 219,
+      "type": "item"
+    },
+    {
+      "index": 4083,
+      "depth": 8,
+      "cell": 219,
+      "type": "item"
+    },
+    {
+      "index": 4084,
+      "depth": 8,
+      "cell": 219,
+      "type": "cell",
+      "target_cell": 342
+    },
+    {
+      "index": 4085,
+      "depth": 8,
+      "cell": 219,
+      "type": "item"
+    },
+    {
+      "index": 4086,
+      "depth": 8,
+      "cell": 219,
+      "type": "cell",
+      "target_cell": 341
+    },
+    {
+      "index": 4087,
+      "depth": 8,
+      "cell": 219,
+      "type": "item"
+    },
+    {
+      "index": 4088,
+      "depth": 8,
+      "cell": 219,
+      "type": "cell",
+      "target_cell": 262
+    },
+    {
+      "index": 4089,
+      "depth": 8,
+      "cell": 219,
+      "type": "item"
+    },
+    {
+      "index": 4090,
+      "depth": 8,
+      "cell": 219,
+      "type": "cell",
+      "target_cell": 261
+    },
+    {
+      "index": 4091,
+      "depth": 8,
+      "cell": 219,
+      "type": "cell",
+      "target_cell": 258,
+      "intent": "retreat"
+    },
+    {
+      "index": 4092,
+      "depth": 8,
+      "cell": 258,
+      "type": "cell",
+      "target_cell": 298,
+      "intent": "retreat"
+    },
+    {
+      "index": 4093,
+      "depth": 8,
+      "cell": 298,
+      "type": "cell",
+      "target_cell": 337,
+      "intent": "retreat"
+    },
+    {
+      "index": 4094,
+      "depth": 8,
+      "cell": 337,
+      "type": "cell",
+      "target_cell": 338,
+      "intent": "retreat"
+    },
+    {
+      "index": 4095,
+      "depth": 8,
+      "cell": 338,
+      "type": "cell",
+      "target_cell": 339,
+      "intent": "retreat"
+    },
+    {
+      "index": 4096,
+      "depth": 8,
+      "cell": 339,
+      "type": "cell",
+      "target_cell": 298,
+      "intent": "retreat"
+    },
+    {
+      "index": 4097,
+      "depth": 8,
+      "cell": 298,
+      "type": "cell",
+      "target_cell": 337,
+      "intent": "retreat"
+    },
+    {
+      "index": 4098,
+      "depth": 8,
+      "cell": 337,
+      "type": "cell",
+      "target_cell": 336,
+      "intent": "retreat"
+    },
+    {
+      "index": 4099,
+      "depth": 8,
+      "cell": 336,
+      "type": "cell",
+      "target_cell": 335,
+      "intent": "retreat"
+    },
+    {
+      "index": 4100,
+      "depth": 8,
+      "cell": 335,
+      "type": "cell",
+      "target_cell": 334,
+      "intent": "retreat"
+    },
+    {
+      "index": 4101,
+      "depth": 8,
+      "cell": 334,
+      "type": "cell",
+      "target_cell": 333,
+      "intent": "retreat"
+    },
+    {
+      "index": 4102,
+      "depth": 8,
+      "cell": 333,
+      "type": "cell",
+      "target_cell": 332,
+      "intent": "retreat"
+    }
+  ],
+  "observations": [
+    {
+      "signature": "28faf5a42e64de2a",
+      "kind": "planner-stop:immediate-safety-emergency",
+      "reason": "Critical-health withdrawal exhausted its budget without recovery or usable magic",
+      "depth": 8,
+      "cell": 332,
+      "action_from": 4079,
+      "action_to": 4102
+    },
+    {
+      "signature": "978b37be6c47758c",
+      "kind": "planner-incident",
+      "reason": "Piranha-room chest remains uncollected: seek/test this floor invisibility supply and finish verified retrieval before descending",
+      "depth": 3,
+      "cell": 1086,
+      "action_from": 1372,
+      "action_to": 1396
+    },
+    {
+      "signature": "39f61fce25826364",
+      "kind": "planner-incident",
+      "reason": "Critical-health withdrawal exhausted its budget without recovery or usable magic",
+      "depth": 8,
+      "cell": 332,
+      "action_from": 4079,
+      "action_to": 4103
+    }
+  ],
+  "prior_review_attempt": false
+}
