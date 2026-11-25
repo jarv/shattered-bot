@@ -24,6 +24,101 @@ def wood_room(rules=None):
 
 
 class WoodenBarrierTests(unittest.TestCase):
+    def simple_room(self):
+        from tools.mage_policy import MagePolicy
+        s, _ = wood_room()
+        s["inventory"][-1] = potion("potion of liquid flame")
+        s["hero"]["cell"] = 39
+        p = MagePolicy(profile="simple-bot")
+        p.challenges_verified = True
+        p.update(s)
+        return s, p
+
+    def test_simple_uses_known_flame_before_ordinary_descent(self):
+        from tools.simple_navigation import choose, before_descent
+        from tools.policy_decision import Decision, Intent
+        for final_gate in (False, True):
+            s, p = self.simple_room()
+            action = before_descent(p, s, Decision(
+                {"type": "cell", "cell": 40}, "leave", Intent.DESCEND)) if final_gate else choose(p, s, [])
+            self.assertEqual("THROW", action.action["action"])
+            self.assertEqual(41, p.target)
+            self.assertEqual("verify-wood", p.wood_burn_plan["phase"])
+            self.assertFalse(p.reserve_floor_puzzle_supplies)
+
+    def test_simple_retains_known_bookshelf_burning_and_scoped_unknown_fire_test(self):
+        from tools.simple_navigation import wooden_barricade
+        for kind in ("shelf", "unknown"):
+            s, p = self.simple_room()
+            if kind == "shelf":
+                p.tiles[41]["terrain"] = 27
+                action = wooden_barricade(p, s, [])
+                self.assertEqual("THROW", action.action["action"])
+            else:
+                s["hero"]["cell"] = 40  # Dry bank, one move to water.
+                s["inventory"][-1] = potion()
+                action = wooden_barricade(p, s, [])
+                self.assertEqual("DRINK", action.action["action"])
+                self.assertFalse(s["inventory"][-1]["identified"])
+            self.assertEqual(41, p.wood_burn_plan["wood"])
+            self.assertFalse(p.reserve_floor_puzzle_supplies)
+
+    def test_simple_still_protects_allies_loot_and_threat_gates(self):
+        from tools.simple_navigation import wooden_barricade
+        for kind in ("ally", "scroll", "threat"):
+            s, p = self.simple_room()
+            if kind == "ally":s["objects"] = [{"cell": 42, "name": "sad ghost"}]
+            elif kind == "scroll":p.loot[42] = {"name": "scroll of upgrade"}
+            else:p.recent_threats[30] = {"cell": 30, "name": "gnoll scout", "observations_ago": 1}
+            self.assertIsNone(wooden_barricade(p, s, []), kind)
+            self.assertIsNone(p.wood_burn_plan, kind)
+
+    def test_simple_unknown_test_keeps_identification_water_and_storage_requirements(self):
+        from tools.simple_navigation import wooden_barricade
+        for kind in ("identify", "no-water", "stack", "shelf-only", "low-health"):
+            s, p = self.simple_room()
+            s["hero"]["cell"] = 40
+            s["inventory"][-1] = potion(quantity=2 if kind == "stack" else 1)
+            if kind == "identify":
+                s["inventory"].append({"id": "identify", "name": "scroll of identify", "actions": ["READ"]})
+                self.assertEqual("READ", wooden_barricade(p, s, []).action["action"])
+                self.assertIsNone(p.wood_burn_plan)
+                continue
+            if kind == "no-water":p.tiles[39]["terrain"] = 1
+            elif kind == "shelf-only":p.tiles[41]["terrain"] = 27
+            elif kind == "low-health":s["hero"]["hp"] = 10
+            action = wooden_barricade(p, s, [])
+            self.assertTrue(action is None or action.action.get("action") != "DRINK", kind)
+            self.assertIsNone(p.wood_burn_plan, kind)
+
+    def test_simple_rejected_unknown_test_rolls_back_probe_and_custody_plans(self):
+        from tools.simple_navigation import wooden_barricade
+        s, p = self.simple_room()
+        s["hero"]["cell"] = 40
+        s["inventory"][-1] = potion()
+        transaction = Transaction(p, p.planner)
+        self.assertEqual("DRINK", wooden_barricade(p, s, []).action["action"])
+        self.assertTrue(p.wood_burn_plan)
+        transaction.rollback()
+        self.assertIsNone(p.wood_burn_plan)
+        self.assertFalse(p.puzzle_drinks)
+        self.assertFalse(p.wood_probe_attempts)
+        self.assertIsNone(p.potion_probe_permit)
+
+    def test_simple_recovery_waits_for_observed_fire_expiry_without_collection_credit(self):
+        from tools.simple_navigation import wooden_barricade
+        s, p = self.simple_room()
+        wooden_barricade(p, s, [])
+        wood = next(t for t in s["map"]["cells"] if t["cell"] == 41)
+        wood.update(terrain=20, effects=["A fire is raging here."])
+        p.update(s)
+        self.assertEqual("wait", recover(p, s, []).action["type"])
+        wood["effects"] = []
+        p.update(s)
+        self.assertIsNone(recover(p, s, []))
+        self.assertIsNone(p.wood_burn_plan)
+        self.assertFalse(p.loot_collection_receipts)
+
     def test_last_flame_is_reserved_from_optional_combat_but_not_emergencies(self):
         for hp,expected in ((20,False),(6,True)):
             s,p=wood_room();s['hero'].update(hp=hp,max_hp=20)

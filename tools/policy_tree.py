@@ -16,6 +16,7 @@ POLICY = Selector("survival", (
         Leaf("vertigo-response", n.vertigo_response),
         Leaf("toxic-gas-escape", n.toxic_gas),
         Leaf("burning-recovery", n.burning),
+        Leaf("ordinary-flight-recovery", n.ordinary_flight_recovery),
         Leaf("hazardous-room-escape", lambda c: c.policy.escape_special_room(c.state)),
         Leaf("boss-telegraph", n.boss_escape),
         Leaf("warning-escape", n.warned_cell),

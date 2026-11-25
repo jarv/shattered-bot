@@ -775,18 +775,26 @@ def open_journey_entrance(p,state,journey):
     return False,None
 
 
-def prepare_supplies(p, state, enemies, distance, neighbors):
+def prepare_supplies(p, state, enemies, distance, neighbors, *, wood_only=False):
     if enemies or p.puzzle_probe or state.get("danger_cells") or not preparation_allowed(p,state):
         return None
     try:
         from .piranha_profile import scout
     except ImportError:
         from piranha_profile import scout
-    observation=scout(p,state)
+    observation=scout(p,state) if not wood_only else None
     if observation:return observation
     hero = state["hero"]
     buffs = " ".join(b["name"].lower() for b in hero.get("buffs", []))
-    pending=demands(p,state,distance)
+    if wood_only:
+        # Explicit simple-profile exception, not permission to resume all
+        # puzzle demands, piranha scouting, supply expeditions or reservations.
+        pending = [Demand('flame', 'potion of liquid flame', c) for c, t in p.tiles.items()
+                   if t.get('terrain') == 13 and t.get('visible')
+                   and p.wood_probe_attempts[c] < 2 and p.known_burn_staging[c] < 32]
+        pending.sort(key=lambda d: distance(hero['cell'], d.cell, state['map']['width']))
+    else:
+        pending=demands(p,state,distance)
     # Cross-door preparation owns one test bank. If fresh arrival no longer
     # admits that bank, recover the confirmed drops rather than moving the
     # unknown experiment to another bank with an unrelated return promise.
@@ -831,7 +839,7 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
                 p.room_attempts.add(frost_key);p.puzzle_hungry_frost=True
                 return p.use(healing[0],'DRINK','room: spend one surplus healing potion to fund near-full frost-barrier test; retain emergency reserve')
     meal_key=(state["depth"],"puzzle-meal")
-    if "hungry" in buffs and "starving" not in buffs and hero["hp"]>=0.95*hero["max_hp"] \
+    if not wood_only and "hungry" in buffs and "starving" not in buffs and hero["hp"]>=0.95*hero["max_hp"] \
             and not any(t in buffs for t in ("burning","poison","blind","vertigo","paral","root","magic immun")) \
             and (any(fire_barrier(t) for t in p.tiles.values()) or any(d.kind=='flight'
              and distance(hero['cell'],d.cell,state['map']['width'])<=6 for d in pending)
@@ -1043,12 +1051,12 @@ def prepare_supplies(p, state, enemies, distance, neighbors):
                 return use_room_supply(p,candidate,"DRINK","room: test unconfirmed frost beside barrier with one intervening square; verify fire removal",kind='frost')
             finally:
                 p.potion_probe_permit=None
-        if demand.kind=='flame' and getattr(p,'reserve_floor_puzzle_supplies',False):
+        if demand.kind=='flame' and (getattr(p,'reserve_floor_puzzle_supplies',False) or wood_only):
             try:
                 from .wooden_barrier import prepare as prepare_wood
             except ImportError:
                 from wooden_barrier import prepare as prepare_wood
-            action=prepare_wood(p,state,demand,candidate,safe_test_bank)
+            action=prepare_wood(p,state,demand,candidate,safe_test_bank,ordinary=wood_only)
             if action:return action
         # Known flame is still preferred as a THROW. The unknown-drink fallback
         # above is explicitly staged beside wood with an immediate water exit.

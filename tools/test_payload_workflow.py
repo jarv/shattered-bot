@@ -74,6 +74,35 @@ def picked(p,s,quantity=1):
 
 
 class PayloadCustodyContracts(unittest.TestCase):
+    def test_offscreen_payload_returns_to_safe_bank_without_clearing_hazard_memory(self):
+        p, s, plan = landed()
+        s = disarmed(p, s)
+        for tile in p.tiles.values():tile["observed"] = True
+        p.tiles[43].update(visible=False,effects=["The air is unnaturally frigid here."])
+        p.room_blocked.add(43)
+        self.assertNotIn(43, p.paths(s))
+        action = recover_trap_payload(p, s, [])
+        self.assertIsNotNone(action)
+        self.assertNotEqual(43, action.action["cell"])
+        self.assertIn(43, p.room_blocked)
+        self.assertTrue(p.tiles[43]["effects"])
+        self.assertEqual(1, plan.reobserve_steps)
+        self.assertEqual({"waterskin": 1}, plan.outstanding)
+
+    def test_visible_payload_hazard_or_protected_room_is_not_overridden(self):
+        for case in ("effect", "live", "protected", "unknown"):
+            p, s, plan = landed()
+            s = disarmed(p, s)
+            p.tiles[43]["observed"] = True
+            p.room_blocked.add(43)
+            p.room_notes.append({"cell": 43, "kind": "chasm/trap"})
+            if case == "effect":p.tiles[43]["effects"] = ["A fire is raging here."]
+            elif case == "live":p.tiles[43]["terrain"] = 18
+            elif case == "protected":p.room_notes.append({"cell": 43, "kind": "statue"})
+            else:p.tiles[43]["observed"] = False
+            self.assertIsNone(recover_trap_payload(p, s, []), case)
+            self.assertTrue(plan.outstanding)
+
     def test_proposal_and_targeting_are_not_landing_or_disarm(self):
         p,b,d=proposed()
         plan=p.trap_payload_return

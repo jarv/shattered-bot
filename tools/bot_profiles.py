@@ -9,6 +9,7 @@ class Profile:
     special_rooms: bool = True
     full_exploration: bool = True
     secret_hunting: bool = True
+    mimic_investigation: bool = True
 
 
 PROFILES = {

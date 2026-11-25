@@ -31,6 +31,7 @@ class PayloadReturn(OwnedItems):
     item_id: str = ""
     origin: int = -1
     steps: int = 0
+    reobserve_steps: int = 0
     disarm_required: bool = True
     phase: PayloadPhase = PayloadPhase.PROPOSED
     attempted_cell: int | None = None

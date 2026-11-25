@@ -40,6 +40,37 @@ def receipt(s,cells):
 
 
 class MovementBatchTests(unittest.TestCase):
+    def test_simple_batches_observed_unvisited_open_ground_and_descent_approach(self):
+        from tools.mage_policy import MagePolicy
+        for intent in (Intent.EXPLORE, Intent.LOOT, Intent.DESCEND):
+            s, _ = corridor()
+            for t in s['map']['cells']:
+                if 1 <= t['cell']//17 <= 5 and 1 <= t['cell']%17 <= 15:
+                    t['terrain'] = 1
+            p = MagePolicy(profile='simple-bot')
+            p.challenges_verified = True
+            p.update(s)
+            a = proposal(s, p, intent=intent)
+            # Equal-length BFS routes across open rooms need not be straight.
+            a.navigation_route = tuple(range(54, 65))
+            a.action = {'type': 'cell', 'cell': 55}
+            a = prepare(p, s, a)
+            self.assertEqual(tuple(range(54, 61)), a.movement_batch)
+
+    def test_simple_does_not_batch_past_unknown_edges_or_locked_doors(self):
+        from tools.mage_policy import MagePolicy
+        for mode in ('unknown', 'door', 'trap', 'loot'):
+            s, _ = corridor()
+            p = MagePolicy(profile='simple-bot')
+            p.challenges_verified = True
+            p.update(s)
+            if mode == 'unknown':p.tiles[38]['observed'] = False
+            elif mode == 'door':p.tiles[38]['terrain'] = 10
+            elif mode == 'trap':p.tiles[38].update(terrain=18, trap='flock trap')
+            else:p.loot[38] = {'name': 'gold', 'cell': 38}
+            a = prepare(p, s, proposal(s, p))
+            self.assertFalse(a.movement_batch, mode)
+
     def test_clear_visited_straight_corridor_batches_at_most_six_steps(self):
         s,p=corridor();a=prepare(p,s,proposal(s,p))
         self.assertEqual({'type':'cell','cell':60},a.action)

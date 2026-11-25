@@ -86,6 +86,28 @@ def recover_trap_payload(p,state,enemies):
     if plan.phase in {PayloadPhase.PROPOSED,PayloadPhase.AIMING}:
         return None
     paths=p.paths(state)
+    if not p.tiles.get(plan.cell,{}).get("visible"):
+        # Offscreen cold/fire is correctly retained as uncertain. Return to
+        # ordinary known ground to reobserve it, never clear it from memory.
+        try:
+            from .policy_geometry import distance, line_clear
+        except ImportError:
+            from policy_geometry import distance, line_clear
+        pos=state["hero"]["cell"];width=state["map"]["width"]
+        banks=[c for c in paths if c!=pos and 1<=distance(c,plan.cell,width)<=3
+               and p.tiles[c].get("observed") and p.tiles[c]["terrain"] in {1,3,9,14,20,29}
+               and not p.tiles[c].get("trap") and not p.tiles[c].get("plant")
+               and not p.tiles[c].get("effects") and c not in p.loot
+               and line_clear(c,plan.cell,width,p.tiles)]
+        if banks:
+            if plan.reobserve_steps>=64:
+                p.stop_obligation("trap-payload","Reusable payload reobservation exhausted bounded known-ground route")
+            target=min(banks,key=lambda c:(len(p.route(paths,c)),c))
+            action=p.toward(state,target,"trap: reobserve owed payload from admitted ordinary ground",
+                            paths,intent=Intent.LOOT)
+            if action:
+                plan.reobserve_steps+=1
+                return action
     if plan.cell not in paths or (plan.disarm_required and p.tiles[plan.cell].get("terrain")!=19) \
             or p.effects_block_movement(p.tiles.get(plan.cell,{})):
         return None  # Do not enter a still-active or otherwise hazardous trap.

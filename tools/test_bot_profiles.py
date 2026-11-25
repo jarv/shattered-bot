@@ -6,7 +6,7 @@ from tools.bot_profiles import resolve
 from tools.mage_policy import MagePolicy
 from tools.policy_decision import Decision, Intent, Finished
 from tools.policy_runtime import Context, Leaf, Transaction
-from tools.simple_navigation import observe, choose, loot, before_descent, dead_end_search, accepted
+from tools.simple_navigation import observe, choose, loot, before_descent, dead_end_search, accepted, paths
 from tools.test_survival_bot import state, fully_known
 from tools.puzzle_supplies import demands
 from tools.policy_geometry import distance
@@ -60,6 +60,170 @@ class ProfileTests(unittest.TestCase):
 
 
 class SimpleNavigationTests(unittest.TestCase):
+    def test_simple_paths_do_not_propose_later_reversal_of_a_protected_retreat_edge(self):
+        s, p = ready()
+        for c, tile in p.tiles.items():
+            tile["terrain"] = 1 if c in {23, 24, 25} else 4
+        s["hero"]["cell"] = 25
+        p.escape_commitment = {"edges": [(23, 24)], "hp": 20, "charges": 0, "age": 0}
+        self.assertIn(24, paths(p, s))
+        self.assertNotIn(23, paths(p, s))
+        self.assertIn(23, paths(p, s, avoid_retreats=False))
+
+    def test_quiet_escape_commitment_can_reobserve_without_a_current_enemy_memory(self):
+        from tools.simple_navigation import reobserve_temporary_threats
+        s, p = ready()
+        p.escape_commitment = {"edges": [(25, 24)], "hp": 20, "charges": 0, "age": 0}
+        p.recent_threats.clear()
+        action = reobserve_temporary_threats(p, s, [], observe(p, s))
+        self.assertEqual({"type": "wait"}, action.action)
+        self.assertTrue(action.simple_threat_reobserve)
+
+    def test_bounded_memory_reobservation_can_hold_closed_door_cover_at_noncritical_health(self):
+        from tools.simple_navigation import reobserve_temporary_threats
+        s, p = ready()
+        s["hero"]["hp"] = 9
+        p.recent_threats = {8: {"name": "dm-100", "cell": 8, "observations_ago": 5}}
+        floor = observe(p, s)
+        for c in list(p.tiles):
+            if c != s["hero"]["cell"]:p.tiles[c]["terrain"] = 4
+        p.tiles[25]["terrain"] = 8  # A known goal only in the counterfactual.
+        with patch("tools.challenge_combat.exposure", return_value={"exposure": 0}), \
+                patch("tools.simple_navigation.paths", return_value={24: None, 25: 24}), \
+                patch("tools.dm100_escape.exposed_memory", return_value=False):
+            action = reobserve_temporary_threats(p, s, [], floor)
+            self.assertEqual({"type": "wait"}, action.action)
+            self.assertEqual({}, floor["searches"])
+            s["hero"]["hp"] = 6
+            self.assertIsNone(reobserve_temporary_threats(p, s, [], floor))
+
+    def test_missing_stairs_can_use_shared_mapping_resource_without_puzzle_objective(self):
+        s, p = ready()
+        p.tiles[25]["terrain"] = 1
+        information = Decision({"type": "item", "id": "mapping", "action": "READ"}, "reveal")
+        with patch("tools.preparation_prerequisites.reconnaissance", return_value=information) as scout:
+            action = choose(p, s, [])
+        self.assertIs(action, information)
+        scout.assert_called_once_with(p, s)
+        self.assertIn("mapping resource", action.reason)
+
+    def test_known_stairs_do_not_trigger_optional_mapping(self):
+        s, p = ready()
+        with patch("tools.preparation_prerequisites.reconnaissance") as scout:
+            self.assertEqual(Intent.DESCEND, choose(p, s, []).intent)
+        scout.assert_not_called()
+
+    def test_longer_lived_dm100_memory_constrains_navigation_after_recent_sighting_expires(self):
+        from tools.public_evidence import bind_threat
+        from tools.simple_navigation import remembered_threats
+        s, p = ready()
+        p.dm100_threat = {"cell": 8, "age": 7}
+        bind_threat(p, s, p.dm100_threat, 8)
+        p.recent_threats.clear()
+        self.assertEqual("DM-100", remembered_threats(p, s)[0]["name"])
+        with patch("tools.dm100_escape.sees", side_effect=lambda _p, _s, source, target: target == 25), \
+                patch("tools.challenge_combat.exposure", return_value={"exposure": 0}):
+            self.assertNotIn(25, paths(p, s))
+            self.assertIn(25, paths(p, s, avoid_memories=False))
+
+    def test_low_health_temporary_threat_reobservation_uses_safe_step_not_wait(self):
+        from tools.simple_navigation import reobserve_temporary_threats
+        s, p = ready()
+        s["hero"]["hp"] = 12
+        for tile in p.tiles.values():
+            tile["observed"] = True
+        p.recent_threats = {8: {"name": "prison guard", "cell": 8, "observations_ago": 6}}
+        with patch("tools.challenge_combat.exposure", return_value={"exposure": 0}):
+            action = reobserve_temporary_threats(p, s, [], observe(p, s))
+        self.assertEqual("cell", action.action["type"])
+        self.assertTrue(action.simple_threat_reobserve)
+
+    def test_temporary_memory_reobservation_is_bounded_accepted_only_and_not_for_sleepers(self):
+        from tools.simple_navigation import reobserve_temporary_threats
+        s, p = ready()
+        p.recent_threats = {8: {"name": "gnoll scout", "cell": 8, "observations_ago": 4}}
+        floor = observe(p, s)
+        with patch("tools.challenge_combat.exposure", return_value={"exposure": 0}):
+            action = reobserve_temporary_threats(p, s, [], floor)
+            self.assertEqual({"type": "wait"}, action.action)
+            self.assertNotIn("threat_reobservations", floor)
+            accepted(p, s, action, s)
+            self.assertEqual(1, floor["threat_reobservations"])
+            p.recent_threats[8]["sleeping"] = True
+            self.assertIsNone(reobserve_temporary_threats(p, s, [], floor))
+            p.recent_threats[8]["sleeping"] = False
+            floor["threat_reobservations"] = 16
+            self.assertIsNone(reobserve_temporary_threats(p, s, [], floor))
+
+    def test_goo_defeat_preempts_remaining_frontiers_without_level_gain(self):
+        s, p = ready()
+        s["depth"] = 5
+        p.update(s)
+        p.keys["worn"] = 1
+        p.tiles[25]["terrain"] = 21
+        p.tiles[26]["terrain"] = 5
+        action = choose(p, s, [])
+        self.assertEqual(Intent.DESCEND, action.intent)
+        self.assertIn("Goo defeated", action.reason)
+        self.assertFalse(observe(p, s)["level_gained"])
+        self.assertTrue(p.planner.report["simple_descent"]["doors"])
+        p.loot[23] = {"name": "gold", "cell": 23, "top_item": {"name": "gold"}}
+        self.assertEqual(Intent.LOOT, choose(p, s, []).intent)
+
+    def test_worn_key_admits_boss_exit_as_descent_target(self):
+        s, p = ready()
+        p.tiles[25]["terrain"] = 21
+        self.assertNotIn(25, paths(p, s))
+        p.keys["worn"] = 1
+        action = choose(p, s, [])
+        self.assertEqual(Intent.DESCEND, action.intent)
+        self.assertEqual(25, action.navigation_route[-1])
+
+    def test_level_gain_and_final_descent_gate_do_not_skip_a_held_iron_key(self):
+        s, p = ready()
+        s["hero"]["level"] += 1
+        p.tiles[26]["terrain"] = 10
+        p.keys["iron"] = 1
+        for action in (choose(p, s, []), before_descent(
+                p, s, Decision({"type": "cell", "cell": 25}, "leave", Intent.DESCEND))):
+            self.assertEqual(Intent.EXPLORE, action.intent)
+            self.assertEqual(26, action.navigation_route[-1])
+            self.assertIn("held key", action.reason)
+
+    def test_unusable_key_is_reported_but_does_not_force_exhaustive_search(self):
+        s, p = ready()
+        p.keys["iron"] = 1
+        action = Decision({"type": "cell", "cell": 25}, "leave", Intent.DESCEND)
+        with patch("tools.descent_potions.begin", return_value=None):
+            self.assertIs(action, before_descent(p, s, action))
+        self.assertTrue(any(o["obligation"]["kind"] == "unspent floor keys"
+                            for o in p.deferred_obligations))
+
+    def test_iron_and_crystal_keys_admit_observed_matching_doors(self):
+        from tools.simple_navigation import paths, ordinary_work
+        s, p = ready()
+        p.tiles[26]["terrain"] = 10
+        p.keys["iron"] = 0
+        self.assertNotIn(26, paths(p, s))
+        p.keys["iron"] = 1
+        self.assertIn(26, paths(p, s))
+        self.assertIn(26, ordinary_work(p, s, paths(p, s))[0])
+        action = choose(p, s, [])
+        self.assertEqual(Intent.EXPLORE, action.intent)
+        p.tiles[26]["terrain"] = 31
+        p.keys["crystal"] = 1
+        self.assertIn(26, paths(p, s))
+        p.crystal_key_requirement = 3
+        self.assertNotIn(26, paths(p, s))
+
+    def test_golden_key_admits_locked_chest_without_special_room_controller(self):
+        s, p = ready()
+        s["objects"] = [{"name": "locked chest", "cell": 23}]
+        s["keys"] = [{"name": "golden key", "quantity": 1, "depth": s["depth"]}]
+        p.update(s)
+        self.assertIn(23, loot(p, s)[0])
+        self.assertEqual(Intent.LOOT, choose(p, s, []).intent)
+
     def test_exhausted_ordinary_frontiers_does_not_require_visiting_every_tile(self):
         s, p = ready()
         self.assertTrue(any(not p.visits[c] for c in p.paths(s)))

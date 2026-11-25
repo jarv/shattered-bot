@@ -17,6 +17,33 @@ def in_garden(tile):
     return any(garden_effect(e) for e in tile.get('effects',[]))
 
 
+def harvest_supplies(p, state, enemies, floor):
+    """Known dew/seed producers are ordinary supplies, not secret-room hunts."""
+    if enemies or p.recent_threats or p.dm100_threat or state.get("danger_cells") or p.unseen_damage_turns:
+        return None
+    if floor.get("harvest_inputs", 0) >= 64:
+        return None
+    buffs = " ".join(b["name"].lower() for b in state["hero"].get("buffs", []))
+    if any(k in buffs for k in ("burn", "poison", "bleed", "ooze", "vertigo", "paral", "root", "starv")):
+        return None
+    attempts = floor.get("harvest_attempts", {})
+    targets = {c for c, t in p.tiles.items()
+               if t.get("observed") and t.get("plant", "").lower().replace(" ", "") in {"dewcatcher", "seedpod"}
+               and not attempts.get(c)}
+    for target in sorted(targets, key=lambda c: distance(state["hero"]["cell"], c, state["map"]["width"])):
+        occupied = {c for c, t in p.tiles.items() if t.get("plant") and c != target}
+        previous = p.paths(state, occupied)
+        if target not in previous or len(p.route(previous, target)) > 17:
+            continue
+        action = p.toward(state, target, "simple: harvest observed dewcatcher/seed pod; collect only witnessed drops",
+                          previous, intent=Intent.LOOT)
+        if action:
+            action.simple_harvest_target = target
+            action.simple_navigation = True
+            return action
+    return None
+
+
 def choose(p,state,enemies):
     if enemies or p.recent_threats or state.get('danger_cells'):return None
     hero=state['hero'];pos=hero['cell'];width=state['map']['width']

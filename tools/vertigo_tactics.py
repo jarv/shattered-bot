@@ -16,6 +16,7 @@ except ImportError:
 
 MAX_MOVES = 12
 MAX_WAITS = 12
+MAX_GAS_WAITS = 32
 GROUND = {1, 2, 3, 6, 9, 11, 14, 15, 19, 20, 29, 30}
 
 
@@ -222,6 +223,17 @@ def choose(p, state):
                      and "READ" in i.get("actions", []) and p.item_action_allowed(i, "READ")), None)
     if teleport:
         return p.use(teleport, "READ", "vertigo: known emergency teleport after no admissible bounded local escape")
+    if getattr(getattr(p, "profile", None), "name", None) == "simple-bot" \
+            and gas and calm and plan.get("gas_waits", 0) < MAX_GAS_WAITS \
+            and tile.get("terrain") in GROUND and not tile.get("plant") \
+            and (not tile.get("trap") or tile.get("terrain") == 19) \
+            and not any("starving" in b["name"].lower() for b in state["hero"].get("buffs", [])):
+        # Pure confusion does not damage HP. Where random movement could fall
+        # into a chasm, remain on known ground and reobserve bounded dissipation.
+        # Renewed vertigo is not recovery; mixed/damaging gas is never admitted.
+        return mark(p, state, p.decision({"type": "wait"},
+                    "vertigo: bounded stationary observation of pure confusion gas; no random chasm step",
+                    intent=Intent.RECOVER), "gas-wait")
     raise PlannerStuck("Vertigo/confusion exposure: no admissible recovery or all-direction-safe escape within budget",
                        kind="immediate-safety-emergency")
 
@@ -241,6 +253,8 @@ def observe(p, before, decision, after):
             plan["stale"] = 0
     else:
         plan["waits"] += 1
+        if pending["kind"] == "gas-wait":
+            plan["gas_waits"] = plan.get("gas_waits", 0) + 1
         old, new = pending["remaining"], remaining(after)
         plan["stale"] = plan["stale"] + 1 if old is not None and new is not None and new >= old else 0
     return {"kind": pending["kind"], "actual_cell": after["hero"]["cell"],

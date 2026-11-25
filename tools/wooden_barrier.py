@@ -15,8 +15,9 @@ except ImportError:
     from stash_workflow import retrieve as retrieve_stash
 
 
-def prepare(p,state,demand,candidate,safe_bank):
-    if not getattr(p,'reserve_floor_puzzle_supplies',False) or p.wood_burn_plan:return None
+def prepare(p,state,demand,candidate,safe_bank,*,ordinary=False):
+    scoped = ordinary and demand.kind == 'flame' and p.tiles.get(demand.cell,{}).get('terrain') == 13
+    if not (getattr(p,'reserve_floor_puzzle_supplies',False) or scoped) or p.wood_burn_plan:return None
     if state.get('status')!='ready' or state.get('modal') or state.get('danger_cells') or p.recent_threats:return None
     buffs=' '.join(b['name'].lower() for b in state['hero'].get('buffs',[]))
     if any(b in buffs for b in ('burn','poison','bleed','chill','frozen','paral','root','vertigo','slow','crippl',
@@ -55,6 +56,9 @@ def prepare(p,state,demand,candidate,safe_bank):
         return None
     _,bank,water=min(choices)
     if pos!=bank:
+        if scoped:
+            if p.known_burn_staging[wood] >= 32:return None
+            p.known_burn_staging[wood] += 1
         return p.toward(state,bank,'room: stage unknown fire potion beside wooden barrier with immediate water exit',paths,intent=Intent.REPOSITION)
     stash=protect_potions(p,state,candidate,distance,neighbors,safe_bank)
     if stash:return stash

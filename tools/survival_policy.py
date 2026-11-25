@@ -462,14 +462,15 @@ class SurvivalPolicy:
             and cell not in self.blocked and cell not in self.room_blocked \
             and (cell not in self.neutral_actor_cells or cell in ignored_neutrals or cell in self.friendly_passage_cells) and cell not in occupied
 
-    def paths(self, state, occupied=(), ignored_neutrals=(), ignored_plants=()):
+    def paths(self, state, occupied=(), ignored_neutrals=(), ignored_plants=(), *, forbidden_edges=()):
         start, width, height = state["hero"]["cell"], state["map"]["width"], state["map"]["height"]
         previous = {start: None}
         queue = deque([start])
         while queue:
             cell = queue.popleft()
             for adjacent in neighbors(cell, width, height):
-                if adjacent not in previous and self.walkable(adjacent, occupied, ignored_neutrals, ignored_plants):
+                if adjacent not in previous and (cell, adjacent) not in forbidden_edges \
+                        and self.walkable(adjacent, occupied, ignored_neutrals, ignored_plants):
                     previous[adjacent] = cell
                     # Stairs and locks are action destinations, never transit tiles.
                     # A normal click on stairs would change floors prematurely.

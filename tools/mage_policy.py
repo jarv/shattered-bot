@@ -727,7 +727,7 @@ class MagePolicy(SurvivalPolicy):
                                  if any("fire is raging" in e.lower() for e in t.get("effects",[]))
                                  for n in neighbors(c,state["map"]["width"],state["map"]["height"])
                                  if self.tiles.get(n,{}).get("terrain") in {2,5,6,13,15,27,30}}
-        if self.profile.special_rooms:observe_hunts(self,state,distance)
+        if self.profile.mimic_investigation:observe_hunts(self,state,distance)
         if state.get("status")=="ready" and not state.get("modal"):
             seen={o["cell"]:dict(o,observations_ago=0) for o in state.get("objects",[])
                    if is_hostile(o) and not o.get("sleeping")}
@@ -758,7 +758,7 @@ class MagePolicy(SurvivalPolicy):
             from .keyed_rooms import observe as observe_keyed_rooms
         except ImportError:
             from keyed_rooms import observe as observe_keyed_rooms
-        if self.profile.special_rooms:observe_keyed_rooms(self,state)
+        observe_keyed_rooms(self,state)  # Key recognition remains shared; no room-supply expedition.
         try:
             from .dm100_escape import observe as observe_dm100
         except ImportError:
@@ -1346,6 +1346,13 @@ class MagePolicy(SurvivalPolicy):
         returned=recover_trap_payload(self,state,enemies)
         if returned:
             return returned
+        if not self.profile.special_rooms:
+            try:
+                from .ordinary_traps import choose as clear_ordinary_trap
+            except ImportError:
+                from ordinary_traps import choose as clear_ordinary_trap
+            clearing = clear_ordinary_trap(self, state, enemies)
+            if clearing:return clearing
         progression=prepare_mask(self,state,enemies)
         if progression:
             return progression
@@ -1402,10 +1409,10 @@ class MagePolicy(SurvivalPolicy):
             reward = visit_ghost(self,state,enemies,distance,neighbors)
             if reward:
                 return reward
-        hunt=hunt_missing_mimic(self,state,enemies,distance) if self.profile.special_rooms else None
+        hunt=hunt_missing_mimic(self,state,enemies,distance) if self.profile.mimic_investigation else None
         if hunt:
             return hunt
-        recharge=charge_suspect_container(self,state,enemies) if self.profile.special_rooms else None
+        recharge=charge_suspect_container(self,state,enemies) if self.profile.mimic_investigation else None
         if recharge:
             return recharge
         if self.profile.quests and self.unit_strategies_enabled:
@@ -1423,7 +1430,7 @@ class MagePolicy(SurvivalPolicy):
         search=seek_corridor_end(self,state,enemies,distance) if self.profile.secret_hunting else None
         if search:
             return search
-        suspect=investigate_suspect_container(self,state,enemies,distance) if self.profile.special_rooms else None
+        suspect=investigate_suspect_container(self,state,enemies,distance) if self.profile.mimic_investigation else None
         if suspect:
             return suspect
         buffs = " ".join(b["name"].lower() for b in state["hero"].get("buffs", []))

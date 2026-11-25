@@ -76,6 +76,16 @@ def burning(c):
         return rinse(c)
 
 
+def ordinary_flight_recovery(c):
+    if getattr(getattr(c.policy, "profile", None), "name", None) != "simple-bot":
+        return None
+    try:
+        from .simple_flight import recover
+    except ImportError:
+        from simple_flight import recover
+    return recover(c.policy, c.state, c.enemies)
+
+
 def boss_escape(c):
     if not c.boss:
         return None

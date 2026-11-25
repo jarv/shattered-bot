@@ -1,4 +1,4 @@
-"""Short native destination clicks on already-traversed straight safe corridors."""
+"""Short native destination clicks with actual movement receipts."""
 try:
     from .policy_decision import Intent
     from .policy_geometry import neighbors
@@ -17,9 +17,10 @@ BENIGN_TRAVEL_BUFFS={'barrier','wands empowered','lingering magic'}
 
 
 def prepare(p,state,decision):
+    simple = getattr(getattr(p, 'profile', None), 'name', None) == 'simple-bot'
     if not getattr(p,'unit_strategies_enabled',False) or 'movement_trace' not in state.get('capabilities',[]) \
             or p.movement_batch_disabled or state.get('status')!='ready' or state.get('modal') \
-            or state.get('danger_cells') or decision.intent not in {Intent.EXPLORE,Intent.LOOT} \
+             or state.get('danger_cells') or decision.intent not in ({Intent.EXPLORE,Intent.LOOT,Intent.DESCEND} if simple else {Intent.EXPLORE,Intent.LOOT}) \
             or decision.action.get('type')!='cell' or p.recent_threats or p.unseen_damage_turns:return decision
     if state.get('evaluation_stats',{}).get('elapsed_turns',0)<p.movement_batch_ready_at:return decision
     route=decision.navigation_route;hero=state['hero'];pos=hero['cell'];w,h=state['map']['width'],state['map']['height']
@@ -43,7 +44,7 @@ def prepare(p,state,decision):
     forbidden=p.navigation_barriers(state,decision.intent)
     def clear(cell):
         tile=p.tiles.get(cell,{})
-        return tile.get('visible') and tile.get('observed') and p.visits[cell]>0 and cell not in forbidden \
+        return tile.get('visible') and tile.get('observed') and (simple or p.visits[cell]>0) and cell not in forbidden \
             and tile.get('terrain') in GROUND and not tile.get('trap') and not tile.get('plant') \
             and not tile.get('effects') and cell not in p.loot and cell not in p.room_blocked \
             and not p.failed_moves[cell] and cell not in p.blocked and p.walkable(cell)
@@ -54,6 +55,14 @@ def prepare(p,state,decision):
         along={cell-dy*w-dx,cell+dy*w+dx}
         for n in neighbors(cell,w,h):
             tile=p.tiles.get(n,{})
+            if simple:
+                # Fully observed open ground is fine, but not unknown edges,
+                # door interactions, actors, loot, hazards or timed terrain.
+                if not tile.get('visible') or not tile.get('observed'):return False
+                if tile.get('terrain') in WALLS:
+                    if tile.get('effects') or tile.get('plant') or tile.get('trap') or n in p.loot:return False
+                elif not clear(n):return False
+                continue
             if n in along:
                 if not clear(n):return False
             elif not tile.get('visible') or not tile.get('observed') or tile.get('terrain') not in WALLS \
@@ -70,7 +79,9 @@ def prepare(p,state,decision):
     if goal and goal.get('proposed')==(state['depth'],pos,original):
         goal['proposed']=(state['depth'],pos,segment[-1])
     p.planner.report['movement_batch']={'route':segment,'requested_steps':len(segment)-1,
-        'qualification':'Native walking on visited visible straight corridor; arrival and actual steps require receipt'}
+        'qualification':('Native walking on fully observed safe straight ground' if simple else
+                         'Native walking on visited visible straight corridor')+
+                        '; arrival and actual steps require receipt'}
     return decision
 
 

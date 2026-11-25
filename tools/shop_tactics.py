@@ -111,6 +111,18 @@ def visit_entrance_shop(p, state, previous, neighbors):
     try:
         action = _visit_entrance_shop(p, state, previous, neighbors)
     except ShopVisitBlocked as error:
+        if getattr(getattr(p, "profile", None), "name", None) == "simple-bot" \
+                and p.entrance_cell not in previous and not stock:
+            # An observed teleport can separate the hero from the entrance.
+            # Discover an ordinary connection rather than invent a path or
+            # certify a store visit. Retry this same shop routine next input.
+            p.shop_search_target = None
+            reason = "Entrance shop temporarily disconnected; continue ordinary exploration and retry observed access"
+            publish(p, "entrance-shop", Result(Status.BLOCKED, reason,
+                    prerequisites=[dict(entrance=p.entrance_cell, visited=False)]))
+            p.defer_obligations(state, [{"kind": "unreached entrance shop", "cell": p.entrance_cell}],
+                                reason)
+            return None
         publish(p, "entrance-shop", Result(Status.EXHAUSTED, str(error),
                 prerequisites=[dict(failed_targets=sorted(p.shop_search_failed),
                                     accepted_search_inputs=p.entrance_visit_steps)]))
